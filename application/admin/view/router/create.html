@@ -1,0 +1,148 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text"> 新增路由 </blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置路由名称" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">系统路由</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="router" lay-verify="router" autocomplete="off" placeholder="设置系统路由,例：/admin" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">菜单路由</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="menu" lay-verify="router" autocomplete="off" placeholder="设置菜单路由（原则上与系统路由一致）" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由图标</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="设置路由图标,例：#ec2ds;" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由状态</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">父级路由</label>
+                                <div class="layui-input-block ">
+                                    <select name="pid" lay-filter="selectPId">
+                                        <option value="0">一级目录</option>
+                                        {volist name="main" id="m"}
+                                            <option value="{$m.id}">{$m.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" id="isOpen">
+                                <label class="layui-form-label">是否展开</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="open" value="1" lay-skin="switch" lay-text="展开|收起">
+                                </div>
+                            </div>
+
+                           <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">是否主目录</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox"  id="isMain" name="main" value="1" lay-skin="switch" lay-text=" 是 | 否 ">
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  layui.use(['form', 'layedit', 'laydate'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        layer = layui.layer;
+
+    form.render();
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 1 || value.length > 25) {
+                return '路由名称长度应在1-25个字符之间';
+            }
+        },
+        router:function(value) {
+            if(value != ''){
+                var ret = /(^\/)\w*$/;
+                if(!ret.test(value)){
+                    return '路由错误格式,例：/admin';
+                }
+            }
+        },
+        icon:function(value) {
+            if(value != ''){
+                var ret = /(^#)[a-z0-9]{5}(;)$/;
+                if(!ret.test(value)){
+                    return '路由图标格式错误，例：#xe67a;';
+                }
+            }
+        }
+    });
+
+    form.on('select(selectPId)',function(data){
+       data.value == 0 ? $('#isOpen').css('display','') : $('#isOpen').css('display','none');
+    });
+
+    //监听提交
+    form.on('submit(form_submit)', function(data) {
+        $.post("/router_store",data.field,function(res){
+            layer.msg(res);
+            window.location.href="#/router";
+        });
+        return false;
+    });
+
+  });
+</script>
+
+<style scoped>
+
+</style>

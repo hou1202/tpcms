@@ -1,0 +1,124 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text"> 编辑管理员 </blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">管理员帐户</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="account" lay-verify="required|account" autocomplete="off" placeholder="设置登录管理帐户" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">帐户密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="password" lay-verify="required|pass" placeholder="设置登录管理密码" autocomplete="off" class="layui-input">
+                                    </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">真实姓名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="name" lay-verify="required|name" placeholder="请输入管理员真实姓名" autocomplete="off" class="layui-input ">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">帐户状态</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">所属权限组</label>
+                                <div class="layui-input-block ">
+                                    <select name="permissions_id">
+                                        <option value="5">写作</option>
+                                        <option value="1">阅读</option>
+                                        <option value="2">游戏</option>
+                                        <option value="3">音乐</option>
+                                        <option value="4">旅行</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-form-text layui-input-md">
+                                <label class="layui-form-label">备注</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入备注内容" name="remark" lay-verify="remark" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  layui.use(['form', 'layedit', 'laydate'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        layer = layui.layer;
+
+    form.render();
+
+    //自定义验证规则
+    form.verify({
+        account: function(value) {
+            if (value.length < 5 || value.length > 20) {
+                return '登录帐户长度应在5-20个字符之间';
+            }
+        },
+        pass: [/(.+){6,20}$/, '帐户登录密码必须6到20位'],
+        name:function(value) {
+            if(value.length < 2 || value.length >10) {
+                return '管理员真实姓名应在5-20个字符之间';
+            }
+        },
+        remark:function(value) {
+            if(value.length > 200) {
+                return '备注信息不能大于200个字符';
+            }
+        }
+    });
+
+    //监听提交
+    form.on('submit(form_submit)', function(data) {
+        $.post("/adminer_store",data.field,function(res){
+            layer.msg(res);
+            window.location.href="#/adminer";
+        });
+        return false;
+    });
+  });
+</script>
+
+<style scoped>
+
+</style>

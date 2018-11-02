@@ -1,0 +1,134 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote layui-text"> 管理员设置 </blockquote>
+
+                    <div class="layui-card-header">
+                        <a href="#/adminer_create" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe654;</i>
+                            <span>新增</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+                        <!--表格主体-->
+                        <table id="demo_hash" lay-filter="test"></table>
+
+                        <!--操作控制-->
+                        <script type="text/html" id="barDemo_hash">
+                            <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </script>
+
+                        <!--状态显示控制-->
+                        <script type="text/html" id="setStatus">
+
+                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="开启|禁用" value="{{d.id}}">
+
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    layui.config({
+        base: '/static/admin/js/'
+    }).use(['jquery', 'mockjs', 'table', 'sidebar', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            table = layui.table,
+            sidebar = layui.sidebar,
+            form = layui.form;
+        // 注入mock
+        layui.mockjs.inject({
+            'GET /adminer_data': {
+                code: 0,
+                msg: "xxx",
+                count: 1000,
+                'data|10': [{
+                    'id|+1': 1,
+                    account: '@account',
+                    name: '@name',
+                    status: '@status ',
+                    permissions_id: '@permissions_id',
+                    last_ip: '@last_ip',
+                    last_at: '@last_at',
+                    count: '@count',
+                    remark: '@remark',
+                }]
+            }
+        });
+
+        //第一个实例
+        table.render({
+            method: 'get',
+            //size: 'sm',
+            limit: 10,
+            elem: '#demo_hash',
+            height: 'full-235',
+            url: '/adminer_data', //数据接口
+            page: true, //开启分页
+            cols: [
+                [ //表头
+                    {
+                        field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
+                    }, {
+                        field: 'account', title: '登录帐户', align: 'center'
+                    }, {
+                        field: 'name', title: '真实姓名', align: 'center'
+                    }, {
+                        field: 'status', title: '帐户状态', align: 'center', minWidth: 100, templet:'#setStatus'
+                    }, {
+                        field: 'permissions_id', title: '所属权限组', align: 'center', minWidth: 120
+                    }, {
+                        field: 'last_ip', title: '最后登录IP',align: 'center', minWidth: 120
+                    }, {
+                        field: 'last_at', title: '最后登录时间', align: 'center', minWidth: 120
+                    }, {
+                        field: 'count', title: '登录次数', align: 'center', minWidth: 100
+                    }, {
+                        field: 'remark', title: '备注', align: 'center'
+                    }, {
+                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barDemo_hash'
+                    }
+                ]
+            ]
+        });
+
+        //监听状态开关
+        form.on('switch(switchStatus)', function(data) {
+            var status = this.checked ? 1 : 0 ;
+            $.ajax({
+                url:'adminer_status',
+                type:'post',
+                data:{"id":data.value,"status":status},
+                success:function(data){
+                    layer.msg(data);
+                    form.render('switch');
+                },
+                error:function () {
+                    layer.msg('网络错误，请重试！')
+                }
+            });
+        });
+
+
+
+
+    });
+</script>
+
+
+<style scoped>
+
+</style>
