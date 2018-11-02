@@ -20,6 +20,7 @@ class Router extends AdminController
         return view('router/index');
     }
 
+    //获取路由列表数据
     public function routerData()
     {
         $data = RouteM::all();
@@ -31,6 +32,7 @@ class Router extends AdminController
         return json($res);
     }
 
+    //设置路由状态
     public function setRouterStatus(Request $request)
     {
         $data = $request -> post();
@@ -90,11 +92,14 @@ class Router extends AdminController
      * @param  int  $id
      * @return \think\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        //var_dump();
+        //var_dump($routeM);
         $main = RouteM::field('id,title')->where('main',1)->where('status',1)->select();
+        $route = Routem::where('id',$id)->find();
+        //var_dump($route);
         $this->assign('main',$main);
+        $this->assign('Route',$route);
         return view('router/edit');
     }
 
@@ -108,6 +113,7 @@ class Router extends AdminController
     public function update(Request $request, $id)
     {
         //
+        var_dump($request);
     }
 
     /**

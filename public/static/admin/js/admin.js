@@ -154,16 +154,20 @@ layui.define(mods, function(exports) {
             name:'保存管理员'
         },{
             path:'/router',
-            component:'/routers',
+            component:'/router',
             name:'路由设置'
         },{
             path:'/router_create',
             component:'/router_create',
             name:'添加路由'
         },{
-            path:'/router_edit/edit/*',
+            path:'/router_edit/*',
             component:'/router_edit/:id',
-            name:'编辑'
+            name:'编辑路由'
+        },{
+            path:'/router_update/*',
+            component:'router_update/:id',
+            name:'保存路由'
         }
       ]
       };

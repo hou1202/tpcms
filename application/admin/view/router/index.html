@@ -117,11 +117,10 @@
         });
 
         table.on('tool(tIndex)',function(obj){
-            //console.log(obj);
             if(obj.event === 'detail'){
 
             }else if(obj.event === 'edit'){
-                window.location.href ='#/router_edit/edit/'+obj.data.id;
+                window.location.href ='#/router_edit/'+obj.data.id;
             }else if(obj.event === 'del'){
 
             }

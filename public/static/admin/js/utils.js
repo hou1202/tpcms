@@ -43,7 +43,11 @@ layui.define(['lodash', 'axios'], function(exports) {
     find: function(arr, callback) {
       return arr[_.findKey(arr, callback)];
     },
-    //动态地址分析
+    /*
+    * 动态地址分析
+    * hash    当前地址
+    * path    全部路由
+    * */
     match:function(hash,path) {
         var hash_arr = hash.split('/');
         var count_path = 0;

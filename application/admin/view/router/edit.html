@@ -19,35 +19,35 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置路由名称" class="layui-input">
+                                    <input type="text" name="title" value="{$Route.title}" lay-verify="required|title" autocomplete="off" placeholder="设置路由名称" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">系统路由</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="router" lay-verify="router" autocomplete="off" placeholder="设置系统路由,例：/admin" class="layui-input">
+                                    <input type="text" name="router" value="{$Route.router}" lay-verify="router" autocomplete="off" placeholder="设置系统路由,例：/admin" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">菜单路由</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="menu" lay-verify="router" autocomplete="off" placeholder="设置菜单路由（原则上与系统路由一致）" class="layui-input">
+                                    <input type="text" name="menu" value="{$Route.menu}" lay-verify="router" autocomplete="off" placeholder="设置菜单路由（原则上与系统路由一致）" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由图标</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="icon" lay-verify="icon" autocomplete="off" placeholder="设置路由图标,例：#ec2ds;" class="layui-input">
+                                    <input type="text" name="icon" value="{$Route.icon}" lay-verify="icon" autocomplete="off" placeholder="设置路由图标,例：#ec2ds;" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {if $Route.status} checked {/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 
@@ -58,23 +58,25 @@
                                     <select name="pid" lay-filter="selectPId">
                                         <option value="0">一级目录</option>
                                         {volist name="main" id="m"}
-                                            <option value="{$m.id}">{$m.title}</option>
+                                            {if ($Route.id != $m.id)}
+                                            <option value="{$m.id}" {if ($Route.pid == $m.id)}selected{/if} >{$m.title}</option>
+                                            {/if}
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md" id="isOpen">
+                            <div class="layui-form-item layui-input-md" id="isOpen" {if !$Route.main} style="display:none" {/if}>
                                 <label class="layui-form-label">是否展开</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" name="open" value="1" lay-skin="switch" lay-text="展开|收起">
+                                    <input type="checkbox" name="open" {if $Route.open} checked {/if} value="{if $Route.open} 1 {else /} 0 {/if}" lay-skin="switch" lay-text="展开|收起">
                                 </div>
                             </div>
 
                            <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">是否主目录</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox"  id="isMain" name="main" value="1" lay-skin="switch" lay-text=" 是 | 否 ">
+                                    <input type="checkbox"  id="isMain" {if $Route.main} checked {/if} name="main" value="{if $Route.main} 1 {else /} 0 {/if}" lay-skin="switch" lay-text=" 是 | 否 ">
                                 </div>
                             </div>
 
@@ -133,7 +135,7 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/router_store",data.field,function(res){
+        $.post("/router_update/"+"{$Route.id}",data.field,function(res){
             layer.msg(res);
             window.location.href="#/router";
         });

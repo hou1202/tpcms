@@ -31,12 +31,13 @@ Route::get('adminer_create','admin/admin/create');
 Route::post('adminer_store','admin/admin/save');
 
 //路由管理Route
-Route::get('routers','admin/router/index');
+Route::get('router','admin/router/index');
 Route::post('router_data','admin/router/routerData');
 Route::post('router_status','admin/router/setRouterStatus');
 Route::get('router_create','admin/router/create');
 Route::post('router_store','admin/router/save');
 Route::get('router_edit/:id','admin/router/edit');
+Route::post('router_update/:id','admin/router/update');
 
 
 

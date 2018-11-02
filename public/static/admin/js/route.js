@@ -185,7 +185,6 @@ layui.define(['utils', 'jquery', 'lodash', 'nprogress', 'layer'], function(expor
         });
       }
     } else {
-      alert('no-find');
       _viewBox.html(notFoundTpl.join(''));
       NProgress.done();
       loadIndex && layer.close(loadIndex);
