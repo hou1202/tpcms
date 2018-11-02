@@ -1,4 +1,6 @@
 /.idea
 /.vscode
 *.log
+/config/app.php
+/config/database.php
 
