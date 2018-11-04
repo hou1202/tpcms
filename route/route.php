@@ -37,7 +37,8 @@ Route::post('router_status','admin/router/setRouterStatus');
 Route::get('router_create','admin/router/create');
 Route::post('router_store','admin/router/save');
 Route::get('router_edit/:id','admin/router/edit');
-Route::post('router_update/:id','admin/router/update');
+Route::patch('router_update/:id','admin/router/update');
+Route::post('router_del/:id','admin/router/delete');
 
 
 

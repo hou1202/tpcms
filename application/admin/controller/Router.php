@@ -21,13 +21,14 @@ class Router extends AdminController
     }
 
     //获取路由列表数据
-    public function routerData()
+    public function routerData(Request $request)
     {
-        $data = RouteM::all();
+        $data = $request -> post();
+        $list = RouteM::limit(($data['page']-1)*$data['limit'],$data['limit']) -> select();
         $res = [
             'code' => 0,
-            'count' => count($data),
-            'data' => $data,
+            'count' => RouteM::count('id'),
+            'data' => $list,
         ];
         return json($res);
     }
@@ -94,10 +95,8 @@ class Router extends AdminController
      */
     public function edit($id)
     {
-        //var_dump($routeM);
         $main = RouteM::field('id,title')->where('main',1)->where('status',1)->select();
         $route = Routem::where('id',$id)->find();
-        //var_dump($route);
         $this->assign('main',$main);
         $this->assign('Route',$route);
         return view('router/edit');
@@ -113,7 +112,13 @@ class Router extends AdminController
     public function update(Request $request, $id)
     {
         //
-        var_dump($request);
+        $route = RouteM::get($id);
+        $data = $request -> post();
+        $validate = new RouterV();
+        if(!$validate->scene('save')->check($data)){
+            return json($validate->getError());
+        }
+        return $route->save($data) ? json('路由编辑成功') : json('编辑失败');
     }
 
     /**
@@ -125,5 +130,10 @@ class Router extends AdminController
     public function delete($id)
     {
         //
+        if(RouteM::where('pid',$id)->find()){
+            return json('该路由为主路由，若要删除请先删除所属子路由');
+        }
+        return RouteM::destroy($id) ? json('路由删除成功') : json('删除失败');
+        //var_dump($id);
     }
 }

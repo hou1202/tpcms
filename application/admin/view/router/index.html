@@ -46,6 +46,7 @@
             layer = layui.layer,
             table = layui.table,
             form = layui.form,
+            laypage = layui.laypage,
             route = layui.route;
         // 注入mock
        /* layui.mockjs.inject({
@@ -72,10 +73,12 @@
             method: 'post',
             //size: 'sm',
             limit: 10,
+            limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
             url: '/router_data', //数据接口
-            page: true, //开启分页
+            //page: false, //开启分页
+            page:true,
             cols: [
                 [ //表头
                     {
@@ -116,12 +119,19 @@
             });
         });
 
+        //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'detail'){
 
             }else if(obj.event === 'edit'){
                 window.location.href ='#/router_edit/'+obj.data.id;
             }else if(obj.event === 'del'){
+                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/router_del/'+obj.data.id,'',function(res){
+                        layer.msg(res);
+                    });
+                    layer.close(index);
+                });
 
             }
         });
