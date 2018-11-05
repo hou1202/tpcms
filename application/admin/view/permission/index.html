@@ -4,10 +4,10 @@
             <div class="layui-card">
 
                 <div class="layui-card-body">
-                    <blockquote class="layui-elem-quote layui-text"> 路由设置 </blockquote>
+                    <blockquote class="layui-elem-quote layui-text"> 权限组设置 </blockquote>
 
                     <div class="layui-card-header">
-                        <a href="#/router_create" class="layui-btn layui-btn-sm">
+                        <a href="#/permission_create" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe654;</i>
                             <span>新增</span>
                         </a>
@@ -47,25 +47,6 @@
             table = layui.table,
             form = layui.form,
             route = layui.route;
-        // 注入mock
-       /* layui.mockjs.inject({
-            'GET /adminer_data': {
-                code: 0,
-                msg: "xxx",
-                count: 1000,
-                'data|10': [{
-                    'id|+1': 1,
-                    account: '@account',
-                    name: '@name',
-                    status: '@status ',
-                    permissions_id: '@permissions_id',
-                    last_ip: '@last_ip',
-                    last_at: '@last_at',
-                    count: '@count',
-                    remark: '@remark',
-                }]
-            }
-        });*/
 
         //表格数据获取及定义
         table.render({

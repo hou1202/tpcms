@@ -40,6 +40,10 @@ Route::get('router_edit/:id','admin/router/edit');
 Route::patch('router_update/:id','admin/router/update');
 Route::post('router_del/:id','admin/router/delete');
 
+//权限管理permission
+Route::get('permission','admin/permission/index');
+Route::get('permission_create','admin/permission/create');
+
 
 
 Route::get('setting','admin/set/index');

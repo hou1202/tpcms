@@ -111,7 +111,7 @@
         },
         router:function(value) {
             if(value != ''){
-                var ret = /(^\/)\w*$/;
+                var ret = /(^\/)(\w)*/;
                 if(!ret.test(value)){
                     return '路由错误格式,例：/admin';
                 }
