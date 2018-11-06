@@ -42,7 +42,10 @@ Route::post('router_del/:id','admin/router/delete');
 
 //权限管理permission
 Route::get('permission','admin/permission/index');
+Route::post('permission_data','admin/permission/permissionData');
+Route::post('permission_status','admin/permission/setPermissionStatus');
 Route::get('permission_create','admin/permission/create');
+Route::post('permission_store','admin/permission/save');
 
 
 

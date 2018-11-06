@@ -169,14 +169,14 @@ layui.define(mods, function(exports) {
             component:'router_update/:id',
             name:'保存路由'
         },{
-                path:'/permission',
-                component:'/permission',
-                name:'权限设置'
-            },{
-                path:'/permission_create',
-                component:'/permission_create',
-                name:'添加权限组'
-            }
+            path:'/permission',
+            component:'/permission',
+            name:'权限设置'
+        },{
+            path:'/permission_create',
+            component:'/permission_create',
+            name:'添加权限组'
+        }
       ]
       };
       if (config.loadType === 'TABS') {

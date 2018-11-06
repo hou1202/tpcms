@@ -33,7 +33,7 @@ class Router extends AdminController
         return json($res);
     }
 
-    //设置路由状态
+    //设置状态
     public function setRouterStatus(Request $request)
     {
         $data = $request -> post();
