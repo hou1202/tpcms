@@ -22,4 +22,11 @@ class Permission extends Model
      * $readonly    定义只读字段保护
      * */
     protected $readonly = ['id'];
+
+    public function setStatusAttr($value)
+    {
+        if($value == ""){
+            return $value = 0;
+        }
+    }
 }

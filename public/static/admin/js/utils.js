@@ -49,60 +49,56 @@ layui.define(['lodash', 'axios'], function(exports) {
     * path    全部路由
     * */
     match:function(hash,path) {
+
         var hash_arr = hash.split('/');
         var count_path = 0;
         var str_hash ='';
+        //对路由总地址进行循环
         for(var pi = 0 ; pi < path.length ; pi++) {
             var path_arr = path[pi].path.split('/');
 
             if(hash_arr.length === path_arr.length){
+
+                //统计出现通用符 * 的次数
                 for(var li = 0 ; li < path_arr.length ; li++) {
                     if (path_arr[li] === '*') {
                         count_path += 1;
                     }
                 }
 
+                /*
+                * 循环判断去除通用符部分，是否同时
+                * var str_hash 去除去除通用符部分路由
+                * */
                 for(var ni = 0 ; ni < path_arr.length-count_path ; ni++) {
                     if(hash_arr[ni] === path_arr[ni]) {
                         str_hash += hash_arr[ni]+'/';
                     }else{
                         str_hash = '';
-                        return false
+                        count_path = 0;
                     }
                 }
             }
 
+
+            /*
+            * 判断 var str_hash 是否为空
+            * 为空     未匹配到路由
+            * 不为空   匹配到路由
+            * return  匹配并拼接的路由地址
+            * */
             if(str_hash != ''){
-              for(var hi = 0 ; hi < count_path ; hi++) {
-                str_hash += hash_arr[hash_arr.length-count_path+hi]+'/';
-              }
-              str_hash = str_hash.substring(0,str_hash.length-1);
-              path[pi].component = str_hash;
-              path[pi].path = str_hash;
-
-              return path[pi];
+                for(var hi = 0 ; hi < count_path ; hi++) {
+                    str_hash += hash_arr[hash_arr.length-count_path+hi]+'/';
+                }
+                str_hash = str_hash.substring(0,str_hash.length-1);
+                path[pi].component = str_hash;
+                path[pi].path = str_hash;
+                return path[pi];
             }
-
 
         }
 
-      /*
-        str_hash = str_hash.substring(0,str_hash.length-1);
-        return str_hash;
-        for(var li = 0 ; li < path_arr.length ; li++) {
-            if (path_arr[li] === '*') {
-                count_path += 1;
-            }
-        }
-        for(var mi = 0 ; mi < path_arr.length-count_path ; mi++) {
-            if(hash_arr[mi] === path_arr[mi]){
-                str_hash += hash_arr[mi]+'/';
-            }else{
-                return false;
-            }
-        }
-        str_hash = str_hash.substring(0,str_hash.length-1);
-        return str_hash;*/
 
     },
     // 读取模板

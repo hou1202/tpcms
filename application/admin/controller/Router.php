@@ -113,6 +113,9 @@ class Router extends AdminController
     {
         //
         $route = RouteM::get($id);
+        if(!$route){
+            return json('编辑信息有误');
+        }
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data)){

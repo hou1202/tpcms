@@ -4,7 +4,7 @@
             <div class="layui-card">
                 <div class="layui-card-body">
 
-                    <blockquote class="layui-elem-quote layui-text"> 新增权限组 </blockquote>
+                    <blockquote class="layui-elem-quote layui-text"> 编辑权限组 </blockquote>
                     <div class="layui-card-header">
                         <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe65a;</i>
@@ -15,18 +15,19 @@
                     <div class="layui-card-body">
 
                         <form class="layui-form">
+                            <input type="hidden" name="_method" value="PUT" >
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">权限组名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置权限组名称" class="layui-input">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置权限组名称" class="layui-input" value="{$Per.title}">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">权限组状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {if($Per.status)}checked{/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 
@@ -39,7 +40,7 @@
 
                                         <div class="layui-colla-item">
                                             <h2 class="layui-colla-title">
-                                                <input type="checkbox" name="router_id[]" title="{$vo.title}" checked class="grade" value="{$vo.id}" >
+                                                <input type="checkbox" name="router_id[]" title="{$vo.title}" {if in_array($vo.id,$Per.router_id)}checked{/if} class="grade" value="{$vo.id}" >
                                             </h2>
 
                                             {volist name="Route" id="co" }
@@ -48,13 +49,13 @@
                                                 <div class="layui-collapse" lay-accordion="">
                                                     <div class="layui-colla-item">
                                                         <h2 class="layui-colla-title">
-                                                            <input type="checkbox" name="router_id[]" title="{$co.title}" checked class="father" value="{$co.id}">
+                                                            <input type="checkbox" name="router_id[]" title="{$co.title}" {if in_array($co.id,$Per.router_id)}checked{/if} class="father" value="{$co.id}">
                                                         </h2>
                                                         <div class="layui-colla-content">
 
                                                             {volist name="Route" id="go" }
                                                             {if $co.id === $go.pid}
-                                                                <input type="checkbox" name="router_id[]" title="{$go.title}" checked class="sun" value="{$go.id}">
+                                                                <input type="checkbox" name="router_id[]" title="{$go.title}" {if in_array($go.id,$Per.router_id)}checked{/if} class="sun" value="{$go.id}">
                                                             {/if}
                                                             {/volist}
                                                         </div>
@@ -110,9 +111,9 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/permission_store",data.field,function(res){
+        $.post("/permission/"+"{$Per.id}",data.field,function(res){
             layer.msg(res);
-            //window.location.href="#/permission";
+            window.location.href="#/permission";
         });
         return false;
     });

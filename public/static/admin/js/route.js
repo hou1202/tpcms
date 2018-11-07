@@ -77,18 +77,22 @@ layui.define(['utils', 'jquery', 'lodash', 'nprogress', 'layer'], function(expor
     hash = hash || location.hash;
     //获取当前地址
     var route = layui.router(hash);
+
     //分解当前地址
     var href = route.href.split('?');
     var c = utils.find(routes, function(r) {
       return r.path === href[0];
     });
+
     if (c === undefined) {
       //当返回为“undefined”时，判断是否是动态地址
       if(utils.match(href[0],routes) != false) {
         c = utils.match(href[0],routes);
       }
+
       return c;
     }
+
     if (href.length > 1) {
       c.component += '?' + href[1];
       c.path += '?' + href[1];

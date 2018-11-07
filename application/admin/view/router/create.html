@@ -133,7 +133,7 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/router_store",data.field,function(res){
+        $.post("/router",data.field,function(res){
             layer.msg(res);
             window.location.href="#/router";
         });

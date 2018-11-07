@@ -31,22 +31,15 @@ Route::get('adminer_create','admin/admin/create');
 Route::post('adminer_store','admin/admin/save');
 
 //路由管理Route
-Route::get('router','admin/router/index');
-Route::post('router_data','admin/router/routerData');
-Route::post('router_status','admin/router/setRouterStatus');
-Route::get('router_create','admin/router/create');
-Route::post('router_store','admin/router/save');
-Route::get('router_edit/:id','admin/router/edit');
-Route::patch('router_update/:id','admin/router/update');
-Route::post('router_del/:id','admin/router/delete');
+Route::resource('router','admin/router')->rest('edit',['GET', '/edit/:id','edit']);
+Route::post('router/data','admin/router/routerData');
+Route::post('router/status','admin/router/setRouterStatus');
+
 
 //权限管理permission
-Route::get('permission','admin/permission/index');
-Route::post('permission_data','admin/permission/permissionData');
-Route::post('permission_status','admin/permission/setPermissionStatus');
-Route::get('permission_create','admin/permission/create');
-Route::post('permission_store','admin/permission/save');
-
+Route::resource('permission','admin/permission')->rest('edit',['GET', '/edit/:id','edit']);
+Route::post('permission/data','admin/permission/permissionData');
+Route::post('permission/status','admin/permission/setPermissionStatus');
 
 
 Route::get('setting','admin/set/index');

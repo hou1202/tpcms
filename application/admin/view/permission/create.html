@@ -110,9 +110,9 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/permission_store",data.field,function(res){
+        $.post("/permission",data.field,function(res){
             layer.msg(res);
-            //window.location.href="#/permission";
+            window.location.href="#/permission";
         });
         return false;
     });

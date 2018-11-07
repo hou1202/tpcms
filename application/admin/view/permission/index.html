@@ -7,7 +7,7 @@
                     <blockquote class="layui-elem-quote layui-text"> 权限组设置 </blockquote>
 
                     <div class="layui-card-header">
-                        <a href="#/permission_create" class="layui-btn layui-btn-sm">
+                        <a href="#/permission/create" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe654;</i>
                             <span>新增</span>
                         </a>
@@ -56,16 +56,16 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/permission_data', //数据接口
+            url: '/permission/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'title', title: '权限组名称', align: 'center'
+                        field: 'title', title: '权限组名称', align: 'center', minWidth: 300
                     }, {
-                        field: 'router_id', title: '权限组路由', align: 'center'
+                        field: 'router_id', title: '权限组路由', align: 'center', minWidth: 300
                     },{
                         title: '权限组状态',align: 'center', minWidth: 120, templet:'#setStatus'
                     },{
@@ -79,7 +79,7 @@
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
             $.ajax({
-                url:'permission_status',
+                url:'permission/status',
                 type:'post',
                 data:{"id":data.value,"status":status},
                 success:function(data){
@@ -97,10 +97,10 @@
             if(obj.event === 'detail'){
 
             }else if(obj.event === 'edit'){
-                window.location.href ='#/router_edit/'+obj.data.id;
+                window.location.href ='#/permission/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/router_del/'+obj.data.id,'',function(res){
+                layer.confirm('确定删除该权限组?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/permission/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res);
                     });
                     layer.close(index);

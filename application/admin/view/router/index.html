@@ -7,7 +7,7 @@
                     <blockquote class="layui-elem-quote layui-text"> 路由设置 </blockquote>
 
                     <div class="layui-card-header">
-                        <a href="#/router_create" class="layui-btn layui-btn-sm">
+                        <a href="#/router/create" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe654;</i>
                             <span>新增</span>
                         </a>
@@ -75,7 +75,7 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/router_data', //数据接口
+            url: '/router/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
@@ -104,7 +104,7 @@
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
             $.ajax({
-                url:'router_status',
+                url:'router/status',
                 type:'post',
                 data:{"id":data.value,"status":status},
                 success:function(data){
@@ -122,11 +122,12 @@
             if(obj.event === 'detail'){
 
             }else if(obj.event === 'edit'){
-                window.location.href ='#/permission_edit/'+obj.data.id;
+                window.location.href ='#/router/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
                 layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/permission_del/'+obj.data.id,'',function(res){
+                    $.post('/router/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res);
+                        table.reload('tableHash');
                     });
                     layer.close(index);
                 });

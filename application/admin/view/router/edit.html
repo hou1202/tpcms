@@ -15,7 +15,7 @@
                     <div class="layui-card-body">
 
                         <form class="layui-form">
-                            <input type="hidden" name="_method" value="PATCH" >
+                            <input type="hidden" name="_method" value="PUT" >
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由名称</label>
@@ -114,7 +114,7 @@
         },
         router:function(value) {
             if(value != ''){
-                var ret = /(^\/)\w*$/;
+                var ret = /(^\/)\w*/;
                 if(!ret.test(value)){
                     return '路由错误格式,例：/admin';
                 }
@@ -136,7 +136,7 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/router_update/"+"{$Route.id}",data.field,function(res){
+        $.post("/router/"+"{$Route.id}",data.field,function(res){
             layer.msg(res);
             window.location.href="#/router";
         });

@@ -157,26 +157,30 @@ layui.define(mods, function(exports) {
             component:'/router',
             name:'路由设置'
         },{
-            path:'/router_create',
-            component:'/router_create',
+            path:'/router/create',
+            component:'/router/create',
             name:'添加路由'
         },{
-            path:'/router_edit/*',
-            component:'/router_edit/:id',
+            path:'/router/edit/*',
+            component:'/router/edit/:id',
             name:'编辑路由'
         },{
-            path:'/router_update/*',
-            component:'router_update/:id',
+            path:'/router/*',
+            component:'router/:id',
             name:'保存路由'
         },{
             path:'/permission',
             component:'/permission',
             name:'权限设置'
         },{
-            path:'/permission_create',
-            component:'/permission_create',
+            path:'/permission/create',
+            component:'/permission/create',
             name:'添加权限组'
-        }
+        },{
+            path:'/permission/edit/*',
+            component:'/permission/edit/:id',
+            name:'编辑权限组'
+        },
       ]
       };
       if (config.loadType === 'TABS') {

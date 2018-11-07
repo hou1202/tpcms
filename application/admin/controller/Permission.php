@@ -98,6 +98,12 @@ class Permission extends AdminController
     public function edit($id)
     {
         //
+        $router = Router::where('status',1)->all();
+        $permission = PermissionM::get($id);
+        $permission['router_id'] = explode('-',$permission['router_id']);
+        $this->assign("Route",$router);
+        $this->assign("Per",$permission);
+        return view('permission/edit');
     }
 
     /**
@@ -110,6 +116,18 @@ class Permission extends AdminController
     public function update(Request $request, $id)
     {
         //
+        //var_dump($request -> post());
+        $permission = PermissionM::get($id);
+        if(!$permission){
+            return json('编辑信息有误');
+        }
+        $data = $request -> post();
+        $validate = new PermissionV();
+        if(!$validate->scene('save')->check($data)){
+            return json($validate->getError());
+        }
+        $data['router_id'] = implode('-',$data['router_id']);
+        return $permission->save($data) ? json('权限组修改成功') : json('修改失败');
     }
 
     /**
@@ -121,5 +139,6 @@ class Permission extends AdminController
     public function delete($id)
     {
         //
+        var_dump('del');
     }
 }
