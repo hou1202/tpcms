@@ -2,9 +2,9 @@
 
 namespace app\admin\validate;
 
-use think\Validate;
+use app\common\validate\CommonValidate;
 
-class Permission extends Validate
+class Permission extends CommonValidate
 {
     /**
      * 定义验证规则

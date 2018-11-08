@@ -24,11 +24,14 @@ Route::get('main','admin/home/main');
 Route::get('menu','admin/home/menu');
 
 //管理员管理Route
-Route::get('adminer','admin/admin/index');
+Route::resource('adminer','admin/admin')->rest('edit',['GET', '/edit/:id','edit']);
+Route::post('adminer/data','admin/admin/indexData');
+Route::post('adminer/status','admin/admin/setAdminStatus');
+/*Route::get('adminer','admin/admin/index');
 Route::get('adminer_data','admin/admin/indexData');
 Route::post('adminer_status','admin/admin/setAdminStatus');
 Route::get('adminer_create','admin/admin/create');
-Route::post('adminer_store','admin/admin/save');
+Route::post('adminer_store','admin/admin/save');*/
 
 //路由管理Route
 Route::resource('router','admin/router')->rest('edit',['GET', '/edit/:id','edit']);

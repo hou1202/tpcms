@@ -5,8 +5,10 @@ namespace app\admin\controller;
 use app\common\controller\AdminController;
 use think\Request;
 use app\admin\model\Router;
+use app\admin\model\Admin;
 use app\admin\model\Permission as PermissionM;
 use app\admin\validate\Permission as PermissionV;
+
 
 class Permission extends AdminController
 {
@@ -98,8 +100,11 @@ class Permission extends AdminController
     public function edit($id)
     {
         //
-        $router = Router::where('status',1)->all();
         $permission = PermissionM::get($id);
+        if(!$permission){
+            return json('非有效数据信息');
+        }
+        $router = Router::where('status',1)->all();
         $permission['router_id'] = explode('-',$permission['router_id']);
         $this->assign("Route",$router);
         $this->assign("Per",$permission);
@@ -115,11 +120,9 @@ class Permission extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
-        //var_dump($request -> post());
         $permission = PermissionM::get($id);
         if(!$permission){
-            return json('编辑信息有误');
+            return json('非有效数据信息');
         }
         $data = $request -> post();
         $validate = new PermissionV();
@@ -139,6 +142,9 @@ class Permission extends AdminController
     public function delete($id)
     {
         //
-        var_dump('del');
+        if(Admin::where('permissions_id',$id)->find()){
+            return json('该权限组正在被管理员使用中，请先调整管理员权限组');
+        }
+        return PermissionM::destroy($id) ? json('删除成功') : json('删除失败');
     }
 }

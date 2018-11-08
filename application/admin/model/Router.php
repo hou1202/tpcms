@@ -21,4 +21,16 @@ class Router extends Model
      * $readonly    定义只读字段保护
      * */
     protected $readonly = ['id'];
+
+
+    public function getPidTextAttr($value,$data)
+    {
+        if($data['pid'] === 0){
+            $pid_text = '一级目录';
+        }else{
+            $rec = $this->field('title')->where('id',$data['pid'])->find();
+            $pid_text = $rec['title'];
+        }
+        return $pid_text;
+    }
 }

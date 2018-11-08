@@ -23,10 +23,5 @@ class Permission extends Model
      * */
     protected $readonly = ['id'];
 
-    public function setStatusAttr($value)
-    {
-        if($value == ""){
-            return $value = 0;
-        }
-    }
+
 }

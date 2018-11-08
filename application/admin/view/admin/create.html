@@ -48,11 +48,9 @@
                                 <label class="layui-form-label">所属权限组</label>
                                 <div class="layui-input-block ">
                                     <select name="permissions_id">
-                                        <option value="5">写作</option>
-                                        <option value="1">阅读</option>
-                                        <option value="2">游戏</option>
-                                        <option value="3">音乐</option>
-                                        <option value="4">旅行</option>
+                                        {volist name="Per" id="vo"}
+                                            <option value="{$vo.id}">{$vo.title}</option>
+                                        {/volist}
                                     </select>
                                 </div>
                             </div>
@@ -110,7 +108,7 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/adminer_store",data.field,function(res){
+        $.post("/adminer",data.field,function(res){
             layer.msg(res);
             window.location.href="#/adminer";
         });

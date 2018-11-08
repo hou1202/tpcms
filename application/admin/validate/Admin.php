@@ -2,9 +2,10 @@
 
 namespace app\admin\validate;
 
+use app\common\validate\CommonValidate;
 use think\Validate;
 
-class Admin extends Validate
+class Admin extends CommonValidate
 {
     /**
      * 定义验证规则
@@ -18,7 +19,7 @@ class Admin extends Validate
         'password|帐户密码' => 'require|length:6,20',
         'name|真实姓名' => 'require|length:2,10',
         'status' => 'in:0,1',
-        'permissions_id|所属权限组' => 'require|number|gt:0',
+        'permissions_id|所属权限组' => 'require|number|gt:0|isExist:permissions,id',
         'remark|备注内容' => 'max:255',
     ];
     
@@ -31,9 +32,11 @@ class Admin extends Validate
     protected $message = [
         'id.required' => '提交内容为非有效信息',
         'id.number' => '提交内容为非有效信息',
+        'id.isExist' => '提交内容为非有效信息',
         'status.in' => '提交内容为非有效信息',
         'permissions_id.number' => '所属权限组为非有效信息',
         'permissions_id.gt' => '所属权限组为非有效信息',
+        'permissions_id.isExist' => '所属权限组为非有效信息',
     ];
 
     /*
@@ -44,4 +47,7 @@ class Admin extends Validate
         'status' => ['id','status'],
         'save' => ['account','password','name','status','permissions_id','remark']
     ];
+
+
+
 }

@@ -111,6 +111,9 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
+        if(!data.field.status){
+            data.field.status = 0
+        }
         $.post("/permission/"+"{$Per.id}",data.field,function(res){
             layer.msg(res);
             window.location.href="#/permission";

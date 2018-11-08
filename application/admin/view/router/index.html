@@ -120,7 +120,7 @@
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'detail'){
-
+                window.location.href ='#/router/'+obj.data.id;
             }else if(obj.event === 'edit'){
                 window.location.href ='#/router/edit/'+obj.data.id;
             }else if(obj.event === 'del'){

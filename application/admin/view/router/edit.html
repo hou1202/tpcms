@@ -136,6 +136,15 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
+        if(!data.field.status){
+            data.field.status = 0;
+        }
+        if(!data.field.open){
+            data.field.open = 0;
+        }
+        if(!data.field.main){
+            data.field.main = 0;
+        }
         $.post("/router/"+"{$Route.id}",data.field,function(res){
             layer.msg(res);
             window.location.href="#/router";

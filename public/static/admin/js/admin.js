@@ -145,12 +145,12 @@ layui.define(mods, function(exports) {
           component:'/adminer',
           name:'管理员设置'
         },{
-            path:'/adminer_create',
-            component:'/adminer_create',
+            path:'/adminer/create',
+            component:'/adminer/create',
             name:'添加管理员'
         },{
-            path:'/adminer_store',
-            component:'/adminer_store',
+            path:'/adminer',
+            component:'/adminer',
             name:'保存管理员'
         },{
             path:'/router',
@@ -160,6 +160,10 @@ layui.define(mods, function(exports) {
             path:'/router/create',
             component:'/router/create',
             name:'添加路由'
+        },{
+            path:'/router/*',
+            component:'/router/:id',
+            name:'查看路由'
         },{
             path:'/router/edit/*',
             component:'/router/edit/:id',

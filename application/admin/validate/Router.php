@@ -2,9 +2,10 @@
 
 namespace app\admin\validate;
 
-use think\Validate;
+use app\common\validate\CommonValidate;
 
-class Router extends Validate
+
+class Router extends CommonValidate
 {
     /**
      * 定义验证规则

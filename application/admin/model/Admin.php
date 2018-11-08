@@ -41,5 +41,10 @@ class Admin extends Model
         return md5($value);
     }
 
+    public function permission()
+    {
+        return $this->hasOne('Permission','id');
+    }
+
 
 }

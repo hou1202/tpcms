@@ -1,0 +1,91 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text"> 查看路由 </blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form layui-form-pane" action="">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Route.title}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">系统路由</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Route.router}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">菜单路由</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Route.menu}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由图标</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Route.icon}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" pane="" >
+                                <label class="layui-form-label">路由状态</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {if $Route.status} checked {/if} >
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">父级路由</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Route.pid_text}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" pane="" >
+                                <label class="layui-form-label">是否展开</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text="展开|收起" disabled {if $Route.open} checked {/if} >
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" pane="" >
+                                <label class="layui-form-label">是否主目录</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" lay-skin="switch" lay-text=" 是 | 否 " disabled {if $Route.main} checked {/if} >
+                                </div>
+                            </div>
+
+                        </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+
+</script>
+
+<style scoped>
+
+</style>

@@ -6,6 +6,7 @@ use app\common\controller\AdminController;
 use think\Request;
 use app\admin\model\Router as RouteM;
 use app\admin\validate\Router as RouterV;
+use think\validate\ValidateRule;
 
 class Router extends AdminController
 {
@@ -16,7 +17,6 @@ class Router extends AdminController
      */
     public function index()
     {
-        //
         return view('router/index');
     }
 
@@ -84,7 +84,10 @@ class Router extends AdminController
      */
     public function read($id)
     {
-        //
+
+        $route = RouteM::get($id);
+        $this->assign('Route',$route);
+        return view('router/read');
     }
 
     /**
@@ -137,6 +140,6 @@ class Router extends AdminController
             return json('该路由为主路由，若要删除请先删除所属子路由');
         }
         return RouteM::destroy($id) ? json('路由删除成功') : json('删除失败');
-        //var_dump($id);
+
     }
 }
