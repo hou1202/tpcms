@@ -14,7 +14,7 @@ class Admin extends CommonValidate
      * @var array
      */	
 	protected $rule = [
-        'id' => 'require|number',
+        'id' => 'require|number|isExist:adminer,id',
         'account|帐户' => 'require|length:5,20|unique:adminer',
         'password|帐户密码' => 'require|length:6,20',
         'name|真实姓名' => 'require|length:2,10',
@@ -47,6 +47,17 @@ class Admin extends CommonValidate
         'status' => ['id','status'],
         'save' => ['account','password','name','status','permissions_id','remark']
     ];
+
+    /*
+     * 定义编辑 edit 模式下，验证场景
+     * */
+    public function sceneEdit()
+    {
+        return $this -> only(['account','password','name','status','permissions_id','remark'])
+            ->remove('account','unique')
+            ->remove('password','require')
+            ->append('password','requireCallback:checkEmpty');
+    }
 
 
 

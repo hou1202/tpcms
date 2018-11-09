@@ -6,19 +6,30 @@
                 <div class="layui-card-body">
                     <blockquote class="layui-elem-quote layui-text"> 管理员设置 </blockquote>
 
-                    <div class="layui-card-header">
-                        <a href="#/adminer/create" class="layui-btn layui-btn-sm">
-                            <i class="layui-icon">&#xe654;</i>
-                            <span>新增</span>
-                        </a>
+                    <div class="layui-card-header" >
+                        <div class="self-card-header">
+                            <a href="#/adminer/create" class="layui-btn layui-btn-sm">
+                                <i class="layui-icon">&#xe654;</i>
+                                <span>新增</span>
+                            </a>
+                        </div>
+
+                        <div class="self-search">
+                            <form action="/">
+                                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="关键字..." />
+                                <button class=" self-search-btn" title="搜索" type="submit">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="layui-card-body">
                         <!--表格主体-->
-                        <table id="demo_hash" lay-filter="test"></table>
+                        <table id="tableHash" lay-filter="tIndex"></table>
 
                         <!--操作控制-->
-                        <script type="text/html" id="barDemo_hash">
+                        <script type="text/html" id="barHash">
                             <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
                             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -74,7 +85,7 @@
             method: 'post',
             //size: 'sm',
             limit: 10,
-            elem: '#demo_hash',
+            elem: '#tableHash',
             height: 'full-235',
             url: '/adminer/data', //数据接口
             page: true, //开启分页
@@ -99,7 +110,7 @@
                     }, {
                         field: 'remark', title: '备注', align: 'center'
                     }, {
-                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barDemo_hash'
+                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
                 ]
             ]
@@ -114,7 +125,7 @@
                 data:{"id":data.value,"status":status},
                 success:function(data){
                     layer.msg(data);
-                    form.render('switch');
+                    table.reload('tableHash');
                 },
                 error:function () {
                     layer.msg('网络错误，请重试！')
@@ -129,7 +140,7 @@
             }else if(obj.event === 'edit'){
                 window.location.href ='#/adminer/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
+                layer.confirm('确定删除该管理员?', {icon: 3, title:'提示'}, function(index){
                     $.post('/adminer/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res);
                         table.reload('tableHash');

@@ -19,7 +19,7 @@ class CommonValidate extends Validate
 
     /**
      * 验证数据在指定表的字段中是否存在
-     * @access public
+     * @access protected
      * @param  mixed     $value  字段值
      * @param  mixed     $rule  验证规则 格式：数据表,字段名,主键名
      * @param  array     $data  数据
@@ -63,6 +63,18 @@ class CommonValidate extends Validate
 
         return false;
 
+    }
+
+    /**
+     * 验证数据字段是否为空
+     * @access protected
+     * @param  mixed     $value  字段值
+     * @return bool
+     *
+     * */
+    protected function checkEmpty($value)
+    {
+        return empty($value) ? false : true ;
     }
 
 }

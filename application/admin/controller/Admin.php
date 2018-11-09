@@ -95,6 +95,14 @@ class Admin extends AdminController
     public function read($id)
     {
         //
+        $adminer = AdminM::table('adminer')
+            ->alias('a')
+            ->field('a.*,p.title as per_id')
+            ->join('permissions p','p.id = a.permissions_id')
+            ->where('a.id',$id)
+            ->find();
+        $this -> assign('Adminer',$adminer);
+        return view('admin/read');
     }
 
     /**
@@ -106,6 +114,11 @@ class Admin extends AdminController
     public function edit($id)
     {
         //
+        $permission = Permission::field('id,title')->all();
+        $adminer = AdminM::get($id);
+        $this->assign('Per',$permission);
+        $this->assign('Adminer',$adminer);
+        return view('admin/edit');
     }
 
     /**
@@ -118,6 +131,19 @@ class Admin extends AdminController
     public function update(Request $request, $id)
     {
         //
+        $adminer = AdminM::get($id);
+        if(!$adminer){
+            return json('提交信息有误');
+        }
+        $data = $request -> post();
+        if(empty($data['password'])){
+            unset($data['password']);
+        }
+        $validate = new AdminValidate();
+        if(!$validate->sceneEdit()->check($data)) {
+            return json($validate->getError());
+        }
+        return $adminer -> save($data) ? json('管理员编辑成功') : json('编辑失败');
     }
 
     /**
@@ -129,5 +155,6 @@ class Admin extends AdminController
     public function delete($id)
     {
         //
+        return AdminM::destroy($id) ? json('管理员删除成功') : json('删除失败');
     }
 }

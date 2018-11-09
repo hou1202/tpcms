@@ -24,10 +24,17 @@ class Router extends AdminController
     public function routerData(Request $request)
     {
         $data = $request -> post();
-        $list = RouteM::limit(($data['page']-1)*$data['limit'],$data['limit']) -> select();
+        if(isset($data['keyword']) && !empty($data['keyword'])){
+            $map[] = ['id|title|router|menu','like','%'.$data['keyword'].'%'];
+        }else{
+            $map[] = ['id','>',0];
+        }
+        $list = RouteM::where($map)
+            ->limit(($data['page']-1)*$data['limit'],$data['limit'])
+            ->select();
         $res = [
             'code' => 0,
-            'count' => RouteM::count('id'),
+            'count' => RouteM::where($map)->count('id'),
             'data' => $list,
         ];
         return json($res);

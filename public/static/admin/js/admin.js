@@ -153,6 +153,14 @@ layui.define(mods, function(exports) {
             component:'/adminer',
             name:'保存管理员'
         },{
+            path:'/adminer/edit/*',
+            component:'/adminer/edit/:id',
+            name:'编辑管理员'
+        },{
+            path:'/adminer/*',
+            component:'/adminer/:id',
+            name:'查看管理员'
+        },{
             path:'/router',
             component:'/router',
             name:'路由设置'

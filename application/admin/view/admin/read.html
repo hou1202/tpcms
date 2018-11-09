@@ -4,7 +4,7 @@
             <div class="layui-card">
                 <div class="layui-card-body">
 
-                    <blockquote class="layui-elem-quote layui-text"> 查看路由 </blockquote>
+                    <blockquote class="layui-elem-quote layui-text"> 查看管理员 </blockquote>
                     <div class="layui-card-header">
                         <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe65a;</i>
@@ -17,58 +17,58 @@
                         <form class="layui-form layui-form-pane" action="">
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">路由名称</label>
+                                <label class="layui-form-label">登录帐号</label>
                                 <div class="layui-input-block">
-                                    <input type="text"   value="{$Route.title}" readonly class="layui-input">
+                                    <input type="text"   value="{$Adminer.account}" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">系统路由</label>
+                                <label class="layui-form-label">真实姓名</label>
                                 <div class="layui-input-block">
-                                    <input type="text"   value="{$Route.router}" readonly class="layui-input">
+                                    <input type="text"   value="{$Adminer.name}" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">菜单路由</label>
+                                <label class="layui-form-label">所属权限组</label>
                                 <div class="layui-input-block">
-                                    <input type="text"   value="{$Route.menu}" readonly class="layui-input">
+                                    <input type="text"   value="{$Adminer.per_id}" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">路由图标</label>
+                                <label class="layui-form-label">登录次数</label>
                                 <div class="layui-input-block">
-                                    <input type="text"   value="{$Route.icon}" readonly class="layui-input">
+                                    <input type="text"   value="{$Adminer.count}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">最后登录IP</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Adminer.last_ip}" readonly class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">最后登录时间</label>
+                                <div class="layui-input-block">
+                                    <input type="text"   value="{$Adminer.last_at}" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md" pane="" >
-                                <label class="layui-form-label">路由状态</label>
+                                <label class="layui-form-label">帐户状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {if $Route.status} checked {/if} >
+                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {if $Adminer.status} checked {/if} >
                                 </div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">父级路由</label>
+                            <div class="layui-form-item layui-form-text layui-input-md">
+                                <label class="layui-form-label">备注</label>
                                 <div class="layui-input-block">
-                                    <input type="text"   value="{$Route.pid_text}" readonly class="layui-input">
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item layui-input-md" pane="" >
-                                <label class="layui-form-label">是否展开</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="展开|收起" disabled {if $Route.open} checked {/if} >
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item layui-input-md" pane="" >
-                                <label class="layui-form-label">是否主目录</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text=" 是 | 否 " disabled {if $Route.main} checked {/if} >
+                                    <textarea  class="layui-textarea" readonly >{$Adminer.remark}</textarea>
                                 </div>
                             </div>
 
@@ -90,6 +90,7 @@
         form.render();
 
     });
+
 </script>
 
 <style scoped>

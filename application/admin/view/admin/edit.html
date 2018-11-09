@@ -15,32 +15,33 @@
                     <div class="layui-card-body">
 
                         <form class="layui-form">
+                            <input type="hidden" name="_method" value="PUT" >
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">管理员帐户</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="account" lay-verify="required|account" autocomplete="off" placeholder="设置登录管理帐户" class="layui-input">
+                                    <input type="text" name="account" value="{$Adminer.account}" lay-verify="required|account" autocomplete="off" placeholder="设置登录管理帐户" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">帐户密码</label>
-                                    <div class="layui-input-block">
-                                        <input type="password" name="password" lay-verify="required|pass" placeholder="设置登录管理密码" autocomplete="off" class="layui-input">
-                                    </div>
+                                <div class="layui-input-block">
+                                    <input type="password" name="password"  lay-verify="pass" placeholder="**********" autocomplete="off" class="layui-input">
+                                </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">真实姓名</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="name" lay-verify="required|name" placeholder="请输入管理员真实姓名" autocomplete="off" class="layui-input ">
+                                    <input type="text" name="name" value="{$Adminer.name}" lay-verify="required|name" placeholder="请输入管理员真实姓名" autocomplete="off" class="layui-input ">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">帐户状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {if $Adminer.status} checked="" {/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 
@@ -48,11 +49,9 @@
                                 <label class="layui-form-label">所属权限组</label>
                                 <div class="layui-input-block ">
                                     <select name="permissions_id">
-                                        <option value="5">写作</option>
-                                        <option value="1">阅读</option>
-                                        <option value="2">游戏</option>
-                                        <option value="3">音乐</option>
-                                        <option value="4">旅行</option>
+                                        {volist name="Per" id="vo"}
+                                            <option value="{$vo.id}" {if $Adminer.permissions_id == $vo.id} selected {/if} >{$vo.title}</option>
+                                        {/volist}
                                     </select>
                                 </div>
                             </div>
@@ -60,7 +59,7 @@
                             <div class="layui-form-item layui-form-text layui-input-md">
                                 <label class="layui-form-label">备注</label>
                                 <div class="layui-input-block">
-                                    <textarea placeholder="请输入备注内容" name="remark" lay-verify="remark" class="layui-textarea"></textarea>
+                                    <textarea placeholder="请输入备注内容" name="remark" lay-verify="remark" class="layui-textarea">{$Adminer.remark}</textarea>
                                 </div>
                             </div>
 
@@ -95,7 +94,13 @@
                 return '登录帐户长度应在5-20个字符之间';
             }
         },
-        pass: [/(.+){6,20}$/, '帐户登录密码必须6到20位'],
+        pass:function(value) {
+            if(value != '') {
+                if(value.length < 6 || value.length >20) {
+                    return '帐户登录密码必须6到20位';
+                }
+            }
+        },
         name:function(value) {
             if(value.length < 2 || value.length >10) {
                 return '管理员真实姓名应在5-20个字符之间';
@@ -110,12 +115,14 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/adminer_store",data.field,function(res){
+        if(!data.field.status){ data.field.status = 0 }
+        $.post("/adminer/"+"{$Adminer.id}",data.field,function(res){
             layer.msg(res);
             window.location.href="#/adminer";
         });
         return false;
     });
+
   });
 </script>
 

@@ -57,7 +57,7 @@ layui.define(['lodash', 'axios'], function(exports) {
         for(var pi = 0 ; pi < path.length ; pi++) {
             var path_arr = path[pi].path.split('/');
 
-            if(hash_arr.length === path_arr.length){
+            if(hash_arr.length === path_arr.length && hash_arr[1] === path_arr[1]){
 
                 //统计出现通用符 * 的次数
                 for(var li = 0 ; li < path_arr.length ; li++) {

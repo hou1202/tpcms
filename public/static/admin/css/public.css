@@ -7,3 +7,31 @@
 .layui-input-bg{
     width:80%;
 }
+
+.self-card-header{
+    display:inline;
+    float:left;
+}
+.self-search{
+    float:left;
+    margin:0 20px;
+    /*position:absolute !important;
+    left:100px;
+    top:0;*/
+    /*margin:0 20px;*/
+}
+.self-search .self-search-input{
+    border-color:#009688 !important;
+    color:#009688 !important;
+    padding: 0 0 0 35px !important;
+}
+.self-search .self-search-btn{
+    border:0;
+    background-color:transparent;
+    z-index:2;
+    cursor:pointer;
+    color:#009688;
+    position:absolute;
+    top:15px;
+    padding-left:11px;
+}

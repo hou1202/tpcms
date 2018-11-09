@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2018-11-07 18:13:26
+# Date: 2018-11-09 18:32:36
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -24,13 +24,13 @@ CREATE TABLE `adminer` (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `adminer_key` (`id`,`account`,`permissions_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 #
 # Data for table "adminer"
 #
 
-INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','admin',1,1,1,'admin',NULL,NULL,0,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',0,1,0,'guest',NULL,NULL,0,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','test',0,5,0,'',NULL,NULL,0,'2018-10-25 11:47:56'),(4,'test2','96e79218965eb72c92a549dd5a330112','test2',0,5,0,'000000',NULL,NULL,0,'2018-10-25 13:17:47'),(5,'test3','96e79218965eb72c92a549dd5a330112','test',0,5,0,'',NULL,NULL,0,'2018-10-25 17:31:36'),(6,'test4','96e79218965eb72c92a549dd5a330112','test',0,5,0,'',NULL,NULL,0,'2018-10-25 17:32:44'),(7,'test5','96e79218965eb72c92a549dd5a330112','test',0,5,0,'',NULL,NULL,0,'2018-10-25 17:33:07');
+INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','admin',1,1,1,'admin',NULL,NULL,0,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',0,1,0,'guest',NULL,NULL,0,'2018-10-23 15:16:25');
 
 #
 # Structure for table "permissions"
@@ -70,13 +70,13 @@ CREATE TABLE `router` (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `router_key` (`id`,`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
 
 #
 # Data for table "router"
 #
 
-INSERT INTO `router` VALUES (1,'/','/','控制面板','#xe679;',0,0,1,1,'2018-10-26 14:44:54'),(2,'','','系统设置','#xe66a;',0,1,1,1,'2018-10-26 16:57:59'),(3,'/adminer','/adminer','管理员设置','#xe653;',2,0,1,1,'2018-10-26 16:59:16'),(4,'/adminer_data','/adminer_data','管理员列表','',3,0,0,1,'2018-10-26 17:02:06'),(5,'/adminer_create','/adminer_create','新增管理员','',3,0,0,1,'2018-10-26 17:03:30'),(6,'/adiner_store','/adiner_store','保存管理员','',3,0,0,1,'2018-10-26 17:04:09'),(7,'/adminer_edit','/adminer_edit','编辑管理员','',3,0,0,1,'2018-10-26 17:05:38'),(8,'/adminer_update','/adminer_update','更新管理员','',3,0,0,1,'2018-10-26 17:06:30'),(9,'/adminer_del','/adminer_del','删除管理员','',3,0,0,1,'2018-10-26 17:07:14'),(10,'/router','/router','路由设置','#xe653;',2,0,1,1,'2018-10-30 10:41:29'),(11,'/router/data','/router/data','路由列表','',10,0,0,1,'2018-10-30 10:44:59'),(12,'/router/create','/router/create','新增路由','',10,0,0,1,'2018-10-30 10:47:36'),(13,'/router','/router','保存路由','',10,0,0,1,'2018-11-05 11:00:01'),(14,'/router/edit/:id','/router/edit/*','编辑路由','',10,0,0,1,'2018-11-05 11:44:50'),(15,'/router/:id','/router/*','更新路由','',10,0,0,1,'2018-11-05 11:47:04'),(16,'/router/:id','/router/*','删除路由','',10,0,0,1,'2018-11-05 11:47:34'),(17,'/permission','/permission','权限设置','#xe653;',2,0,1,1,'2018-11-05 15:03:03'),(18,'/adminer_status','/adminer_status','管理员状态','',3,0,0,1,'2018-11-07 09:12:01'),(19,'/router/status','/router/status','路由状态','',10,0,0,1,'2018-11-07 09:12:35'),(20,'/permission_data','/permission_data','权限组列表','',17,0,0,1,'2018-11-07 09:14:05'),(21,'/permission_status','/permission_status','权限组状态','',17,0,0,1,'2018-11-07 09:15:14'),(22,'/permission/create','/permission/create','新增权限组','',17,0,0,1,'2018-11-07 09:15:50'),(23,'/permission','/permission','保存权限组','',17,0,0,1,'2018-11-07 09:16:24'),(24,'/permission/edit/:id','/permission/edit/*','编辑权限组','',17,0,0,1,'2018-11-07 09:16:52'),(25,'/permission/:id','/permission/*','更新权限组','',17,0,0,1,'2018-11-07 09:17:36'),(26,'/permission/:id','/permission/*','删除权限组','',17,0,0,1,'2018-11-07 09:18:20');
+INSERT INTO `router` VALUES (1,'/','/','控制面板','#xe679;',0,0,1,1,'2018-10-26 14:44:54'),(2,'','','系统设置','#xe66a;',0,1,1,1,'2018-10-26 16:57:59'),(3,'/adminer','/adminer','管理员设置','#xe653;',2,0,1,1,'2018-10-26 16:59:16'),(4,'/adminer/data','/adminer/data','管理员列表','',3,0,0,1,'2018-10-26 17:02:06'),(5,'/adminer/create','/adminer/create','新增管理员','',3,0,0,1,'2018-10-26 17:03:30'),(6,'/adminer','/adminer','保存管理员','',3,0,0,1,'2018-10-26 17:04:09'),(7,'/adminer/:id','/adminer/*','编辑管理员','',3,0,0,1,'2018-10-26 17:05:38'),(8,'/adminer/:id','/adminer/*','更新管理员','',3,0,0,1,'2018-10-26 17:06:30'),(9,'/adminer/:id','/adminer/*','删除管理员','',3,0,0,1,'2018-10-26 17:07:14'),(10,'/router','/router','路由设置','#xe653;',2,0,1,1,'2018-10-30 10:41:29'),(11,'/router/data','/router/data','路由列表','',10,0,0,1,'2018-10-30 10:44:59'),(12,'/router/create','/router/create','新增路由','',10,0,0,1,'2018-10-30 10:47:36'),(13,'/router','/router','保存路由','',10,0,0,1,'2018-11-05 11:00:01'),(14,'/router/edit/:id','/router/edit/*','编辑路由','',10,0,0,1,'2018-11-05 11:44:50'),(15,'/router/:id','/router/*','更新路由','',10,0,0,1,'2018-11-05 11:47:04'),(16,'/router/:id','/router/*','删除路由','',10,0,0,1,'2018-11-05 11:47:34'),(17,'/permission','/permission','权限设置','#xe653;',2,0,1,1,'2018-11-05 15:03:03'),(18,'/adminer/status','/adminer/status','管理员状态','',3,0,0,1,'2018-11-07 09:12:01'),(19,'/router/status','/router/status','路由状态','',10,0,0,1,'2018-11-07 09:12:35'),(20,'/permission_data','/permission_data','权限组列表','',17,0,0,1,'2018-11-07 09:14:05'),(21,'/permission_status','/permission_status','权限组状态','',17,0,0,1,'2018-11-07 09:15:14'),(22,'/permission/create','/permission/create','新增权限组','',17,0,0,1,'2018-11-07 09:15:50'),(23,'/permission','/permission','保存权限组','',17,0,0,1,'2018-11-07 09:16:24'),(24,'/permission/edit/:id','/permission/edit/*','编辑权限组','',17,0,0,1,'2018-11-07 09:16:52'),(25,'/permission/:id','/permission/*','更新权限组','',17,0,0,1,'2018-11-07 09:17:36'),(26,'/permission/:id','/permission/*','删除权限组','',17,0,0,1,'2018-11-07 09:18:20'),(27,'/router/:id','/router/*','查看路由','',10,0,0,1,'2018-11-08 10:48:00'),(28,'/adminer/:id','/adminer/*','查看管理员','',3,0,0,1,'2018-11-09 14:07:38');
 
 #
 # Structure for table "users"
