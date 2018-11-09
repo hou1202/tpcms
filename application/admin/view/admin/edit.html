@@ -41,7 +41,7 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">帐户状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" {if $Adminer.status} checked="" {/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {$Adminer.status ?= "checked" } name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 
@@ -50,7 +50,7 @@
                                 <div class="layui-input-block ">
                                     <select name="permissions_id">
                                         {volist name="Per" id="vo"}
-                                            <option value="{$vo.id}" {if $Adminer.permissions_id == $vo.id} selected {/if} >{$vo.title}</option>
+                                            <option value="{$vo.id}" {$Adminer.permissions_id==$vo.id ?= "selected"} >{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>

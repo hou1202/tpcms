@@ -47,7 +47,7 @@
                             <div class="layui-form-item layui-input-md" pane="" >
                                 <label class="layui-form-label">路由状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {if $Route.status} checked {/if} >
+                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {$Route.status ?= 'checked'} >
                                 </div>
                             </div>
 
@@ -61,14 +61,14 @@
                             <div class="layui-form-item layui-input-md" pane="" >
                                 <label class="layui-form-label">是否展开</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="展开|收起" disabled {if $Route.open} checked {/if} >
+                                    <input type="checkbox" lay-skin="switch" lay-text="展开|收起" disabled {$Route.open ?= 'checked'} >
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md" pane="" >
                                 <label class="layui-form-label">是否主目录</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text=" 是 | 否 " disabled {if $Route.main} checked {/if} >
+                                    <input type="checkbox" lay-skin="switch" lay-text=" 是 | 否 " disabled {$Route.main ?= 'checked'} >
                                 </div>
                             </div>
 

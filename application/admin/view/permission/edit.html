@@ -27,7 +27,7 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">权限组状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" {if($Per.status)}checked{/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {$Per.status ?= 'checked'} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 

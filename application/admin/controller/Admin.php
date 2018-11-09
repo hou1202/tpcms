@@ -34,12 +34,8 @@ class Admin extends AdminController
             ->join('permissions p','a.permissions_id = p.id')
             ->group('a.id')
             ->select();
-        $res = [
-            'code' => 0,
-            'count' => count($data),
-            'data' => $data,
-        ];
-        return json($res);
+
+        return $this->returnJson($data,count($data));
     }
 
     /*

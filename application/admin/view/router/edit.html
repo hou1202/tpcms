@@ -48,7 +48,7 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" {if $Route.status} checked {/if} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                    <input type="checkbox" {$Route.status ?= 'checked'} name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
                                 </div>
                             </div>
 
@@ -60,24 +60,24 @@
                                         <option value="0">一级目录</option>
                                         {volist name="main" id="m"}
                                             {if ($Route.id != $m.id)}
-                                            <option value="{$m.id}" {if ($Route.pid == $m.id)}selected{/if} >{$m.title}</option>
+                                            <option value="{$m.id}" {$Route.pid==$m.id ?= 'selected'} >{$m.title}</option>
                                             {/if}
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md" id="isOpen" {if !$Route.main} style="display:none" {/if}>
+                            <div class="layui-form-item layui-input-md" id="isOpen" {if !$Route.main} style="display:none" {/if} >
                                 <label class="layui-form-label">是否展开</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" name="open" {if $Route.open} checked {/if} value="1" lay-skin="switch" lay-text="展开|收起">
+                                    <input type="checkbox" name="open" {$Route.open ?='checked'} value="1" lay-skin="switch" lay-text="展开|收起">
                                 </div>
                             </div>
 
                            <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">是否主目录</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox"  id="isMain" {if $Route.main} checked {/if} name="main" value="1" lay-skin="switch" lay-text=" 是 | 否 ">
+                                    <input type="checkbox"  id="isMain" {$Route.main ?= 'checked'} name="main" value="1" lay-skin="switch" lay-text=" 是 | 否 ">
                                 </div>
                             </div>
 
