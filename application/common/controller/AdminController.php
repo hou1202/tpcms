@@ -10,6 +10,7 @@ namespace app\common\controller;
 
 
 use think\Controller;
+use think\facade\Cookie;
 
 class AdminController extends Controller
 {
@@ -18,20 +19,23 @@ class AdminController extends Controller
      * init     初始化操作
      * */
 
-    protected function init()
+    protected function initialize()
     {
+        if(!Cookie::has('admin_account')){
+            return redirect('/login');
+        }
 
     }
 
 
     /*
-     * 返回JSON格式的数据
+     * 返回kit_admin列表数据返回JSON格式的数据
      * @param       $data       数据源
      * @param       $count      数据总数量
      * @param       $code
      * @return      json
      * */
-    protected function returnJson($data,$count,$code=0)
+    protected function kitJson($data,$count,$code=0)
     {
         $res = [
             'code' => $code,
@@ -39,6 +43,25 @@ class AdminController extends Controller
             'data' => $data,
         ];
         return json($res);
+    }
+
+    /*
+     * 返回kit_admin列表数据返回JSON格式的数据
+     * @param       $data       数据源
+     * @param       $url        跳转路由
+     * @param       $code       1=》成功；0=》失败
+     * @return      json
+     * */
+    protected function returnJson($data,$code=1,$url)
+    {
+        $res = [
+            'code' => $code,
+            'url' => $url,
+            'data' => $data,
+        ];
+        return json($res);
+
+
     }
 
 

@@ -33,6 +33,7 @@ class Admin extends CommonValidate
         'id.required' => '提交内容为非有效信息',
         'id.number' => '提交内容为非有效信息',
         'id.isExist' => '提交内容为非有效信息',
+        'account.isExist' => '帐户信息有误',
         'status.in' => '提交内容为非有效信息',
         'permissions_id.number' => '所属权限组为非有效信息',
         'permissions_id.gt' => '所属权限组为非有效信息',
@@ -57,6 +58,13 @@ class Admin extends CommonValidate
             ->remove('account','unique')
             ->remove('password','require')
             ->append('password','requireCallback:checkEmpty');
+    }
+
+    public function sceneLogin()
+    {
+        return $this  -> only(['account','password'])
+            ->remove('account','unique')
+            ->append('account','isExist:adminer,account');
     }
 
 

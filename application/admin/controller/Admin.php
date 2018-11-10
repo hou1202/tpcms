@@ -35,7 +35,7 @@ class Admin extends AdminController
             ->group('a.id')
             ->select();
 
-        return $this->returnJson($data,count($data));
+        return $this->kitJson($data,count($data));
     }
 
     /*

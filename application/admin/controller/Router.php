@@ -32,7 +32,7 @@ class Router extends AdminController
                         ->limit(($data['page']-1)*$data['limit'],$data['limit'])
                         ->select();
         $count = RouteM::where($map)->count('id');
-        return $this->returnJson($list,$count);
+        return $this->kitJson($list,$count);
     }
 
     //设置状态

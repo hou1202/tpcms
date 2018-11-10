@@ -28,12 +28,9 @@ class Permission extends AdminController
     {
         $data = $request -> post();
         $list = PermissionM::limit(($data['page']-1)*$data['limit'],$data['limit']) -> select();
-        $res = [
-            'code' => 0,
-            'count' => PermissionM::count('id'),
-            'data' => $list,
-        ];
-        return json($res);
+        $count = PermissionM::count('id');
+
+        return $this->kitJson($list,$count);
     }
 
     //设置状态
