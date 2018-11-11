@@ -12,23 +12,25 @@ namespace app\admin\controller;
 use app\admin\model\Router;
 use app\common\controller\AdminController;
 
+use think\Controller;
 use think\facade\Cookie;
 
 
 class Home extends AdminController
 {
-    protected function initialize()
+   /* protected function initialize()
     {
         if(!Cookie::has('admin_account')){
-            return redirect('/login');
+            redirect('/login');
         }
 
-    }
+    }*/
+
     public function home(){
-        /*if(!Cookie::has('admin_account')){
+        if(!Cookie::has('admin_account')){
             return redirect('/login');
             //var_dump(Cookie::has('admin_account'));die;
-        }*/
+        }
         return $this->fetch('/index');
     }
 

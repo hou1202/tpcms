@@ -15,17 +15,20 @@ use think\facade\Cookie;
 class AdminController extends Controller
 {
 
+    protected $middleware = ['Auth'];
+
     /*
      * init     初始化操作
      * */
-
-    protected function initialize()
+    /*protected function initialize()
     {
         if(!Cookie::has('admin_account')){
+            //var_dump(213);die;
             return redirect('/login');
+            //die;
         }
 
-    }
+    }*/
 
 
     /*

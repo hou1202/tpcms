@@ -20,7 +20,6 @@ class Login extends Controller
         //
         if(Cookie::has('admin_account')){
             return redirect('/admin');
-            //var_dump(Cookie::has('admin_account'));die;
         }
         return view('/login');
     }
@@ -45,10 +44,10 @@ class Login extends Controller
             ->where($map)
             ->find();
         if(!$admin){
-            return json('帐户或密码信息有误');
+            return json(['data' =>'帐户或密码信息有误']);
         }
         if(!$admin['status']){
-            return json('帐户已被禁用，请联系管理员');
+            return json(['data' =>'帐户已被禁用，请联系管理员']);
         }
         Cookie::set('admin_account',$admin['account']);
         $res = [
