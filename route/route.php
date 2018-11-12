@@ -19,6 +19,7 @@ Route::get('hello','index/index/hello');
 //主体框架加载Route
 Route::get('admin','admin/home/home');
 Route::get('main','admin/home/main');
+Route::post('logout','admin/home/logout');
 
 //登录Route
 Route::get('login','admin/login/index');

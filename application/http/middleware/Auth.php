@@ -10,10 +10,12 @@ class Auth
     {
 
         //var_dump($request->cookie('admif_account'));die;
-        if(empty($request->cookie('admin_account'))){
+        /*if(empty($request->cookie('admin_account'))){
             return redirect('/login');
-        }
-
+        }*/
+        var_dump($request->baseUrl());
+        var_dump($request->method());
+        \app\admin\common\Auth::verifyRule($request->baseUrl());
         return $next($request);
     }
 }

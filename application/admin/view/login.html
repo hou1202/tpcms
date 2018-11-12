@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login</title>
+  <title>Aozom后台管理系统</title>
   {load href="/static/admin/css/login.css" /}
   {load href="/static/admin/lib/layui/css/layui.css" /}
 </head>
@@ -64,17 +64,9 @@
 
       //监听提交
       form.on('submit(form_submit)', function(data) {
-        /*var layIndex = layer.load(2, {
-          shade: [0.1, '#393D49']
-        });*/
-        /*console.log(data.field);
-        setTimeout(function() {
-          location.href = '/';
-        }, 2000);*/
           $.post("/login",data.field,function(res){
               layer.msg(res.data);
               if(res.url){
-                  //return console.log(res.code);
                   setTimeout(function() {
                       window.location.href=res.url;
                   }, 2000);

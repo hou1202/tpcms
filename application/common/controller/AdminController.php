@@ -14,7 +14,13 @@ use think\facade\Cookie;
 
 class AdminController extends Controller
 {
+    //管理员资料
+    protected $admin_info;
 
+    //管理员权限
+    protected $permission;
+
+    //控制器验证中间键
     protected $middleware = ['Auth'];
 
     /*

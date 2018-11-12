@@ -7,6 +7,7 @@ use think\Controller;
 use think\Request;
 use app\admin\model\Admin as AdminM;
 use think\facade\Cookie;
+use app\admin\common\Auth;
 
 class Login extends Controller
 {
@@ -17,10 +18,11 @@ class Login extends Controller
      */
     public function index()
     {
-        //
-        if(Cookie::has('admin_account')){
+        if(Auth::check()) return redirect('/admin');
+
+        /*if(Cookie::has('admin_account')){
             return redirect('/admin');
-        }
+        }*/
         return view('/login');
     }
 
@@ -43,13 +45,10 @@ class Login extends Controller
         $admin = AdminM::field('id,account,password,status')
             ->where($map)
             ->find();
-        if(!$admin){
-            return json(['data' =>'帐户或密码信息有误']);
-        }
-        if(!$admin['status']){
-            return json(['data' =>'帐户已被禁用，请联系管理员']);
-        }
-        Cookie::set('admin_account',$admin['account']);
+        if(!$admin) return json(['data' =>'帐户或密码信息有误']);
+        if(!$admin['status']) return json(['data' =>'帐户已被禁用，请联系管理员']);
+        if(Auth::login($admin['account'])) return json(['data' =>'登录失败，请重新登录']);
+        //Cookie::set('admin_account',$admin['account']);
         $res = [
             'data' => '登录成功',
             'url' => '/admin'

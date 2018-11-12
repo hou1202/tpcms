@@ -9,11 +9,13 @@
 
 namespace app\admin\controller;
 
+use app\admin\common\Auth;
 use app\admin\model\Router;
 use app\common\controller\AdminController;
 
 use think\Controller;
 use think\facade\Cookie;
+use think\facade\Request;
 
 
 class Home extends AdminController
@@ -26,16 +28,30 @@ class Home extends AdminController
 
     }*/
 
-    public function home(){
-        if(!Cookie::has('admin_account')){
-            return redirect('/login');
-            //var_dump(Cookie::has('admin_account'));die;
-        }
+   //主体框架加载信息
+    public function home()
+    {
+        /*if(!Cookie::has('admin_account')) return redirect('/login');*/
+        if(!$admin = Auth::user()) return redirect(Request::domain().'/login');
+        $this->assign('User',$admin);
         return $this->fetch('/index');
     }
 
-    public function main(){
+    public function main()
+    {
         return view('/main');
+    }
+
+    //退出登录状态
+    public function logout()
+    {
+        Auth::logout();
+        $res = [
+            'data' => '退出成功',
+            'url' => Request::domain().'/login'
+        ];
+        return json($res);
+
     }
 
     //左右导航菜单目录
