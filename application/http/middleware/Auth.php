@@ -13,9 +13,9 @@ class Auth
         /*if(empty($request->cookie('admin_account'))){
             return redirect('/login');
         }*/
-        var_dump($request->baseUrl());
-        var_dump($request->method());
-        \app\admin\common\Auth::verifyRule($request->baseUrl());
+        //var_dump($request->baseUrl());
+        //var_dump($request->method());
+        if(!\app\admin\common\Auth::verifyRule($request->baseUrl())) return false;
         return $next($request);
     }
 }

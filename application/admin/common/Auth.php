@@ -201,7 +201,7 @@ class Auth
         }
         //获取用户所属管理组
         $rolesS = self::roles($uuid);
-        $rulesS[$uuid] = Router::field('id,router')->where('id','in',$rolesS)->select();
+        $rulesS[$uuid] = Router::field('router')->where('id','in',$rolesS)->select();
         return $rulesS[$uuid];
     }
 
@@ -248,6 +248,7 @@ class Auth
         if (!in_array($rule, $allRules)) {
             return true;
         }
+
         // D.1 获取该用户所有权限规则
         $userRules = self::rules($uuid); // 如果uuid为空，则获取当前登录用户
         // D.2 转换为小写, 并获取权限规则
