@@ -21,6 +21,9 @@ Route::get('admin','admin/home/home');
 Route::get('main','admin/home/main');
 Route::post('logout','admin/home/logout');
 
+//ERROR页面
+Route::get('/error/403','admin/error/errorPower');
+
 //登录Route
 Route::get('login','admin/login/index');
 Route::post('login','admin/login/login');

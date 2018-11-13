@@ -8,260 +8,187 @@
 
 namespace app\admin\common;
 
-use app\admin\model\Admin;
-use app\admin\model\Router;
-use app\admin\model\Permission;
+
 use think\facade\Env;
+use think\Db;
 class Auth
 {
-    /**
-     * 生成session的key
-     * var string
-     */
-    private static $sessionKey;
-    /**
-     * 用户加密密钥
-     * var string
-     */
-    private static $authKey;
-    /**
-     * 是否已初始化
-     * var boolean
-     */
-    private static $handler = false;
-    /**
-     * 初始化
-     */
-    public static function init(){
-        self::$sessionKey = 'login_'.md5('user');
-        self::$authKey    = Env::get('AUTH_USER_KEY');
-        self::$handler = true;  // 标记为初始化成功
+    //默认配置
+    protected $_config = array(
+        'auth_on'           => true,                // 认证开关
+        'auth_type'         => 1,                   // 认证方式，1为实时认证；2为登录认证。
+        'auth_group'        => 'permissions',        // 用户组数据表名
+        'auth_group_access' => 'group_access',      // 用户-用户组关系表
+        'auth_rule'         => 'router',         // 权限规则表
+        'auth_user'         => 'adminer'             // 用户信息表
+    );
+
+    public function __construct() {
+        if (config('auth_config')) {
+            //可设置配置项 auth_config, 此配置项为数组。
+            $this->_config = array_merge($this->_config, config('auth_config'));
+        }
     }
 
     /**
-     * 内容信息定义
-     * @param   string  $uid        用户ID
-     * @param   string  $token      $user[id].$user[password]
-     * @param   string  $uuid       用户account
-     * */
-
-    /**
-     * 获取用户信息
-     * @param  string  $uuid        uuid，为空，则获取当前登录用户的用户信息
-     * @param  boolean $refresh     是否重新刷新，false为不刷新直接读取静态变量；true重新获取
-     * return array|false
+     * 检查权限
+     * @param name string|array  需要验证的规则列表,支持逗号分隔的权限规则或索引数组
+     * @param uid  int           认证用户的id
+     * @param string mode        执行check的模式
+     * @param relation string    如果为 'or' 表示满足任一条规则即通过验证;如果为 'and'则表示需满足所有规则才能通过验证
+     * @return boolean           通过验证返回true;失败返回false
      */
-    public static function user($uuid = '', $refresh = false){
-        !self::$handler && self::init();
-        // 设置静态变量
-        static $users = array();
-        // 如未设置uuid，则获取当前登录的用户uuid
-        if (empty($uuid)) {
-            if (!$uuid = self::logined_uuid()) return false;
+    public  function check($name, $uid='', $type=1, $mode='url', $relation='or') {
+        if (!$this->_config['auth_on'])
+            return true;
+        if(empty($uid)){
+            if(!$user = User::user()){
+                return false;
+            }
+            $uid = $user['id'];
         }
-        // 读取静态变量（不刷新），如果存在，则直接返回
-        if (!$refresh && array_key_exists($uuid, $users)) {
-            return $users[$uuid];
-        }
-        // 获取用户信息
-        $users[$uuid] = Admin::where(array('account' => $uuid))->find();
-        return $users[$uuid];
-    }
+        //var_dump($uid);die;
+        $authList = $this->getAuthList($uid,$type); //获取用户需要验证的所有有效规则列表
 
-    /**
-     * 判断用户是否登录
-     * return string|false 如登录，则返回uuid，否则false
-     */
-
-    public static function check(){
-        !self::$handler && self::init(); // 初始化
-        //获取并判断session存储的用户信息
-        if (!$sArrs = session(self::$sessionKey)) {
-            return false;
+        if (is_string($name)) {
+            $name = strtolower($name);
+            if (strpos($name, ',') !== false) {
+                $name = explode(',', $name);
+            } else {
+                $name = array($name);
+            }
         }
-        if (!array_key_exists('uid', $sArrs) || !array_key_exists('token', $sArrs)) {
-            return false;
+        $list = array(); //保存验证通过的规则名
+        if ($mode=='url') {
+            $REQUEST = unserialize( strtolower(serialize($_REQUEST)) );
         }
-        // 解密 并 获取uid
-        $uid = decrypt($sArrs['uid'], self::$authKey);
-        // 设置静态变量
-        static $users = array();
-        // 读取数据
-        if (array_key_exists($uid, $users)) {
-            $user = $users[$uid];
-        } else {
-            $user = $users[$uid] = Admin::where(array('status' => 1, 'id' => $uid))->find();
+        foreach ( $authList as $auth ) {
+            $query = preg_replace('/^.+\?/U','',$auth);
+            if ($mode=='url' && $query!=$auth ) {
+                parse_str($query,$param); //解析规则中的param
+                $intersect = array_intersect_assoc($REQUEST,$param);
+                $auth = preg_replace('/\?.*$/U','',$auth);
+                if ( in_array($auth,$name) && $intersect==$param ) {  //如果节点相符且url参数满足
+                    $list[] = $auth ;
+                }
+            }else if (in_array($auth , $name)){
+                $list[] = $auth ;
+            }
         }
-        if (!$user) {
-            self::logout(); //登出
-            return false;
-        }
-        // 校验token
-        $tokenStr       = $user['id'].$user['password'];
-        $verifyTokenStr = decrypt($sArrs['token'], self::$authKey); //待校验token
-        if (!$verifyTokenStr || $verifyTokenStr != $tokenStr) {
-            self::logout(); //登出
-            return false;
-        }
-        return $user['account'];
-    }
-
-    /**
-     * 用户登录
-     * @param  string $uuid uuid
-     * return boolean
-     */
-
-    public static function login($uuid){
-        !self::$handler && self::init(); // 初始化
-        if (empty($uuid)) return false;
-        // 读取用户信息
-        $user = self::user($uuid);
-        if (!$user) return false;
-        // 加密用户信息并生成session
-        $tokenStr = $user['id'].$user['password'];
-        $sArrs    = array(
-            'uid'       => encrypt($user['id'], self::$authKey),
-            'token'     => encrypt($tokenStr, self::$authKey),
-            'timestamp' => time()
-        );
-        session(self::$sessionKey, $sArrs);
-    }
-
-    /**
-     * 登出
-     */
-    public static function logout(){
-        !self::$handler && self::init(); // 初始化
-        session(self::$sessionKey, null);
-    }
-
-    /**
-     * 获取登录用户的uuid
-     * return string      返回uuid
-     */
-    public static function logined_uuid(){
-        static $uuid = null;
-        if ($uuid == null) {
-            $uuid = self::check();
-        }
-        return $uuid;
-    }
-
-    /**
-     * 获取用户所属管理组（后台专用）
-     * @param  string  $uuid    uuid（若为空，则获取当前登录用户的管理组）
-     * @param  boolean $refresh 是否刷新
-     * return array|false
-     */
-    public static function roles($uuid = '', $refresh = false){
-        // 设置静态变量
-        static $rolesS = array();
-        // 如为设置uuid，则获取当前登录的用户uuid
-        if (empty($uuid)) {
-            if (!$uuid = self::logined_uuid()) return false;
-        }
-        // 读取静态变量（不刷新），如果存在，则直接返回
-        if (!$refresh && array_key_exists($uuid, $rolesS)) {
-            return $rolesS[$uuid];
-        }
-        /*$pre = C('DB_PREFIX'); // 表前缀
-        $rolesS[$uuid] =  M('mall_roles r')
-            ->field('r.*')
-            ->cache(true, 60)
-            ->join($pre . 'mall_users_roles ur on ur.role_id = r.id')
-            ->join($pre . 'users u on u.id = ur.user_id')
-            ->where(array('u.uuid' => $uuid))
-            ->select();*/
-        $rolesS[$uuid] = Admin::alias('a')
-                        ->field('p.router_id')
-                        ->join('permissions p','a.permissions_id = p.id')
-                        ->where('account',$uuid)
-                        ->find();
-        $rolesS[$uuid] = explode('-',$rolesS[$uuid]['router_id']);
-        return $rolesS[$uuid];
-    }
-
-    /**
-     * 获取用户可用管理权限（后台专用）
-     * @param  string  $uuid    uuid（若为空，则获取当前登录用户的用户权限）
-     * @param  boolean $refresh 是否刷新
-     * return array|false      已经处理重复清除
-     */
-    public static function rules($uuid, $refresh = false){
-        // 设置静态变量
-        static $rulesS = array();
-        // 如为设置uuid，则获取当前登录的用户uuid
-        if (empty($uuid)) {
-            if (!$uuid = self::logined_uuid()) return false;
-        }
-        // 读取静态变量（不刷新），如果存在，则直接返回
-        if (!$refresh && array_key_exists($uuid, $rulesS)) {
-            return $rulesS[$uuid];
-        }
-        //获取用户所属管理组
-        $rolesS = self::roles($uuid);
-        $rulesS[$uuid] = Router::field('router')->where('id','in',$rolesS)->select();
-        return $rulesS[$uuid];
-    }
-
-    /**
-     * 获取所有可用的权限规则
-     * @param  boolean $refresh 是否刷新
-     * return array|false
-     */
-    public static function allRules($refresh = false){
-        // 设置静态变量
-        static $allRules = null;
-        // 读取静态变量（不刷新），如果存在，则直接返回
-        if (!$refresh && $allRules != null) {
-            return $allRules;
-        }
-        //$allRules = M('mall_rules')->where(array('status' => 1))->select();
-        $allRules = Router::where('status',1)->select();
-        return $allRules;
-    }
-
-    /**
-     * 权限校验
-     * @param  string $rule 权限规则(如果不存在预置的权限规则，则直接通过，可用)
-     * @param  string $uuid uuid（若为空，则获取当前登录用户的用户权限）
-     * return boolean
-     */
-    public static function verifyRule($rule, $uuid = ''){
-        !self::$handler && self::init();
-        // A. 获取所有权限
-        $allRules = self::allRules();
-        // A.1 转换为小写
-        $allRulesTmp = array();
-        foreach($allRules as $v){
-            $allRulesTmp[] = strtolower($v['router']);
-        }
-        $allRules = $allRulesTmp;
-        // B. 待校验的规则
-        if (!is_string($rule)) {
-            return false;
-        }
-        $rule = strtolower($rule);  //转换为小写
-        // C. 判断当前校验的权限是否需要权限(如果不存在预置的权限规则，则直接通过，可用)
-        //var_dump($allRules);die;
-        if (!in_array($rule, $allRules)) {
+        if ($relation == 'or' and !empty($list)) {
             return true;
         }
-
-        // D.1 获取该用户所有权限规则
-        $userRules = self::rules($uuid); // 如果uuid为空，则获取当前登录用户
-        // D.2 转换为小写, 并获取权限规则
-        $userRulesTmp = array();
-        foreach($userRules as $v){
-            $userRulesTmp[] = strtolower($v['router']);
-        }
-        $userRules = $userRulesTmp;
-        // E. 如果在预置的权限规则里。则校验当前用户是否含有改权限
-        if (in_array($rule, $userRules)) {
+        $diff = array_diff($name, $list);
+        if ($relation == 'and' and empty($diff)) {
             return true;
         }
         return false;
     }
+
+    /**
+     * 根据用户id获取用户组,返回值为数组
+     * @param  uid int     用户id
+     * @return array       用户所属的路由组 array()
+     */
+    public function getGroups($uid) {
+        static $groups = array();
+        if (isset($groups[$uid]))
+            return $groups[$uid];
+        /*$user_groups = Db::table($this->_config['auth_group_access'])
+            ->alias('a')
+            ->join($this->_config['auth_group']." g", "g.id=a.group_id")
+            ->where("a.aid='$uid' and g.status='1'")
+            ->field('aid,group_id,title,rules')->select();*/
+        $user_groups = Db::table($this->_config['auth_user'])
+            ->alias('a')
+            ->field('p.router_id')
+            ->join($this->_config['auth_group'].' p','a.permissions_id = p.id')
+            ->where('a.id',$uid)
+            ->find();
+        $groups[$uid] = $user_groups ? explode('-',trim($user_groups['router_id'])) : array();
+        return $groups[$uid];
+    }
+
+    /**
+     * 获得权限列表
+     * @param integer $uid  用户id
+     * @param integer $type
+     */
+    protected function getAuthList($uid,$type) {
+        //保存用户验证通过的权限列表
+        static $_authList = array();
+        $t = implode(',',(array)$type);
+        if (isset($_authList[$uid.$t])) {
+            return $_authList[$uid.$t];
+        }
+        if( $this->_config['auth_type']==2 && isset($_SESSION['_auth_list_'.$uid.$t])){
+            return $_SESSION['_auth_list_'.$uid.$t];
+        }
+
+        //读取用户所属用户组
+        $groups = $this->getGroups($uid);
+        $ids = array();//保存用户所属用户组设置的所有权限规则id
+        /*foreach ($groups as $g) {
+            $ids = array_merge($ids, explode('-', trim($g['router_id'])));
+        }*/
+        //var_dump($ids);die;
+        $ids = array_merge($ids, $groups);
+        //var_dump($ids);die;
+        //$ids = array_unique($ids);
+        if (empty($ids)) {
+            $_authList[$uid.$t] = array();
+            return array();
+        }
+
+        $map=array(
+            'id'=>array('in',$ids),
+            'status'=>1,
+        );
+        //读取用户组所有权限规则
+        //$rules = \think\Db::name($this->_config['auth_rule'])->where($map)->field('condition,name')->select();
+        //$rules = Db::name($this->_config['auth_rule'])->where($map)->field('id,router,menu,path,title')->select();
+        $rules = Db::name($this->_config['auth_rule'])
+            ->field('id,router,menu,path,title')
+            ->where('id','in',$ids)
+            ->where('status',1)
+            ->select();
+        //var_dump($rules);die;
+        //循环规则，判断结果。
+        $authList = array();   //
+        foreach ($rules as $rule) {
+            if (!empty($rule['condition'])) { //根据condition进行验证
+                $user = $this->getUserInfo($uid);//获取用户信息,一维数组
+
+                $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $rule['condition']);
+                //dump($command);//debug
+                @(eval('$condition=(' . $command . ');'));
+                if ($condition) {
+                    $authList[] = strtolower($rule['name']);
+                }
+            } else {
+                //只要存在就记录
+                $authList[] = strtolower($rule['name']);
+            }
+        }
+        $_authList[$uid.$t] = $authList;
+        if($this->_config['auth_type']==2){
+            //规则列表结果保存到session
+            $_SESSION['_auth_list_'.$uid.$t]=$authList;
+        }
+        return array_unique($authList);
+    }
+
+    /**
+     * 获得用户资料,根据自己的情况读取数据库
+     */
+    protected function getUserInfo($uid) {
+        static $userinfo=array();
+        if(!isset($userinfo[$uid])){
+            $userinfo[$uid]=\think\Db::name($this->_config['auth_user'])->where(array('aid'=>$uid))->find();
+        }
+        return $userinfo[$uid];
+    }
+
+
 
 }

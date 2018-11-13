@@ -18,6 +18,7 @@ class Router extends CommonValidate
         'title|路由名称' => 'require|max:15',
         'router|系统路由' => '/(^\/)\w*/',
         'menu|菜单路由' => '/(^\/)\w*/',
+        'path|系统路径' => '/(^[a-zA-Z])\w*/',
         'icon|路由图标' => '/(^#)[a-z0-9]{5}(;)$/',
         'pid|父级ID' => 'number|length:1,11',
         'open|是否展开' => 'in:0,1',
@@ -36,6 +37,7 @@ class Router extends CommonValidate
         'id.number' => '路由信息有误',
         'router' => '系统路由格式错误,例：/admin',
         'menu' => '菜单路由格式错误,例：/admin',
+        'path' => '系统路径格式错误,例：/admin/index/index',
         'pid.number' => '父级ID有误！若为主目录别ID为0',
         'pid.length' => '父级ID有误！若为主目录别ID为0',
         'open.in' => '主目录是否展开信息有误',
@@ -50,6 +52,6 @@ class Router extends CommonValidate
      * */
     protected $scene = [
         'status' => ['id','status'],
-        'save' => ['title','router','menu','icon','pid','open','main','status']
+        'save' => ['title','router','menu','path','icon','pid','open','main','status']
     ];
 }

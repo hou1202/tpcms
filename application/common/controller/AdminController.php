@@ -21,7 +21,7 @@ class AdminController extends Controller
     protected $permission;
 
     //控制器验证中间键
-    protected $middleware = ['Auth'];
+    protected $middleware = ['Authority'];
 
     /*
      * init     初始化操作

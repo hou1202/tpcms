@@ -16,6 +16,9 @@ use app\common\controller\AdminController;
 use think\Controller;
 use think\facade\Cookie;
 use think\facade\Request;
+use think\facade\Env;
+use think\validate\ValidateRule;
+use app\admin\common\User;
 
 
 class Home extends AdminController
@@ -32,7 +35,8 @@ class Home extends AdminController
     public function home()
     {
         /*if(!Cookie::has('admin_account')) return redirect('/login');*/
-        if(!$admin = Auth::user()) return redirect(Request::domain().'/login');
+        //if(!$admin = Auth::user()) return redirect(Request::domain().'/login');
+        if(!$admin = User::user()) return redirect(Request::domain().'/login');
         $this->assign('User',$admin);
         return $this->fetch('/index');
     }
@@ -45,7 +49,7 @@ class Home extends AdminController
     //退出登录状态
     public function logout()
     {
-        Auth::logout();
+        User::logout();
         $res = [
             'data' => '退出成功',
             'url' => Request::domain().'/login'
@@ -56,7 +60,14 @@ class Home extends AdminController
 
     //左右导航菜单目录
     public function menu(){
-        $res = Router::where('status',1)->all();
+        $user = User::user();
+        //系统默认管理员获取全部菜单
+        if($user['account'] === Env::get('DEFAULT_ADMIN')){
+            $res = Router::where('status',1)->all();
+        }else{
+            $roles = Auth::roles();
+            $res = Router::where('id','in',$roles)->where('status',1)->select();
+        };
         $xml = array();
         foreach($res as $router){
             if($router['pid'] == 0){
