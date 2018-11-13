@@ -8,7 +8,7 @@
 
 namespace app\admin\common;
 
-use think\facade\Env;
+use think\facade\Config;
 use think\Db;
 
 class User
@@ -46,10 +46,10 @@ class User
      */
     public static function init(){
         self::$sessionKey = 'login_'.md5('user');
-        self::$authKey = Env::get('AUTH_USER_KEY');
+        self::$authKey = Config::get('crypt_key');
         self::$handler = true;  // 标记为初始化成功
-        self::$table = Env::get('ADMIN_TABLE');
-        self::$name = Env::get('ADMIN_NAME');
+        self::$table = Config::get('admin_table');
+        self::$name = Config::get('admin_name');
     }
 
     /**

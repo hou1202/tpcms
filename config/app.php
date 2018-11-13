@@ -143,5 +143,17 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
+    //自定义配置项
+
+    //Admin权限及用户验证配置项
+    //加密、解密密钥
+    'crypt_key'         => '84e7871c139909e1982c05be74c3d06d',
+    //默认系统超级管理员帐户名称
+    'default_admin'         => 'admin',
+    //默认管理员用户表
+    'admin_table'           => 'adminer',
+    //默认管理员帐户字段名
+    'admin_name'            => 'account',
+
 
 ];

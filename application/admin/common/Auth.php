@@ -8,11 +8,22 @@
 
 namespace app\admin\common;
 
-
-use think\facade\Env;
 use think\Db;
+use think\facade\Config;
 class Auth
 {
+    /**
+     * 管理员用户表名
+     * var string
+     * */
+    private static $defaultAdmin;
+
+    /**
+     * 管理员用户帐户字段名称,即$uuid
+     * $name
+     * */
+    private static $account;
+
     //默认配置
     protected $_config = array(
         'auth_on'           => true,                // 认证开关
@@ -28,6 +39,9 @@ class Auth
             //可设置配置项 auth_config, 此配置项为数组。
             $this->_config = array_merge($this->_config, config('auth_config'));
         }
+
+        self::$defaultAdmin = Config::get('default_admin');
+        self::$account = Config::get('admin_name');
     }
 
     /**
@@ -47,6 +61,7 @@ class Auth
             }
             $uid = $user['id'];
         }
+
         //var_dump($uid);die;
         $authList = $this->getAuthList($uid,$type); //获取用户需要验证的所有有效规则列表
 
@@ -131,7 +146,6 @@ class Auth
         /*foreach ($groups as $g) {
             $ids = array_merge($ids, explode('-', trim($g['router_id'])));
         }*/
-        //var_dump($ids);die;
         $ids = array_merge($ids, $groups);
         //var_dump($ids);die;
         //$ids = array_unique($ids);
@@ -139,11 +153,6 @@ class Auth
             $_authList[$uid.$t] = array();
             return array();
         }
-
-        $map=array(
-            'id'=>array('in',$ids),
-            'status'=>1,
-        );
         //读取用户组所有权限规则
         //$rules = \think\Db::name($this->_config['auth_rule'])->where($map)->field('condition,name')->select();
         //$rules = Db::name($this->_config['auth_rule'])->where($map)->field('id,router,menu,path,title')->select();
@@ -152,7 +161,7 @@ class Auth
             ->where('id','in',$ids)
             ->where('status',1)
             ->select();
-        //var_dump($rules);die;
+        var_dump($rules);die;
         //循环规则，判断结果。
         $authList = array();   //
         foreach ($rules as $rule) {
@@ -184,7 +193,7 @@ class Auth
     protected function getUserInfo($uid) {
         static $userinfo=array();
         if(!isset($userinfo[$uid])){
-            $userinfo[$uid]=\think\Db::name($this->_config['auth_user'])->where(array('aid'=>$uid))->find();
+            $userinfo[$uid]=Db::name($this->_config['auth_user'])->where(array('id'=>$uid))->find();
         }
         return $userinfo[$uid];
     }

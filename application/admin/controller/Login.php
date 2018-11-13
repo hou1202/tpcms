@@ -19,7 +19,7 @@ class Login extends Controller
      */
     public function index()
     {
-        if(Auth::check()) return redirect('/admin');
+        if(User::check()) return redirect('/admin');
 
         /*if(Cookie::has('admin_account')){
             return redirect('/admin');

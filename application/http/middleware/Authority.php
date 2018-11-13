@@ -4,6 +4,7 @@ namespace app\http\middleware;
 
 use app\admin\model\Admin;
 use app\admin\common\Auth;
+use app\admin\common\User;
 
 class Authority
 {
@@ -21,6 +22,7 @@ class Authority
         var_dump($request->controller());
         var_dump($request->action());
         die;*/
+        if(!$admin = User::user()) return redirect($request->domain().'/login');
         $baseUrl = strtolower($request->module()).'/'.strtolower($request->controller()).'/'.strtolower($request->action());
         //var_dump($baseUrl);die;
         $auth = new Auth();
