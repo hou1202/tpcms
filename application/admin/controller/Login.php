@@ -6,8 +6,6 @@ use app\admin\validate\Admin as AdminV;
 use think\Controller;
 use think\Request;
 use app\admin\model\Admin as AdminM;
-use think\facade\Cookie;
-use app\admin\common\Auth;
 use app\admin\common\User;
 
 class Login extends Controller
@@ -34,8 +32,6 @@ class Login extends Controller
      */
     public function login(Request $request)
     {
-        //
-        //var_dump($request->post());
         $data = $request -> post();
         $validate = new AdminV();
         if(!$validate->sceneLogin()->check($data)){
@@ -48,7 +44,6 @@ class Login extends Controller
             ->find();
         if(!$admin) return json(['data' =>'帐户或密码信息有误']);
         if(!$admin['status']) return json(['data' =>'帐户已被禁用，请联系管理员']);
-        //if(Auth::login($admin['account'])) return json(['data' =>'登录失败，请重新登录']);
         if(User::login($admin['account'])) return json(['data' =>'登录失败，请重新登录']);
         //Cookie::set('admin_account',$admin['account']);
         $res = [

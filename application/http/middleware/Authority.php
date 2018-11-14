@@ -2,31 +2,29 @@
 
 namespace app\http\middleware;
 
-use app\admin\model\Admin;
 use app\admin\common\Auth;
 use app\admin\common\User;
+use think\facade\Config;
 
 class Authority
 {
     public function handle($request, \Closure $next)
     {
 
-        //var_dump($request->cookie('admif_account'));die;
-        /*if(empty($request->cookie('admin_account'))){
-            return redirect('/login');
-        }*/
-        //var_dump($request->baseUrl());
-        //var_dump($request->method());
-        //var_dump($request);
-        /*var_dump($request->module());
-        var_dump($request->controller());
-        var_dump($request->action());
-        die;*/
-        if(!$admin = User::user()) return redirect($request->domain().'/login');
-        $baseUrl = strtolower($request->module()).'/'.strtolower($request->controller()).'/'.strtolower($request->action());
-        //var_dump($baseUrl);die;
-        $auth = new Auth();
-        if(!$auth->check($baseUrl)) return redirect('/error/403');
+        //判断用户登录情况
+        if(!User::check()) return redirect($request->domain().'/login');
+        //判断用户请求权限
+        $baseUrl = $request->module().'/'.$request->controller().'/'.$request->action();
+        //var_dump(Config::get('admin_main'));die;
+        $refresh = strtolower($baseUrl) == Config::get('admin_main') ? true : false;
+        //var_dump($refresh);die;
+        if(!Auth::check($baseUrl,$refresh)){
+            if(isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($request->server('HTTP_X_REQUESTED_WITH')) =='xmlhttprequest'){
+                return json(['code' => 0, 'data' => '你暂无权限进行该操作',]);
+            }else{
+                return redirect('/error/403');
+            }
+        }
         return $next($request);
     }
 }

@@ -7,7 +7,6 @@ use app\common\controller\AdminController;
 use think\Request;
 use app\admin\model\Admin as AdminM;
 use app\admin\validate\Admin as AdminValidate;
-use think\Validate;
 
 class Admin extends AdminController
 {
@@ -47,10 +46,10 @@ class Admin extends AdminController
         $data = $request -> post();
         $validate = new AdminValidate();
         if(!$validate->scene('status')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
         $adminer = AdminM::get($data['id']);
-        return $adminer->save($data) ? json('管理员帐户状态更新成功') : json('状态更新失败');
+        return $adminer->save($data) ? $this ->returnJson('管理员帐户状态更新成功') : $this ->returnJson('状态更新失败');
     }
 
     /**
@@ -76,9 +75,9 @@ class Admin extends AdminController
         $data = $request -> post();
         $validate = new AdminValidate();
         if(!$validate->scene('save')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
-        return AdminM::create($data) ? json('管理员新增成功') : json('添加失败');
+        return AdminM::create($data) ? $this ->returnJson('管理员新增成功') : $this ->returnJson('添加失败');
 
     }
 
@@ -129,7 +128,7 @@ class Admin extends AdminController
         //
         $adminer = AdminM::get($id);
         if(!$adminer){
-            return json('提交信息有误');
+            return $this->returnJson('提交信息有误');
         }
         $data = $request -> post();
         if(empty($data['password'])){
@@ -137,9 +136,9 @@ class Admin extends AdminController
         }
         $validate = new AdminValidate();
         if(!$validate->sceneEdit()->check($data)) {
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
-        return $adminer -> save($data) ? json('管理员编辑成功') : json('编辑失败');
+        return $adminer -> save($data) ? $this ->returnJson('管理员编辑成功') : $this ->returnJson('编辑失败');
     }
 
     /**
@@ -151,6 +150,6 @@ class Admin extends AdminController
     public function delete($id)
     {
         //
-        return AdminM::destroy($id) ? json('管理员删除成功') : json('删除失败');
+        return AdminM::destroy($id) ? $this->returnJson('管理员删除成功') : $this->returnJson('删除失败');
     }
 }

@@ -111,7 +111,7 @@
     //监听提交
     form.on('submit(form_submit)', function(data) {
         $.post("/permission",data.field,function(res){
-            layer.msg(res);
+            layer.msg(res.data);
             window.location.href="#/permission";
         });
         return false;

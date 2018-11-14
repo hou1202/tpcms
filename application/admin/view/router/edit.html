@@ -161,7 +161,7 @@
             data.field.main = 0;
         }
         $.post("/router/"+"{$Route.id}",data.field,function(res){
-            layer.msg(res);
+            layer.msg(res.data);
             window.location.href="#/router";
         });
         return false;

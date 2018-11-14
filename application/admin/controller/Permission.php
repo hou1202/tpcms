@@ -39,10 +39,10 @@ class Permission extends AdminController
         $data = $request -> post();
         $validate = new PermissionV();
         if(!$validate->scene('status')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
         $router = PermissionM::get($data['id']);
-        return $router->save($data) ? json('权限组状态更新成功') : json('状态更新失败');
+        return $router->save($data) ? $this->returnJson('权限组状态更新成功') : $this->returnJson('状态更新失败');
     }
 
 
@@ -71,10 +71,10 @@ class Permission extends AdminController
         $data = $request -> post();
         $validate = new PermissionV();
         if(!$validate->scene('save')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
         $data['router_id'] = implode('-',$data['router_id']);
-        return PermissionM::create($data) ? json('权限组新增成功') : json('添加失败');
+        return PermissionM::create($data) ? $this->returnJson('权限组新增成功') : $this->returnJson('添加失败');
     }
 
     /**
@@ -99,7 +99,7 @@ class Permission extends AdminController
         //
         $permission = PermissionM::get($id);
         if(!$permission){
-            return json('非有效数据信息');
+            return $this->returnJson('非有效数据信息');
         }
         $router = Router::where('status',1)->all();
         $permission['router_id'] = explode('-',$permission['router_id']);
@@ -119,15 +119,15 @@ class Permission extends AdminController
     {
         $permission = PermissionM::get($id);
         if(!$permission){
-            return json('非有效数据信息');
+            return $this->returnJson('非有效数据信息');
         }
         $data = $request -> post();
         $validate = new PermissionV();
         if(!$validate->scene('save')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
         $data['router_id'] = implode('-',$data['router_id']);
-        return $permission->save($data) ? json('权限组修改成功') : json('修改失败');
+        return $permission->save($data) ? $this->returnJson('权限组修改成功') : $this->returnJson('修改失败');
     }
 
     /**
@@ -140,8 +140,8 @@ class Permission extends AdminController
     {
         //
         if(Admin::where('permissions_id',$id)->find()){
-            return json('该权限组正在被管理员使用中，请先调整管理员权限组');
+            return $this->returnJson('该权限组正在被管理员使用中，请先调整管理员权限组');
         }
-        return PermissionM::destroy($id) ? json('删除成功') : json('删除失败');
+        return PermissionM::destroy($id) ? $this->returnJson('删除成功') : $this->returnJson('删除失败');
     }
 }

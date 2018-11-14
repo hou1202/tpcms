@@ -149,7 +149,7 @@
     //监听提交
     form.on('submit(form_submit)', function(data) {
         $.post("/router",data.field,function(res){
-            layer.msg(res);
+            layer.msg(res.data);
             window.location.href="#/router";
         });
         return false;

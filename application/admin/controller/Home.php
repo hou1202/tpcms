@@ -13,29 +13,17 @@ use app\admin\common\Auth;
 use app\admin\model\Router;
 use app\common\controller\AdminController;
 
-use think\Controller;
-use think\facade\Cookie;
+use think\facade\Config;
 use think\facade\Request;
-use think\facade\Env;
-use think\validate\ValidateRule;
 use app\admin\common\User;
 
 
 class Home extends AdminController
 {
-   /* protected function initialize()
-    {
-        if(!Cookie::has('admin_account')){
-            redirect('/login');
-        }
-
-    }*/
 
    //主体框架加载信息
     public function home()
     {
-        /*if(!Cookie::has('admin_account')) return redirect('/login');*/
-        //if(!$admin = Auth::user()) return redirect(Request::domain().'/login');
         if(!$admin = User::user()) return redirect(Request::domain().'/login');
         $this->assign('User',$admin);
         return $this->fetch('/index');
@@ -50,11 +38,7 @@ class Home extends AdminController
     public function logout()
     {
         User::logout();
-        $res = [
-            'data' => '退出成功',
-            'url' => Request::domain().'/login'
-        ];
-        return json($res);
+        return $this ->returnJson('退出成功',1,Request::domain().'/login');
 
     }
 
@@ -62,10 +46,10 @@ class Home extends AdminController
     public function menu(){
         $user = User::user();
         //系统默认管理员获取全部菜单
-        if($user['account'] === Env::get('DEFAULT_ADMIN')){
+        if($user['account'] === Config::get('default_admin')){
             $res = Router::where('status',1)->all();
         }else{
-            $roles = Auth::roles();
+            $roles = Auth::getGroups();
             $res = Router::where('id','in',$roles)->where('status',1)->select();
         };
         $xml = array();
@@ -141,7 +125,6 @@ class Home extends AdminController
             ]
         ];*/
 
-        //return json($route);
         return json($xml);
 
     }

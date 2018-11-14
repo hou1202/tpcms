@@ -6,7 +6,6 @@ use app\common\controller\AdminController;
 use think\Request;
 use app\admin\model\Router as RouteM;
 use app\admin\validate\Router as RouterV;
-use think\validate\ValidateRule;
 
 class Router extends AdminController
 {
@@ -41,10 +40,10 @@ class Router extends AdminController
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('status')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
         $router = RouteM::get($data['id']);
-        return $router->save($data) ? json('路由状态更新成功') : json('状态更新失败');
+        return $router->save($data) ? $this->returnJson('路由状态更新成功') : $this->returnJson('状态更新失败');
     }
 
     /**
@@ -72,10 +71,9 @@ class Router extends AdminController
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
-        //$data['main'] =  $data['pid'] == 0 ? 1 : 0 ;
-        return RouteM::create($data) ? json('路由新增成功') : json('添加失败');
+        return RouteM::create($data) ? $this->returnJson('路由新增成功') : $this->returnJson('添加失败');
     }
 
     /**
@@ -124,9 +122,9 @@ class Router extends AdminController
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data)){
-            return json($validate->getError());
+            return $this->returnJson($validate->getError());
         }
-        return $route->save($data) ? json('路由编辑成功') : json('编辑失败');
+        return $route->save($data) ? $this->returnJson('路由编辑成功') : $this->returnJson('编辑失败');
     }
 
     /**
@@ -139,9 +137,9 @@ class Router extends AdminController
     {
         //
         if(RouteM::where('pid',$id)->find()){
-            return json('该路由为主路由，若要删除请先删除所属子路由');
+            return $this->returnJson('该路由为主路由，若要删除请先删除所属子路由');
         }
-        return RouteM::destroy($id) ? json('路由删除成功') : json('删除失败');
+        return RouteM::destroy($id) ? $this->returnJson('路由删除成功') : $this->returnJson('删除失败');
 
     }
 }

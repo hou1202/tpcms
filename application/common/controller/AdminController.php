@@ -10,7 +10,6 @@ namespace app\common\controller;
 
 
 use think\Controller;
-use think\facade\Cookie;
 
 class AdminController extends Controller
 {
@@ -26,15 +25,11 @@ class AdminController extends Controller
     /*
      * init     初始化操作
      * */
-    /*protected function initialize()
+    protected function initialize()
     {
-        if(!Cookie::has('admin_account')){
-            //var_dump(213);die;
-            return redirect('/login');
-            //die;
-        }
 
-    }*/
+
+    }
 
 
     /*
@@ -61,7 +56,7 @@ class AdminController extends Controller
      * @param       $code       1=》成功；0=》失败
      * @return      json
      * */
-    protected function returnJson($data,$code=1,$url)
+    protected function returnJson($data,$code=1,$url='')
     {
         $res = [
             'code' => $code,

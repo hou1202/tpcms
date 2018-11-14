@@ -35,3 +35,18 @@
     top:15px;
     padding-left:11px;
 }
+.self-body{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.self-error .self-error-icon {
+    font-size:100px !important;
+    color:#928b08;
+}
+.self-error .self-error-title{
+    font-size: 18px;
+    color:#009688;
+    font-weight: 900;
+}

@@ -100,8 +100,8 @@
                 url:'router/status',
                 type:'post',
                 data:{"id":data.value,"status":status},
-                success:function(data){
-                    layer.msg(data);
+                success:function(res){
+                    layer.msg(res.data);
                     table.reload('tableHash');
                 },
                 error:function () {
@@ -119,7 +119,7 @@
             }else if(obj.event === 'del'){
                 layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
                     $.post('/router/'+obj.data.id,{'_method':'DELETE'},function(res){
-                        layer.msg(res);
+                        layer.msg(res.data);
                         table.reload('tableHash');
                     });
                     layer.close(index);

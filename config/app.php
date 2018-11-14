@@ -154,6 +154,8 @@ return [
     'admin_table'           => 'adminer',
     //默认管理员帐户字段名
     'admin_name'            => 'account',
+    //kit_admin主框架路由
+    'admin_main'            =>  'admin/home/home'
 
 
 ];
