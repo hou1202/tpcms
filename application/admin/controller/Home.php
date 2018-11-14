@@ -38,6 +38,7 @@ class Home extends AdminController
     public function logout()
     {
         User::logout();
+        Auth::authOut();
         return $this ->returnJson('退出成功',1,Request::domain().'/login');
 
     }
@@ -79,51 +80,7 @@ class Home extends AdminController
                     ];
             }
         }
-        /*$route = [
-            [
-                'id'=>1,
-                'title'=>'系统管理',
-                'path'=>'',
-                'icon'=>'&#xe631;',
-                'pid'=>0,
-                'open'=>true,
-                'children'=>[
-                    [
-                        'id'=>10,
-                        'title'=>'管理员设置',
-                        'path'=>'#/adminer',
-                        'icon'=>'&#xe631;', //第一个#号用&代替,
-                        'pid'=>1,
-                        'open'=>false
-                    ],[
-                        'id'=>11,
-                        'title'=>'路由设置',
-                        'path'=>'#/router',
-                        'icon'=>'&#xe631;', //第一个#号用&代替,
-                        'pid'=>1,
-                        'open'=>false
-                    ],
-            ]
-            ],[
-                'id'=>2,
-                'title'=>'一级菜单2',
-                'path'=>'#/user/cc',
-                'icon'=>'&#xe631;', //第一个#号用&代替,
-                'pid'=>0,
-                'open'=>true,
-                'children'=>[
-                    [
-                        'id'=>22,
-                        'title'=>'二级菜单21',
-                        'path'=>'#/user/cc',
-                        'icon'=>'&#xe631;', //第一个#号用&代替,
-                        'pid'=>2,
-                        'open'=>false,
-                        'children'=>[]
-                    ]
-                ]
-            ]
-        ];*/
+
 
         return json($xml);
 

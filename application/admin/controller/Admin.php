@@ -2,9 +2,11 @@
 
 namespace app\admin\controller;
 
+use app\admin\common\User;
 use app\admin\model\Permission;
 use app\common\controller\AdminController;
 use think\Request;
+use think\facade\Config;
 use app\admin\model\Admin as AdminM;
 use app\admin\validate\Admin as AdminValidate;
 
@@ -49,6 +51,8 @@ class Admin extends AdminController
             return $this->returnJson($validate->getError());
         }
         $adminer = AdminM::get($data['id']);
+        if($adminer['account'] == Config::get('default_admin')) return $this ->returnJson('该帐户状态无权限禁用');
+        if($adminer['account'] == User::logined_uuid()) return $this ->returnJson('无法禁用自己的帐户状态');
         return $adminer->save($data) ? $this ->returnJson('管理员帐户状态更新成功') : $this ->returnJson('状态更新失败');
     }
 
@@ -150,6 +154,9 @@ class Admin extends AdminController
     public function delete($id)
     {
         //
-        return AdminM::destroy($id) ? $this->returnJson('管理员删除成功') : $this->returnJson('删除失败');
+        $adminer = AdminM::get($id);
+        if($adminer['account'] == Config::get('default_admin')) return $this ->returnJson('该帐户无权限删除');
+        if($adminer['account'] == User::logined_uuid()) return $this ->returnJson('无法删除自己的帐户');
+        return $adminer->delete() ? $this->returnJson('管理员删除成功') : $this->returnJson('删除失败');
     }
 }

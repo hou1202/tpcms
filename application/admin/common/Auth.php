@@ -139,6 +139,7 @@ class Auth
             ->field('p.router_id')
             ->join(self::$authGroup.' p','a.permissions_id = p.id')
             ->where('a.id',$uid)
+            ->where('p.status',1)
             ->find();
         $groups[$uid] = $user_groups ? explode('-',trim($user_groups['router_id'])) : array();
         return $groups[$uid];
@@ -162,8 +163,8 @@ class Auth
         //如何不刷新，则判断数据是否存在并返回
         if(!$refresh){
             if (isset($_authList[$uid.$t])) return $_authList[$uid.$t];
-            if (isset($_SESSION['_auth_list_'.$uid.$t]) && !empty($_SESSION['_auth_list_'.$uid.$t]))
-                return $_SESSION['_auth_list_'.$uid.$t];
+            if (session('?_auth_list_'.$uid.$t))
+                return session('_auth_list_'.$uid.$t);
         }
         //读取用户所属用户权限数组
         $groups = self::getGroups($uid);
@@ -184,7 +185,7 @@ class Auth
 
         $_authList[$uid.$t] = $authList = array_unique($authList);
         //规则列表结果保存到session
-        $_SESSION['_auth_list_'.$uid.$t]=$authList;
+        session('_auth_list_'.$uid.$t,$authList);
         return $authList;
     }
 
@@ -200,12 +201,12 @@ class Auth
         // 读取静态变量（不刷新），如果存在，则直接返回
         if (!$refresh) {
             if($allRules != null) return $allRules;
-            if (isset($_SESSION['_all_router_list']) && !empty($_SESSION['_all_router_list']))
-                return $_SESSION['_all_router_list'];
+            if (session('?_all_router_list'))
+                return session('_all_router_list');
         }
         $allRules = Db::name(self::$authRoute)->where('status',1)->select();
         //规则列表结果保存到session
-        $_SESSION['_all_router_list']=$allRules;
+        session('_all_router_list',$allRules);
         return $allRules;
     }
 
@@ -220,6 +221,20 @@ class Auth
         return $userinfo[$uid];
     }
 
+    /*
+     * 清除权限记录
+     * */
+    public static function authOut($uid='',$type=1)
+    {
+        !self::$handler && self::init(); // 初始化
+        if(empty($uid)){
+            if(!$user = User::user()) return false;
+            $uid = $user['id'];
+        }
+        $t = implode(',',(array)$type);
+        session('_all_router_list',null);
+        session('_auth_list_'.$uid.$t,null);
+    }
 
 
 }

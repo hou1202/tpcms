@@ -78,17 +78,9 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.ajax({
-                url:'permission/status',
-                type:'post',
-                data:{"id":data.value,"status":status},
-                success:function(res){
-                    layer.msg(res.data);
-                    table.reload('tableHash');
-                },
-                error:function () {
-                    layer.msg('网络错误，请重试！')
-                }
+            $.post("permission/status",{"id":data.value,"status":status},function(res){
+                layer.msg(res.data);
+                table.reload('tableHash');
             });
         });
 

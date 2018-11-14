@@ -96,17 +96,9 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.ajax({
-                url:'router/status',
-                type:'post',
-                data:{"id":data.value,"status":status},
-                success:function(res){
-                    layer.msg(res.data);
-                    table.reload('tableHash');
-                },
-                error:function () {
-                    layer.msg('网络错误，请重试！')
-                }
+            $.post("router/status",{"id":data.value,"status":status},function(res){
+                layer.msg(res.data);
+                table.reload('tableHash');
             });
         });
 
@@ -128,13 +120,12 @@
             }
         });
 
-        //监听提交
+        //监听搜索提交
         form.on('submit(formSubmit)', function(data) {
             if(data.field.keyword === ''){
                 layer.msg('请输入搜索关键词');
                 return false;
             }
-            //return false;
             table.render({
                 method: 'post',
                 //size: 'sm',
