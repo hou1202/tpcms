@@ -113,26 +113,23 @@ layui.define(mods, function(exports) {
 
     // 执行回调函数
     typeof callback === 'function' && callback();
+
   };
   //路由参数项
   var _private = {
     routeInit: function(config) {
       var that = this;
-      // route.set({
-      //   beforeRender: function (route) {
-      //     if (!utils.oneOf(route.path, ['/user/table', '/user/table2', '/'])) {
-      //       return {
-      //         id: new Date().getTime(),
-      //         name: 'Unauthorized',
-      //         path: '/exception/403',
-      //         component: 'views/exception/403.html'
-      //       };
-      //     }
-      //     return route;
-      //   }
-      // });
       // 配置路由
+      var opt;
+      $.ajaxSetup({async : false});
+      $.post('/opts','',function(res){
+          opt = res;
+      });
       var routeOpts = {
+         routes:opt
+      };
+
+      /*var routeOpts = {
         //name: 'kitadmin',
 
         routes: [
@@ -153,11 +150,11 @@ layui.define(mods, function(exports) {
             component:'/adminer',
             name:'保存管理员'
         },{
-            path:'/adminer/edit/*',
+            path:'/adminer/edit/!*',
             component:'/adminer/edit/:id',
             name:'编辑管理员'
         },{
-            path:'/adminer/*',
+            path:'/adminer/!*',
             component:'/adminer/:id',
             name:'查看管理员'
         },{
@@ -169,15 +166,15 @@ layui.define(mods, function(exports) {
             component:'/router/create',
             name:'添加路由'
         },{
-            path:'/router/*',
+            path:'/router/!*',
             component:'/router/:id',
             name:'查看路由'
         },{
-            path:'/router/edit/*',
+            path:'/router/edit/!*',
             component:'/router/edit/:id',
             name:'编辑路由'
         },{
-            path:'/router/*',
+            path:'/router/!*',
             component:'router/:id',
             name:'保存路由'
         },{
@@ -189,12 +186,13 @@ layui.define(mods, function(exports) {
             component:'/permission/create',
             name:'添加权限组'
         },{
-            path:'/permission/edit/*',
+            path:'/permission/edit/!*',
             component:'/permission/edit/:id',
             name:'编辑权限组'
         },
       ]
-      };
+      };*/
+
       if (config.loadType === 'TABS') {
         routeOpts.onChanged = function() {
           // 如果当前hash不存在选项卡列表中

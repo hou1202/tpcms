@@ -20,16 +20,13 @@ Route::get('hello','index/index/hello');
 Route::get('admin','admin/home/home');
 Route::get('main','admin/home/main');
 Route::post('logout','admin/home/logout');
-
-//ERROR页面
-Route::get('/error/403','admin/error/errorPower');
+Route::get('menu','admin/home/menu');                   //导航栏加载
+Route::post('opts','admin/home/opts');                   //导航栏加载
+Route::get('/error/403','admin/error/errorPower');      //ERROR页面
 
 //登录Route
 Route::get('login','admin/login/index');
 Route::post('login','admin/login/login');
-
-//导航栏加载
-Route::get('menu','admin/home/menu');
 
 //管理员管理Route
 Route::resource('adminer','admin/admin')->rest('edit',['GET', '/edit/:id','edit']);
@@ -41,12 +38,10 @@ Route::resource('router','admin/router')->rest('edit',['GET', '/edit/:id','edit'
 Route::post('router/data','admin/router/routerData');
 Route::post('router/status','admin/router/setRouterStatus');
 
-
 //权限管理permission
 Route::resource('permission','admin/permission')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('permission/data','admin/permission/permissionData');
 Route::post('permission/status','admin/permission/setPermissionStatus');
-
 
 Route::get('setting','admin/set/index');
 Route::get('table_two','admin/set/tableTwo');

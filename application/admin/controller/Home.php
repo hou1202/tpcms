@@ -85,4 +85,46 @@ class Home extends AdminController
         return json($xml);
 
     }
+
+    //路由配置项菜单
+    public function opts()
+    {
+        $res = Router::where('status',1)->select();
+        $xml = [];
+        foreach($res as $router){
+            /*if($router['pid'] == 0){
+                $children = array();
+                foreach ($res as $CRoute){
+                    if($CRoute['pid'] == $router['id'] && $CRoute['main'] == 1){
+                        $children[] = [
+                            'id'=>$CRoute['id'],
+                            'title'=>$CRoute['title'],
+                            'path'=>'#'.$CRoute['menu'],
+                            'icon'=>'&'.$CRoute['icon'],
+                            'pid'=>$CRoute['pid'],
+                            'open'=>false
+                        ];
+                    }
+                }
+                $xml[] = [
+                    'id'=>$router['id'],
+                    'title'=>$router['title'],
+                    'path'=>$router['menu'] ? '#'.$router['menu'] : '',
+                    'icon'=>'&'.$router['icon'],
+                    'pid'=>$router['pid'],
+                    'open'=>$router['open'] == 1 ? true : false,
+                    'children'=>$children,
+                ];
+            }*/
+            //$xml .= "{path:'".$router['menu']."', component:'".$router['router']."', name:'".$router['title']."'},";
+            $xml[]= [
+                'path'=>$router['menu'],
+                'component'=>$router['router'],
+                'name'=>$router['title']
+            ];
+        }
+
+
+        return json($xml);
+    }
 }
