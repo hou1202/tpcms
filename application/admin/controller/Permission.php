@@ -86,6 +86,15 @@ class Permission extends AdminController
     public function read($id)
     {
         //
+        $permission = PermissionM::get($id);
+        if(!$permission){
+            return $this->returnJson('非有效数据信息');
+        }
+        $router = Router::where('status',1)->all();
+        $permission['router_id'] = explode('-',$permission['router_id']);
+        $this->assign("Route",$router);
+        $this->assign("Per",$permission);
+        return view('permission/read');
     }
 
     /**

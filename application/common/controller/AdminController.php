@@ -51,9 +51,9 @@ class AdminController extends Controller
 
     /*
      * 返回kit_admin列表数据返回JSON格式的数据
-     * @param       $data       数据源
-     * @param       $url        跳转路由
-     * @param       $code       1=》成功；0=》失败
+     * @param  string     $data       数据源
+     * @param  string     $url        跳转路由
+     * @param  number     $code       1=》成功；0=》失败
      * @return      json
      * */
     protected function returnJson($data,$code=1,$url='')

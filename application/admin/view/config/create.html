@@ -1,0 +1,81 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text"> 新增配置参数 </blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">参数名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置配置参数名称" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">参数值</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="param" lay-verify="required" autocomplete="off" placeholder="设置配置参数值" class="layui-input">
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  layui.use(['form', 'layedit', 'laydate'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        layer = layui.layer;
+
+    form.render();
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 1 || value.length > 25) {
+                return '名称长度应在1-25个字符之间';
+            }
+        }
+    });
+
+    //监听提交
+    form.on('submit(form_submit)', function(data) {
+        //console.log(data);
+        //return false;
+        $.post("/config",data.field,function(res){
+            layer.msg(res.data);
+            window.location.href="#/config";
+        });
+        return false;
+    });
+
+  });
+</script>
+
+<style scoped>
+
+</style>

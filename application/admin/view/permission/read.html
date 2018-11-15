@@ -1,0 +1,101 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text"> 查看权限组 </blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form">
+                            <input type="hidden" name="_method" value="PUT" >
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">权限组名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text"  autocomplete="off"  class="layui-input" value="{$Per.title}" readonly>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">权限组状态</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" {$Per.status ?= 'checked'} disabled lay-skin="switch" lay-text="开启|禁用">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">权限</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-collapse" lay-accordion="">
+                                        {volist name="Route" id="vo" }
+                                        {if $vo.pid ===0}
+
+                                        <div class="layui-colla-item">
+                                            <h2 class="layui-colla-title">
+                                                <input type="checkbox"  title="{$vo.title}" {if in_array($vo.id,$Per.router_id)}checked{/if} >
+                                            </h2>
+
+                                            {volist name="Route" id="co" }
+                                            {if $vo.id === $co.pid}
+                                            <div class="layui-colla-content layui-show">
+                                                <div class="layui-collapse" lay-accordion="">
+                                                    <div class="layui-colla-item">
+                                                        <h2 class="layui-colla-title">
+                                                            <input type="checkbox"  title="{$co.title}" {if in_array($co.id,$Per.router_id)}checked{/if} >
+                                                        </h2>
+                                                        <div class="layui-colla-content">
+
+                                                            {volist name="Route" id="go" }
+                                                            {if $co.id === $go.pid}
+                                                                <input type="checkbox"  title="{$go.title}" {if in_array($go.id,$Per.router_id)}checked{/if} >
+                                                            {/if}
+                                                            {/volist}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/if}
+                                            {/volist}
+                                        </div>
+
+                                        {/if}
+                                        {/volist}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                    </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  layui.use(['form', 'element'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        element = layui.element;
+
+    form.render();
+
+    element.init();
+
+  });
+</script>
+
+<style scoped>
+
+</style>

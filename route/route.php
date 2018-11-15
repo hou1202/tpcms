@@ -13,8 +13,11 @@ Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
 Route::rule('/','index/index','get');
-Route::get('test','index/index/test');
 Route::get('hello','index/index/hello');
+//后台管理模块路由-admin
+
+Route::get('setting','admin/set/index');
+Route::get('table_two','admin/set/tableTwo');
 
 //主体框架加载Route
 Route::get('admin','admin/home/home');
@@ -43,8 +46,10 @@ Route::resource('permission','admin/permission')->rest('edit',['GET', '/edit/:id
 Route::post('permission/data','admin/permission/permissionData');
 Route::post('permission/status','admin/permission/setPermissionStatus');
 
-Route::get('setting','admin/set/index');
-Route::get('table_two','admin/set/tableTwo');
+//参数设置模块config
+Route::resource('config','admin/config')->rest('edit',['GET', '/edit/:id','edit']);
+Route::post('config/data','admin/config/getData');
+
 
 
 

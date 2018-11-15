@@ -1,0 +1,142 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote layui-text"> 配置参数设置 </blockquote>
+
+                    <div class="layui-card-header">
+                        <div class="self-card-header">
+                            <a href="#/config/create" class="layui-btn layui-btn-sm">
+                                <i class="layui-icon">&#xe654;</i>
+                                <span>新增</span>
+                            </a>
+                        </div>
+                        <div class="self-search">
+                            <form class="layui-form">
+                                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索关键字..." />
+                                <button class=" self-search-btn" lay-submit="" lay-filter="formSubmit">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="layui-card-body">
+                        <!--表格主体-->
+                        <table id="tableHash" lay-filter="tIndex"></table>
+
+                        <!--操作控制-->
+                        <script type="text/html" id="barHash">
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    layui.config({
+        base: '/static/admin/js/'
+    }).use(['jquery', 'mockjs', 'table', 'sidebar', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            table = layui.table,
+            form = layui.form,
+            route = layui.route;
+
+        //表格数据获取及定义
+        table.render({
+            method: 'post',
+            //size: 'sm',
+            limit: 10,
+            limits:[10,20],
+            elem: '#tableHash',
+            height: 'full-235',
+            url: '/config/data', //数据接口
+            page: true, //开启分页
+            cols: [
+                [ //表头
+                    {
+                        field: 'id', title: 'ID', sort: true, align: 'center', fixed: 'left'
+                    }, {
+                        field: 'title', title: '配置名称', align: 'center'
+                    }, {
+                        field: 'param', title: '参数值', align: 'center'
+                    }, {
+                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
+                    }
+                ]
+            ]
+        });
+
+
+
+        //操作栏监听
+        table.on('tool(tIndex)',function(obj){
+            if(obj.event === 'detail'){
+                window.location.href ='#/router/'+obj.data.id;
+            }else if(obj.event === 'edit'){
+                window.location.href ='#/router/edit/'+obj.data.id;
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/router/'+obj.data.id,{'_method':'DELETE'},function(res){
+                        layer.msg(res.data);
+                        table.reload('tableHash');
+                    });
+                    layer.close(index);
+                });
+
+            }
+        });
+
+        //监听搜索提交
+        form.on('submit(formSubmit)', function(data) {
+            if(data.field.keyword === ''){
+                layer.msg('请输入搜索关键词');
+                return false;
+            }
+            table.render({
+                method: 'post',
+                //size: 'sm',
+                limit: 10,
+                limits:[10,20],
+                elem: '#tableHash',
+                height: 'full-235',
+                where:{keyword:data.field.keyword},
+                url: '/config/data', //数据接口
+                page: true, //开启分页
+                cols: [
+                    [ //表头
+                        {
+                            field: 'id', title: 'ID', sort: true, align: 'center', fixed: 'left'
+                        }, {
+                            field: 'title', title: '配置名称', align: 'center'
+                        }, {
+                            field: 'param', title: '参数值', align: 'center'
+                        }, {
+                            fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
+                        }
+                    ]
+                ]
+            });
+            return false;
+        });
+
+
+
+    });
+</script>
+
+
+<style scoped>
+
+</style>

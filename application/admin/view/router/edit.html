@@ -48,7 +48,7 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">路由图标</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="icon" value="{$Route.icon}" lay-verify="icon" autocomplete="off" placeholder="设置路由图标,例：#ec2ds;" class="layui-input">
+                                    <input type="text" name="icon" value="{$Route.icon}" lay-verify="icon" autocomplete="off" placeholder="设置路由图标,例：#xe653;" class="layui-input">
                                 </div>
                             </div>
 
@@ -139,7 +139,7 @@
             if(value != ''){
                 var ret = /(^#)[a-z0-9]{5}(;)$/;
                 if(!ret.test(value)){
-                    return '路由图标格式错误，例：#xe67a;';
+                    return '路由图标格式错误，例：#xe653;';
                 }
             }
         }

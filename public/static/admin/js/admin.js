@@ -53,10 +53,16 @@ layui.define(mods, function(exports) {
       utils.setUrlState('主页', '#/');
     }
 
-    // 处理 sidebar
-    layui.sidebar.render({
+
+    /**
+     * 处理顶部侧滑弹出sidebar，两种处理方式
+     * 一：直接通过LAYUI渲染的方式处理
+     * 二：通过click事件，再渲染处理
+    * */
+    // 方式一：
+    /*layui.sidebar.render({
       elem: '#ccleft',
-      //content:'', 
+      content:'p j g wh ',
       title: '这是左侧打开的栗子',
       shade: true,
       // shadeClose:false,
@@ -64,13 +70,13 @@ layui.define(mods, function(exports) {
       dynamicRender: true,
       url: 'table_two',
       width: '50%', //可以设置百分比和px
-    });
-
-    $('#cc').on('click', function() {
+    });*/
+    //方法二：
+    /*$('#cc').on('click', function() {
       var that = this;
       layui.sidebar.render({
         elem: that,
-        //content:'', 
+        //content:'',
         title: '这是表单盒子',
         shade: true,
         // shadeClose:false,
@@ -79,7 +85,7 @@ layui.define(mods, function(exports) {
         url: 'views/form/index.html',
         width: '50%', //可以设置百分比和px
       });
-    });
+    });*/
 
     // 监听头部右侧 nav
     component.on('nav(header_right)', function(_that) {
@@ -101,10 +107,13 @@ layui.define(mods, function(exports) {
       if (target === 'help') {
         layer.alert('AOZOM客户服务信息：574137491');
       }
+      if(target === 'cleft') {
+        layer.alert('可能通过admin.js中的【layui.sidebar.render】方式来进行渲染页面进行侧边弹出,使用渲染弹出时，需要设置 id;alert时需设置kit-target');
+      }
     });
 
     // 注入mock
-    layui.mockjs.inject(APIs);
+    //layui.mockjs.inject(APIs);
 
     // 初始化渲染
     if (config.loadType === 'SPA') {
@@ -189,6 +198,14 @@ layui.define(mods, function(exports) {
             path:'/permission/edit/!*',
             component:'/permission/edit/:id',
             name:'编辑权限组'
+        },{
+            path:'/config',
+            component:'/config',
+            name:'参数设置'
+        },{
+            path:'/config/create',
+            component:'/config/create',
+            name:'参数设置'
         },
       ]
       };*/
