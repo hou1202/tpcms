@@ -4,7 +4,7 @@
             <div class="layui-card">
                 <div class="layui-card-body">
 
-                    <blockquote class="layui-elem-quote layui-text"> 新增配置参数 </blockquote>
+                    <blockquote class="layui-elem-quote layui-text"> 编辑配置参数 </blockquote>
                     <div class="layui-card-header">
                         <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
                             <i class="layui-icon">&#xe65a;</i>
@@ -15,18 +15,19 @@
                     <div class="layui-card-body">
 
                         <form class="layui-form">
+                            <input type="hidden" name="_method" value="PUT" />
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">参数名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="设置配置参数名称" class="layui-input">
+                                    <input type="text" name="title" value="{$Conf.title}" lay-verify="required|title" autocomplete="off" placeholder="设置配置参数名称" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">参数值</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="param" lay-verify="required" autocomplete="off" placeholder="设置配置参数值" class="layui-input">
+                                    <input type="text" name="param" value="{$Conf.param}" lay-verify="required" autocomplete="off" placeholder="设置配置参数值" class="layui-input">
                                 </div>
                             </div>
 
@@ -64,7 +65,7 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/config",data.field,function(res){
+        $.post("/config/"+"{$Conf.id}",data.field,function(res){
             layer.msg(res.data);
             if(res.code === 1){
                 window.location.href="#"+res.url;

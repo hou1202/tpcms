@@ -20,7 +20,7 @@ class Router extends AdminController
     }
 
     //获取路由列表数据
-    public function routerData(Request $request)
+    public function getData(Request $request)
     {
         $data = $request -> post();
         $map[] = ['id','>',0];
@@ -35,15 +35,16 @@ class Router extends AdminController
     }
 
     //设置状态
-    public function setRouterStatus(Request $request)
+    public function setStatus(Request $request)
     {
         $data = $request -> post();
         $validate = new RouterV();
-        if(!$validate->scene('status')->check($data)){
+        if(!$validate->scene('status')->check($data))
             return $this->returnJson($validate->getError());
-        }
-        $router = RouteM::get($data['id']);
-        return $router->save($data) ? $this->returnJson('路由状态更新成功') : $this->returnJson('状态更新失败');
+
+        $route = RouteM::get($data['id']);
+        if(!$route) return $this->returnJson('非有效数据信息');
+        return $route->save($data) ? $this->returnJson('状态更新成功') : $this->returnJson('状态更新失败');
     }
 
     /**
@@ -73,7 +74,7 @@ class Router extends AdminController
         if(!$validate->scene('save')->check($data)){
             return $this->returnJson($validate->getError());
         }
-        return RouteM::create($data) ? $this->returnJson('路由新增成功') : $this->returnJson('添加失败');
+        return RouteM::create($data) ? $this->returnJson('新增成功',1,'/router') : $this->returnJson('添加失败',0);
     }
 
     /**
@@ -86,6 +87,7 @@ class Router extends AdminController
     {
 
         $route = RouteM::get($id);
+        if(!$route) return $this->redirectError('非有效数据信息');
         $this->assign('Route',$route);
         return view('router/read');
     }
@@ -99,7 +101,8 @@ class Router extends AdminController
     public function edit($id)
     {
         $main = RouteM::field('id,title')->where('main',1)->where('status',1)->select();
-        $route = Routem::where('id',$id)->find();
+        $route = RouteM::get($id);
+        if(!$route) return $this->redirectError('非有效数据信息');
         $this->assign('main',$main);
         $this->assign('Route',$route);
         return view('router/edit');
@@ -116,15 +119,12 @@ class Router extends AdminController
     {
         //
         $route = RouteM::get($id);
-        if(!$route){
-            return json('编辑信息有误');
-        }
+        if(!$route) return $this->returnJson('非有效数据信息');
         $data = $request -> post();
         $validate = new RouterV();
-        if(!$validate->scene('save')->check($data)){
+        if(!$validate->scene('save')->check($data))
             return $this->returnJson($validate->getError());
-        }
-        return $route->save($data) ? $this->returnJson('路由编辑成功') : $this->returnJson('编辑失败');
+        return $route->save($data) ? $this->returnJson('更新成功',1,'/router') : $this->returnJson('更新失败');
     }
 
     /**
@@ -136,10 +136,9 @@ class Router extends AdminController
     public function delete($id)
     {
         //
-        if(RouteM::where('pid',$id)->find()){
+        if(RouteM::where('pid',$id)->find())
             return $this->returnJson('该路由为主路由，若要删除请先删除所属子路由');
-        }
-        return RouteM::destroy($id) ? $this->returnJson('路由删除成功') : $this->returnJson('删除失败');
+        return RouteM::destroy($id) ? $this->returnJson('删除成功') : $this->returnJson('删除失败');
 
     }
 }

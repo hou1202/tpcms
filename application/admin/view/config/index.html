@@ -54,7 +54,7 @@
             route = layui.route;
 
         //表格数据获取及定义
-        table.render({
+        var tableLoad = table.render({
             method: 'post',
             //size: 'sm',
             limit: 10,
@@ -82,13 +82,11 @@
 
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
-            if(obj.event === 'detail'){
-                window.location.href ='#/router/'+obj.data.id;
-            }else if(obj.event === 'edit'){
-                window.location.href ='#/router/edit/'+obj.data.id;
+            if(obj.event === 'edit'){
+                window.location.href ='#/config/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/router/'+obj.data.id,{'_method':'DELETE'},function(res){
+                layer.confirm('配置参数非常重要，请慎重操作！确定删除该条配置参数?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/config/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.data);
                         table.reload('tableHash');
                     });
@@ -104,29 +102,8 @@
                 layer.msg('请输入搜索关键词');
                 return false;
             }
-            table.render({
-                method: 'post',
-                //size: 'sm',
-                limit: 10,
-                limits:[10,20],
-                elem: '#tableHash',
-                height: 'full-235',
-                where:{keyword:data.field.keyword},
-                url: '/config/data', //数据接口
-                page: true, //开启分页
-                cols: [
-                    [ //表头
-                        {
-                            field: 'id', title: 'ID', sort: true, align: 'center', fixed: 'left'
-                        }, {
-                            field: 'title', title: '配置名称', align: 'center'
-                        }, {
-                            field: 'param', title: '参数值', align: 'center'
-                        }, {
-                            fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
-                        }
-                    ]
-                ]
+            tableLoad.reload({
+                where:{keyword:data.field.keyword}
             });
             return false;
         });

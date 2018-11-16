@@ -23,7 +23,7 @@ class Authority
             if(isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($request->server('HTTP_X_REQUESTED_WITH')) =='xmlhttprequest'){
                 return json(['code' => 0, 'data' => '你暂无权限进行该操作',]);
             }else{
-                return redirect('/error/403');
+                return redirect('/error');
             }
         }
         return $next($request);

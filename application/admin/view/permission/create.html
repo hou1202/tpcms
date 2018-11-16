@@ -112,7 +112,9 @@
     form.on('submit(form_submit)', function(data) {
         $.post("/permission",data.field,function(res){
             layer.msg(res.data);
-            window.location.href="#/permission";
+            if(res.code === 1){
+                window.location.href="#"+res.url;
+            }
         });
         return false;
     });

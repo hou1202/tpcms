@@ -64,8 +64,17 @@ class AdminController extends Controller
             'data' => $data,
         ];
         return json($res);
+    }
 
-
+    /*
+     * 错误信息重定向
+     * @param  string     $msg       提示信息
+     * @param  string     $url       跳转路由
+     * @return      redirect
+     * */
+    protected function redirectError($msg='抱歉，你暂无权限进行该操作.',$url='/error')
+    {
+        return $this->redirect($url,['msg'=>$msg]);
     }
 
 

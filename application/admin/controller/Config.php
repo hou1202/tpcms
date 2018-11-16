@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminController;
-use think\facade\Validate;
+use think\Validate;
 use think\Request;
 use app\admin\model\Config as ConfigM;
 
@@ -64,7 +64,7 @@ class Config extends AdminController
         if(!$validate->check($data)){
             return $this->returnJson($validate->getError());
         }
-        return ConfigM::create($data) ? $this->returnJson('参数新增成功',1,'/config') : $this->returnJson('添加失败');
+        return ConfigM::create($data) ? $this->returnJson('参数新增成功',1,'/config') : $this->returnJson('添加失败',0);
     }
 
     /**
@@ -87,6 +87,10 @@ class Config extends AdminController
     public function edit($id)
     {
         //
+        $config = ConfigM::get($id);
+        if(!$config) return $this->redirectError('非有效数据信息');
+        $this->assign('Conf',$config);
+        return view('config/edit');
     }
 
     /**
@@ -98,7 +102,19 @@ class Config extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $data = $request -> post();
+        $config = ConfigM::get($id);
+        if(!$config) return $this->returnJson('非有效数据信息',0);
+        $rule = [
+            'title|参数名称' => 'require|max:15',
+            'param|参数值' => 'require',
+        ];
+        $validate = new Validate($rule);
+        if(!$validate->check($data)){
+            return $this->returnJson($validate->getError());
+        }
+        return $config->save($data) ? $this->returnJson('参数新增成功',1,'/config') : $this->returnJson('添加失败',0);
     }
 
     /**
@@ -110,5 +126,6 @@ class Config extends AdminController
     public function delete($id)
     {
         //
+        return ConfigM::destroy($id) ? $this->returnJson('删除成功') : $this->returnJson('删除失败');
     }
 }

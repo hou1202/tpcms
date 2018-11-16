@@ -51,25 +51,7 @@
             table = layui.table,
             sidebar = layui.sidebar,
             form = layui.form;
-        // 注入mock
-        layui.mockjs.inject({
-            'GET /adminer_data': {
-                code: 0,
-                msg: "xxx",
-                count: 1000,
-                'data|10': [{
-                    'id|+1': 1,
-                    account: '@account',
-                    name: '@name',
-                    status: '@status ',
-                    permissions_id: '@permissions_id',
-                    last_ip: '@last_ip',
-                    last_at: '@last_at',
-                    count: '@count',
-                    remark: '@remark',
-                }]
-            }
-        });
+
 
         //第一个实例
         table.render({
@@ -121,6 +103,7 @@
             if(obj.event === 'detail'){
                 window.location.href ='#/adminer/'+obj.data.id;
             }else if(obj.event === 'edit'){
+                console.log(obj.data.id);
                 window.location.href ='#/adminer/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
                 layer.confirm('确定删除该管理员?', {icon: 3, title:'提示'}, function(index){

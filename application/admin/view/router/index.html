@@ -51,7 +51,7 @@
 <script>
     layui.config({
         base: '/static/admin/js/'
-    }).use(['jquery', 'mockjs', 'table', 'sidebar', 'form'], function () {
+    }).use(['jquery', 'table', 'sidebar', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             table = layui.table,
@@ -59,9 +59,8 @@
             route = layui.route;
 
         //表格数据获取及定义
-        table.render({
+        var tableLoad = table.render({
             method: 'post',
-            //size: 'sm',
             limit: 10,
             limits:[10,20],
             elem: '#tableHash',
@@ -98,7 +97,7 @@
             var status = this.checked ? 1 : 0 ;
             $.post("router/status",{"id":data.value,"status":status},function(res){
                 layer.msg(res.data);
-                table.reload('tableHash');
+                tableLoad.reload();
             });
         });
 
@@ -126,39 +125,8 @@
                 layer.msg('请输入搜索关键词');
                 return false;
             }
-            table.render({
-                method: 'post',
-                //size: 'sm',
-                limit: 10,
-                limits:[10,20],
-                elem: '#tableHash',
-                height: 'full-235',
-                where:{keyword:data.field.keyword},
-                url: '/router/data', //数据接口
-                page: true, //开启分页
-                cols: [
-                    [ //表头
-                        {
-                            field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
-                        }, {
-                        field: 'title', title: '路由名称', align: 'center'
-                    }, {
-                        field: 'router', title: '系统路由', align: 'center'
-                    }, {
-                        field: 'menu', title: '菜单路由', align: 'center'
-                    },{
-                        field: 'path', title: '系统路径', align: 'center'
-                    }, {
-                        field: 'icon', title: '路由图标', align: 'center'
-                    }, {
-                        field: 'pid', title: '父级ID',align: 'center'
-                    },{
-                        field: 'status', title: '路由状态',align: 'center', minWidth: 120, templet:'#setStatus'
-                    },{
-                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
-                    }
-                    ]
-                ]
+            tableLoad.reload({
+                where:{keyword:data.field.keyword}
             });
             return false;
         });

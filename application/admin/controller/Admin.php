@@ -27,7 +27,7 @@ class Admin extends AdminController
      *
      * @return json
      * */
-    public function indexData()
+    public function getData()
     {
         $data = AdminM::table('adminer')
             ->alias('a')
@@ -40,20 +40,21 @@ class Admin extends AdminController
     }
 
     /*
-     * @ setAdminStatus     更新管理员帐户状态
+     * @ setStatus     更新状态
      * @Method      POST
      * */
-    public function setAdminStatus(Request $request)
+    public function setStatus(Request $request)
     {
         $data = $request -> post();
         $validate = new AdminValidate();
-        if(!$validate->scene('status')->check($data)){
+        if(!$validate->scene('status')->check($data))
             return $this->returnJson($validate->getError());
-        }
+
         $adminer = AdminM::get($data['id']);
+        if(!$adminer) return $this->returnJson('非有效数据信息');
         if($adminer['account'] == Config::get('default_admin')) return $this ->returnJson('该帐户状态无权限禁用');
         if($adminer['account'] == User::logined_uuid()) return $this ->returnJson('无法禁用自己的帐户状态');
-        return $adminer->save($data) ? $this ->returnJson('管理员帐户状态更新成功') : $this ->returnJson('状态更新失败');
+        return $adminer->save($data) ? $this ->returnJson('状态更新成功') : $this ->returnJson('状态更新失败');
     }
 
     /**
@@ -78,10 +79,10 @@ class Admin extends AdminController
     {
         $data = $request -> post();
         $validate = new AdminValidate();
-        if(!$validate->scene('save')->check($data)){
+        if(!$validate->scene('save')->check($data))
             return $this->returnJson($validate->getError());
-        }
-        return AdminM::create($data) ? $this ->returnJson('管理员新增成功') : $this ->returnJson('添加失败');
+
+        return AdminM::create($data) ? $this ->returnJson('新增成功',1,'/adminer') : $this ->returnJson('添加失败',0);
 
     }
 
@@ -100,6 +101,7 @@ class Admin extends AdminController
             ->join('permissions p','p.id = a.permissions_id')
             ->where('a.id',$id)
             ->find();
+        if(!$adminer) return $this->redirectError('非有效数据信息');
         $this -> assign('Adminer',$adminer);
         return view('admin/read');
     }
@@ -112,9 +114,9 @@ class Admin extends AdminController
      */
     public function edit($id)
     {
-        //
-        $permission = Permission::field('id,title')->all();
         $adminer = AdminM::get($id);
+        if(!$adminer) return $this->redirectError('非有效数据信息');
+        $permission = Permission::field('id,title')->all();
         $this->assign('Per',$permission);
         $this->assign('Adminer',$adminer);
         return view('admin/edit');
@@ -131,18 +133,15 @@ class Admin extends AdminController
     {
         //
         $adminer = AdminM::get($id);
-        if(!$adminer){
-            return $this->returnJson('提交信息有误');
-        }
+        if(!$adminer) return $this->returnJson('非有效数据信息');
         $data = $request -> post();
-        if(empty($data['password'])){
-            unset($data['password']);
-        }
+        if(empty($data['password'])) unset($data['password']);
+
         $validate = new AdminValidate();
-        if(!$validate->sceneEdit()->check($data)) {
+        if(!$validate->sceneEdit()->check($data))
             return $this->returnJson($validate->getError());
-        }
-        return $adminer -> save($data) ? $this ->returnJson('管理员编辑成功') : $this ->returnJson('编辑失败');
+
+        return $adminer -> save($data) ? $this ->returnJson('更新成功') : $this ->returnJson('更新失败');
     }
 
     /**
@@ -155,8 +154,9 @@ class Admin extends AdminController
     {
         //
         $adminer = AdminM::get($id);
+        if(!$adminer) return $this->returnJson('非有效数据信息');
         if($adminer['account'] == Config::get('default_admin')) return $this ->returnJson('该帐户无权限删除');
         if($adminer['account'] == User::logined_uuid()) return $this ->returnJson('无法删除自己的帐户');
-        return $adminer->delete() ? $this->returnJson('管理员删除成功') : $this->returnJson('删除失败');
+        return $adminer->delete() ? $this->returnJson('删除成功') : $this->returnJson('删除失败');
     }
 }

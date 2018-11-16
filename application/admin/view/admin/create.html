@@ -110,7 +110,9 @@
     form.on('submit(form_submit)', function(data) {
         $.post("/adminer",data.field,function(res){
             layer.msg(res.data);
-            window.location.href="#/adminer";
+            if(res.code === 1){
+                window.location.href="#"+res.url;
+            }
         });
         return false;
     });
