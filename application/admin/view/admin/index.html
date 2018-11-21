@@ -45,11 +45,10 @@
 <script>
     layui.config({
         base: '/static/admin/js/'
-    }).use(['jquery', 'mockjs', 'table', 'sidebar', 'form'], function () {
+    }).use(['jquery', 'table', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             table = layui.table,
-            sidebar = layui.sidebar,
             form = layui.form;
 
 
@@ -113,7 +112,6 @@
                     });
                     layer.close(index);
                 });
-
             }
         });
 

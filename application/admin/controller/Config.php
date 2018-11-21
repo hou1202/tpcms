@@ -26,7 +26,7 @@ class Config extends AdminController
         $data = $request -> post();
         $map[] = ['id','>',0];
         if(isset($data['keyword']) && !empty($data['keyword'])){
-            $map[] = ['id|title','like','%'.$data['keyword'].'%'];
+            $map[] = ['id|title','like','%'.trim($data['keyword']).'%'];
         }
         $list = ConfigM::where($map)
             ->limit(($data['page']-1)*$data['limit'],$data['limit'])

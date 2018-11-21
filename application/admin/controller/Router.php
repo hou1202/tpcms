@@ -25,7 +25,7 @@ class Router extends AdminController
         $data = $request -> post();
         $map[] = ['id','>',0];
         if(isset($data['keyword']) && !empty($data['keyword'])){
-            $map[] = ['id|title|router|path|menu','like','%'.$data['keyword'].'%'];
+            $map[] = ['id|title|router|path|menu','like','%'.trim($data['keyword']).'%'];
         }
         $list = RouteM::where($map)
                         ->limit(($data['page']-1)*$data['limit'],$data['limit'])

@@ -27,7 +27,7 @@ class AdminController extends Controller
      * */
     protected function initialize()
     {
-
+        //var_dump($this->request);
 
     }
 

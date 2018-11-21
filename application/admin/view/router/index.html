@@ -51,12 +51,11 @@
 <script>
     layui.config({
         base: '/static/admin/js/'
-    }).use(['jquery', 'table', 'sidebar', 'form'], function () {
+    }).use(['jquery', 'table', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             table = layui.table,
-            form = layui.form,
-            route = layui.route;
+            form = layui.form;
 
         //表格数据获取及定义
         var tableLoad = table.render({
@@ -130,8 +129,6 @@
             });
             return false;
         });
-
-
 
     });
 </script>
