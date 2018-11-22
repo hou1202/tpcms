@@ -89,8 +89,7 @@ layui.define(['utils', 'jquery', 'lodash', 'nprogress', 'layer'], function(expor
       if(utils.match(href[0],routes) != false) {
         c = utils.match(href[0],routes);
       }
-
-      return c;
+      //return c;
     }
 
     if (href.length > 1) {
