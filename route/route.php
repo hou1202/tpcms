@@ -15,6 +15,7 @@ Route::get('think', function () {
 Route::get('/','admin/home/home');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');
+
 //后台管理模块路由-admin
 
 Route::get('setting','admin/set/index');

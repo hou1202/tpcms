@@ -54,8 +54,6 @@ class Router extends AdminController
      */
     public function create()
     {
-        //
-        //var_dump($this->request->server());
         $main = RouteM::field('id,title')->where('main',1)->where('status',1)->select();
         $this->assign('main',$main);
         return view('router/create');
