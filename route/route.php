@@ -12,7 +12,7 @@
 Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
-Route::get('/','admin/home/home');
+Route::get('/','index/index/index');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');
 
