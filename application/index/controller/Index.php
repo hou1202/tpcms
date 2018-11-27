@@ -17,6 +17,9 @@ class Index extends BaseController
         return view('/index');
     }
 
+    public function goods(){
+        return view('/details');
+    }
     public function hello($name = 'ThinkPHP5')
     {
 

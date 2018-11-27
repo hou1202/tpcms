@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>商品详情</title>
+    {load href="/static/index/lib/flexible_css.js" /}
+    {load href="/static/index/lib/flexible.js" /}
+    {load href="/static/index/lib/swiper-4.3.3.min.css" /}
+    {load href="/static/index/css/cssreset.css" /}
+    {load href="/static/index/css/public.css" /}
+    {load href="/static/index/css/details.css" /}
+
+</head>
+
+<body>
+
+<header class="banner">
+    <div class="swiper-container" id="banner">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/static/index/images/goods1.jpg"/>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/index/images/goods2.jpg"/>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/index/images/goods3.jpg"/>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="details-title">
+    <div class="title-main">
+        <h3>iPhone XR-大屏幕上见</h3>
+        <p>畅想科技未来不得不见的可以来现</p>
+        <label class="left">￥2500.00</label>
+        <label class="right">￥3000.00</label>
+    </div>
+
+    <div class="title-vice">
+        <p>发货地：合肥 </p>
+        <p>销量：1200 </p>
+        <p>邮费：￥0.00 </p>
+    </div>
+
+    <div class="title-icon">
+        <div class="icon-img">
+            <img src="/static/index/images/goods-icon-1.png" />
+        </div>
+        <div class="icon-img">
+            <img src="/static/index/images/goods-icon-2.png" />
+        </div>
+        <div class="icon-img">
+            <img src="/static/index/images/goods-icon-3.png" />
+        </div>
+        <div class="icon-img">
+            <img src="/static/index/images/goods-icon-4.png" />
+        </div>
+    </div>
+
+    <div class="title-param">
+        <div class="param-title">
+            <label>参数规格</label>
+            <img src="/static/index/images/direct-down.png">
+        </div>
+        <div class="param-info">
+            <div class="info-con">
+                <label>品牌 ：</label>
+                <p>小米</p>
+            </div>
+            <div class="info-con">
+                <label>系列 ：</label>
+                <p>MINX</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="recomm">
+    <div class="swiper-container" id="recomm">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/index/images/goods2.jpg"/>
+            </div>
+            <div class="swiper-slide">
+                <img src="/static/index/images/goods3.jpg"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+</body>
+
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+<script>
+    var mySwiper = new Swiper('#banner', {
+        //direction: 'vertical',
+        slidesPerView: "auto",
+        loop: true,
+        effect:'coverflow',
+        autoplay: true,
+    });
+    window.addEventListener('touchmove', function(evt) {
+        evt.preventDefault()
+    });
+</script>
+
+</html>

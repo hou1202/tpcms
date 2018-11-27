@@ -1,0 +1,114 @@
+
+.banner{
+  padding:0.1rem 0.1rem;
+}
+.banner img{
+  width:100%;
+  border-radius:5px;
+}
+.details-title {
+  padding: 0.2rem 0.4rem;
+}
+.details-title .title-main{
+  line-height:0.5rem;
+}
+.details-title .title-main h3{
+  font-size:0.4rem;
+  height:0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.details-title .title-main p{
+  color:#505050;
+  font-size:0.33333333rem;
+  height:0.5rem;
+  padding-left:0.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.details-title .title-main label{
+  font-size:0.30666666rem;
+  height:0.8rem;
+  line-height:0.8rem;
+  padding-left:0.2rem;
+}
+.details-title .title-main .left{
+  color:#cc7f15;
+  font-size:0.33333333rem;
+}
+.details-title .title-main .right{
+  color:#969696;
+  text-decoration:line-through;
+  float:right;
+  padding-right:1rem;
+}
+.details-title .title-vice{
+  border-top:1px solid #e5e5e5;
+  text-align:center;
+  height:1.2rem;
+  line-height:1.2rem;
+}
+.details-title .title-vice p{
+  font-size:0.30666666rem;
+  float:left;
+  width:33.33%;
+  color:#969696;
+}
+.details-title .title-icon{
+  padding:0.4rem 1rem;
+  overflow: hidden;
+}
+.details-title .title-icon .icon-img{
+  width:25%;
+  float:left;
+  text-align:center;
+}
+.details-title .title-icon .icon-img img{
+  width:0.9rem;
+}
+.details-title .title-param{
+
+}
+.details-title .title-param .param-title{
+  height:1rem;
+  line-height:1rem;
+  font-size:0.4rem;
+}
+.details-title .title-param .param-title img{
+  width:0.5rem;
+  margin:0.25rem 0.3rem 0.2rem 0;
+  float:right;
+}
+.details-title .title-param .param-info{
+  padding-left:0.4rem;
+  color:#969696;
+  font-size:0.33333333rem;
+}
+.details-title .title-param .param-info .info-con{
+  height:0.6rem;
+  line-height:0.6rem;
+}
+.details-title .title-param .param-info .info-con label{
+  float:left;
+}
+.details-title .title-param .param-info .info-con p{
+  float:left;
+  padding-left:0.3rem;
+}
+.recomm{
+
+}
+.recomm .recomm-list{
+
+}
+.recomm .recomm-list .recomm-list-con{
+
+}
+
+
