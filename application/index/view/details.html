@@ -81,6 +81,7 @@
 <div class="recomm">
     <div class="swiper-container" id="recomm">
         <div class="swiper-wrapper">
+
             <div class="swiper-slide">
                 <div class="recomm-list">
                     <a href="">
@@ -93,13 +94,64 @@
                 </div>
             </div>
             <div class="swiper-slide">
-                <img src="/static/index/images/goods2.jpg"/>
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
             </div>
             <div class="swiper-slide">
-                <img src="/static/index/images/goods3.jpg"/>
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+
 
 </div>
 
@@ -113,13 +165,25 @@
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
 
 <script>
-    var mySwiper = new Swiper('#banner', {
+
+    var bannerSwiper = new Swiper('#banner', {
         //direction: 'vertical',
         slidesPerView: "auto",
         loop: true,
         effect:'coverflow',
         autoplay: true,
     });
+
+    var recommSwiper = new Swiper('#recomm', {
+        /*direction: 'vertical',
+        slidesPerView: "auto",
+        loop: true,
+        effect:'coverflow',
+        autoplay: true,*/
+        centeredSlides:true,
+    });
+
+
     window.addEventListener('touchmove', function(evt) {
         evt.preventDefault()
     });

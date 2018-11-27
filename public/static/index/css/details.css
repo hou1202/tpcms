@@ -101,14 +101,40 @@
   float:left;
   padding-left:0.3rem;
 }
+
+/*产品推荐模块*/
 .recomm{
+  padding-left:0.5rem;
 
 }
 .recomm .recomm-list{
-
+  width:3rem;
+  padding:0.15rem;
+  border:1px solid #ccc;
+  border-radius:5px;
 }
-.recomm .recomm-list .recomm-list-con{
-
+.recomm .recomm-list a{
+  display:block;
+}
+.recomm .recomm-list img{
+  width:100%;
+}
+.recomm .recomm-list .recomm-list-con h3{
+  color:#505050;
+  font-size:0.33333333rem;
+  height:0.5rem;
+  line-height: 0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.recomm .recomm-list .recomm-list-con p{
+  color:#cc7f15;
+  font-size:0.30666666rem;
+  height:0.5rem;
+  line-height: 0.6rem;
 }
 
 
