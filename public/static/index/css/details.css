@@ -220,7 +220,8 @@
   padding-top:0.3rem;
 }
 .info .info-con .info-con-img img{
-  width:100%
+  width:100%;
+  display:block;
 }
 .info .info-con .info-comment{
 

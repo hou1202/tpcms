@@ -20,7 +20,6 @@
         </div>
     </div>
 </header>
-<!--
 <div class="details-title">
     <div class="title-main">
         <h3>iPhone XR-大屏幕上见</h3>
@@ -35,7 +34,7 @@
         <p>邮费：￥0.00 </p>
     </div>
 
-    &lt;!&ndash;图标&ndash;&gt;
+    <!--图标-->
     <div class="title-icon">
         <div class="icon-img">
             <img src="/static/index/images/goods-icon-1.png" />
@@ -51,14 +50,14 @@
         </div>
     </div>
 
-    &lt;!&ndash;参数模块&ndash;&gt;
+    <!--参数模块-->
     <div class="title-param" >
         <div class="param-title" id="paramTitle">
             <label>参数规格</label>
             <img src="/static/index/images/direct-down.png" id="paramIcon">
         </div>
 
-        &lt;!&ndash;参数信息&ndash;&gt;
+        <!--参数信息-->
         <div class="param-info" id="paramInfo">
             <div class="info-con">
                 <label>品牌 ：</label>
@@ -74,10 +73,10 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
 <!--推荐模块-->
-<!--<div class="recomm">
+<div class="recomm">
     <div class="swiper-container" id="recomm">
         <div class="swiper-wrapper">
 
@@ -248,7 +247,7 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
 <!--商品详情-->
 <div class="info">
@@ -260,6 +259,14 @@
     <div class="info-con">
         <div class="swiper-container" id="info">
             <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                    <div class="info-con-img">
+                        <img src="/static/index/images/goods1.jpg"/>
+                        <img src="/static/index/images/goods2.jpg"/>
+                        <img src="/static/index/images/goods1.jpg"/>
+                    </div>
+                </div>
                 <div class="swiper-slide">
                     <div class="info-comment">
 
@@ -313,6 +320,9 @@
                                 <img src="/static/index/images/goods1.jpg"/>
                                 <img src="/static/index/images/goods1.jpg"/>
                             </div>
+                            <div class="comment-list-img-big">
+                                <img src=""/>
+                            </div>
                         </div>
                         <div class="comment-list">
                             <div class="comment-list-header">
@@ -337,13 +347,11 @@
                                 <img src="/static/index/images/goods1.jpg"/>
                                 <img src="/static/index/images/goods1.jpg"/>
                             </div>
+                            <div class="comment-list-img-big">
+                                <img src=""/>
+                            </div>
                         </div>
 
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="info-con-img">
-                        <img src="/static/index/images/goods1.jpg"/>
                     </div>
                 </div>
 
@@ -412,6 +420,7 @@
 
     /*产品详情Swiper*/
     var infoSwiper = new Swiper('#info', {
+        autoHeight:true,
         on:{
             slideChangeTransitionEnd:function(){
                 var id = "#"+this.activeIndex;
