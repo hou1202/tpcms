@@ -73,7 +73,8 @@
   width:0.9rem;
 }
 .details-title .title-param{
-
+  margin-bottom:0.3rem;
+  border-bottom:1px solid #e5e5e5;
 }
 .details-title .title-param .param-title{
   height:1rem;
@@ -89,6 +90,7 @@
   padding-left:0.4rem;
   color:#969696;
   font-size:0.33333333rem;
+  display:none;
 }
 .details-title .title-param .param-info .info-con{
   height:0.6rem;
@@ -104,8 +106,7 @@
 
 /*产品推荐模块*/
 .recomm{
-  padding-left:0.5rem;
-
+  padding: 0 0.3rem;
 }
 .recomm .recomm-list{
   width:3rem;
@@ -136,5 +137,160 @@
   height:0.5rem;
   line-height: 0.6rem;
 }
+
+/*商品详情底部模块*/
+.goods-bottom{
+  font-size:0.33333333rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.33333333rem;
+  line-height: 1.33333333rem;
+  background: #ffffff;
+  z-index: 2000;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align:center;
+
+}
+.goods-bottom a{
+  display:block;
+  color:#fff;
+}
+.goods-bottom .goods-bottom-icon{
+  height: 1.33333333rem;
+  position:fixed;
+  left:0;
+
+ }
+.goods-bottom .goods-bottom-icon .goods-bottom-icon-img{
+  float:left;
+  padding-top:0.3rem;
+}
+.goods-bottom .goods-bottom-icon .goods-bottom-icon-img img{
+  width:0.55rem;
+  margin:0 0.2rem;
+}
+.goods-bottom .goods-bottom-now{
+  width:2.8rem;
+  background:#cc7f15;
+  position:fixed;
+  right:2.5rem;
+  border-right:1px solid #fff;
+  border-top-left-radius: 0.8rem;
+}
+.goods-bottom .goods-bottom-car{
+  width:2.5rem;
+  background:#cc7f15;
+  position:fixed;
+  right:0;
+
+}
+
+/*产品详情模块*/
+.info{
+  margin-top:0.5rem;
+}
+.info .info-title{
+
+  width:100%;
+  height:1.33333333rem;
+  line-height:1.33333333rem;
+  text-align:center;
+}
+.info .info-title h2{
+  font-size:0.33333333rem;
+  width:50%;
+  color: #b2b2b2;
+  float:left;
+  background: rgba(226, 226, 226, 0.2);
+  border-top:1px solid rgba(226, 226, 226,0.6);
+  border-bottom:1px solid rgba(226, 226, 226,0.6);
+}
+.info .info-title .info-active{
+  color:#cc7f15;
+  border-top:1px solid rgba(204,127,21,0.6);
+  border-bottom:1px solid rgba(204,127,21,0.6);
+}
+
+.info .info-con{
+  padding-top:0.3rem;
+}
+.info .info-con .info-con-img img{
+  width:100%
+}
+.info .info-con .info-comment{
+
+}
+.info .info-con .info-comment .comment-list{
+  padding:0.2rem 0.5rem;
+  overflow: hidden;
+  border-bottom:1px solid #e5e5e5;
+}
+.info .info-con .info-comment .comment-list .comment-list-header{
+  width:100%;
+  height:1.4rem;
+  border-bottom:1px solid #e5e5e5;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-img{
+  width:1rem;
+  height:1.4rem;
+  line-height:1.4rem;
+  float:left;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-img img{
+  width:100%;
+  margin-top:0.2rem;
+  border-radius:50%;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-title{
+  width:6.5rem;
+  float:left;
+  height:1.4rem;
+  padding-left:0.3rem;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-title h2{
+  font-size:0.33333333rem;
+  line-height:0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-title p{
+
+  font-size:0.30666666rem;
+  color:#505050;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-agree{
+  width:0.6rem;
+  height:1.4rem;
+  line-height:1.4rem;
+  float:left;
+}
+.info .info-con .info-comment .comment-list .comment-list-header .list-header-agree img{
+  width:80%;
+  margin-top:0.4rem;
+}
+.info .info-con .info-comment .comment-list .comment-list-content{
+  font-size:0.33333333rem;
+  padding:0.2rem;
+  text-indent:0.7rem;
+  line-height:0.5rem;
+}
+.info .info-con .info-comment .comment-list .comment-list-img img{
+  width:1.6rem;
+ }
+.info .info-con .info-comment .comment-list .comment-list-img-big{
+  display:none;
+}
+.info .info-con .info-comment .comment-list .comment-list-img-big img{
+  width:100%;
+}
+
 
 

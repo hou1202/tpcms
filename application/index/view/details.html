@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>商品详情</title>
-    {load href="/static/index/lib/flexible_css.js" /}
-    {load href="/static/index/lib/flexible.js" /}
-    {load href="/static/index/lib/swiper-4.3.3.min.css" /}
-    {load href="/static/index/css/cssreset.css" /}
-    {load href="/static/index/css/public.css" /}
-    {load href="/static/index/css/details.css" /}
+<!--引入头部文件-->
+{include file="default/header" title="商品详情" keywords="Aoogi商城系统"}
 
-</head>
-
-<body>
+{load href="/static/index/css/details.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
 <header class="banner">
     <div class="swiper-container" id="banner">
@@ -32,6 +20,7 @@
         </div>
     </div>
 </header>
+<!--
 <div class="details-title">
     <div class="title-main">
         <h3>iPhone XR-大屏幕上见</h3>
@@ -46,6 +35,7 @@
         <p>邮费：￥0.00 </p>
     </div>
 
+    &lt;!&ndash;图标&ndash;&gt;
     <div class="title-icon">
         <div class="icon-img">
             <img src="/static/index/images/goods-icon-1.png" />
@@ -61,12 +51,15 @@
         </div>
     </div>
 
-    <div class="title-param">
-        <div class="param-title">
+    &lt;!&ndash;参数模块&ndash;&gt;
+    <div class="title-param" >
+        <div class="param-title" id="paramTitle">
             <label>参数规格</label>
-            <img src="/static/index/images/direct-down.png">
+            <img src="/static/index/images/direct-down.png" id="paramIcon">
         </div>
-        <div class="param-info">
+
+        &lt;!&ndash;参数信息&ndash;&gt;
+        <div class="param-info" id="paramInfo">
             <div class="info-con">
                 <label>品牌 ：</label>
                 <p>小米</p>
@@ -75,10 +68,16 @@
                 <label>系列 ：</label>
                 <p>MINX</p>
             </div>
+            <div class="info-con">
+                <label>处理器 ：</label>
+                <p>Crole 9</p>
+            </div>
         </div>
     </div>
-</div>
-<div class="recomm">
+</div>-->
+
+<!--推荐模块-->
+<!--<div class="recomm">
     <div class="swiper-container" id="recomm">
         <div class="swiper-wrapper">
 
@@ -96,7 +95,18 @@
             <div class="swiper-slide">
                 <div class="recomm-list">
                     <a href="">
-                        <img src="/static/index/images/goods1.jpg">
+                        <img src="/static/index/images/goods2.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods3.jpg">
                         <div class="recomm-list-con">
                             <h3>小米MIX3-为发烧友而生</h3>
                             <p>￥2500.00</p>
@@ -118,7 +128,18 @@
             <div class="swiper-slide">
                 <div class="recomm-list">
                     <a href="">
-                        <img src="/static/index/images/goods1.jpg">
+                        <img src="/static/index/images/goods2.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods3.jpg">
                         <div class="recomm-list-con">
                             <h3>小米MIX3-为发烧友而生</h3>
                             <p>￥2500.00</p>
@@ -140,7 +161,84 @@
             <div class="swiper-slide">
                 <div class="recomm-list">
                     <a href="">
+                        <img src="/static/index/images/goods2.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods3.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
                         <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods2.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods3.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods1.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods2.jpg">
+                        <div class="recomm-list-con">
+                            <h3>小米MIX3-为发烧友而生</h3>
+                            <p>￥2500.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="recomm-list">
+                    <a href="">
+                        <img src="/static/index/images/goods3.jpg">
                         <div class="recomm-list-con">
                             <h3>小米MIX3-为发烧友而生</h3>
                             <p>￥2500.00</p>
@@ -150,43 +248,209 @@
             </div>
         </div>
     </div>
+</div>-->
 
+<!--商品详情-->
+<div class="info">
+    <div class="info-title">
+        <h2 class="info-active" id="0">产品详情</h2>
+        <h2 id="1">用户评论</h2>
+    </div>
 
+    <div class="info-con">
+        <div class="swiper-container" id="info">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="info-comment">
 
+                        <div class="comment-list">
+                            <div class="comment-list-header">
+                                <div class="list-header-img">
+                                    <img src="/static/index/images/goods1.jpg"/>
+                                </div>
+                                <div class="list-header-title">
+                                    <h2>随风却飘不起来</h2>
+                                    <p>2018-10-02</p>
+                                </div>
+                                <div class="list-header-agree">
+                                    <img src="/static/index/images/agree.png"/>
+                                </div>
+                            </div>
+                            <div class="comment-list-content">
+                                大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。
+                            </div>
+                            <div class="comment-list-img">
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods2.jpg"/>
+                                <img src="/static/index/images/goods3.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods2.jpg"/>
+                            </div>
+                            <div class="comment-list-img-big">
+                                <img src=""/>
+                            </div>
+                        </div>
+                        <div class="comment-list">
+                            <div class="comment-list-header">
+                                <div class="list-header-img">
+                                    <img src="/static/index/images/goods1.jpg"/>
+                                </div>
+                                <div class="list-header-title">
+                                    <h2>随风却飘不起来</h2>
+                                    <p>2018-10-02</p>
+                                </div>
+                                <div class="list-header-agree">
+                                    <img src="/static/index/images/agree.png"/>
+                                </div>
+                            </div>
+                            <div class="comment-list-content">
+                                大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。
+                            </div>
+                            <div class="comment-list-img">
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                            </div>
+                        </div>
+                        <div class="comment-list">
+                            <div class="comment-list-header">
+                                <div class="list-header-img">
+                                    <img src="/static/index/images/goods1.jpg"/>
+                                </div>
+                                <div class="list-header-title">
+                                    <h2>随风却飘不起来</h2>
+                                    <p>2018-10-02</p>
+                                </div>
+                                <div class="list-header-agree">
+                                    <img src="/static/index/images/agree.png"/>
+                                </div>
+                            </div>
+                            <div class="comment-list-content">
+                                大江东去，浪淘尽，千古风流人物。故垒西边，人道是，三国周郎赤壁。乱石穿空，惊涛拍岸，卷起千堆雪。
+                            </div>
+                            <div class="comment-list-img">
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                                <img src="/static/index/images/goods1.jpg"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="info-con-img">
+                        <img src="/static/index/images/goods1.jpg"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
-<!--引入加载footer文件-->
-{include file="default/footer" /}
+<!--底部模块-->
+<div class="bottom-content"></div>
+
+<div class="goods-bottom">
+    <div class="goods-bottom-icon">
+        <div class="goods-bottom-icon-img">
+            <a href="">
+                <img src="/static/index/images/collection.png"/>
+            </a>
+
+        </div>
+        <div class="goods-bottom-icon-img">
+            <a href="">
+                <img src="/static/index/images/share.png"/>
+            </a>
+        </div>
+        <div class="goods-bottom-icon-img">
+            <a href="">
+                <img src="/static/index/images/car.png"/>
+            </a>
+        </div>
+
+    </div>
+    <div class="goods-bottom-now">
+        <a href="">
+            立即购买
+        </a>
+    </div>
+    <div class="goods-bottom-car">
+        <a href="">
+        加入购物车
+        </a>
+    </div>
+
+</div>
+
 
 </body>
+<!--引入加载footer文件-->
+<!--{include file="default/footer" /}-->
 
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
 
 <script>
-
+    /*产品Banner图Swiper*/
     var bannerSwiper = new Swiper('#banner', {
-        //direction: 'vertical',
-        slidesPerView: "auto",
         loop: true,
         effect:'coverflow',
         autoplay: true,
     });
 
+    /*推荐产品Swiper*/
     var recommSwiper = new Swiper('#recomm', {
-        /*direction: 'vertical',
-        slidesPerView: "auto",
-        loop: true,
-        effect:'coverflow',
-        autoplay: true,*/
-        centeredSlides:true,
+        slidesPerView:3
     });
 
-
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault()
+    /*产品详情Swiper*/
+    var infoSwiper = new Swiper('#info', {
+        on:{
+            slideChangeTransitionEnd:function(){
+                var id = "#"+this.activeIndex;
+                $(".info-title h2").siblings().removeClass("info-active");
+                $(id).addClass("info-active");
+            }
+        }
     });
+
+    $(".info-title h2").on("click",function(){
+        $(this).siblings().removeClass("info-active");
+        $(this).addClass("info-active");
+        infoSwiper.slideTo($(this).attr('id'));
+    });
+
+    /*切换参数规格显示模式*/
+    $("#paramTitle").on('click',function(){
+       $("#paramInfo").toggle('slow',function(){
+           switch($(this).css('display')){
+               case 'block':
+                   $("#paramIcon").attr('src','/static/index/images/direct-up.png');
+                   break;
+               default:
+                   $("#paramIcon").attr('src','/static/index/images/direct-down.png');
+                   break;
+           }
+       });
+    });
+
+    /*评论图显示*/
+    $(".comment-list-img img").on('click',function(){
+        $(this).parent().next().children('img').attr('src',$(this).attr('src'));
+        $(this).parent().next().show()
+    });
+    /*评论图隐藏*/
+    $(".comment-list-img-big").on("click",function(){
+        $(this).hide();
+    });
+
 </script>
 
 </html>

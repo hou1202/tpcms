@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>首页</title>
-    {load href="/static/index/lib/flexible_css.js" /}
-    {load href="/static/index/lib/flexible.js" /}
-    {load href="/static/index/lib/swiper-4.3.3.min.css" /}
-    {load href="/static/index/css/cssreset.css" /}
-    {load href="/static/index/css/public.css" /}
-    {load href="/static/index/css/index.css" /}
+<!--引入头部文件-->
+{include file="default/header" title="首页" keywords="Aoogi商城系统"}
 
-</head>
+{load href="/static/index/css/index.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
-<body>
 
 <header class="carousel">
     <div class="swiper-container">
@@ -168,8 +157,6 @@
 <!--引入加载footer文件-->
 {include file="default/footer" /}
 
-</body>
-
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
 
 <script>
@@ -180,9 +167,9 @@
         effect:'coverflow',
         autoplay: true,
     });
-    window.addEventListener('touchmove', function(evt) {
+    /*window.addEventListener('touchmove', function(evt) {
         evt.preventDefault()
-    });
+    });*/
 </script>
 
 </html>
