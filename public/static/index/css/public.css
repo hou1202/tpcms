@@ -96,11 +96,26 @@ i.ficon4 {
 }
 .alertInfo p{
   background:rgba(39,39,39,0.9);
-  padding:0.35rem 1rem;
+  padding:0.34666666rem 1rem;
   border-radius:5px;
   max-width:80%;
   width:fit-content;
   width:-webkit-fit-content;
   width:-moz-fit-content;
   margin:0 auto;
+}
+
+/*Back返回功能模块*/
+.back{
+  width:0.8rem;
+  z-index: 998;
+  position:fixed;
+  top:0.50666666rem;
+  left:0.50666666rem;
+}
+.back a{
+  display:block;
+}
+.back img{
+  width:100%;
 }

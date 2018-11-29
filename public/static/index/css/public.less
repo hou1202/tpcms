@@ -81,3 +81,42 @@ i.ficon4{
 .bottom-content{
     height: 120/@rem;
 }
+
+/*弹窗提示*/
+.alertInfo{
+    font-size:25/@rem;
+    text-align:center;
+    color: rgba(212,212,212,0.9);
+    background: rgba(255, 255, 255, 0);
+    width:100%;
+    z-index: 1000;
+    position: fixed;
+    top:50%;
+    line-height:45/@rem;
+    display:none;
+    p{
+        background:rgba(39,39,39,0.9);
+        padding:26/@rem 75/@rem;
+        border-radius:5px;
+        max-width:80%;
+        width:fit-content;
+        width:-webkit-fit-content;
+        width:-moz-fit-content;
+        margin:0 auto;
+    }
+}
+
+/*Back返回功能模块*/
+.back{
+    width:60/@rem;
+    z-index: 998;
+    position:fixed;
+    top:38/@rem;
+    left:38/@rem;
+    a{
+        display:block;
+    }
+    img{
+        width:100%;
+    }
+}
