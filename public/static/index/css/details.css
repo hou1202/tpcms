@@ -297,24 +297,24 @@
   display:none;
 }
 .bottom-param .bottom-param-spec .radio-active{
-  background:#cc7f15;
-  border-color:#cc7f15;
+  background:#dc7b41;
+  border-color:#dc7b41;
   color:#fff;
 
 }
 .bottom-param .bottom-param-button{
   text-align:center;
-  padding:0.30666666rem;
+  padding:0.30666666rem 0;
 }
 .bottom-param .bottom-param-button button{
   height:1rem;
   line-height: 1rem;
-  background:#cc7f15;
+  background:#a56713;
   border:none;
   border-radius:7px;
   color:#fff;
   font-size:0.33333333rem;
-  width:5.50666666rem;
+  width:8.8rem;
 }
 
 /*产品详情模块*/
