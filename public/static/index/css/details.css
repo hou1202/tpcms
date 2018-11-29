@@ -6,6 +6,20 @@
   width:100%;
   border-radius:5px;
 }
+.back{
+  width:0.8rem;
+  z-index: 99;
+  position:fixed;
+  top:0.5rem;
+  left:0.5rem;
+
+}
+.back a{
+  display:block;
+}
+.back img{
+  width:100%;
+}
 .details-title {
   padding: 0.2rem 0.4rem;
 }
