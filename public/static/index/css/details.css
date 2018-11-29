@@ -9,7 +9,7 @@
 
 .back{
   width:0.8rem;
-  z-index: 99;
+  z-index: 998;
   position:fixed;
   top:0.5rem;
   left:0.5rem;
@@ -25,6 +25,7 @@
 }
 .details-title .title-main{
   line-height:0.5rem;
+  overflow: hidden;
 }
 .details-title .title-main h3{
   font-size:0.4rem;
@@ -46,7 +47,7 @@
   -webkit-line-clamp: 1; /* 这个表示要显示几行 */
   -webkit-box-orient: vertical;
 }
-.details-title .title-main label{
+.details-title .title-main span{
   font-size:0.30666666rem;
   height:0.8rem;
   line-height:0.8rem;
@@ -106,14 +107,14 @@
   font-size:0.33333333rem;
   display:none;
 }
-.details-title .title-param .param-info .info-con{
+.details-title .title-param .param-info .param-info-con{
   height:0.6rem;
   line-height:0.6rem;
 }
-.details-title .title-param .param-info .info-con label{
+.details-title .title-param .param-info .param-info-con span{
   float:left;
 }
-.details-title .title-param .param-info .info-con p{
+.details-title .title-param .param-info .param-info-con p{
   float:left;
   padding-left:0.3rem;
 }
@@ -162,7 +163,7 @@
   height: 1.33333333rem;
   line-height: 1.33333333rem;
   background: #ffffff;
-  z-index: 2000;
+  z-index: 999;
   display: flex;
   display: -webkit-flex;
   justify-content: space-around;
@@ -178,7 +179,6 @@
   height: 1.33333333rem;
   position:fixed;
   left:0;
-
  }
 .goods-bottom .goods-bottom-icon .goods-bottom-icon-img{
   float:left;
@@ -197,11 +197,136 @@
   border-top-left-radius: 0.8rem;
 }
 .goods-bottom .goods-bottom-car{
+  color:#fff;
   width:2.5rem;
   background:#cc7f15;
   position:fixed;
   right:0;
+}
 
+.bottom-param{
+  width:100%;
+  position: fixed;
+  bottom:1.33333333rem;
+  background:#fff;
+  z-index: 999;
+  border-bottom:1px solid #e5e5e5;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  padding:0.5rem 0.6rem 0.3rem 0.6rem;
+  display:none;
+
+}
+.bottom-param .bottom-param-title{
+  overflow: hidden;
+}
+.bottom-param .bottom-param-title img{
+  width:2rem;
+  float:left;
+}
+.bottom-param .bottom-param-title .param-title-middle{
+  float:left;
+  height:2rem;
+  padding:0.2rem 0 0 0.3rem;
+}
+.bottom-param .bottom-param-title .param-title-middle h2{
+  width:5.5rem;
+  font-size:0.33333333rem;
+  height:0.9rem;
+  line-height:0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.bottom-param .bottom-param-title .param-title-middle .param-title-middle-price{
+  width:5rem;
+  font-size:0.30666666rem;
+  height:0.45rem;
+  line-height:0.45rem;
+  color:#cc7f15;
+}
+.bottom-param .bottom-param-title .param-title-middle .param-title-middle-price p ,span{
+  float:left;
+}
+.bottom-param .bottom-param-title .param-title-close{
+  width:1rem;
+  float:right;
+}
+.bottom-param .bottom-param-title .param-title-close img{
+  width:0.6rem;
+  float:right;
+}
+.bottom-param .bottom-param-num{
+  height:1rem;
+  line-height:1rem;
+  font-size:0.33333333rem;
+  margin:0.5rem 0 0.3rem 0;
+}
+.bottom-param .bottom-param-num span{
+  margin-right:0.5rem;
+}
+.bottom-param .bottom-param-num .param-num-icon{
+  display: inline-block;
+  width:0.5rem;
+  height:0.5rem;
+}
+.bottom-param .bottom-param-num .icon-left{
+  background:url('/static/index/images/jian.png') no-repeat;
+  background-size:0.5rem 0.5rem;
+}
+.bottom-param .bottom-param-num .icon-right{
+  background:url('/static/index/images/jia.png') no-repeat;
+  background-size:0.5rem 0.5rem;
+}
+.bottom-param .bottom-param-num input{
+  width:2.5rem;
+  border:none;
+  border-bottom:1px solid #e5e5e5;
+  margin: 0 0.2rem;
+  text-align:center;
+}
+.bottom-param .bottom-param-spec {
+  padding:0.2rem 0;
+  overflow: hidden;
+}
+.bottom-param .bottom-param-spec .spec-radio{
+  font-size:0.33333333rem;
+  height:1rem;
+  line-height:1rem;
+  padding:0 0.2rem;
+  border:1px solid #ccc;
+  border-radius:5px;
+  float:left;
+  margin-right:0.2rem;
+  margin-bottom:0.2rem;
+  width:fit-content;
+  width:-webkit-fit-content;
+  width:-moz-fit-content;
+}
+.bottom-param .bottom-param-spec .spec-radio input{
+  display:none;
+}
+.bottom-param .bottom-param-spec .radio-active{
+  background:#cc7f15;
+  border-color:#cc7f15;
+  color:#fff;
+
+}
+.bottom-param .bottom-param-button{
+  text-align:center;
+  padding:0.3rem;
+}
+.bottom-param .bottom-param-button button{
+  height:1rem;
+  line-height: 1rem;
+  background:#cc7f15;
+  border:none;
+  border-radius:7px;
+  color:#fff;
+  font-size:0.33333333rem;
+  width:5.5rem;
 }
 
 /*产品详情模块*/

@@ -32,8 +32,8 @@
     <div class="title-main">
         <h3>iPhone XR-大屏幕上见</h3>
         <p>畅想科技未来不得不见的可以来现</p>
-        <label class="left">￥2500.00</label>
-        <label class="right">￥3000.00</label>
+        <span class="left">￥2500.00</span>
+        <span class="right">￥3000.00</span>
     </div>
 
     <div class="title-vice">
@@ -57,26 +57,25 @@
             <img src="/static/index/images/goods-icon-4.png" />
         </div>
     </div>
-
     <!--参数模块-->
     <div class="title-param" >
         <div class="param-title" id="paramTitle">
-            <label>参数规格</label>
+            <span>参数规格</span>
             <img src="/static/index/images/direct-down.png" id="paramIcon">
         </div>
 
         <!--参数信息-->
         <div class="param-info" id="paramInfo">
-            <div class="info-con">
-                <label>品牌 ：</label>
+            <div class="param-info-con">
+                <span>品牌 ：</span>
                 <p>小米</p>
             </div>
-            <div class="info-con">
-                <label>系列 ：</label>
+            <div class="param-info-con">
+                <span>系列 ：</span>
                 <p>MINX</p>
             </div>
-            <div class="info-con">
-                <label>处理器 ：</label>
+            <div class="param-info-con">
+                <span>处理器 ：</span>
                 <p>Crole 9</p>
             </div>
         </div>
@@ -370,16 +369,12 @@
 
 
 
-<!--底部模块-->
+<!--底部功能模块-->
 <div class="bottom-content"></div>
-
 <div class="goods-bottom">
     <div class="goods-bottom-icon">
-        <div class="goods-bottom-icon-img">
-            <a href="">
-                <img src="/static/index/images/collection.png"/>
-            </a>
-
+        <div class="goods-bottom-icon-img" id="collect">
+            <img src="/static/index/images/collection.png"/>
         </div>
         <div class="goods-bottom-icon-img">
             <a href="">
@@ -399,12 +394,65 @@
         </a>
     </div>
     <div class="goods-bottom-car">
-        <a href="">
         加入购物车
-        </a>
+    </div>
+</div>
+
+<!--底部功能选项模块-->
+<div class="bottom-param">
+    <div class="bottom-param-title">
+        <img src="/static/index/images/goods2.jpg">
+        <div class="param-title-middle">
+            <h2>小米MIX3 - 有你有我不见不散</h2>
+            <div class="param-title-middle-price">
+                <p>￥ </p><span id="goodsPrice">2500.00</span>
+            </div>
+            <div class="param-title-middle-price">
+                <p>库存：</p><span id="goodsStock">1000</span>
+            </div>
+        </div>
+        <div class="param-title-close">
+            <img src="/static/index/images/close.png">
+        </div>
     </div>
 
+    <form id="car_form">
+
+        <div class="bottom-param-num">
+            <span>购买数量：</span>
+            <i class="param-num-icon icon-left"></i>
+            <input type="text" name="num" value="1" id="goodsNum"/>
+            <i class="param-num-icon icon-right"></i>
+        </div>
+
+        <div class="bottom-param-spec">
+            <div class="spec-radio radio-active">
+                <input type="radio" name="spec" checked value="0"/>
+                <span>MIX3 移动版</span>
+            </div>
+            <div class="spec-radio">
+                <input type="radio" name="spec" value="1"/>
+                <span>MIX3 联通版</span>
+            </div>
+            <div class="spec-radio">
+                <input type="radio" name="spec" value="2"/>
+                <span>MIX3 电信版</span>
+            </div>
+            <div class="spec-radio">
+                <input type="radio" name="spec" value="3"/>
+                <span>MIX3 全网通</span>
+            </div>
+
+        </div>
+
+        <div class="bottom-param-button">
+            <button type="button" id="submit"> 确 定 </button>
+        </div>
+
+    </form>
+
 </div>
+
 
 
 </body>
@@ -412,6 +460,7 @@
 <!--{include file="default/footer" /}-->
 
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
+{load href="/static/index/js/public.js" /}
 
 <script>
     /*产品Banner图Swiper*/
@@ -438,14 +487,14 @@
         }
     });
 
-    $(".info-title h2").on("click",function(){
+    $(".info-title h2").click(function(){
         $(this).siblings().removeClass("info-active");
         $(this).addClass("info-active");
         infoSwiper.slideTo($(this).attr('id'));
     });
 
     /*切换参数规格显示模式*/
-    $("#paramTitle").on('click',function(){
+    $("#paramTitle").click(function(){
        $("#paramInfo").toggle('slow',function(){
            switch($(this).css('display')){
                case 'block':
@@ -459,14 +508,62 @@
     });
 
     /*评论图显示*/
-    $(".comment-list-img img").on('click',function(){
+    $(".comment-list-img img").click(function(){
         $(this).parent().next().children('img').attr('src',$(this).attr('src'));
         $(this).parent().next().show()
     });
     /*评论图隐藏*/
-    $(".comment-list-img-big").on("click",function(){
+    $(".comment-list-img-big").click(function(){
         $(this).hide();
     });
+
+    /*商品参数选择控制*/
+    $(".spec-radio").click(function(){
+        $(this).siblings().removeClass("radio-active");
+        $(this).addClass("radio-active");
+        $(this).children('input').attr('checked','checked');
+    });
+
+    /*购物数量减法控制*/
+    $(".icon-left").click(function(){
+        var goods = $('#goodsNum');
+        if(parseInt(goods.val()) <0 ) return $(goods).val(1);
+        if(parseInt(goods.val())-1 > 0) return $(goods).val(goods.val()-1);
+
+    });
+    /*购物数量加法控制*/
+    $(".icon-right").click(function(){
+        var goods = $('#goodsNum');
+        var stock = $('#goodsStock').text();
+        if(parseInt(goods.val()) <0 ) return $(goods).val(1);
+        if(parseInt(goods.val())+1 <= stock) return $(goods).val(parseInt(goods.val())+1);
+    });
+    /*判断输入数量是否合法*/
+    $("#goodsNum").blur(function(){
+        var reg = /^[1-9]+[0-9]*$/;
+        if(!reg.test($(this).val())) return $(this).val(1);
+    });
+
+    /*显示参数面板*/
+    $(".goods-bottom-car").click(function(){
+        $(".bottom-param").show();
+    });
+    /*关闭参数面板*/
+    $(".param-title-close").click(function(){
+        $(".bottom-param").hide();
+    });
+
+    /*参数提交*/
+    $("#submit").click(function(){
+        autoAlert($("#car_form").serialize());
+        $(".bottom-param").hide();
+    });
+
+    /*收藏功能处理*/
+    $("#collect").click(function(){
+        $(this).children('img').attr('src','/static/index/images/collection-true.png')
+    });
+
 
 </script>
 
