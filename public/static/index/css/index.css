@@ -51,7 +51,7 @@
   font-size:0.4rem;
   margin-bottom:0.10666666rem;
   height:0.4rem;
-  line-height: 0.4rem;
+  line-height: 0.41333333rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -61,7 +61,7 @@
 .recom .recom-list .recom-com span{
   font-size:0.33333333rem;
   height:0.33333333rem;
-  line-height: 0.33333333rem;
+  line-height: 0.34666666rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -72,7 +72,7 @@
   font-size:0.30666666rem;
   margin-top:0.10666666rem;
   height:1.08rem;
-  line-height:0.36rem;
+  line-height:0.37333333rem;
   text-indent: 0.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,17 +80,7 @@
   -webkit-line-clamp: 3; /* 这个表示要显示几行 */
   -webkit-box-orient: vertical;
 }
-/*.recom .recom-list .recom-com p::after{
-  content: "...";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding-left: 0.4rem;
-  background: -webkit-linear-gradient(left, transparent, #fff 55%);
-  background: -o-linear-gradient(right, transparent, #fff 55%);
-  background: -moz-linear-gradient(right, transparent, #fff 55%);
-  background: linear-gradient(to right, transparent, #fff 55%);
-}*/
+
 .recom .recom-list .recom-com img{
   margin-top:0.2rem;
   float:right;

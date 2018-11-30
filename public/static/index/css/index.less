@@ -48,33 +48,34 @@
                 font-size:30/@rem;
                 margin-bottom:8/@rem;
                 height:30/@rem;
-                line-height: 30/@rem;
+                line-height: 31/@rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
             }
-            label{
+            span{
                 font-size:25/@rem;
                 height:25/@rem;
-                line-height:25/@rem;
+                line-height:26/@rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
             }
             p{
+                font-size:23/@rem;
                 margin-top:8/@rem;
                 height:81/@rem;
-                line-height:27/@rem;
-                position: relative;
+                line-height:28/@rem;
                 overflow: hidden;
-                &::after{
-                    font-size:23/@rem;
-                    content: "...";
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
-                    padding-left: 30/@rem;
-                    background: -webkit-linear-gradient(left, transparent, #fff 55%);
-                    background: -o-linear-gradient(right, transparent, #fff 55%);
-                    background: -moz-linear-gradient(right, transparent, #fff 55%);
-                    background: linear-gradient(to right, transparent, #fff 55%);
-                }
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
             }
-
             img{
                 margin-top:15/@rem;
                 float:right;
