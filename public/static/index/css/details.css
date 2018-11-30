@@ -293,7 +293,7 @@
   width:-webkit-fit-content;
   width:-moz-fit-content;
 }
-.bottom-param .bottom-param-spec .spec-radio input{
+.bottom-param .bottom-param-spec .spec-radio input,.spec-radio-hidden{
   display:none;
 }
 .bottom-param .bottom-param-spec .radio-active{

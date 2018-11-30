@@ -20,6 +20,10 @@ class Index extends BaseController
     public function goods(){
         return view('/details');
     }
+
+    public function car(){
+        return view('/car');
+    }
     public function hello($name = 'ThinkPHP5')
     {
 

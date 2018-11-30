@@ -382,7 +382,7 @@
             </a>
         </div>
         <div class="goods-bottom-icon-img">
-            <a href="">
+            <a href="/car">
                 <img src="/static/index/images/car.png"/>
             </a>
         </div>
@@ -401,7 +401,7 @@
 <!--底部功能选项模块-->
 <div class="bottom-param">
     <div class="bottom-param-title">
-        <img src="/static/index/images/goods2.jpg">
+        <img src="/static/index/images/goods2.jpg" id="goodsImg">
         <div class="param-title-middle">
             <h2>小米MIX3 - 有你有我不见不散</h2>
             <div class="param-title-middle-price">
@@ -417,7 +417,7 @@
     </div>
 
     <form id="car_form">
-
+        <input type="hidden" name="id" value="1" />
         <div class="bottom-param-num">
             <span>购买数量：</span>
             <i class="param-num-icon icon-left"></i>
@@ -429,18 +429,38 @@
             <div class="spec-radio radio-active">
                 <input type="radio" name="spec" checked value="0"/>
                 <span>MIX3 移动版</span>
+                <div class="spec-radio-hidden">
+                    <p class="specImg">/static/index/images/goods2.jpg</p>
+                    <p class="specPrice">2500</p>
+                    <p class="specStock">1000</p>
+                </div>
             </div>
             <div class="spec-radio">
                 <input type="radio" name="spec" value="1"/>
                 <span>MIX3 联通版</span>
+                <div class="spec-radio-hidden">
+                    <p class="specImg">/static/index/images/goods3.jpg</p>
+                    <p class="specPrice">2600</p>
+                    <p class="specStock">800</p>
+                </div>
             </div>
             <div class="spec-radio">
                 <input type="radio" name="spec" value="2"/>
                 <span>MIX3 电信版</span>
+                <div class="spec-radio-hidden">
+                    <p class="specImg">/static/index/images/goods1.jpg</p>
+                    <p class="specPrice">2300</p>
+                    <p class="specStock">1200</p>
+                </div>
             </div>
             <div class="spec-radio">
                 <input type="radio" name="spec" value="3"/>
                 <span>MIX3 全网通</span>
+                <div class="spec-radio-hidden">
+                    <p class="specImg">/static/index/images/goods2.jpg</p>
+                    <p class="specPrice">3000</p>
+                    <p class="specStock">500</p>
+                </div>
             </div>
 
         </div>
@@ -522,6 +542,12 @@
         $(this).siblings().removeClass("radio-active");
         $(this).addClass("radio-active");
         $(this).children('input').attr('checked','checked');
+        $('#goodsImg').attr('src',$(this).find('.specImg').text());
+        $('#goodsPrice').text($(this).find('.specPrice').text());
+        $('#goodsStock').text($(this).find('.specStock').text());
+        if(parseInt($("#goodsNum").val()) > parseInt($(this).find('.specStock').text()))
+            return $("#goodsNum").val(parseInt($(this).find('.specStock').text()));
+
     });
 
     /*购物数量减法控制*/
@@ -534,14 +560,16 @@
     /*购物数量加法控制*/
     $(".icon-right").click(function(){
         var goods = $('#goodsNum');
-        var stock = $('#goodsStock').text();
+        var stock = parseInt($('#goodsStock').text());
         if(parseInt(goods.val()) <0 ) return $(goods).val(1);
         if(parseInt(goods.val())+1 <= stock) return $(goods).val(parseInt(goods.val())+1);
     });
     /*判断输入数量是否合法*/
     $("#goodsNum").blur(function(){
         var reg = /^[1-9]+[0-9]*$/;
+        var stock = parseInt($('#goodsStock').text());
         if(!reg.test($(this).val())) return $(this).val(1);
+        if(parseInt($(this).val()) > stock) return $(this).val(parseInt(stock));
     });
 
     /*显示参数面板*/

@@ -1,0 +1,172 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="首页" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/car.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+
+
+<header class="car-title">
+    <p>共计 <span>2</span> 商品</p>
+</header>
+
+<!--购物车列表模块-->
+<div class="car">
+    <form>
+        <div class="car-list">
+            <div class="car-list-select">
+                <input type="checkbox" name="id" class="selectInput">
+                <div class="list-select-box"></div>
+            </div>
+            <div class="car-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="car-list-cont">
+                <div class="list-cont-title">
+                    <h2>小米 MIX2 为发烧的你而做</h2>
+                    <p>￥<span class="goodsPrice">2500</span></p>
+                    <p>库存：<span class="goodsStock">1000</span></p>
+                </div>
+                <div class="list-cont-num">
+                    <i class="cont-num-icon icon-left"></i>
+                    <input type="text" name="num" value="1" class="goodsNum">
+                    <i class="cont-num-icon icon-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="car-list">
+            <div class="car-list-select">
+                <input type="checkbox" name="id" class="selectInput">
+                <div class="list-select-box"></div>
+            </div>
+            <div class="car-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="car-list-cont">
+                <div class="list-cont-title">
+                    <h2>小米 MIX2 为发烧的你而做</h2>
+                    <p>￥<span class="goodsPrice">3000</span></p>
+                    <p>库存：<span class="goodsStock">800</span></p>
+                </div>
+                <div class="list-cont-num">
+                    <i class="cont-num-icon icon-left"></i>
+                    <input type="text" name="num" value="1" class="goodsNum">
+                    <i class="cont-num-icon icon-right"></i>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--购物车结算模块-->
+<div class="balance">
+    <div class="balance-all">
+        <div class="balance-all-box"></div>
+    </div>
+    <div class="balance-sum">
+        <p>合计：<span class="periceSum">0.00</span></p>
+    </div>
+    <div class="balance-button">
+        <button type="button" id="submit"> 结 算 </button>
+    </div>
+
+</div>
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+{load href="/static/index/js/public.js" /}
+
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        //direction: 'vertical',
+        slidesPerView: "auto",
+        loop: true,
+        effect:'coverflow',
+        autoplay: true,
+    });
+
+    /*购物车列表产品单个状态操作*/
+    $(".list-select-box").click(function(){
+        $(this).toggleClass('select-box-active');
+        var sum = $(".periceSum");
+        var price = $(this).parent().parent().find(".goodsPrice").text();
+        var num = $(this).parent().parent().find(".goodsNum").val();
+        if($(this).hasClass('select-box-active')){
+            $(this).prev().attr("checked", true);
+            sum.text(parseInt(sum.text())+parseInt(price)*num);
+        }else{
+            $(this).prev().attr("checked", false);
+            $(".balance-all-box").removeClass('all-box-active');
+            var sumMoney =parseInt(sum.text())-parseInt(price)*num;
+            if(sumMoney < 0) sumMoney = 0.00;
+            sum.text(sumMoney);
+
+        }
+    });
+    /*购物车列表产品全选状态操作*/
+    $(".balance-all-box").click(function(){
+        $(this).toggleClass('all-box-active');
+        if($(this).hasClass('all-box-active')){
+            $(".list-select-box").addClass('select-box-active');
+            $(".selectInput").attr("checked", true);
+            var goodsPrice = $(".goodsPrice");
+            var sumPrice = 0;
+            for(i = 0 ; i < goodsPrice.length ; i++){
+                var numGoods = 1;
+                numGoods = goodsPrice[i].parentNode.parentNode.nextElementSibling.children[1].value;
+                sumPrice = sumPrice+parseInt(goodsPrice[i].textContent)*parseInt(numGoods);
+            }
+            $(".periceSum").text(sumPrice);
+
+        }else{
+            $(".list-select-box").removeClass('select-box-active');
+            $(".selectInput").attr("checked", false);
+            $(".periceSum").text("0.00");
+        }
+    });
+
+    /*购物数量减法控制*/
+    $(".icon-left").click(function(){
+        var goods = $(this).next();
+        if(parseInt(goods.val()) <= 1 ) return autoAlert('已经不能再少了');
+        $(goods).val(goods.val()-1);
+        if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+            var periceSum = $(".periceSum");
+            periceSum.text(parseInt(periceSum.text())-parseInt($(this).parent().prev().find('.goodsPrice').text()));
+        }
+
+    });
+    /*购物数量加法控制*/
+    $(".icon-right").click(function(){
+        var goods = $(this).prev();
+        var stock = parseInt($(this).parent().prev().children().find(".goodsStock").text());
+        if(parseInt(goods.val()) < 0 ) return $(goods).val(1);
+        if(parseInt(goods.val())+1 > stock) return autoAlert('真的不能再多了');
+            $(goods).val(parseInt(goods.val())+1);
+            if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+                var periceSum = $(".periceSum");
+                periceSum.text(parseInt(periceSum.text())+parseInt($(this).parent().prev().find('.goodsPrice').text()));
+            }
+
+
+    });
+    /*购物数量输入合法性判断*/
+    $(".goodsNum").blur(function(){
+        var reg = /^[1-9]+[0-9]*$/;
+        var stock = parseInt($(this).parent().prev().children().find(".goodsStock").text());
+        if(!reg.test($(this).val())) return $(this).val(1);
+        if(parseInt($(this).val()) > stock) return $(this).val(parseInt(stock));
+        console.log($(this).val());
+        if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+            var periceSum = $(".periceSum");
+            periceSum.text(parseInt(periceSum.text())+parseInt($(this).parent().prev().find('.goodsPrice').text()));
+        }
+    });
+
+</script>
+
+</html>
