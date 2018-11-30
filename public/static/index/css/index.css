@@ -52,21 +52,35 @@
   margin-bottom:0.10666666rem;
   height:0.4rem;
   line-height: 0.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
 }
-.recom .recom-list .recom-com label{
+.recom .recom-list .recom-com span{
   font-size:0.33333333rem;
   height:0.33333333rem;
   line-height: 0.33333333rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
 }
 .recom .recom-list .recom-com p{
   font-size:0.30666666rem;
   margin-top:0.10666666rem;
   height:1.08rem;
   line-height:0.36rem;
-  position: relative;
+  text-indent: 0.2rem;
   overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
 }
-.recom .recom-list .recom-com p::after{
+/*.recom .recom-list .recom-com p::after{
   content: "...";
   position: absolute;
   bottom: 0;
@@ -76,7 +90,7 @@
   background: -o-linear-gradient(right, transparent, #fff 55%);
   background: -moz-linear-gradient(right, transparent, #fff 55%);
   background: linear-gradient(to right, transparent, #fff 55%);
-}
+}*/
 .recom .recom-list .recom-com img{
   margin-top:0.2rem;
   float:right;
