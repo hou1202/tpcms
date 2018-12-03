@@ -12,10 +12,10 @@
 
 <!--购物车列表模块-->
 <div class="car">
-    <form>
+    <form id="carFrom">
         <div class="car-list">
             <div class="car-list-select">
-                <input type="checkbox" name="id" class="selectInput">
+                <input type="checkbox" name="id" value="1" class="selectInput">
                 <div class="list-select-box"></div>
             </div>
             <div class="car-list-img">
@@ -29,14 +29,14 @@
                 </div>
                 <div class="list-cont-num">
                     <i class="cont-num-icon icon-left"></i>
-                    <input type="text" name="num" value="1" class="goodsNum">
+                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
                     <i class="cont-num-icon icon-right"></i>
                 </div>
             </div>
         </div>
         <div class="car-list">
             <div class="car-list-select">
-                <input type="checkbox" name="id" class="selectInput">
+                <input type="checkbox" name="id" value="2" class="selectInput">
                 <div class="list-select-box"></div>
             </div>
             <div class="car-list-img">
@@ -50,7 +50,49 @@
                 </div>
                 <div class="list-cont-num">
                     <i class="cont-num-icon icon-left"></i>
-                    <input type="text" name="num" value="1" class="goodsNum">
+                    <input type="text" name="" value="1" class="goodsNum">
+                    <i class="cont-num-icon icon-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="car-list">
+            <div class="car-list-select">
+                <input type="checkbox" name="id" value="2" class="selectInput">
+                <div class="list-select-box"></div>
+            </div>
+            <div class="car-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="car-list-cont">
+                <div class="list-cont-title">
+                    <h2>小米 MIX2 为发烧的你而做</h2>
+                    <p>￥<span class="goodsPrice">3000</span></p>
+                    <p>库存：<span class="goodsStock">800</span></p>
+                </div>
+                <div class="list-cont-num">
+                    <i class="cont-num-icon icon-left"></i>
+                    <input type="text" name="" value="1" class="goodsNum">
+                    <i class="cont-num-icon icon-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="car-list">
+            <div class="car-list-select">
+                <input type="checkbox" name="id" value="2" class="selectInput">
+                <div class="list-select-box"></div>
+            </div>
+            <div class="car-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="car-list-cont">
+                <div class="list-cont-title">
+                    <h2>小米 MIX2 为发烧的你而做</h2>
+                    <p>￥<span class="goodsPrice">3000</span></p>
+                    <p>库存：<span class="goodsStock">800</span></p>
+                </div>
+                <div class="list-cont-num">
+                    <i class="cont-num-icon icon-left"></i>
+                    <input type="text" name="" value="1" class="goodsNum">
                     <i class="cont-num-icon icon-right"></i>
                 </div>
             </div>
@@ -67,7 +109,7 @@
         <p>合计：<span class="periceSum">0.00</span></p>
     </div>
     <div class="balance-button">
-        <button type="button" id="submit"> 结 算 </button>
+        <button type="button" id="submitForm" form="carForm"> 结 算 </button>
     </div>
 
 </div>
@@ -94,16 +136,20 @@
         $(this).toggleClass('select-box-active');
         var sum = $(".periceSum");
         var price = $(this).parent().parent().find(".goodsPrice").text();
-        var num = $(this).parent().parent().find(".goodsNum").val();
+        var num = $(this).parent().parent().find(".goodsNum");
         if($(this).hasClass('select-box-active')){
+            //选中
             $(this).prev().attr("checked", true);
-            sum.text(parseInt(sum.text())+parseInt(price)*num);
+            sum.text(parseInt(sum.text())+parseInt(price)*num.val());
+            num.attr('name','num');
         }else{
+            //取消
             $(this).prev().attr("checked", false);
             $(".balance-all-box").removeClass('all-box-active');
-            var sumMoney =parseInt(sum.text())-parseInt(price)*num;
+            var sumMoney =parseInt(sum.text())-parseInt(price)*num.val();
             if(sumMoney < 0) sumMoney = 0.00;
             sum.text(sumMoney);
+            num.attr('name','');
 
         }
     });
@@ -111,6 +157,7 @@
     $(".balance-all-box").click(function(){
         $(this).toggleClass('all-box-active');
         if($(this).hasClass('all-box-active')){
+            //选中
             $(".list-select-box").addClass('select-box-active');
             $(".selectInput").attr("checked", true);
             var goodsPrice = $(".goodsPrice");
@@ -121,11 +168,14 @@
                 sumPrice = sumPrice+parseInt(goodsPrice[i].textContent)*parseInt(numGoods);
             }
             $(".periceSum").text(sumPrice);
+            $(".goodsNum").attr('name','num');
 
         }else{
+            //取消
             $(".list-select-box").removeClass('select-box-active');
             $(".selectInput").attr("checked", false);
             $(".periceSum").text("0.00");
+            $(".goodsNum").attr('name','');
         }
     });
 
@@ -151,8 +201,6 @@
                 var periceSum = $(".periceSum");
                 periceSum.text(parseInt(periceSum.text())+parseInt($(this).parent().prev().find('.goodsPrice').text()));
             }
-
-
     });
     /*购物数量输入合法性判断*/
     $(".goodsNum").blur(function(){
@@ -162,9 +210,21 @@
         if(parseInt($(this).val()) > stock) return $(this).val(parseInt(stock));
         console.log($(this).val());
         if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
-            var periceSum = $(".periceSum");
-            periceSum.text(parseInt(periceSum.text())+parseInt($(this).parent().prev().find('.goodsPrice').text()));
+            var goodsPrice = $(".select-box-active").parent().next().next().find(".goodsPrice");
+
+            var sumPrice = 0;
+            for(i = 0 ; i < goodsPrice.length ; i++){
+                var numGoods = 1;
+                numGoods = goodsPrice[i].parentNode.parentNode.nextElementSibling.children[1].value;
+                sumPrice = sumPrice+parseInt(goodsPrice[i].textContent)*parseInt(numGoods);
+            }
+            $(".periceSum").text(sumPrice);
         }
+    });
+
+    $("#submitForm").click(function(){
+       console.log($("#carFrom").serialize()) ;
+       console.log($("#carFrom").serializeArray()) ;
     });
 
 </script>
