@@ -31,12 +31,12 @@ body{
 /*结算模块*/
 .order{
   padding: 0 0.4rem;
-  margin-top:0.8rem;
+  margin-top:0.4rem;
 }
 .order .order-address{
   border:1px solid #cc7f15;
   border-radius:0.2rem;
-  padding:0.4rem;
+  padding: 0.4rem 0.4rem 0.2rem 0.4rem;
   overflow:hidden;
   font-size:0.33333333rem;
 }
@@ -59,6 +59,12 @@ body{
   display: -webkit-box;
   -webkit-line-clamp: 1; /* 这个表示要显示几行 */
   -webkit-box-orient: vertical;
+}
+.order .order-address .address-title p:first-child{
+  text-align:right;
+}
+.order .order-address .address-title p:nth-child(2){
+  text-align:right;
 }
 
 .order .order-address .address-posit{
@@ -110,7 +116,7 @@ body{
   color: #a2a2a2;
   float:left;
 }
-
+/*订单产品*/
 .order .order-goods{
   padding:0 0.4rem;
   margin-top:0.2rem;
@@ -173,6 +179,33 @@ body{
   font-size:0.30666666rem;
   color:#cc7f15;
   text-align:right;
+}
+/*订单优惠信息*/
+.order .order-discount{
+
+}
+.order .order-discount .discount-info{
+  height:0.8rem;
+  line-height:0.6rem;
+  font-size:0.30666666rem;
+  border-bottom:1px solid #d7d7d7;
+}
+.order .order-discount .discount-info span{
+
+}
+.order .order-discount .discount-info p{
+  float:right;
+  padding-right:0.2rem;
+  width:6.6rem;
+  text-align:right;
+}
+.order .order-discount .discount-info i{
+  float:right;
+  display:block;
+  width:0.6rem;
+  height:0.6rem;
+  background:url('/static/index/images/open.png') no-repeat center center;
+  background-size:0.4rem 0.4rem;
 }
 
 
