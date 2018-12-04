@@ -39,6 +39,8 @@ body{
   display: -webkit-box;
   overflow-x: scroll;
   -webkit-overflow-scrolling:touch;
+  scrollbar-track-color: #fff;
+  scrollbar-base-color:#fff;
 
 }
 
