@@ -24,6 +24,11 @@ class Index extends BaseController
     public function car(){
         return view('/car');
     }
+
+    public function order(){
+        return view('/order');
+    }
+
     public function hello($name = 'ThinkPHP5')
     {
 

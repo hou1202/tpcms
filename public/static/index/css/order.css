@@ -20,7 +20,6 @@ body{
 .car .car-null img{
   width:3.2rem;
 }
-
 .car .car-title{
   height:1.2rem;
   line-height:1.2rem;
@@ -28,24 +27,12 @@ body{
   padding-left:1.4rem;
   color:#cc7f15;
 }
-
 .car .car-list{
   border-radius:7px;
+  overflow: hidden;
   padding:0.4rem;
   margin-bottom:0.4rem;
   background:#fff;
-  overflow: hidden;
-
-  display: -webkit-box;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling:touch;
-
-}
-
-.car-list::-webkit-scrollbar { width:0; height:0; display: none; }
-.car .car-list .car-list-box{
-  width:10.2rem;
-  height:2.4rem;
 
 }
 .car .car-list .car-list-select{
@@ -136,19 +123,6 @@ body{
   background:url('/static/index/images/jia.png') no-repeat;
   background-size:0.4rem 0.4rem;
 }
-
-.car .car-list .car-list-del{
-  margin-left:0.8rem;
-  width:1rem;
-  float:left;
-  height:2.4rem;
-  line-height:2.4rem;
-  text-align:center;
-  background:#cc7f15;
-  color:#fff;
-  border-radius:7px;
-}
-
 
 /*购物车结算模块*/
 .balance{

@@ -15,6 +15,7 @@ Route::get('think', function () {
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
 Route::get('/car','index/index/car');
+Route::get('/order','index/index/order');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');
 
