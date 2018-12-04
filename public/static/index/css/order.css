@@ -6,6 +6,178 @@ body{
   font-size:0.33333333rem;
 }
 
+.header-title{
+  width:100%;
+  height:1.2rem;
+
+}
+.header-title img{
+  width:0.8rem;
+  margin:0.4rem 0 0 0.6rem;
+  float:left;
+}
+.header-title h2{
+  float:left;
+  color:#cc7f15;
+  font-size:0.4rem;
+  height:1.2rem;
+  line-height:1.2rem;
+  margin-left:3rem;
+  padding-top:0.2rem;
+  letter-spacing:0.05333333rem;
+
+}
+
+/*结算模块*/
+.order{
+  padding: 0 0.4rem;
+  margin-top:0.8rem;
+}
+.order .order-address{
+  border:1px solid #cc7f15;
+  border-radius:0.2rem;
+  padding:0.4rem;
+  overflow:hidden;
+  font-size:0.33333333rem;
+}
+.order .order-address .address-info{
+  width:7.6rem;
+  height:2.2rem;
+  float:left;
+}
+.order .order-address .address-title{
+  width:7.6rem;
+  overflow:hidden;
+}
+.order .order-address .address-title p{
+  width:50%;
+  float:left;
+  height:0.6rem;
+  line-height:0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+
+.order .order-address .address-posit{
+  width:7.6rem;
+  height:1.6rem;
+  overflow:hidden;
+}
+.order .order-address .address-posit .address-posit-img{
+  width:0.8rem;
+  height:1.6rem;
+  float:left;
+  align-items:center;
+  display:flex;
+}
+.order .order-address .address-posit .address-posit-img img{
+  width:100%;
+
+}
+.order .order-address .address-posit .address-posit-info{
+  width:6.6rem;
+  height:1.6rem;
+  padding:0.2rem 0 0 0.2rem;
+  overflow: hidden;
+}
+.order .order-address .address-posit .address-posit-info p{
+  height:0.6rem;
+  line-height:0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.order .order-address .address-select{
+  width:0.6rem;
+  float:right;
+  height:2.2rem;
+  align-items:center;
+  display:flex;
+}
+.order .order-address .address-select img{
+  width:0.30666666rem;
+}
+.order .order-address .address-null{
+  width:7.70666666rem;
+  height:2.2rem;
+  line-height:2.2rem;
+  text-align:center;
+  color: #a2a2a2;
+  float:left;
+}
+
+.order .order-goods{
+  padding:0 0.4rem;
+  margin-top:0.2rem;
+}
+.order .order-goods .order-goods-list{
+  border:1px solid #ccc;
+  border-radius:0.2rem;
+  padding:0.2rem 0.4rem;
+  margin-bottom:0.2rem;
+  overflow: hidden;
+}
+.order .order-goods .order-goods-list .goods-list-img{
+  width:1.4rem;
+  float:left;
+}
+.order .order-goods .order-goods-list .goods-list-img img{
+  width:100%;
+  border-radius:0.1rem;
+}
+.order .order-goods .order-goods-list .goods-list-cont{
+  float:left;
+  padding-left:0.2rem;
+  width:6rem;
+}
+.order .order-goods .order-goods-list .goods-list-cont h2{
+  width:100%;
+  height:0.6rem;
+  line-height:0.6rem;
+  font-size:0.33333333rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.order .order-goods .order-goods-list .goods-list-cont .list-cont-param{
+  width:4.4rem;
+  float:left;
+  overflow: hidden;
+}
+.order .order-goods .order-goods-list .goods-list-cont .list-cont-param p{
+  width:4.8rem;
+  height:0.4rem;
+  line-height:0.4rem;
+  font-size:0.30666666rem;
+  color:#cc7f15;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.order .order-goods .order-goods-list .goods-list-cont .list-cont-num{
+  width:1.33333333rem;
+  height:0.8rem;
+  line-height:0.8rem;
+  float:right;
+  overflow: hidden;
+  font-size:0.30666666rem;
+  color:#cc7f15;
+  text-align:right;
+}
+
+
+
+
 
 /*购物车列表模块*/
 .car{

@@ -10,7 +10,7 @@ body{
 /*购物车列表模块*/
 .car{
   padding: 0 0.4rem;
-  margin-top:0.8rem;
+  margin:0.8rem 0 1.2rem 0;
 }
 .car .car-null{
   width:100%;
@@ -43,12 +43,15 @@ body{
   scrollbar-base-color:#fff;
 
 }
-
-.car-list::-webkit-scrollbar { width:0; height:0; display: none; }
+::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+  background: #fff;
+}
+::-webkit-scrollbar-track {/*滚动条里面轨道*/
+  background: #fff;
+}
 .car .car-list .car-list-box{
   width:10.4rem;
   height:2.4rem;
-
 }
 .car .car-list .car-list-select{
   width:0.8rem;
@@ -149,7 +152,7 @@ body{
   text-align:center;
   background:#cc7f15;
   color:#fff;
-  border-radius:7px;
+  border-radius:5px;
 }
 
 

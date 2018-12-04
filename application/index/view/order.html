@@ -1,110 +1,99 @@
 
 <!--引入头部文件-->
-{include file="default/header" title="首页" keywords="Aoogi商城系统"}
+{include file="default/header" title="订单结算" keywords="Aoogi商城系统"}
 
 {load href="/static/index/css/order.css" /}
 {load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
 
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>订单结算</h2>
+</header>
 
 
-<!--购物车列表模块-->
-<div class="car">
-    <div class="car-title">
-        <p>共计 <span>2</span> 商品</p>
+<!--结算模块-->
+<div class="order">
+    <!--结算地址-->
+    <div class="order-address">
+        <div class="address-info">
+            <div class="address-title">
+                <p>收货人： <span>李白是一个诗人，一个好诗人</span></p>
+                <p><span>13564078415</span></p>
+            </div>
+            <div class="address-posit">
+                <div class="address-posit-img">
+                    <img src="/static/index/images/address.png">
+                </div>
+                <div class="address-posit-info">
+                    <p>安徽省 . 合肥市 . 蜀山区</p>
+                    <p>望江西路亚夏汽车大楼1902室sgdgsfdgsdfgsdfgsdgs</p>
+                </div>
+
+
+            </div>
+        </div>
+        <!--<div class="address-null">
+            添加购物地址 ....
+        </div>-->
+        <div class="address-select">
+            <img src="/static/index/images/open.png">
+        </div>
     </div>
-    <form id="carFrom">
-        <div class="car-list">
-            <div class="car-list-select">
-                <input type="checkbox" name="id" value="1" class="selectInput">
-                <div class="list-select-box"></div>
-            </div>
-            <div class="car-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="car-list-cont">
-                <div class="list-cont-title">
-                    <h2>小米 MIX2 为发烧的你而做</h2>
-                    <p>￥<span class="goodsPrice">2500</span></p>
-                    <p>库存：<span class="goodsStock">1000</span></p>
-                </div>
-                <div class="list-cont-num">
-                    <i class="cont-num-icon icon-left"></i>
-                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
-                    <i class="cont-num-icon icon-right"></i>
-                </div>
-            </div>
-        </div>
-        <div class="car-list">
-            <div class="car-list-select">
-                <input type="checkbox" name="id" value="2" class="selectInput">
-                <div class="list-select-box"></div>
-            </div>
-            <div class="car-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="car-list-cont">
-                <div class="list-cont-title">
-                    <h2>小米 MIX2 为发烧的你而做</h2>
-                    <p>￥<span class="goodsPrice">3000</span></p>
-                    <p>库存：<span class="goodsStock">800</span></p>
-                </div>
-                <div class="list-cont-num">
-                    <i class="cont-num-icon icon-left"></i>
-                    <input type="text" name="" value="1" class="goodsNum">
-                    <i class="cont-num-icon icon-right"></i>
-                </div>
-            </div>
-        </div>
-        <div class="car-list">
-            <div class="car-list-select">
-                <input type="checkbox" name="id" value="2" class="selectInput">
-                <div class="list-select-box"></div>
-            </div>
-            <div class="car-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="car-list-cont">
-                <div class="list-cont-title">
-                    <h2>小米 MIX2 为发烧的你而做</h2>
-                    <p>￥<span class="goodsPrice">3000</span></p>
-                    <p>库存：<span class="goodsStock">800</span></p>
-                </div>
-                <div class="list-cont-num">
-                    <i class="cont-num-icon icon-left"></i>
-                    <input type="text" name="" value="1" class="goodsNum">
-                    <i class="cont-num-icon icon-right"></i>
-                </div>
-            </div>
-        </div>
-        <div class="car-list">
-            <div class="car-list-select">
-                <input type="checkbox" name="id" value="2" class="selectInput">
-                <div class="list-select-box"></div>
-            </div>
-            <div class="car-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="car-list-cont">
-                <div class="list-cont-title">
-                    <h2>小米 MIX2 为发烧的你而做</h2>
-                    <p>￥<span class="goodsPrice">3000</span></p>
-                    <p>库存：<span class="goodsStock">800</span></p>
-                </div>
-                <div class="list-cont-num">
-                    <i class="cont-num-icon icon-left"></i>
-                    <input type="text" name="" value="1" class="goodsNum">
-                    <i class="cont-num-icon icon-right"></i>
-                </div>
-            </div>
-        </div>
-    </form>
 
-    <!--购物车为空-->
-    <!--<div class="car-null">
-        <img src="/static/index/images/null.png">
-    </div>-->
+    <!--结算产品-->
+    <div class="order-goods">
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+        </div>
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+        </div>
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <!--购物车结算模块-->
 <div class="balance">
