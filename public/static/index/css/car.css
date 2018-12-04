@@ -46,7 +46,7 @@ body{
 
 .car-list::-webkit-scrollbar { width:0; height:0; display: none; }
 .car .car-list .car-list-box{
-  width:10.2rem;
+  width:10.4rem;
   height:2.4rem;
 
 }
@@ -140,6 +140,7 @@ body{
 }
 
 .car .car-list .car-list-del{
+  font-size:0.33333333rem;
   margin-left:0.8rem;
   width:1rem;
   float:left;
