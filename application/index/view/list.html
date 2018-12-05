@@ -3,6 +3,7 @@
 {include file="default/header" title="产品列表" keywords="Aoogi商城系统"}
 
 {load href="/static/index/css/list.css" /}
+{load href="/static/index/css/goods-list.css" /}
 {load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
 
@@ -18,7 +19,7 @@
 <div class="category">
     <div class="swiper-container" id="categorySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide" id="1">
+            <div class="swiper-slide category-active" id="1">
                 <span>iPhone X</span>
             </div>
             <div class="swiper-slide" id="2">
@@ -48,6 +49,118 @@
 
 <!--产品列表模块-->
 <div class="list">
+    <div class="list-block" title="1">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见-与你相约</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥2500.00</p>
+                <p>￥3000.00</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="list-block" title="2">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="3">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="4">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="5">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="6">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="7">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-block" title="8">
+        <div class="block-img">
+            <img src="/static/index/images/goods1.jpg">
+        </div>
+        <div class="block-info">
+            <h2>iPhone XR-大屏幕上见</h2>
+            <h3>畅想科技未来不得不见的可以来现</h3>
+            <div class="block-info-price">
+                <p>￥<span>2500.00</span></p>
+                <p>￥<span>3000.00</span></p>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -69,8 +182,14 @@
     categorySwiper.on('click',function(){
         //this.clickedSlide.addClass('category-active');
         console.log(this.clickedSlide);
+        $(".swiper-slide").removeClass('category-active');
+        $("#"+this.clickedSlide.id).addClass('category-active');
     })
 
+    $(".list-block").click(function(){
+        //console.log($(this).attr('title'));
+        window.location.href="/details";
+    })
 
 </script>
 

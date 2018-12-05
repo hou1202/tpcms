@@ -1,0 +1,63 @@
+@rem:75rem;
+
+/*产品列表*/
+.list{
+    padding:27/@rem 27/@rem;
+    overflow:hidden;
+    .list-block{
+        width:318/@rem;
+        float:left;
+        margin:15/@rem 15/@rem 0.4rem 15/@rem;
+        /*border:1px solid #ccc;*/
+        border-radius:8/@rem;
+        .block-img{
+            text-align:center;
+            img{
+                width:240/@rem;
+                border-radius:8/@rem;
+            }
+        }
+        .block-info{
+            padding:8/@rem;
+            margin-top:15/@rem;
+            h2{
+                font-size:28/@rem;
+            }
+            h3{
+                font-size:24/@rem;
+                color:#505050;
+            }
+            h2,h3{
+                height:36/@rem;
+                line-height:36/@rem;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
+            }
+            .block-info-price{
+                height:36/@rem;
+                line-height:36/@rem;
+                padding-right:15/@rem;
+                p{
+                    width:143/@rem;
+                    &:first-child{
+                        font-size:23/@rem;
+                        color:#cc7f15;
+                        float:left;
+                    }
+                    &:nth-child(2){
+                        font-size:20/@rem;
+                        color:#969696;
+                        text-decoration:line-through;
+                        float:right;
+                        text-align:right;
+                    }
+                }
+            }
+        }
+    }
+}
+

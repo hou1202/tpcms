@@ -111,6 +111,10 @@
 .recomm{
   padding: 0 0.30666666rem;
 }
+.recomm .swiper-slide{
+  width:3rem;
+  margin-right:0.2rem;
+}
 .recomm .recomm-list{
   width:3rem;
   padding:0.14666666rem;

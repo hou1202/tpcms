@@ -1,0 +1,60 @@
+/*产品列表*/
+.list{
+  padding:0.36rem 0.36rem;
+  overflow:hidden;
+}
+.list .list-block{
+  width:4.24rem;
+  float:left;
+  margin:0.2rem 0.2rem 0.4rem 0.2rem;
+  /*border:1px solid #ccc;*/
+  border-radius:0.10666666rem;
+}
+.list .list-block .block-img{
+  text-align:center;
+}
+.list .list-block .block-img img{
+  width:3.2rem;
+  border-radius:0.10666666rem;
+}
+.list .list-block .block-info{
+  padding:0.10666666rem;
+  margin-top:0.2rem;
+}
+.list .list-block .block-info h2{
+  font-size:0.37333333rem;
+}
+.list .list-block .block-info h3{
+  font-size:0.32rem;
+  color:#505050;
+}
+.list .list-block .block-info h2,h3{
+  height:0.48rem;
+  line-height:0.48rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.list .list-block .block-info .block-info-price{
+  height:0.48rem;
+  line-height:0.48rem;
+  padding-right:0.2rem;
+}
+.list .list-block .block-info .block-info-price p{
+  width:1.90666666rem;
+}
+.list .list-block .block-info .block-info-price p:first-child{
+  font-size:0.30666666rem;
+  color:#cc7f15;
+  float:left;
+}
+.list .list-block .block-info .block-info-price p:nth-child(2){
+  font-size:0.26666666rem;
+  color:#969696;
+  text-decoration:line-through;
+  float:right;
+  text-align:right;
+}
