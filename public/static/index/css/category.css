@@ -1,0 +1,28 @@
+
+.category{
+  padding:2rem 1rem 0 1rem;
+  overflow:hidden;
+}
+.category .category-list{
+  width:25%;
+  text-align:center;
+  float:left;
+  margin-bottom:0.8rem;
+}
+.category .category-list a{
+  display:block;
+  color:#cc7f15;
+}
+.category .category-list img{
+  width:1.2rem;
+}
+.category .category-list h2{
+  font-size:0.33333333rem;
+  height:1rem;
+  line-height:1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}

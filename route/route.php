@@ -16,6 +16,9 @@ Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
 Route::get('/car','index/index/car');
 Route::get('/order','index/index/order');
+Route::get('/category','index/index/category');
+Route::get('/list','index/index/goodsList');
+Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');
 

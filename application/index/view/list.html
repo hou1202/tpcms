@@ -1,0 +1,77 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="产品列表" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/list.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>产品列表</h2>
+</header>
+
+<!--二级分类模块-->
+<div class="category">
+    <div class="swiper-container" id="categorySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="1">
+                <span>iPhone X</span>
+            </div>
+            <div class="swiper-slide" id="2">
+                <span>小米MX3</span>
+            </div>
+            <div class="swiper-slide" id="3">
+                <span>iPhone XR</span>
+            </div>
+            <div class="swiper-slide" id="4">
+                <span>荣耀Pro10</span>
+            </div>
+            <div class="swiper-slide" id="5">
+                小米MX3
+            </div>
+            <div class="swiper-slide" id="6">
+                iPhone XR
+            </div>
+            <div class="swiper-slide" id="7">
+                荣耀Pro10
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<!--产品列表模块-->
+<div class="list">
+
+</div>
+
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+<script>
+    var categorySwiper = new Swiper('#categorySwiper', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false,
+    });
+
+    categorySwiper.on('click',function(){
+        //this.clickedSlide.addClass('category-active');
+        console.log(this.clickedSlide);
+    })
+
+
+</script>
+
+</html>

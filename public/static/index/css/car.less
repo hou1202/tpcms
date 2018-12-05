@@ -1,150 +1,228 @@
 @rem:75rem;
 
-.carousel{
-    padding:15/@rem 27/@rem;
-    img{
+body{
+    background: -webkit-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* 标准的语法 */
+    font-size:25/@rem;
+}
+
+/*购物车列表模块*/
+.car{
+    padding: 0 30/@rem;
+    margin:60/@rem 0 90/@rem 0;
+    .car-null{
         width:100%;
-        border-radius:7px;
-        box-shadow: 5px 5px 5px #aeaeae;
-
-    }
-}
-.nav{
-    display:flex;
-    text-align:center;
-    a{
-        width:25%;
-        color:#0C0C0C;
+        text-align:center;
+        margin-top:375/@rem;
         img{
-            width:100%;
-            padding:45/@rem;
-            border-radius:50%;
+            width:240/@rem;
         }
     }
-}
-.recom{
-    overflow:hidden;
-    margin-top:15/@rem;
-    padding:15/@rem 23/@rem;
-    .recom-list{
-        overflow:hidden;
-        border:1px solid #ccc;
+    .car-title{
+        height:90/@rem;
+        line-height:90/@rem;
+        font-size:25/@rem;
+        padding-left:105/@rem;
+        color:#cc7f15;
+    }
+    .car-list{
         border-radius:7px;
-        padding:15/@rem 23/@rem;
-        margin-top:15/@rem;
-        .recom-img{
-            width:50%;
-            float:left;
-            img{
-                width:100%;
-            }
+        padding:30/@rem;
+        margin-bottom:30/@rem;
+        background:#fff;
+        overflow: hidden;
+
+        display: -webkit-box;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-track-color: #fff;
+        scrollbar-base-color:#fff;
+        ::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+            background: #fff;
         }
-        .recom-com{
-            color:#0C0C0C;
-            width:50%;
+        ::-webkit-scrollbar-track {/*滚动条里面轨道*/
+            background: #fff;
+        }
+        .car-list-box{
+            width:780/@rem;
+            height:180/@rem;
+        }
+        .car-list-select{
+            width:60/@rem;
+            height:180/@rem;
+            line-height:180/@rem;
             float:left;
-            padding-left:15/@rem;
-            h2{
-                font-size:30/@rem;
-                margin-bottom:8/@rem;
+            text-align:center;
+            align-items: center;
+            display: flex;
+            input{
+                display:none;
+            }
+            .list-select-box{
+                width:30/@rem;
                 height:30/@rem;
-                line-height: 32/@rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
+                border:1px solid #ccc;
+                border-radius:50%;
+                margin:0 auto;
             }
-            span{
-                font-size:25/@rem;
-                height:25/@rem;
-                line-height:26/@rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
+            .select-box-active{
+                padding: 15/@rem;
+                background:#cc7f15;
+
             }
-            p{
-                font-size:23/@rem;
-                margin-top:8/@rem;
-                height:81/@rem;
-                line-height:28/@rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
-            }
+        }
+        .car-list-img{
+            width:180/@rem;
+            height:180/@rem;
+            line-height:180/@rem;
+            float:left;
+            align-items: center;
+            display: flex;
             img{
-                margin-top:15/@rem;
-                float:right;
-                width:106/@rem;
-                height:13/@rem;
+                width:80%;
+                border-radius:15/@rem;
+                margin:0 auto;
             }
         }
-        .img-right {
-            float:right;
+        .car-list-cont{
+            padding-left:30/@rem;
+            width:375/@rem;
+            height:180/@rem;
+            float:left;
+            .list-cont-title{
+                height:135/@rem;
+                h2{
+                    height:60/@rem;
+                    line-height:60/@rem;
+                    font-size:30/@rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                    -webkit-box-orient: vertical;
+                }
+                p{
+                    font-size:25/@rem;
+                    line-height:37/@rem;
+                    color:#cc7f15;
+                }
+            }
+            .list-cont-num{
+                height:45/@rem;
+                line-height:45/@rem;
+                float:right;
+                input{
+                    width:105/@rem;
+                    border:none;
+                    border-bottom:1px solid #e5e5e5;
+                    margin: 0 15/@rem;
+                    text-align:center;
+                    background:none;
+                    font-size:23/@rem;
+                }
+                i{
+                    display: inline-block;
+                    width:30/@rem;
+                    height:30/@rem;
+                }
+                .icon-left{
+                    background:url('/static/index/images/jian.png') no-repeat;
+                    background-size:30/@rem 30/@rem;
+                }
+                .icon-right{
+                    background:url('/static/index/images/jia.png') no-repeat;
+                    background-size:30/@rem 30/@rem;
+                }
+            }
         }
-        .com-right{
-            text-align:right;
-            padding:0 15/@rem 0 0;
+        .car-list-del{
+            font-size:25/@rem;
+            margin-left:60/@rem;
+            width:75/@rem;
+            float:left;
+            height:180/@rem;
+            line-height:180/@rem;
+            text-align:center;
+            background:#cc7f15;
+            color:#fff;
+            border-radius:5px;
         }
+
     }
 }
-.goods-list{
-    overflow:hidden;
-    .goods-block{
-        width:50%;
+
+/*购物车结算模块*/
+.balance{
+    width:100%;
+    height:100/@rem;
+    line-height:75/@rem;
+    font-size:25/@rem;
+    position: fixed;
+    left: 0;
+    bottom: 100/@rem;
+    background:#fff;
+    padding:8/@rem 19/@rem 8/@rem 30/@rem;
+    div{
         float:left;
-        padding:30/@rem 30/@rem 0 30/@rem;
-        .block-img{
-            padding:30/@rem;
-            img{
-                width:100%;
-            }
+    }
+    .balance-all{
+        width:75/@rem;
+        height:75/@rem;
+        align-items: center;
+        display: flex;
+        .balance-all-box{
+            width:30/@rem;
+            height:30/@rem;
+            border:1px solid #ccc;
+            border-radius:50%;
+            margin:0 auto;
         }
-        .block-cont{
-            h3{
-                color:#0C0C0C;
-                font-size:30/@rem;
-                height:36/@rem;
-                line-height:36/@rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
-            }
-            p{
-                color:#505050;
-                font-size:25/@rem;
-                height:39/@rem;
-                line-height:39/@rem;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
-            }
-            label{
-                height:39/@rem;
-                line-height:39/@rem;
-            }
-            .label-left{
-                font-size:23/@rem;
-                color: #cc7f15;
-            }
-            .label-right{
-                font-size:20/@rem;
-                color: #969696;
-                float:right;
-                text-decoration:line-through;
-            }
+        .all-box-active{
+            padding: 15/@rem;
+            background:#cc7f15;
+        }
+    }
+    .balance-sum{
+        width:390/@rem;
+        text-align:center;
+        span{
+            color:#cc7f15;
+        }
+    }
+    .balance-button{
+        width:225/@rem;
+        float:right;
+        color:#fff;
+        button{
+            width:225/@rem;
+            height:75/@rem;
+            font-size:25/@rem;
+            border:none;
+            border-radius:750/@rem;
+            background:#cc7f15;
+            color:#fff;
+
 
         }
+
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

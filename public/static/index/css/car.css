@@ -111,7 +111,7 @@ body{
 }
 .car .car-list .car-list-cont .list-cont-title p{
   font-size:0.33333333rem;
-  line-height:0.5rem;
+  line-height:0.49333333rem;
   color:#cc7f15;
 }
 .car .car-list .car-list-cont .list-cont-num{
@@ -159,14 +159,14 @@ body{
 /*购物车结算模块*/
 .balance{
   width:100%;
-  height:1.2rem;
+  height:1.33333333rem;
   line-height:1rem;
   font-size:0.33333333rem;
   position: fixed;
   left: 0;
-  bottom: 1.43333333rem;
+  bottom: 1.33333333rem;
   background:#fff;
-  padding:0.1rem 0.25rem 0.1rem 0.4rem;
+  padding:0.10666666rem 0.25333333rem 0.10666666rem 0.4rem;
 
 }
 .balance div{

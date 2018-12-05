@@ -29,6 +29,18 @@ class Index extends BaseController
         return view('/order');
     }
 
+    public function category(){
+        return view('/category');
+    }
+
+    public function goodsList(){
+        return view('/list');
+    }
+
+    public function post(Request $request){
+        var_dump($request->post());
+    }
+
     public function hello($name = 'ThinkPHP5')
     {
 
