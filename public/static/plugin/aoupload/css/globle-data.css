@@ -53,7 +53,8 @@ a:hover { text-decoration: none; }
     overflow: hidden;
 }
 .upload-pick{
-    background: url(/static/plugin/aoupload/images/bg-w.png) no-repeat 0 0;
+    /*background: url(/static/plugin/aoupload/images/bg-w.png) no-repeat 0 0;*/
+    background: url(/static/plugin/aoupload/images/upload-bj.png) no-repeat 0 0;
 }
 /*.upload-pick:hover{
     background: url(/static/plugin/aoupload/images/upload-bj.png) no-repeat 0 -90px;

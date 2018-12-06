@@ -5,9 +5,11 @@
 {load href="/static/index/css/data.css" /}
 
 <!--上传文件引入文件-->
+<!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
 {load href="/static/plugin/aoupload/css/globle-data.css" /}
 {load href="/static/plugin/aoupload/js/webuploader.min.js" /}
 {load href="/static/plugin/aoupload/js/diyUpload.js" /}
+
 
 
 
@@ -50,7 +52,7 @@
                 </li>
 
                 <li class="upload-pick">
-                    <div class="webuploader-container clearfix" id="imgUpload"></div>
+                    <div class="webuploader-container clearfix" id="headUpload"></div>
                 </li>
             </ul>
         </form>
@@ -83,7 +85,7 @@
 <!--头像图片上传JS脚本-->
 <script>
 //上传图片
-var $tgaUpload = $('#portraitUpload').diyUpload({
+var $tgaUpload = $('#headUpload').diyUpload({
     url:'/upLoader',
     buttonText : '',
     //类型限制;
