@@ -37,16 +37,9 @@
             <ul class="upload-ul clearfix">
                 <li id="fileBox_WU_FILE" class="">
                     <div class="viewThumb">
-                        <input type="hidden" name="img" id="img_id" value="">
-                        <div class="diyBar" style="display: none;">
+                        <!--<div class="diyBar" style="display: none;">
                             <div class="diyProgress" style="width: 100%;">上传完成</div>
-                        </div>
-
-                        <!--<p class="diyControl">
-                            <span class="diyLeft"><i></i></span>
-                            <span class="diyCancel"><i></i></span>
-                            <span class="diyRight"><i></i></span>
-                        </p>-->
+                        </div>-->
                         <img src="/static/index/images/goods1.jpg">
                     </div>
                 </li>
@@ -71,7 +64,11 @@
         </div>
 
         <div class="data-submit">
-            <button type="button"> 修 改 </button>
+            <button type="button" id="dataSubmit"> 修 改 </button>
+        </div>
+
+        <div class="data-submit">
+            <button type="button" id="delSubmit"> 删除 </button>
         </div>
 
     </form>
@@ -85,88 +82,81 @@
 <!--头像图片上传JS脚本-->
 <script>
 //上传图片
-var $tgaUpload = $('#headUpload').diyUpload({
-    url:'/upLoader',
-    buttonText : '',
-    //类型限制;
-    accept: {
-        title: "Images",
-        extensions: 'jpg,jpeg,png'
-    },
-    //配置生成缩略图的选项
-    thumb:{
-        width:50,
-        height:50,
-        quality:100,
-        allowMagnify:true,
-        crop:true,
-        type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
-    },
-    swf:"/static/plugin/aoupload/Uploader.swf",
-    //是否支持多文件上传
-    multiple:false,
-    //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
-    auto:true,
-    //文件上传方式,POST或者GET
-    method:"POST",
-    //服务器地址;
-    server:'/upLoader',
-    //最大上传的文件数量
-    fileNumLimit:1,
-    //总文件大小(单位字节);
-    fileSizeLimit:500000 * 1024,
-    //单个文件大小(单位字节);
-    fileSingleSizeLimit:50000 * 1024,
-    //自定义内容信息
-    custom:{
-        inputName:'portrait',
-        //input加入ID，只适用于单个上传图片
-        inputId:'portrait_id'
-    },
-    success:function( data ) {
-    },
-    error:function( err ) { }
-});
-
-</script>
-<!--显示修改头像隐藏提示信息-->
-<script>
-    var myPortrait = $(".portrait_hidden");     //显示或隐藏的DIV
-    var portraitCancel = $("#portrait_cancel");   //隐藏/取消  事件
-    var portraitConfirm = $("#portrait_confirm");   //确认/提交  事件
-
-
-    //确认/提交
-    $(portraitConfirm).on("click", function() {
-        var confirmCont = $('#portrait_id').val();
-        if($.trim(confirmCont) == '' ){
-            //showAlertAutoClose("提交信息有误，请重新操作");
-            $(myPortrait).fadeOut();
-            //刷新上级页面，清除照片的上传序列
-            location.replace(location);
-            return false;
-        }
-
-        $.ajax({
-            url:"/index/info/infoEdit",
-            type:"POST",
-            dataType: "json",
-            //data:'phone:phone,password:password,invitation:invitation,code:code',
-            data:$('#portrait_form').serialize(),
-            success:function(data){
-                jsonAlertAutoClose(data)
-            },
-            error:function () {
-                showAlertAutoClose("网络错误，请重试...");
-            }
-        });
-
-        event.stopPropagation(); //阻止事件向上冒泡
+    var headUpload = $('#headUpload').diyUpload({
+        url:'/upLoader',
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        buttonText : '',
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/upLoader',
+        //最大上传的文件数量
+        fileNumLimit:2,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,            // 图片质量，只有type为`image/jpeg`的时候才有效。
+            allowMagnify:false,      // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+            crop:true,               // 是否允许裁剪。
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        //自定义内容信息
+        custom:{
+            inputName:'portrait',
+            //input加入ID，只适用于单个上传图片
+            inputId:'portrait_id'
+        },
+        success:function( data ) {
+        },
+        error:function( err ) { }
     });
 
+    headUpload.on('uploadSuccess', function (file, response) {
+        console.log(headUpload.getFiles()); //这里可以得到后台返回的数据
+        //console.log(headUpload.getFiles()[0]); //这里可以得到后台返回的数据
+        console.log(file.id); //这里可以得到后台返回的数据
+        headUpload.removeFile(file.id,true);
+        /*$('#' + file.id).addClass('upload-state-done');
+        imgArr.push(response._raw);*/
+        var defaultId = $("#fileBox_WU_FILE").css('display');
+        if( defaultId == 'none'){
+            headUpload.removeFile(headUpload.getFiles()[0],true);
+            $("#fileBox_"+headUpload.getFiles()[0].id).hide();
+        }else{
+            $("#fileBox_WU_FILE").hide();
+        }
+
+
+    });
+
+    $("#dataSubmit").click(function(){
+        console.log(headUpload.getFiles('undefined')); //这里可以得到后台返回的数据
+    });
+    $("#delSubmit").click(function(){
+        console.log(headUpload.removeFile(headUpload.getFiles()[0],true));
+    })
+
+
+
+
 
 
 </script>
+
 
 
 
