@@ -1,0 +1,226 @@
+body{
+  background: #f6f6f6;
+}
+
+.header-personal{
+  height:2.4rem;
+  padding: 0 0.6rem;
+
+  background: -webkit-linear-gradient(145deg , rgba(204,127,21,0.8), rgba(235, 166, 91, 0.8) 80%); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(145deg , rgba(204,127,21,0.8), rgba(235, 166, 91, 0.8) 80%); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(145deg , rgba(204,127,21,0.8), rgba(235, 166, 91, 0.8) 80%); /* Firefox 3.6 - 15 */
+  background: linear-gradient(145deg , rgba(204,127,21,0.8), rgba(235, 166, 91, 0.8) 80%); /* 标准的语法 */
+}
+.header-personal .header-img{
+  width:1.4rem;
+  height:2.4rem;
+  float:left;
+  align-items: center;
+  display:flex;
+}
+.header-personal .header-img img{
+  width:1.2rem;
+  margin:0 auto;
+  border-radius:50%;
+  border:1px solid #fff;
+}
+.header-personal .header-info{
+  width:5rem;
+  line-height:2.4rem;
+  float:left;
+  padding-left:0.4rem;
+  font-size:0.33333333rem;
+  color:#fff;
+}
+
+/*钱包*/
+.wallet{
+  width:80%;
+  height:2rem;
+  margin-left:10%;
+  background:#fff;
+  border-radius:0.2rem;
+  position:relative;
+  top:-0.4rem;
+
+}
+.wallet .wallet-title{
+  height:0.8rem;
+  line-height:0.8rem;
+  border-bottom:1px solid #e5e5e5;
+  padding-left:0.6rem;
+
+}
+.wallet .wallet-title i{
+  display:inline-block;
+  width:0.4rem;
+  height:0.8rem;
+  background:url("/static/index/images/wallet.png") no-repeat center center;
+  background-size:0.4rem 0.4rem;
+  float:left;
+}
+.wallet .wallet-title h2{
+  color: #525252;
+  float:left;
+  font-size:0.33333333rem;
+  padding-left:0.2rem;
+
+}
+.wallet .wallet-cont{
+  text-align:center;
+  overflow: hidden;
+  font-size:0.33333333rem;
+}
+.wallet .wallet-cont p{
+  float:left;
+  height:1.2rem;
+  line-height:1.2rem;
+  color: #525252;
+  width:100%;
+}
+.wallet .wallet-cont span{
+  color: #cc7f15;
+}
+
+/*订单*/
+.order{
+  width:90%;
+  margin-left:5%;
+  overflow: hidden;
+  background:#fff;
+  border-radius:0.2rem;
+  padding:0.6rem 0.2rem;
+}
+.order .order-list{
+  width:25%;
+  float:left;
+  text-align:center;
+  font-size:0.30666666rem;
+}
+.order .order-list a{
+  display:block;
+}
+.order .order-list i{
+  display:inline-block;
+  width:0.8rem;
+  height:0.8rem;
+}
+i.order-icon-1{
+  background:url("/static/index/images/pay.png") no-repeat center center;
+  background-size:0.76rem;
+}
+i.order-icon-2{
+  background:url("/static/index/images/rece.png") no-repeat center center;
+  background-size:0.76rem;
+}
+i.order-icon-3{
+  background:url("/static/index/images/com.png") no-repeat center center;
+  background-size:0.76rem;
+}
+i.order-icon-4{
+  background:url("/static/index/images/finish.png") no-repeat center center;
+  background-size:0.76rem;
+}
+.order .order-list p{
+  height:0.8rem;
+  line-height: 0.8rem;
+  color:#525252;
+}
+
+/*列表*/
+.personal{
+  width:90%;
+  margin-top:0.4rem;
+  margin-left:5%;
+}
+.personal .personal-list{
+  height:1.2rem;
+  line-height:1.2rem;
+  border-bottom:1px solid #e3e3e3;
+}
+.personal .personal-list i{
+  float:left;
+  display:inline-block;
+  width:1.2rem;
+  height:1.2rem;
+}
+.personal .personal-list .per-icon-open{
+  float:right;
+}
+i.per-icon-fav{
+  background:url("/static/index/images/favour.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-inte{
+  background:url("/static/index/images/integral.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-ship{
+  background:url("/static/index/images/ship.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-coll{
+  background:url("/static/index/images/collect.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-msg{
+  background:url("/static/index/images/msg.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-set{
+  background:url("/static/index/images/set.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-about{
+  background:url("/static/index/images/about.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-tick{
+  background:url("/static/index/images/tick.png") no-repeat center center;
+  background-size:0.56rem;
+}
+i.per-icon-open{
+  background:url("/static/index/images/open.png") no-repeat center center;
+  background-size:0.56rem;
+}
+.personal .personal-list p{
+  width:6rem;
+  float:left;
+  color:#525252;
+  font-size:0.33333333rem;
+}
+.personal .personal-out{
+  height:1.4rem;
+  line-height:1.4rem;
+  background:#cc7f15;
+  border-radius:0.10666666rem;
+  font-size:0.4rem;
+  text-align:center;
+  margin-top:1rem;
+}
+.personal .personal-out a{
+  color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
