@@ -43,6 +43,9 @@ class Index extends BaseController
     public function personalData(){
         return view('/data');
     }
+    public function address(){
+        return view('/address');
+    }
 
     public function post(Request $request){
         var_dump($request->post());

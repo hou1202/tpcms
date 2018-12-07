@@ -142,3 +142,12 @@ i.ficon4 {
   letter-spacing:0.05333333rem;
 
 }
+
+/*input通用样式*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -20,6 +20,7 @@ Route::get('/category','index/index/category');
 Route::get('/list','index/index/goodsList');
 Route::get('/personal','index/index/personal');
 Route::get('/data','index/index/personalData');
+Route::get('/address','index/index/address');
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');

@@ -1,0 +1,60 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="收货地址" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/address.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>收货地址</h2>
+</header>
+
+<!--列表模块-->
+<div class="address">
+    <div class="address-list">
+        <div class="list-top">
+            <p>李白</p>
+            <p>13564078415</p>
+        </div>
+        <div class="list-middle">
+            <p>安徽省 . 合肥市 . 蜀山区</p>
+            <p>望江西路亚夏汽车大厦1902室</p>
+        </div>
+        <div class="list-bottom">
+            <i></i>
+            <a href="">编辑</a>
+            <a href="">删除</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+
+
+<script>
+
+
+
+    //数据提交
+    $("#dataSubmit").click(function(){
+        console.log($("#dataForm").serializeArray()); //这里可以得到后台返回的数据
+    });
+
+</script>
+
+
+
+
+
+
+
+</html>

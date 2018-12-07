@@ -1,0 +1,92 @@
+
+/*列表*/
+.address{
+  margin-top:0.4rem;
+
+}
+.address .address-list{
+  width:90%;
+  height:4rem;
+  margin-left:5%;
+  background:#ccc;
+  border-radius:0.2rem;
+  padding:0.2rem 0.4rem;
+  font-size:0.33333333rem;
+}
+.address .address-list .list-top{
+  height:0.96rem;
+  line-height:0.96rem;
+}
+.address .address-list .list-top p{
+  width:50%;
+  float:left;
+  height:0.96rem;
+  line-height:0.96rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.address .address-list .list-top p:first-child{
+  padding-left:0.2rem;
+}
+.address .address-list .list-top p:nth-child(2){
+  text-align:right;
+  padding-right:0.2rem;
+}
+.address .address-list .list-middle{
+  height:1.12rem;
+  line-height:0.56rem;
+
+}
+.address .address-list .list-middle p{
+  line-height:0.56rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.address .address-list .list-middle p:first-child{
+  font-size:0.36rem;
+  color:#cc7f15;
+}
+.address .address-list .list-middle p:nth-child(2){
+  color:#525252;
+  padding-left:0.36rem;
+
+}
+.address .address-list .list-bottom{
+  height:1.2rem;
+  line-height:1.2rem;
+}
+.address .address-list .list-bottom a{
+  width:1.4rem;
+  height:0.8rem;
+  line-height:0.8rem;
+  display:block;
+  background:#cc7f15;
+  float:right;
+  text-align:center;
+  margin:0.2rem 0.2rem 0 0;
+  border-radius:0.2rem;
+  color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
