@@ -39,7 +39,7 @@ a:hover { text-decoration: none; }
 }
 .upload-ul li{
     position: relative;
-    /*float: left;*/
+    float: left;
     display: inline-block;
     width: 52px;
     height: 52px;
