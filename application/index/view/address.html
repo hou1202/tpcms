@@ -25,7 +25,24 @@
             <p>望江西路亚夏汽车大厦1902室</p>
         </div>
         <div class="list-bottom">
-            <i></i>
+            <i class="circle circle-active"></i>
+            <a href="">编辑</a>
+            <a href="">删除</a>
+        </div>
+
+    </div>
+
+    <div class="address-list">
+        <div class="list-top">
+            <p>李白</p>
+            <p>13564078415</p>
+        </div>
+        <div class="list-middle">
+            <p>安徽省 . 合肥市 . 蜀山区</p>
+            <p>望江西路亚夏汽车大厦1902室</p>
+        </div>
+        <div class="list-bottom">
+            <i class="circle"></i>
             <a href="">编辑</a>
             <a href="">删除</a>
         </div>
@@ -42,6 +59,10 @@
 
 <script>
 
+    $(".circle").click(function(){
+        $(".circle").removeClass('circle-active');
+        $(this).addClass('circle-active');
+    });
 
 
     //数据提交
