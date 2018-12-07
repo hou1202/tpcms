@@ -5,10 +5,9 @@
 {load href="/static/index/css/data.css" /}
 
 <!--上传文件引入文件-->
-<!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
-{load href="/static/plugin/aoupload/css/globle-data.css" /}
+{load href="/static/plugin/aoupload/css/aoogiSingle.css" /}
 {load href="/static/plugin/aoupload/js/webuploader.min.js" /}
-{load href="/static/plugin/aoupload/js/diyUpload.js" /}
+{load href="/static/plugin/aoupload/js/aoogiSingle.js" /}
 
 
 
@@ -23,23 +22,11 @@
 
 <!--列表模块-->
 <div class="data">
-    <div class="data-header">
-        <form method="post" action="" id="portrait_form">
-            <!--<img src="/static/index/images/goods1.jpg">
-            <i class="per-icon-open"></i>-->
-            <!--<input type="hidden" name="id" value=""/>
+    <form id="dataForm">
+        <div class="data-header">
             <ul class="upload-ul clearfix">
-                <li class="upload-pick">
-                    <div class="webuploader-container clearfix" id="portraitUpload"></div>
-                </li>
-            </ul>-->
-
-            <ul class="upload-ul clearfix">
-                <li id="fileBox_WU_FILE" class="">
+                <li id="fileBox_WU_FILE" class="uploadList">
                     <div class="viewThumb">
-                        <!--<div class="diyBar" style="display: none;">
-                            <div class="diyProgress" style="width: 100%;">上传完成</div>
-                        </div>-->
                         <img src="/static/index/images/goods1.jpg">
                     </div>
                 </li>
@@ -48,10 +35,7 @@
                     <div class="webuploader-container clearfix" id="headUpload"></div>
                 </li>
             </ul>
-        </form>
-    </div>
-
-    <form>
+        </div>
 
         <div class="data-list">
             <p>昵称</p>
@@ -63,13 +47,16 @@
             <input type="text" name="account" value="13564078415" placeholder="注册手机号码" readonly/>
         </div>
 
+
+
+
+
+
         <div class="data-submit">
             <button type="button" id="dataSubmit"> 修 改 </button>
         </div>
 
-        <div class="data-submit">
-            <button type="button" id="delSubmit"> 删除 </button>
-        </div>
+
 
     </form>
 
@@ -83,7 +70,6 @@
 <script>
 //上传图片
     var headUpload = $('#headUpload').diyUpload({
-        url:'/upLoader',
         swf:"/static/plugin/aoupload/Uploader.swf",
         buttonText : '',
         //是否支持多文件上传
@@ -93,22 +79,24 @@
         //文件上传方式,POST或者GET
         method:"POST",
         //服务器地址;
-        server:'/upLoader',
+        server:'/static/plugin/aoupload/upload.php',
+        /*server:'/upLoader',*/
         //最大上传的文件数量
-        fileNumLimit:2,
+        fileNumLimit:5,
         //总文件大小(单位字节);
         fileSizeLimit:500000 * 1024,
         //单个文件大小(单位字节);
-        fileSingleSizeLimit:50000 * 1024,
+        fileSingleSizeLimit:500000 * 1024,
         //类型限制;
         accept: {
             title: "Images",
-            extensions: 'jpg,jpeg,png'
+            extensions: 'jpg,jpeg,png',
+            mimeTypes:'image/jpg,image/jpeg,image/png'
         },
         //配置生成缩略图的选项
         thumb:{
-            width:50,
-            height:50,
+            width:120,
+            height:120,
             quality:100,            // 图片质量，只有type为`image/jpeg`的时候才有效。
             allowMagnify:false,      // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
             crop:true,               // 是否允许裁剪。
@@ -118,37 +106,23 @@
         custom:{
             inputName:'portrait',
             //input加入ID，只适用于单个上传图片
-            inputId:'portrait_id'
+            inputId:'portrait_id',
+            //是否开启单图上传，true|false
+            single:true
         },
         success:function( data ) {
         },
-        error:function( err ) { }
-    });
-
-    headUpload.on('uploadSuccess', function (file, response) {
-        console.log(headUpload.getFiles()); //这里可以得到后台返回的数据
-        //console.log(headUpload.getFiles()[0]); //这里可以得到后台返回的数据
-        console.log(file.id); //这里可以得到后台返回的数据
-        headUpload.removeFile(file.id,true);
-        /*$('#' + file.id).addClass('upload-state-done');
-        imgArr.push(response._raw);*/
-        var defaultId = $("#fileBox_WU_FILE").css('display');
-        if( defaultId == 'none'){
-            headUpload.removeFile(headUpload.getFiles()[0],true);
-            $("#fileBox_"+headUpload.getFiles()[0].id).hide();
-        }else{
-            $("#fileBox_WU_FILE").hide();
+        error:function( err ) {
+            autoAlert( '上传失败，请重新上传' );
         }
-
-
     });
 
+
+    //数据提交
     $("#dataSubmit").click(function(){
-        console.log(headUpload.getFiles('undefined')); //这里可以得到后台返回的数据
+        console.log($("#dataForm").serializeArray()); //这里可以得到后台返回的数据
     });
-    $("#delSubmit").click(function(){
-        console.log(headUpload.removeFile(headUpload.getFiles()[0],true));
-    })
+
 
 
 

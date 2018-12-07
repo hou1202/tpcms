@@ -4,14 +4,22 @@ header('content-type:text/plain;charset=utf-8');
 define('ROOT_PATH', str_replace("\\", '/',dirname(dirname(dirname(dirname(__FILE__))))));
 //定义附件上传路径
 define('ATTACHMENTS_PATH', ROOT_PATH . "/uploads/");
+//定义日期目录
+define('DATE_PATH',date('Y').date('m').date('d').'/');
+//完整上传路径
+define('UPLOAD_PATH',ATTACHMENTS_PATH.DATE_PATH);
 
 //判断附件文件夹是否存在，不存在则创建
 if (!is_dir(ATTACHMENTS_PATH)) {
     mkdir(ATTACHMENTS_PATH);
 }
-var_dump($_FILES['imgFile']);
+//判断当天附件文件夹是否存在，不存在则创建
+if (!is_dir(UPLOAD_PATH)) {
+    mkdir(UPLOAD_PATH);
+}
 
-if ($_FILES['imgFile']['error'] > 0) {
+
+if ($_FILES['file']['error'] > 0) {
     $return = array();
     $return['error'] = 1;
     $return['message'] = '上传失败!';
@@ -29,7 +37,7 @@ if ($_FILES['imgFile']['error'] > 0) {
  * 'channels'=>给出的是图像的通道值，RGB 图像默认是 3
  * 'mime'=>类似于'image/jpeg'的MIME信息
  */
-$source_info = getimagesize($_FILES['imgFile']['tmp_name']);
+$source_info = getimagesize($_FILES['file']['tmp_name']);
 if (isset($_REQUEST['minWidth'])) {
     if ($source_info[0] < $_REQUEST['minWidth']) {
         $return = array();
@@ -47,14 +55,14 @@ if (isset($_REQUEST['minHeight'])) {
     }
 }
 
-//获取后缀名(这里不用$_FILES["imgFile"]["type"]去获取文件的MIME类型来判断文件格式，因为flash上传文件的MIME类型统一都是"application/octet-stream")
-//$suffix = '.' . pathinfo($_FILES['imgFile']['name'])['extension']; //$_FILES['imgFile']['name']是上传文件的原始文件名称
-$pathinfo = pathinfo($_FILES['imgFile']['name']);
-$suffix = '.' . $pathinfo['extension']; //$_FILES['imgFile']['name']是上传文件的原始文件名称
+//获取后缀名(这里不用$_FILES["file"]["type"]去获取文件的MIME类型来判断文件格式，因为flash上传文件的MIME类型统一都是"application/octet-stream")
+//$suffix = '.' . pathinfo($_FILES['file']['name'])['extension']; //$_FILES['file']['name']是上传文件的原始文件名称
+$pathinfo = pathinfo($_FILES['file']['name']);
+$suffix = '.' . $pathinfo['extension']; //$_FILES['file']['name']是上传文件的原始文件名称
 
-if (is_uploaded_file($_FILES['imgFile']['tmp_name'])) {
+if (is_uploaded_file($_FILES['file']['tmp_name'])) {
     $src = uniqid() . $suffix;
-    if (!move_uploaded_file($_FILES['imgFile']['tmp_name'], ATTACHMENTS_PATH . $src)) {
+    if (!move_uploaded_file($_FILES['file']['tmp_name'], UPLOAD_PATH . $src)) {
         $return = array();
         $return['error'] = 1;
         $return['message'] = '上传失败!!!';
@@ -63,8 +71,8 @@ if (is_uploaded_file($_FILES['imgFile']['tmp_name'])) {
         $return = array();
         $return['error'] = 0;
         $return['message'] = '上传成功';
-        $return['url'] = "/uploads/" . $src;
-        $return['source_path'] = ATTACHMENTS_PATH . $src;
+        $return['url'] = "/uploads/".DATE_PATH. $src;
+        $return['source_path'] = UPLOAD_PATH . $src;
         if (isset($_REQUEST['uid'])) {
             $return['uid'] = $_REQUEST['uid'];
         }

@@ -1,6 +1,8 @@
 ﻿/* 
  *	jQuery文件上传插件,封装UI,上传处理操作采用Baidu WebUploader;
- *	@Author 黑爪爪;
+ *  主要用于H5前端单张图片上传
+ *	@Author Aoogi;
+ *  注意：修改js中的alert,	autoAlert为自定义提示
  */
 (function( $ ) {
 
@@ -12,7 +14,7 @@
         diyUpload:function( opt, serverCallBack ) {
 
             if ( typeof opt != "object" ) {
-                alert('参数错误!');
+                autoAlert('参数错误!');
                 return;
             }
 
@@ -20,15 +22,10 @@
             var $fileInputId = $fileInput.attr('id');
 
             //组装参数;
-            //input 名
-            if( opt.custom ) {
+
+            if( opt.custom ) {      //自定义参数项
                 var custom = opt.custom;
                 delete opt.custom;
-            }
-            //input ID
-            if( opt.inputId ) {
-                var inputId = opt.inputId;
-                delete opt.inputId;
             }
 
             if( opt.url ) {
@@ -63,13 +60,22 @@
             var webUploader = getUploader( opt );
 
             if ( !WebUploader.Uploader.support() ) {
-                alert( ' 上传组件不支持您的浏览器！');
+                autoAlert( ' 上传组件不支持您的浏览器！');
                 return false;
             }
 
+            //重置队列事件，单张图片上传，加入队列前重置队列
+            webUploader.on('beforeFileQueued',function(file){
+                if(custom.single){
+                    webUploader.reset();
+                }
+            });
+
             //绑定文件加入队列事件;
             webUploader.on('fileQueued', function( file ) {
-                createBox( $fileInput, file ,webUploader);
+                if(!custom.single){
+                    createBox( $fileInput, file ,webUploader);
+                }
 
             });
 
@@ -83,11 +89,11 @@
 
             });
 
-
             //全部上传结束后触发;
             webUploader.on('uploadFinished', function(){
                 $fileInput.next('.parentFileBox').children('.diyButton').remove();
             });
+
             //绑定发送至服务端返回后触发事件;
             webUploader.on('uploadAccept', function( object ,data ){
 
@@ -97,18 +103,34 @@
 
             //上传成功后触发事件;
             webUploader.on('uploadSuccess',function( file,response ){
-                var $fileBox = $('#fileBox_'+file.id);
-                var $diyBar = $fileBox.find('.diyBar');
-                $fileBox.removeClass('diyUploadHover');
-                $fileBox.find('input').attr('name',custom.inputName);
-                $fileBox.find('input').attr('id',custom.inputId);
-                $fileBox.find('input').attr('value',response.url);
-                $diyBar.fadeOut( 1000 ,function(){
-                    $fileBox.children('.diySuccess').show();
-                });
-                if ( successCallBack ) {
-                    successCallBack( response );
+                if(response.error == 0 ){
+                    if(custom.single){
+                        //取消废弃容器
+                        $('.uploadList').remove();
+
+                        //创建新容器
+                        createBox( $fileInput, file ,webUploader);
+                    }
+
+                    //追加容器属性
+                    var $fileBox = $('#fileBox_'+file.id);
+                    var $diyBar = $fileBox.find('.diyBar');
+
+                    $fileBox.find('input').attr('name',custom.inputName);
+                    $fileBox.find('input').attr('id',custom.inputId);
+                    $fileBox.find('input').attr('value',response.url);
+
+                    $diyBar.fadeOut( 1000 ,function(){
+                        $fileBox.children('.diySuccess').show();
+                    });
+                    if ( successCallBack ) {
+                        successCallBack( response );
+                    }
+                }else{
+                    autoAlert( '上传失败，请重新上传' );
                 }
+
+
             });
 
             //上传失败后触发事件;
@@ -139,7 +161,7 @@
                     default : text = '未知错误!';
                         break;
                 }
-                alert( text );
+                autoAlert( text );
             });
              return webUploader;
         }
@@ -161,12 +183,12 @@
             accept:{
                 title:"Images",
                 extensions:"gif,jpg,jpeg,bmp,png",
-                mimeTypes:"image/*"
+                mimeTypes:"image/gif,image/jpg,image/jpeg,image/bmp,image/png"
             },
             //配置生成缩略图的选项
             thumb:{
                 width:160,
-                height:120,
+                height:160,
                 // 图片质量，只有type为`image/jpeg`的时候才有效。
                 quality:90,
                 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
@@ -184,11 +206,11 @@
             //是否已二进制的流的方式发送文件，这样整个上传内容php://input都为文件内容
             sendAsBinary:false,
             // 开起分片上传。 thinkphp的上传类测试分片无效,图片丢失;
-            chunked:true,
+            chunked:false,
             // 分片大小
             chunkSize:512 * 1024,
             //最大上传的文件数量, 总文件大小,单个文件大小(单位字节);
-            fileNumLimit:50,
+            fileNumLimit:1,
             fileSizeLimit:500000 * 1024,
             fileSingleSizeLimit:50000 * 1024,
         };
@@ -215,40 +237,18 @@
 
     }
 
-    //取消事件;
-    function removeLi ( $li ,file_id ,webUploader) {
-        webUploader.removeFile( file_id );
-        $li.remove();
-    }
-
-    //左移事件;
-    function leftLi ($leftli, $li) {
-        $li.insertBefore($leftli);
-    }
-
-    //右移事件;
-    function rightLi ($rightli, $li) {
-        $li.insertAfter($rightli);
-    }
-
     //创建文件操作div;
     function createBox( $fileInput, file, webUploader ) {
         var file_id = file.id;
         var $parentFileBox = $fileInput.parents(".upload-ul");
-        var file_len=$parentFileBox.children(".diyUploadHover").length;
 
         //添加子容器;
-        var li = '<li id="fileBox_'+file_id+'" class="diyUploadHover"> \
+        var li = '<li id="fileBox_'+file_id+'" class="uploadList"> \
 					<div class="viewThumb">\
 					    <input type="hidden">\
 					    <div class="diyBar"> \
 							<div class="diyProgress" style="width:100% !important;">0%</div> \
 					    </div> \
-					    <p class="diyControl">\
-                            <span class="diyLeft"><i></i></span>\
-                            <span class="diyCancel"><i></i></span>\
-                            <span class="diyRight"><i></i></span>\
-					    </p>\
 					</div> \
 				</li>';
 
@@ -256,20 +256,6 @@
 
         var $fileBox = $parentFileBox.find('#fileBox_'+file_id);
 
-        //绑定取消事件;
-        $fileBox.find('.diyCancel').one('click',function(){
-            removeLi( $(this).parents('.diyUploadHover'), file_id, webUploader );
-        });
-
-        //绑定左移事件;
-        $fileBox.find('.diyLeft').one('click',function(){
-            leftLi($(this).parents('.diyUploadHover').prev(), $(this).parents('.diyUploadHover'));
-        });
-
-        //绑定右移事件;
-        $fileBox.find('.diyRight').one('click',function(){
-            rightLi($(this).parents('.diyUploadHover').next(), $(this).parents('.diyUploadHover') );
-        });
 
         if ( file.type.split("/")[0] != 'image' ) {
             var liClassName = getFileTypeClassName( file.name.split(".").pop() );

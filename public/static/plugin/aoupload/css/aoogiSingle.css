@@ -43,7 +43,6 @@ a:hover { text-decoration: none; }
     display: inline-block;
     width: 52px;
     height: 52px;
-    /*margin: 0 10px 10px 0;*/
     padding: 0;
     border: none;
     cursor: pointer;
@@ -54,13 +53,8 @@ a:hover { text-decoration: none; }
 }
 .upload-pick{
     background: url(/static/plugin/aoupload/images/bg-w.png) no-repeat 0 0;
-    /*background: url(/static/plugin/aoupload/images/upload-bj.png) no-repeat 0 0;*/
-    position: absolute;
-    left:-55px;
 }
-/*.upload-pick:hover{
-    background: url(/static/plugin/aoupload/images/upload-bj.png) no-repeat 0 -90px;
-}*/
+
 .webuploader-pick{
     position: relative;
     display: inline-block;

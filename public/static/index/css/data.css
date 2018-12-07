@@ -5,12 +5,23 @@
 
 }
 .data .data-header{
-  padding-left:0.8rem;
-
+  padding:0 0 0.2rem 0.8rem;
+  border-bottom:1px solid #e3e3e3;
+  height:1.6rem;
+  overflow:hidden;
+}
+.data .data-header li{
+  width:1.4rem;
+  height:1.4rem;
 }
 .data .data-header img{
   width:1.4rem;
+  height:1.4rem;
   border-radius:50%;
+}
+.data .data-header .upload-pick{
+  position: relative;
+  left:-1.52rem;
 }
 .data .data-list{
   height:1.2rem;
