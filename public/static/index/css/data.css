@@ -13,6 +13,7 @@
 .data .data-header li{
   width:1.4rem;
   height:1.4rem;
+  overflow:hidden;
 }
 .data .data-header img{
   width:1.4rem;
