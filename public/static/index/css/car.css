@@ -68,13 +68,13 @@ body{
 .car .car-list .car-list-select .list-select-box{
   width:0.4rem;
   height:0.4rem;
-  border:1px solid #ccc;
-  border-radius:50%;
   margin:0 auto;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.4rem;
 }
 .car .car-list .car-list-select .select-box-active{
-  padding: 0.2rem;
-  background:#cc7f15;
+  background:url(/static/index/images/circle-active.png) no-repeat center center;
+  background-size:0.4rem;
 
 }
 .car .car-list .car-list-img{
@@ -181,13 +181,13 @@ body{
 .balance .balance-all .balance-all-box{
   width:0.4rem;
   height:0.4rem;
-  border:1px solid #ccc;
-  border-radius:50%;
   margin:0 auto;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.4rem;
 }
 .balance .balance-all .all-box-active{
-  padding: 0.2rem;
-  background:#cc7f15;
+  background:url(/static/index/images/circle-active.png) no-repeat center center;
+  background-size:0.4rem;
 }
 .balance .balance-sum{
   width:5.2rem;

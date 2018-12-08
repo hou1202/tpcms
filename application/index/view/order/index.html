@@ -1,0 +1,115 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="订单列表" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/roll-nav.css" /}
+{load href="/static/index/css/order.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>订单列表</h2>
+</header>
+
+<!--模块导航-->
+<div class="roll-nav">
+    <div class="swiper-container" id="orderSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide nav-active" id="2">
+                <span>待付款</span>
+            </div>
+            <div class="swiper-slide" id="3">
+                <span>待收货</span>
+            </div>
+            <div class="swiper-slide" id="4">
+                <span>待评价</span>
+            </div>
+            <div class="swiper-slide" id="5">
+                <span>已完成</span>
+            </div>
+            <div class="swiper-slide" id="6">
+                <span>退换货</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--列表模块-->
+<div class="order">
+
+    <div class="order-list">
+        <div class="order-list-left">
+            <img src="/static/index/images/goods1.jpg" >
+        </div>
+        <div class="order-list-middle">
+            <h2>小米MX3 与你相约-我在这里，你不来，我不走</h2>
+            <p>青春移动版</p>
+        </div>
+        <div class="order-list-right">
+            <p>￥2500.00</p>
+            <p>x 5</p>
+        </div>
+        <div class="order-list-bottom">
+            <p>共计1件商品 合计：￥5000.00(含运费：0.00)</p>
+            <div class="bottom-button">
+                <a href="">取消订单</a>
+                <a href="">立即付款</a>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+<!--引入加载footer文件-->
+<div class="bottom-content"></div>
+
+</body>
+
+
+
+<script>
+
+    var orderSwiper = new Swiper('#orderSwiper', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false,
+    });
+
+    orderSwiper.on('click',function(){
+        $(".swiper-slide").removeClass('nav-active');
+        $("#"+this.clickedSlide.id).addClass('nav-active');
+    });
+
+    $(".circle").click(function(){
+        $(".circle").removeClass('circle-active');
+        $(this).addClass('circle-active');
+    });
+
+
+    //数据提交
+    $("#dataSubmit").click(function(){
+        console.log($("#dataForm").serializeArray()); //这里可以得到后台返回的数据
+    });
+
+</script>
+
+
+
+
+
+
+
+</html>

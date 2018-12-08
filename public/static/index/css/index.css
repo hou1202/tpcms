@@ -4,22 +4,23 @@
 }
 .carousel img{
   width:100%;
-  border-radius:7px;
+  border-radius:0.24rem;
   box-shadow: 5px 5px 5px #aeaeae;
 
 }
 .nav{
   display:flex;
   text-align:center;
+  font-size:0.36rem;
 }
 .nav a{
   width:25%;
   color:#0C0C0C;
 }
 .nav a img{
-  width:100%;
-  padding:0.6rem;
+  width:1.2rem;
   border-radius:50%;
+  margin-bottom:0.2rem;
 }
 .recom{
   overflow:hidden;
@@ -29,7 +30,7 @@
 .recom .recom-list{
   overflow:hidden;
   border:1px solid #ccc;
-  border-radius:7px;
+  border-radius:0.24rem;
   padding:0.2rem 0.30666666rem;
   margin-top:0.2rem;
 }
@@ -48,7 +49,7 @@
   padding-left:0.2rem;
 }
 .recom .recom-list .recom-com h2{
-  font-size:0.4rem;
+  font-size:0.36rem;
   margin-bottom:0.10666666rem;
   height:0.4rem;
   line-height: 0.42666666rem;
@@ -126,245 +127,13 @@ i.ticon2 {
 }
 
 
-.goods-list{
-  overflow:hidden;
-}
-.goods-list .goods-block{
-  width:50%;
-  float:left;
-  padding:0.4rem 0.4rem 0 0.4rem;
-}
-.goods-list .goods-block .block-img{
-  padding:0.4rem;
-}
-.goods-list .goods-block .block-img img{
-  width:100%;
-}
-.goods-list .goods-block .block-cont{
-
-}
-.goods-list .goods-block .block-cont h3{
-  color:#0C0C0C;
-  font-size:0.4rem;
-  height:0.48rem;
-  line-height:0.48rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-  -webkit-box-orient: vertical;
-}
-.goods-list .goods-block .block-cont p{
-  color: #505050;
-  font-size:0.33333333rem;
-  height:0.52rem;
-  line-height:0.52rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-  -webkit-box-orient: vertical;
-}
-.goods-list .goods-block .block-cont label{
-  height:0.52rem;
-  line-height:0.52rem;
-}
-.goods-list .goods-block .block-cont .label-left{
-  font-size:0.30666666rem;
-  color: #cc7f15;
-}
-.goods-list .goods-block .block-cont .label-right{
-  font-size:0.26666666rem;
-  color: #969696;
-  float:right;
-  text-decoration:line-through;
+@media screen and (min-width: 800px) {
+  .recom .recom-list {
+    width:45%;
+    margin:0 2.5%;
+    float:left;
+  }
 }
 
 
 
-
-
-/*
-.title-list {
-  position: relative;
-  display: flex;
-  display: -webkit-flex;
-  padding: 0 0.4rem;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: center;
-  margin-top: 1.04rem;
-}
-.title-list::after {
-  display: block;
-  width: 100%;
-  position: absolute;
-  content: "";
-  top: 50%;
-  transform: translateY(-50%);
-  height: 0;
-  border-top: 1px solid #f0f0f0;
-}
-.title-list a {
-  width: 25%;
-  color: #666666;
-  line-height: 0.66666667rem;
-  text-align: center;
-  margin: 0.4rem 0;
-  font-size: 0.37333333rem;
-  position: relative;
-}
-.title-list a::after {
-  display: block;
-  content: "";
-  height: 100%;
-  border-left: 1px solid #f0f0f0;
-  position: absolute;
-  left: 0px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.title-list a.noline::after {
-  display: none;
-}
-.title-list a i {
-  display: inline-block;
-  width: 0.92rem;
-  height: 0.78666667rem;
-}
-i.ticon1 {
-  background: url("../image/ticon.gif");
-  background-size: 0.92rem;
-}
-i.ticon2 {
-  background: url("../image/ticon.gif") 0 -0.78666667rem;
-  background-size: 0.92rem;
-}
-i.ticon3 {
-  background: url("../image/ticon.gif") 0 -1.57333333rem;
-  background-size: 0.92rem;
-}
-i.ticon4 {
-  background: url("../image/ticon.gif") 0 -2.36rem;
-  background-size: 0.92rem;
-}
-i.ticon5 {
-  background: url("../image/ticon.gif") 0 -3.14666667rem;
-  background-size: 0.92rem;
-}
-i.ticon6 {
-  background: url("../image/ticon.gif") 0 -3.93333333rem;
-  background-size: 0.92rem;
-}
-i.ticon7 {
-  background: url("../image/ticon.gif") 0 -4.72rem;
-  background-size: 0.92rem;
-}
-i.ticon8 {
-  background: url("../image/ticon.gif") 0 -5.50666667rem;
-  background-size: 0.92rem;
-}
-div.new {
-  border-top: 0.13333333rem solid #f5f5f5;
-  padding: 0 0.4rem;
-}
-div.new h2 {
-  font-size: 0.4rem;
-  color: #333333;
-  line-height: 1.33333333rem;
-  font-weight: 600;
-}
-div.new h2 .hicon1 {
-  display: inline-block;
-  width: 0.41333333rem;
-  height: 0.32rem;
-  background: url("../image/h.gif");
-  background-size: 0.41333333rem;
-}
-div.new h2 .hicon2 {
-  display: inline-block;
-  width: 0.41333333rem;
-  height: 0.32rem;
-  background: url("../image/h.gif") 0 -0.32rem;
-  background-size: 0.41333333rem;
-}
-div.new .list-new a {
-  color: #4d4d4d;
-  display: flex;
-  display: -webkit-flex;
-  justify-content: space-between;
-  font-size: 0.37333333rem;
-  line-height: 0.66666667rem;
-}
-div.member {
-  border-top: 0.13333333rem solid #f5f5f5;
-  border-bottom: 0.13333333rem solid #f5f5f5;
-  margin-top: 0.37333333rem;
-  padding: 0 0.4rem 0.4rem;
-}
-div.member h2 {
-  font-size: 0.4rem;
-  color: #333333;
-  line-height: 1.33333333rem;
-  font-weight: 600;
-}
-div.member h2 .hicon2 {
-  display: inline-block;
-  width: 0.41333333rem;
-  height: 0.32rem;
-  background: url("../image/h.gif") 0 -0.32rem;
-  background-size: 0.41333333rem;
-}
-div.member .swiper-slide {
-  height: 0.66666667rem !important;
-}
-div.member .swiper-slide a {
-  color: #4d4d4d !important;
-  display: flex;
-  display: -webkit-flex;
-  font-size: 0.34666667rem !important;
-  line-height: 0.66666667rem !important;
-}
-.swiper-container {
-  height: 2rem;
-  overflow: hidden;
-}
-.pcolor1 {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  font-size: 0.18666667rem;
-  background: #e73737;
-  color: #ffffff;
-  text-align: center;
-  line-height: 0.37333333rem;
-  position: relative;
-  top: 0.10666667rem;
-  margin-right: 0.13333333rem;
-}
-.pcolor2 {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  font-size: 0.18666667rem;
-  background: #fd8a3d;
-  color: #ffffff;
-  text-align: center;
-  line-height: 0.37333333rem;
-  position: relative;
-  top: 0.10666667rem;
-  margin-right: 0.13333333rem;
-}
-.pcolor3 {
-  width: 0.37333333rem;
-  height: 0.37333333rem;
-  border-radius: 50%;
-  font-size: 0.18666667rem;
-  background: #f5be3c;
-  color: #ffffff;
-  text-align: center;
-  line-height: 0.37333333rem;
-  position: relative;
-  top: 0.10666667rem;
-  margin-right: 0.13333333rem;
-}*/

@@ -2,7 +2,7 @@
 <!--引入头部文件-->
 {include file="default/header" title="订单结算" keywords="Aoogi商城系统"}
 
-{load href="/static/index/css/order.css" /}
+{load href="/static/index/css/pay.css" /}
 {load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
 
@@ -127,6 +127,13 @@
                 <input type="radio" name="pay" value="2" class="paySelect">
             </div>
         </div>
+        <div class="pay-select">
+            <i class="ye"></i>
+            <p>余额支付 <span>(余额：250.00)</span></p>
+            <div class="pay-select-sure" id="balance">
+                <input type="radio" name="pay" value="3" class="paySelect">
+            </div>
+        </div>
     </div>
 
     <!--结算信息-->
@@ -146,7 +153,7 @@
 <!--订单提交模块-->
 <div class="balance">
     <div class="balance-sum">
-        <p>结算金额：￥<span class="periceSum">0.00</span></p>
+        <p>结算金额：￥<span class="periceSum">30.00</span></p>
     </div>
     <div class="balance-button">
         <button type="button" id="submitForm" form="orderForm"> 订单支付 </button>
@@ -163,8 +170,11 @@
 
 <script>
 
+    var balance = 25;
     /*支付方式选择控制*/
     $(".pay-select-sure").click(function(){
+        if($(this).attr('id') == 'balance' && parseInt($(".periceSum").text()) > parseInt(balance))
+            return autoAlert("余额不足，请选择其他支付方式");
         $(".pay-select-sure").removeClass("pay-active");
         $(".paySelect").attr("checked",false);
         $(this).addClass("pay-active");

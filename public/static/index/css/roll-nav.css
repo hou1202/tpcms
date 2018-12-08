@@ -1,16 +1,16 @@
 
 /*二级产品分类*/
-.category{
+.roll-nav{
   height:1.2rem;
   line-height:1.2rem;
-  margin-top:0.2rem;
+  margin-top:0.4rem;
   border-top:1px solid #cc7f15;
   border-bottom:1px solid #cc7f15;
 }
-.category .swiper-wrapper{
+.roll-nav .swiper-wrapper{
   padding-left:0.2rem;
 }
-.category .swiper-wrapper .swiper-slide{
+.roll-nav .swiper-wrapper .swiper-slide{
   /*width:fit-content;
   width:-webkit-fit-content;
   width:-moz-fit-content;
@@ -22,12 +22,13 @@
   margin:0 0.2rem;
   text-align:center;
 }
-.category .swiper-wrapper .category-active{
-  color:#cc7f15;
-}
-.category .swiper-wrapper .swiper-slide span{
+.roll-nav .swiper-wrapper .swiper-slide span{
   font-size:0.33333333rem;
 }
+.roll-nav .swiper-wrapper .nav-active{
+  color:#cc7f15;
+}
+
 
 
 

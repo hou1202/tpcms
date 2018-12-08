@@ -25,8 +25,8 @@ class Index extends BaseController
         return view('/car');
     }
 
-    public function order(){
-        return view('/order');
+    public function pay(){
+        return view('/pay');
     }
 
     public function category(){
@@ -49,6 +49,10 @@ class Index extends BaseController
 
     public function addressCreate(){
         return view('address/create');
+    }
+
+    public function order(){
+        return view('order/index');
     }
 
     public function post(Request $request){

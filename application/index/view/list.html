@@ -2,7 +2,7 @@
 <!--引入头部文件-->
 {include file="default/header" title="产品列表" keywords="Aoogi商城系统"}
 
-{load href="/static/index/css/list.css" /}
+{load href="/static/index/css/roll-nav.css" /}
 {load href="/static/index/css/goods-list.css" /}
 {load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
@@ -16,10 +16,10 @@
 </header>
 
 <!--二级分类模块-->
-<div class="category">
+<div class="roll-nav">
     <div class="swiper-container" id="categorySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide category-active" id="1">
+            <div class="swiper-slide nav-active" id="1">
                 <span>iPhone X</span>
             </div>
             <div class="swiper-slide" id="2">
@@ -43,7 +43,6 @@
 
         </div>
     </div>
-
 
 </div>
 
@@ -180,11 +179,9 @@
     });
 
     categorySwiper.on('click',function(){
-        //this.clickedSlide.addClass('category-active');
-        console.log(this.clickedSlide);
-        $(".swiper-slide").removeClass('category-active');
-        $("#"+this.clickedSlide.id).addClass('category-active');
-    })
+        $(".swiper-slide").removeClass('nav-active');
+        $("#"+this.clickedSlide.id).addClass('nav-active');
+    });
 
     $(".list-block").click(function(){
         //console.log($(this).attr('title'));

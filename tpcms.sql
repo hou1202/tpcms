@@ -1,8 +1,31 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2018-11-24 16:35:48
+# Date: 2018-12-08 16:42:12
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
+
+#
+# Structure for table "address"
+#
+
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '收货人姓名',
+  `phone` varchar(11) NOT NULL DEFAULT '' COMMENT '收货人电话',
+  `city` varchar(255) NOT NULL DEFAULT '' COMMENT '城市',
+  `street` varchar(255) NOT NULL DEFAULT '' COMMENT '街道地址',
+  `choice` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否为默认地址：1=》是；0=》否',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
+
+#
+# Data for table "address"
+#
+
 
 #
 # Structure for table "adminer"
@@ -30,7 +53,28 @@ CREATE TABLE `adminer` (
 # Data for table "adminer"
 #
 
-INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1542961903,18,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',1,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
+INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1543908656,21,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',1,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
+
+#
+# Structure for table "car"
+#
+
+DROP TABLE IF EXISTS `car`;
+CREATE TABLE `car` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) NOT NULL DEFAULT '0' COMMENT '产品ID',
+  `spec_id` int(11) NOT NULL DEFAULT '0' COMMENT '产品规格ID',
+  `num` int(11) NOT NULL DEFAULT '1' COMMENT '购物产品数量',
+  `isbuy` int(10) DEFAULT NULL COMMENT '是否购买，若购买则为下单时间戳',
+  `isdelete` int(10) DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物车表';
+
+#
+# Data for table "car"
+#
+
 
 #
 # Structure for table "config"
@@ -51,17 +95,85 @@ CREATE TABLE `config` (
 INSERT INTO `config` VALUES (1,'平台标识','AOZOM后台管理系统'),(2,'应用名称','AOZOM 2.0');
 
 #
-# Structure for table "grade"
+# Structure for table "goods"
 #
 
-DROP TABLE IF EXISTS `grade`;
-CREATE TABLE `grade` (
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '产品标题',
+  `info` varchar(255) DEFAULT NULL COMMENT '副标题',
+  `thumbnail` varchar(255) DEFAULT NULL COMMENT '缩略图',
+  `banner` varchar(255) DEFAULT NULL COMMENT '轮播图；多图拼接',
+  `origin-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '原价',
+  `sell-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '售价',
+  `cost-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '成本价',
+  `franking` float(6,2) DEFAULT NULL COMMENT '邮费：为空则为免邮费',
+  `volume` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '销量',
+  `address` varchar(255) DEFAULT NULL COMMENT '发货地',
+  `content` text COMMENT '图文详情',
+  `isdelete` int(10) DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='等级';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品表';
 
 #
-# Data for table "grade"
+# Data for table "goods"
+#
+
+
+#
+# Structure for table "goods-param"
+#
+
+DROP TABLE IF EXISTS `goods-param`;
+CREATE TABLE `goods-param` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) unsigned DEFAULT NULL COMMENT '产品ID',
+  `title` varchar(255) DEFAULT NULL COMMENT '参数标题',
+  `content` varchar(255) DEFAULT NULL COMMENT '参数内容',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品参数表';
+
+#
+# Data for table "goods-param"
+#
+
+
+#
+# Structure for table "goods-spec"
+#
+
+DROP TABLE IF EXISTS `goods-spec`;
+CREATE TABLE `goods-spec` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) unsigned DEFAULT NULL COMMENT '产品ID',
+  `name` varchar(255) DEFAULT NULL COMMENT '规格名称',
+  `price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '产品价格',
+  `stock` int(11) unsigned NOT NULL DEFAULT '1' COMMENT '产品库存',
+  `isdelete` int(10) unsigned DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品规格表';
+
+#
+# Data for table "goods-spec"
+#
+
+
+#
+# Structure for table "order"
+#
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+#
+# Data for table "order"
 #
 
 
@@ -115,23 +227,27 @@ CREATE TABLE `router` (
 INSERT INTO `router` VALUES (1,'/main','/','','控制面板','#xe679;',0,0,1,1,1,'2018-10-26 14:44:54'),(2,'','','','系统设置','#xe66a;',0,0,1,1,1,'2018-10-26 16:57:59'),(3,'/adminer','/adminer','admin/admin/index','管理员设置','#xe653;',2,0,1,1,1,'2018-10-26 16:59:16'),(4,'/adminer/data','/adminer/data','admin/admin/getData','管理员列表','',3,0,0,1,0,'2018-10-26 17:02:06'),(5,'/adminer/create','/adminer/create','admin/admin/create','新增管理员','',3,0,0,1,1,'2018-10-26 17:03:30'),(6,'/adminer','/adminer/save','admin/admin/save','保存管理员','',3,0,0,1,0,'2018-10-26 17:04:09'),(7,'/adminer/edit/:id','/adminer/edit/*','admin/admin/edit','编辑管理员','',3,0,0,1,1,'2018-10-26 17:05:38'),(8,'/adminer/:id','/adminer/update/*','admin/admin/update','更新管理员','',3,0,0,1,0,'2018-10-26 17:06:30'),(9,'/adminer/:id','/adminer/del/*','admin/admin/delete','删除管理员','',3,0,0,1,1,'2018-10-26 17:07:14'),(10,'/router','/router','admin/router/index','路由设置','#xe653;',2,0,1,1,1,'2018-10-30 10:41:29'),(11,'/router/data','/router/data','admin/router/getData','路由列表','',10,0,0,1,0,'2018-10-30 10:44:59'),(12,'/router/create','/router/create','admin/router/create','新增路由','',10,0,0,1,1,'2018-10-30 10:47:36'),(13,'/router','/router/save','admin/router/save','保存路由','',10,0,0,1,0,'2018-11-05 11:00:01'),(14,'/router/edit/:id','/router/edit/*','admin/router/edit','编辑路由','',10,0,0,1,1,'2018-11-05 11:44:50'),(15,'/router/:id','/router/update/*','admin/router/update','更新路由','',10,0,0,1,0,'2018-11-05 11:47:04'),(16,'/router/:id','/router/del/*','admin/router/delete','删除路由','',10,0,0,1,0,'2018-11-05 11:47:34'),(17,'/permission','/permission','admin/permission/index','权限设置','#xe653;',2,0,1,1,1,'2018-11-05 15:03:03'),(18,'/adminer/status','/adminer/status','admin/admin/setStatus','管理员状态','',3,0,0,1,0,'2018-11-07 09:12:01'),(19,'/router/status','/router/status','admin/router/setStatus','路由状态','',10,0,0,1,0,'2018-11-07 09:12:35'),(20,'/permission/data','/permission/data','admin/permission/getData','权限组列表','',17,0,0,1,0,'2018-11-07 09:14:05'),(21,'/permission/status','/permission/status','admin/permission/setStatus','权限组状态','',17,0,0,1,0,'2018-11-07 09:15:14'),(22,'/permission/create','/permission/create','admin/permission/create','新增权限组','',17,0,0,1,1,'2018-11-07 09:15:50'),(23,'/permission','/permission/save','admin/permission/save','保存权限组','',17,0,0,1,0,'2018-11-07 09:16:24'),(24,'/permission/edit/:id','/permission/edit/*','admin/permission/edit','编辑权限组','',17,0,0,1,1,'2018-11-07 09:16:52'),(25,'/permission/:id','/permission/update*','admin/permission/update','更新权限组','',17,0,0,1,0,'2018-11-07 09:17:36'),(26,'/permission/:id','/permission/del/*','admin/permission/delete','删除权限组','',17,0,0,1,0,'2018-11-07 09:18:20'),(27,'/router/:id','/router/read/*','admin/router/read','查看路由','',10,0,0,1,1,'2018-11-08 10:48:00'),(28,'/adminer/:id','/adminer/read/*','admin/admin/read','查看管理员','',3,0,0,1,1,'2018-11-09 14:07:38'),(29,'/logout','/logout','admin/home/logout','退出登录','',1,0,0,1,1,'2018-11-12 14:00:40'),(30,'/error','/error','admin/error/index','403错误','',1,0,0,1,1,'2018-11-13 14:07:32'),(31,'/main','/','admin/home/main','主页','',1,0,0,1,1,'2018-11-15 12:02:01'),(32,'/permission/:id','/permission/read/*','admin/permission/read','查看权限组','',17,0,0,1,1,'2018-11-15 15:19:31'),(33,'/config','/config','admin/config/index','参数设置','#xe653;',2,0,1,1,1,'2018-11-15 16:35:12'),(34,'/config/create','/config/create','admin/config/create','新增参数','',33,0,0,1,1,'2018-11-15 16:44:30'),(35,'/config','/config/save','admin/config/save','保存参数','',33,0,0,1,0,'2018-11-15 17:05:08'),(36,'/config/edit/:id','/config/edit/*','admin/config/edit','编辑参数','',33,0,0,1,1,'2018-11-15 17:09:08'),(37,'/config/:id','/config/update/*','admin/config/update','更新参数','',33,0,0,1,0,'2018-11-16 10:34:21'),(38,'/admin/*','/admin/del/*','admin/config/delete','删除参数','',33,0,0,1,0,'2018-11-23 11:51:30');
 
 #
-# Structure for table "users"
+# Structure for table "user"
 #
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `mobile` varchar(11) DEFAULT NULL,
-  `delete_time` timestamp NULL DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `name` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `password` varchar(255) NOT NULL DEFAULT '' COMMENT '帐户密码',
+  `phone` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `balance` float(8,2) unsigned DEFAULT '0.00' COMMENT '帐户余额',
+  `sex` tinyint(1) unsigned DEFAULT '0' COMMENT '性别：1=》男；0=》女',
+  `birthday` varchar(10) DEFAULT NULL COMMENT '生日',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '帐户状态：1=》正常；0=》禁用',
+  `isdelete` int(10) DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 #
-# Data for table "users"
+# Data for table "user"
 #
 
-INSERT INTO `users` VALUES (1,'Libai','96e79218965eb72c92a549dd5a330112','18297905432',NULL,'2018-10-10 15:08:34',0),(2,'Wangwei','96e79218965eb72c92a549dd5a330112','13564078415',NULL,'2018-10-10 15:08:55',0),(3,'Dufu','96e79218965eb72c92a549dd5a330112','17333007330',NULL,'2018-10-10 15:09:11',0);
+INSERT INTO `user` VALUES (1,'Libai','96e79218965eb72c92a549dd5a330112','18297905432',0.00,0,NULL,0,NULL,'2018-10-10 15:08:34',NULL),(2,'Wangwei','96e79218965eb72c92a549dd5a330112','13564078415',0.00,0,NULL,0,NULL,'2018-10-10 15:08:55',NULL),(3,'Dufu','96e79218965eb72c92a549dd5a330112','17333007330',0.00,0,NULL,0,NULL,'2018-10-10 15:09:11',NULL);

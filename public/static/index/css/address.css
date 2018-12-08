@@ -7,7 +7,7 @@
   width:90%;
   /*height:4rem;*/
   margin-left:5%;
-  background: #f4f4f4;
+  background: rgba(204, 169, 25,0.08);
   border-radius:0.2rem;
   padding:0.2rem 0.4rem;
   font-size:0.33333333rem;
@@ -119,6 +119,21 @@
   background:#fff;
   border:none;
   border-bottom:1px solid #e5e5e5;
+}
+.address .address-input .first-radio{
+  display:none;
+}
+.address .address-input i{
+  display:block;
+  width:0.8rem;
+  height:0.8rem;
+  margin-left:0.6rem;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.48rem;
+}
+.address .address-input .radio-active{
+  background:url(/static/index/images/circle-active.png) no-repeat center center;
+  background-size:0.48rem;
 }
 
 /*底部添加*/
