@@ -322,6 +322,7 @@ window.LArea = (function() {
                 _self.index = 0;
             }
         },
+        //完成并组装数据
         finish: function(e) {
             var _self = this;
             var area_province = _self.gearArea.querySelector(".area_province");
