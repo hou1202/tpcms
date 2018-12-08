@@ -44,7 +44,11 @@ class Index extends BaseController
         return view('/data');
     }
     public function address(){
-        return view('/address');
+        return view('address/address');
+    }
+
+    public function addressCreate(){
+        return view('address/create');
     }
 
     public function post(Request $request){
