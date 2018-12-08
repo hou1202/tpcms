@@ -5,219 +5,46 @@
 
 }
 .order .order-list{
-  height:2rem;
+  max-width:15rem;
+  height:3rem;
   background: rgba(204, 169, 25,1);
+  margin:0 auto;
   border-radius:0.2rem;
   padding:0.2rem 0.4rem;
 }
 .order .order-list .order-list-left{
-  width:25%;
+  width:20%;
+  height:1.6rem;
+  text-align:center;
+  float:left;
 }
 .order .order-list .order-list-left img{
   width:1.6rem;
 }
 .order .order-list .order-list-middle{
+  width:60%;
+  height:1.6rem;
+  float:left;
+  padding:0 0.2rem;
+}
+.order .order-list .order-list-middle h2{
+  line-height:0.5rem;
 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
 }
 .order .order-list .order-list-right{
-
+  width:20%;
+  height:1.6rem;
+  text-align:right;
+  float:left;
 }
 .order .order-list .order-list-bottom{
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*列表*/
-.address{
-  margin-top:0.6rem;
-}
-.address .address-list{
-  width:90%;
-  /*height:4rem;*/
-  margin-left:5%;
-  background: #f4f4f4;
-  border-radius:0.2rem;
-  padding:0.2rem 0.4rem;
-  font-size:0.33333333rem;
-  margin-bottom:0.2rem;
-}
-.address .address-list .list-top{
-  height:0.96rem;
-  line-height:0.96rem;
-}
-.address .address-list .list-top p{
-  width:50%;
-  float:left;
-  height:0.96rem;
-  line-height:0.96rem;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-  -webkit-box-orient: vertical;
-}
-.address .address-list .list-top p:first-child{
-  padding-left:0.2rem;
-}
-.address .address-list .list-top p:nth-child(2){
-  text-align:right;
-  padding-right:0.2rem;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-  -webkit-box-orient: vertical;
-}
-.address .address-list .list-middle{
-  height:1.4rem;
-  line-height:0.56rem;
-  padding-bottom:0.28rem;
-  border-bottom:1px solid #ccc;
-
-}
-.address .address-list .list-middle p{
-  line-height:0.56rem;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-  -webkit-box-orient: vertical;
-}
-.address .address-list .list-middle p:first-child{
-  font-size:0.36rem;
-  color:#cc7f15;
-}
-.address .address-list .list-middle p:nth-child(2){
-  color:#525252;
-  padding-left:0.36rem;
-
-}
-.address .address-list .list-bottom{
-  height:1.2rem;
-  line-height:1.2rem;
-  margin-top:0.12rem;
-}
-.address .address-list .list-bottom i{
-  display:inline-block;
-  width:1rem;
-  height:1.2rem;
-  background:url(/static/index/images/circle.png) no-repeat center center;
-  background-size:0.4rem;
-}
-.address .address-list .list-bottom .circle-active{
-  background:url(/static/index/images/circle-active.png) no-repeat center center;
-  background-size:0.4rem;
-}
-.address .address-list .list-bottom a{
-  width:1.4rem;
-  height:0.72rem;
-  line-height:0.72rem;
-  display:block;
-  background:#cc7f15;
-  float:right;
-  text-align:center;
-  margin:0.24rem 0.2rem 0 0;
-  border-radius:0.2rem;
-  color:#fff;
-}
-
-/*添加新地址*/
-.address .address-input{
-  height:1.6rem;
-  padding-left:0.6rem;
-  margin-bottom:0.2rem;
-
-}
-.address .address-input p{
-  height:0.8rem;
-  line-height:0.8rem;
-  font-size:0.33333333rem;
-  color:#525252;
-
-}
-.address .address-input input{
-  width:7.6rem;
-  height:0.8rem;
-  line-height:0.8rem;
-  font-size:0.33333333rem;
-  padding:0 0.6rem;
-  background:#fff;
-  border:none;
-  border-bottom:1px solid #e5e5e5;
-}
-.address .address-input .first-radio{
-  display:none;
-}
-.address .address-input i{
-  display:block;
-  width:0.8rem;
-  height:0.8rem;
-  margin-left:0.6rem;
-  background:url(/static/index/images/circle.png) no-repeat center center;
-  background-size:0.48rem;
-}
-.address .address-input .radio-active{
-  background:url(/static/index/images/circle-active.png) no-repeat center center;
-  background-size:0.48rem;
-}
-
-/*底部添加*/
-.bottom{
-  height:1.6rem;
-  line-height:1.2rem;
-  width:100%;
-  background:#fff;
-  position:fixed;
-  bottom:0;
-  padding:0.2rem 0;
-}
-.bottom a,button{
-  width:80%;
-  line-height:1.2rem;
-  border:none;
-  background:#cc7f15;
-  display:block;
-  margin:0 auto;
-  text-align:center;
-  color:#fff;
-  font-size:0.33333333rem;
-  border-radius:0.2rem;
-
-}
-.bottom i{
-  display:block;
-  width:0.72rem;
-  height: 1.2rem;
-  background:url(/static/index/images/add.png) no-repeat center center;
-  background-size:0.72rem;
-  margin:0 auto;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
