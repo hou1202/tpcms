@@ -9,8 +9,9 @@
 
   background: rgba(204, 169, 25,0.08);
   margin:0 auto;
+  margin-bottom:0.32rem;
   border-radius:0.2rem;
-  padding:0.2rem 0.4rem;
+  padding:0.4rem 0.4rem 0.2rem 0.4rem;
 }
 .order .order-list .order-goods{
   overflow:hidden;
@@ -96,8 +97,8 @@
 .order .order-list .order-list-bottom a{
   display:block;
   width:2rem;
-  height:0.6rem;
-  line-height:0.6rem;
+  height:0.68rem;
+  line-height:0.68rem;
   font-size:0.30666666rem;
   background:#cc7f15;
   border-radius:0.8rem;
