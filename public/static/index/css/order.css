@@ -37,6 +37,7 @@
 .order .order-list .order-goods .order-list-middle h2{
   line-height:0.5rem;
   font-size:0.30666666rem;
+  color:#0C0C0C;
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -108,6 +109,66 @@
   color:#fff;
 
 }
+
+
+/*订单详情*/
+
+.order-time{
+  padding:0.4rem;
+  overflow:hidden;
+  display:flex;
+  align-items: center;
+
+}
+.order-time .time-cont{
+  width:7rem;
+
+  padding:0.4rem 0 0.4rem 1rem;
+}
+.order-time .time-cont h2{
+  font-size:0.33333333rem;
+  line-height:0.6rem;
+  color:#cc7f15;
+  padding-left:0.2rem;
+}
+.order-time .time-cont p{
+  font-size:0.30666666rem;
+  line-height:0.6rem;
+  color:#525252;
+}
+.order-time img{
+  width:1.2rem;
+}
+.order-address{
+  height:2rem;
+  display:flex;
+  padding:0 0.6rem;
+}
+.order-address i{
+  display:block;
+  height:2rem;
+  width:0.6rem;
+  background:url(/static/index/images/address.png) no-repeat center center;
+  background-size:0.6rem;
+}
+.order-address .address-cont{
+  width:8rem;
+  padding-left:0.4rem;
+  border:1px solid #ccc;
+}
+.order-address .address-cont p{
+  line-height:0.54rem;
+}
+.order-address .address-cont span{
+  float:right;
+}
+.order-address .address-cont p:first-child{
+  padding-right:0.4rem;
+}
+.order-address .address-cont p:nth-child(2){
+ /* float:right;*/
+}
+
 
 
 

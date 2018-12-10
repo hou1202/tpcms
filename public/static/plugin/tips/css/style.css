@@ -1,0 +1,91 @@
+
+
+/*提示框效果*/
+.alertBox{
+  text-align:center;
+  background: rgba(255, 255, 255, 0);
+  width:100%;
+  z-index: 1000;
+  position: fixed;
+  top:50%;
+  line-height:0.6rem;
+  overflow:hidden;
+}
+/*单提示效果*/
+.alertBox .infoBox{
+  font-size:0.33333333rem;
+  color: rgba(212,212,212,0.9);
+  background:rgba(39,39,39,0.9);
+  padding:0.34666666rem 1rem;
+  border-radius:0.2rem;
+  max-width:80%;
+  width:fit-content;
+  width:-webkit-fit-content;
+  width:-moz-fit-content;
+  margin:0 auto;
+}
+/*confirm效果*/
+.alertBox .confirmBox{
+  font-size:0.33333333rem;
+  color:#525252;
+  background:#fff;
+  padding:0.6rem 1rem;
+  border-radius:0.2rem;
+  width:8rem;
+  /*min-width:7rem;
+  max-width:14rem;
+  width:fit-content;
+  width:-webkit-fit-content;
+  width:-moz-fit-content;*/
+  margin:0 auto;
+  border:1px solid #e5e5e5;
+}
+.alertBox .confirmBox .contBox{
+  padding-bottom:0.2rem;
+  border-bottom:1px solid #e5e5e5;
+  min-height:1.4rem;
+
+  display:flex;
+  align-items: center;
+}
+.alertBox .confirmBox .contBox p{
+  margin:0 auto;
+}
+.alertBox .confirmBox .btnBox{
+  padding-top:0.4rem;
+  overflow:hidden;
+}
+.alertBox .confirmBox .btnBox a{
+  min-width:1.6rem;
+  max-width:2.6rem;
+  padding:0 0.2rem;
+  height:0.72rem;
+  line-height:0.72rem;
+  display:block;
+  font-size:0.30666666rem;
+  background:#ccc;
+  border-radius:0.2rem;
+  color:#fff;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.alertBox .confirmBox .btnBox .ok{
+  float:right;
+  background:#cc7f15;
+}
+.alertBox .confirmBox .btnBox .cancel{
+  float:left;
+  background: #ccba6c;
+}
+
+
+
+
+
+
+
+

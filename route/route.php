@@ -23,6 +23,7 @@ Route::get('/data','index/index/personalData');
 Route::get('/address','index/index/address');
 Route::get('/addressCreate','index/index/addressCreate');
 Route::get('/order','index/index/order');
+Route::get('/orderDetails','index/index/orderDetails');
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');

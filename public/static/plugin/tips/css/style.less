@@ -1,0 +1,91 @@
+@rem:75rem;
+
+
+
+/*提示框效果*/
+.alertBox{
+    text-align:center;
+    background: rgba(255, 255, 255, 0);
+    width:100%;
+    z-index: 1000;
+    position: fixed;
+    top:50%;
+    line-height:45/@rem;
+    overflow:hidden;
+    /*单提示效果*/
+    .infoBox{
+        font-size:25/@rem;
+        color: rgba(212,212,212,0.9);
+        background:rgba(39,39,39,0.9);
+        padding:26/@rem 75/@rem;
+        border-radius:15/@rem;
+        max-width:80%;
+        width:fit-content;
+        width:-webkit-fit-content;
+        width:-moz-fit-content;
+        margin:0 auto;
+    }
+
+    /*confirm效果*/
+    .confirmBox{
+        font-size:25/@rem;
+        color:#525252;
+        background:#fff;
+        padding:45/@rem 75/@rem;
+        border-radius:15/@rem;
+        width:600/@rem;
+        /*min-width:525/@rem;
+        max-width:1050/@rem;
+        width:fit-content;
+        width:-webkit-fit-content;
+        width:-moz-fit-content;*/
+        margin:0 auto;
+        border:1px solid #e5e5e5;
+        .contBox{
+            padding-bottom:15/@rem;
+            border-bottom:1px solid #e5e5e5;
+            min-height:105/@rem;
+
+            display:flex;
+            align-items: center;
+            p{
+                margin:0 auto;
+            }
+        }
+        .btnBox{
+            padding-top:30/@rem;
+            overflow:hidden;
+            a{
+                min-width:120/@rem;
+                max-width:195/@rem;
+                padding:0 15/@rem;
+                height:54/@rem;
+                line-height:54/@rem;
+                display:block;
+                font-size:23/@rem;
+                background:#ccc;
+                border-radius:15/@rem;
+                color:#fff;
+            }
+            .ok{
+                float:right;
+                background:#cc7f15;
+            }
+            .cancel{
+                float:left;
+                background: #ccba6c;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

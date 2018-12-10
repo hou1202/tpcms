@@ -1,0 +1,84 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="订单详情" keywords="Aoogi商城系统"}
+
+
+{load href="/static/index/css/order.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>订单详情</h2>
+</header>
+
+<!--详情模块-->
+<div class="order-time">
+    <div class="time-cont">
+        <h2>等待买家付款</h2>
+        <p>订单剩余时间：<span>12:12:12</span></p>
+    </div>
+    <img src="/static/index/images/goods1.jpg" />
+</div>
+
+<div class="order-address">
+    <i></i>
+    <div class="address-cont">
+        <p>李白<span>13564078415</span></p>
+
+        <p>安徽省 . 合肥市 . 蜀山区</p>
+        <p>望江西路亚夏汽车大厦1902室</p>
+    </div>
+</div>
+
+
+
+<!--引入加载footer文件-->
+<div class="bottom-content"></div>
+
+</body>
+
+
+
+<script>
+
+    var orderSwiper = new Swiper('#orderSwiper', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false,
+    });
+
+    /*NAV 切换模式*/
+    orderSwiper.on('click',function(){
+        $(".swiper-slide").removeClass('nav-active');
+        $("#"+this.clickedSlide.id).addClass('nav-active');
+    });
+
+
+    /*取消订单操作*/
+    $(".cancel").click(function() {
+        alertConfirm("确定取消该订单？", 'confirm', {
+            okText:'下次再来',
+            cancelText:'再看看',
+            onOk: function () {
+                console.log(123)
+            }
+        });
+    });
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</html>
