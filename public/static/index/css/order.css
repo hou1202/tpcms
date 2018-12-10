@@ -119,6 +119,11 @@
   display:flex;
   align-items: center;
 
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* 标准的语法 */
+
 }
 .order-time .time-cont{
   width:7rem;
@@ -138,15 +143,17 @@
 }
 .order-time img{
   width:1.2rem;
+    transform:rotate(8deg);
 }
 .order-address{
   height:2rem;
   display:flex;
   padding:0 0.6rem;
+
 }
 .order-address i{
   display:block;
-  height:2rem;
+  height:1.68rem;
   width:0.6rem;
   background:url(/static/index/images/address.png) no-repeat center center;
   background-size:0.6rem;
@@ -154,20 +161,75 @@
 .order-address .address-cont{
   width:8rem;
   padding-left:0.4rem;
-  border:1px solid #ccc;
+
 }
 .order-address .address-cont p{
-  line-height:0.54rem;
+  line-height:0.56rem;
+    font-size:0.32rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+    -webkit-box-orient: vertical;
 }
 .order-address .address-cont span{
+    font-size:0.30666666rem;
   float:right;
+    color:#525252;
 }
 .order-address .address-cont p:first-child{
   padding-right:0.4rem;
 }
-.order-address .address-cont p:nth-child(2){
- /* float:right;*/
+
+.order-info{
+    padding:0 0.6rem;
+    color:#525252;
 }
+.order-info h2{
+    height:1rem;
+    line-height:1rem;
+    font-size:0.32rem;
+    background: rgba(229, 229, 229, 0.3);
+    padding-left:0.2rem;
+}
+.order-info p{
+    line-height:0.6rem;
+    padding-left:0.6rem;
+    font-size:0.30666666rem;
+
+}
+
+.order-bottom{
+    width:100%;
+    height:1.2rem;
+    font-size:0.33333333rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background:#fff;
+    padding:0.2rem 0.4rem;
+}
+.order-bottom a{
+    width:2.2rem;
+    height:0.8rem;
+    line-height:0.8rem;
+    text-align:center;
+    margin-right:0.4rem;
+    display:block;
+    border-radius:2rem;
+    float:right;
+    border:1px solid #ccc;
+}
+.order-bottom a:first-child{
+    color: #666666;
+    border:1px solid #666666;
+}
+.order-bottom a:last-child{
+    color:#cc7f15;
+    border:1px solid #cc7f15;
+}
+
 
 
 

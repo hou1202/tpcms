@@ -1,7 +1,7 @@
 body{
-  background: -webkit-linear-gradient(#cc7f15, #ffffff); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#cc7f15, #ffffff); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#cc7f15, #ffffff); /* Firefox 3.6 - 15 */
+  background: -webkit-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* Firefox 3.6 - 15 */
   background: linear-gradient(rgba(204,127,21,0.2), rgba(194, 194, 194, 0.2) 50%); /* 标准的语法 */
   font-size:0.33333333rem;
 }

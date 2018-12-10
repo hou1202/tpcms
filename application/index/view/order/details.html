@@ -20,9 +20,10 @@
         <h2>等待买家付款</h2>
         <p>订单剩余时间：<span>12:12:12</span></p>
     </div>
-    <img src="/static/index/images/goods1.jpg" />
+    <img src="/static/index/images/order-pay.png" />
 </div>
 
+<!--地址模块-->
 <div class="order-address">
     <i></i>
     <div class="address-cont">
@@ -33,6 +34,57 @@
     </div>
 </div>
 
+<!--订单产品-->
+<div class="order">
+    <div class="order-list">
+
+        <div class="order-goods">
+            <div class="order-list-left">
+                <img src="/static/index/images/goods1.jpg" >
+            </div>
+            <div class="order-list-middle">
+                <h2>小米MX3 与你相约-我在这里，你不来，我不走-我们不见不散，青春永在一路有你</h2>
+                <p>青春移动版</p>
+            </div>
+            <div class="order-list-right">
+                <p>￥2500.00</p>
+                <p>x 5</p>
+            </div>
+        </div>
+
+        <div class="order-goods">
+            <div class="order-list-left">
+                <img src="/static/index/images/goods1.jpg" >
+            </div>
+            <div class="order-list-middle">
+                <h2>小米MX3 与你相约-我在这里，你不来，我不走-我们不见不散，青春永在一路有你</h2>
+                <p>青春移动版</p>
+            </div>
+            <div class="order-list-right">
+                <p>￥2500.00</p>
+                <p>x 5</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--订单信息-->
+<div class="order-info">
+    <h2>订单信息</h2>
+    <p>总金额：￥3000.00</p>
+    <p>优惠金额：￥10.00</p>
+    <p>运费金额：￥5.00</p>
+    <p>实付金额：￥29850.00</p>
+    <p>订单积分：298</p>
+    <p>创建时间：2018-12-09 12:12:59</p>
+    <p>订单编号：2108120954125864</p>
+
+</div>
+
+<div class="order-bottom">
+    <a class="cancelOrder">取消订单</a>
+    <a href="">立即付款</a>
+</div>
 
 
 <!--引入加载footer文件-->
@@ -58,7 +110,7 @@
 
 
     /*取消订单操作*/
-    $(".cancel").click(function() {
+    $(".cancelOrder").click(function() {
         alertConfirm("确定取消该订单？", 'confirm', {
             okText:'下次再来',
             cancelText:'再看看',
