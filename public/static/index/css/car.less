@@ -28,26 +28,19 @@ body{
         color:#cc7f15;
     }
     .car-list{
-        border-radius:7px;
+        max-width:1125/@rem;
+        margin:0 auto;
+        border-radius:18/@rem;
         padding:30/@rem;
         margin-bottom:30/@rem;
         background:#fff;
         overflow: hidden;
+        height:240/@rem;
 
-        display: -webkit-box;
-        overflow-x: scroll;
-        -webkit-overflow-scrolling:touch;
-        scrollbar-track-color: #fff;
-        scrollbar-base-color:#fff;
-        ::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
-            background: #fff;
-        }
-        ::-webkit-scrollbar-track {/*滚动条里面轨道*/
-            background: #fff;
-        }
         .car-list-box{
-            width:780/@rem;
+            width:100%;
             height:180/@rem;
+            display:flex;
         }
         .car-list-select{
             width:60/@rem;
@@ -137,18 +130,21 @@ body{
                 }
             }
         }
-        .car-list-del{
-            font-size:25/@rem;
-            margin-left:60/@rem;
-            width:75/@rem;
-            float:left;
-            height:180/@rem;
-            line-height:180/@rem;
-            text-align:center;
-            background:#cc7f15;
-            color:#fff;
-            border-radius:5px;
+        .del-slide{
+            width:150/@rem;
+            .car-list-del{
+                font-size:25/@rem;
+                margin-left:75/@rem;
+                width:75/@rem;
+                height:180/@rem;
+                line-height:180/@rem;
+                text-align:center;
+                background:#cc7f15;
+                color:#fff;
+                border-radius:15/@rem;
+            }
         }
+
 
     }
 }

@@ -4,121 +4,160 @@
 
 {load href="/static/index/css/car.css" /}
 
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
 <!--购物车列表模块-->
 <div class="car">
     <div class="car-title">
         <p>共计 <span>2</span> 商品</p>
     </div>
     <form id="carFrom">
-        <div class="car-list">
-            <div class="car-list-box">
-                <div class="car-list-select">
-                    <input type="checkbox" name="id" value="1" class="selectInput">
-                    <div class="list-select-box"></div>
-                </div>
-                <div class="car-list-img">
-                    <img src="/static/index/images/goods1.jpg">
-                </div>
-                <div class="car-list-cont">
-                    <div class="list-cont-title">
-                        <h2>小米 MIX2 为发烧的你而做</h2>
-                        <p>￥<span class="goodsPrice">2500</span></p>
-                        <p>库存：<span class="goodsStock">1000</span></p>
-                    </div>
-                    <div class="list-cont-num">
-                        <i class="cont-num-icon icon-left"></i>
-                        <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
-                        <i class="cont-num-icon icon-right"></i>
-                    </div>
-                </div>
 
-            </div>
-            <div class="car-list-del">
-                删除
+        <div class="car-list">
+            <div class="swiper-container carList">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="car-list-box">
+                            <div class="car-list-select">
+                                <input type="checkbox" name="id" value="1" class="selectInput">
+                                <div class="list-select-box"></div>
+                            </div>
+                            <div class="car-list-img">
+                                <img src="/static/index/images/goods1.jpg">
+                            </div>
+                            <div class="car-list-cont">
+                                <div class="list-cont-title">
+                                    <h2>小米 MIX2 为发烧的你而做</h2>
+                                    <p>￥<span class="goodsPrice">2500</span></p>
+                                    <p>库存：<span class="goodsStock">1000</span></p>
+                                </div>
+                                <div class="list-cont-num">
+                                    <i class="cont-num-icon icon-left"></i>
+                                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
+                                    <i class="cont-num-icon icon-right"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="swiper-slide  del-slide">
+                        <div class="car-list-del">
+                            删除
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="car-list">
-            <div class="car-list-box">
-                <div class="car-list-select">
-                    <input type="checkbox" name="id" value="2" class="selectInput">
-                    <div class="list-select-box"></div>
-                </div>
-                <div class="car-list-img">
-                    <img src="/static/index/images/goods1.jpg">
-                </div>
-                <div class="car-list-cont">
-                    <div class="list-cont-title">
-                        <h2>小米 MIX2 为发烧的你而做</h2>
-                        <p>￥<span class="goodsPrice">3000</span></p>
-                        <p>库存：<span class="goodsStock">800</span></p>
-                    </div>
-                    <div class="list-cont-num">
-                        <i class="cont-num-icon icon-left"></i>
-                        <input type="text" name="" value="1" class="goodsNum">
-                        <i class="cont-num-icon icon-right"></i>
-                    </div>
-                </div>
+            <div class="swiper-container carList">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="car-list-box">
+                            <div class="car-list-select">
+                                <input type="checkbox" name="id" value="1" class="selectInput">
+                                <div class="list-select-box"></div>
+                            </div>
+                            <div class="car-list-img">
+                                <img src="/static/index/images/goods1.jpg">
+                            </div>
+                            <div class="car-list-cont">
+                                <div class="list-cont-title">
+                                    <h2>小米 MIX2 为发烧的你而做</h2>
+                                    <p>￥<span class="goodsPrice">2500</span></p>
+                                    <p>库存：<span class="goodsStock">1000</span></p>
+                                </div>
+                                <div class="list-cont-num">
+                                    <i class="cont-num-icon icon-left"></i>
+                                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
+                                    <i class="cont-num-icon icon-right"></i>
+                                </div>
+                            </div>
 
-            </div>
-            <div class="car-list-del">
-                删除
+                        </div>
+                    </div>
+                    <div class="swiper-slide del-slide">
+                        <div class="car-list-del">
+                            删除
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="car-list">
-            <div class="car-list-box">
-                <div class="car-list-select">
-                    <input type="checkbox" name="id" value="2" class="selectInput">
-                    <div class="list-select-box"></div>
-                </div>
-                <div class="car-list-img">
-                    <img src="/static/index/images/goods1.jpg">
-                </div>
-                <div class="car-list-cont">
-                    <div class="list-cont-title">
-                        <h2>小米 MIX2 为发烧的你而做</h2>
-                        <p>￥<span class="goodsPrice">3000</span></p>
-                        <p>库存：<span class="goodsStock">800</span></p>
+            <div class="swiper-container carList">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="car-list-box">
+                            <div class="car-list-select">
+                                <input type="checkbox" name="id" value="1" class="selectInput">
+                                <div class="list-select-box"></div>
+                            </div>
+                            <div class="car-list-img">
+                                <img src="/static/index/images/goods1.jpg">
+                            </div>
+                            <div class="car-list-cont">
+                                <div class="list-cont-title">
+                                    <h2>小米 MIX2 为发烧的你而做</h2>
+                                    <p>￥<span class="goodsPrice">2500</span></p>
+                                    <p>库存：<span class="goodsStock">1000</span></p>
+                                </div>
+                                <div class="list-cont-num">
+                                    <i class="cont-num-icon icon-left"></i>
+                                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
+                                    <i class="cont-num-icon icon-right"></i>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="list-cont-num">
-                        <i class="cont-num-icon icon-left"></i>
-                        <input type="text" name="" value="1" class="goodsNum">
-                        <i class="cont-num-icon icon-right"></i>
+                    <div class="swiper-slide del-slide">
+                        <div class="car-list-del">
+                            删除
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="car-list-del">
-                删除
             </div>
         </div>
 
         <div class="car-list">
-            <div class="car-list-box">
-                <div class="car-list-select">
-                    <input type="checkbox" name="id" value="2" class="selectInput">
-                    <div class="list-select-box"></div>
-                </div>
-                <div class="car-list-img">
-                    <img src="/static/index/images/goods1.jpg">
-                </div>
-                <div class="car-list-cont">
-                    <div class="list-cont-title">
-                        <h2>小米 MIX2 为发烧的你而做</h2>
-                        <p>￥<span class="goodsPrice">3000</span></p>
-                        <p>库存：<span class="goodsStock">800</span></p>
+            <div class="swiper-container carList">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="car-list-box">
+                            <div class="car-list-select">
+                                <input type="checkbox" name="id" value="1" class="selectInput">
+                                <div class="list-select-box"></div>
+                            </div>
+                            <div class="car-list-img">
+                                <img src="/static/index/images/goods1.jpg">
+                            </div>
+                            <div class="car-list-cont">
+                                <div class="list-cont-title">
+                                    <h2>小米 MIX2 为发烧的你而做</h2>
+                                    <p>￥<span class="goodsPrice">2500</span></p>
+                                    <p>库存：<span class="goodsStock">1000</span></p>
+                                </div>
+                                <div class="list-cont-num">
+                                    <i class="cont-num-icon icon-left"></i>
+                                    <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
+                                    <i class="cont-num-icon icon-right"></i>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="list-cont-num">
-                        <i class="cont-num-icon icon-left"></i>
-                        <input type="text" name="" value="1" class="goodsNum">
-                        <i class="cont-num-icon icon-right"></i>
+                    <div class="swiper-slide del-slide">
+                        <div class="car-list-del">
+                            删除
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="car-list-del">
-                删除
             </div>
         </div>
+
     </form>
 
     <!--购物车为空-->
@@ -147,6 +186,13 @@
 {include file="default/footer" /}
 
 <script>
+
+    var carListSwiper = new Swiper('.carList', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false
+    });
+
 
     /*变量定义
     * var   price       string    单个商品价格
@@ -259,106 +305,6 @@
 
 
 </script>
-<script>
 
-    /*触屏横向滑动控制*/
-
-    var mybody = document.getElementsByTagName('body')[0];
-    var h = document.documentElement.clientHeight;
-    mybody.style.height = h + 'px';
-
-    //滑动处理
-    var startX, startY, moveEndX, moveEndY, X, Y;
-    var exist = false;
-    var $that;
-
-    mybody.addEventListener('touchstart', function(e) {
-        // 判断默认行为是否可以被禁用
-        if (e.cancelable) {
-            // 判断默认行为是否已经被禁用
-            if (!e.defaultPrevented) {
-                e.preventDefault();
-            }
-        }
-        //e.preventDefault();
-        startX = e.touches[0].pageX;
-        startY = e.touches[0].pageY;
-        //var classPath = e.path;
-
-
-        $(e.path).each(function (index,element) {
-            if(e.path[index].className == 'car-list-box' || e.path[index].className == 'car-list-box box-active'){
-                exist = true;
-                $that = $(e.path[index]);
-
-
-            }
-        });
-
-
-    }, false);
-
-    mybody.addEventListener('touchmove', function(e) {
-
-        // 判断默认行为是否可以被禁用
-        if (e.cancelable) {
-            // 判断默认行为是否已经被禁用
-            if (!e.defaultPrevented) {
-                e.preventDefault();
-            }
-        }
-
-        moveEndX = e.changedTouches[0].pageX;
-
-        moveEndY = e.changedTouches[0].pageY;
-
-        X = moveEndX - startX;
-
-        Y = moveEndY - startY;
-
-
-        /*向右滑动*/
-        if ( Math.abs(X) > Math.abs(Y) && X > 0 ) {
-            if(exist){
-                //console.log($that);
-                $that.removeClass("box-active");
-                $that.next('.car-list-del').fadeOut(300);
-                $that='';
-                exist = false;
-
-            }
-         }
-
-        /*向左滑动*/
-        if ( Math.abs(X) > Math.abs(Y) && X < 0 ) {
-            if(exist){
-                $that.addClass("box-active");
-                $that.next('.car-list-del').fadeIn(300);
-                $that='';
-                exist = false;
-
-            }
-        }
-
-        /*if ( Math.abs(Y) > Math.abs(X) && Y > 0) {
-
-         console.log("向下");
-
-         }*/
-
-        /*if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
-
-         console.log("向上");
-
-         }*/
-
-        /*else{
-
-         console.log("没滑动");
-
-         }*/
-
-    },false );
-</script>
 
 </html>

@@ -26,6 +26,7 @@
 }
 .roll-nav .swiper-wrapper .swiper-slide span{
   font-size:0.33333333rem;
+  margin:0 auto;
 }
 .roll-nav .swiper-wrapper .nav-active{
   color:#cc7f15;
