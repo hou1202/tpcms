@@ -25,6 +25,7 @@ Route::get('/addressCreate','index/index/addressCreate');
 Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
 Route::get('/coupon','index/index/coupon');
+Route::get('/collect','index/index/collect');
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');

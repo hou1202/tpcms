@@ -60,6 +60,9 @@ class Index extends BaseController
     public function coupon(){
         return view('coupon/index');
     }
+    public function collect(){
+        return view('/collect');
+    }
 
     public function post(Request $request){
         var_dump($request->post());

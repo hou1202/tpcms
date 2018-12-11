@@ -7,10 +7,12 @@
 
 
 .coupon{
-
+    margin-top:0.4rem;
 }
 .coupon .coupon-list{
+    height:4.08rem;
     padding:0.4rem 1rem;
+    overflow:hidden;
 }
 .coupon .coupon-list .coupon-list-top{
     height:1.6rem;
