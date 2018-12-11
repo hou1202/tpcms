@@ -31,9 +31,10 @@
                         <i class="cont-num-icon icon-right"></i>
                     </div>
                 </div>
-                <div class="car-list-del">
-                    删除
-                </div>
+
+            </div>
+            <div class="car-list-del">
+                删除
             </div>
         </div>
 
@@ -58,9 +59,10 @@
                         <i class="cont-num-icon icon-right"></i>
                     </div>
                 </div>
-                <div class="car-list-del">
-                    删除
-                </div>
+
+            </div>
+            <div class="car-list-del">
+                删除
             </div>
         </div>
 
@@ -85,9 +87,9 @@
                         <i class="cont-num-icon icon-right"></i>
                     </div>
                 </div>
-                <div class="car-list-del">
-                    删除
-                </div>
+            </div>
+            <div class="car-list-del">
+                删除
             </div>
         </div>
 
@@ -112,9 +114,9 @@
                         <i class="cont-num-icon icon-right"></i>
                     </div>
                 </div>
-                <div class="car-list-del">
-                    删除
-                </div>
+            </div>
+            <div class="car-list-del">
+                删除
             </div>
         </div>
     </form>
@@ -253,6 +255,110 @@
        //console.log($("#carFrom").serializeArray()) ;
     });
 
+
+
+
+</script>
+<script>
+
+    /*触屏横向滑动控制*/
+
+    var mybody = document.getElementsByTagName('body')[0];
+    var h = document.documentElement.clientHeight;
+    mybody.style.height = h + 'px';
+
+    //滑动处理
+    var startX, startY, moveEndX, moveEndY, X, Y;
+    var exist = false;
+    var $that;
+
+    mybody.addEventListener('touchstart', function(e) {
+        // 判断默认行为是否可以被禁用
+        if (e.cancelable) {
+            // 判断默认行为是否已经被禁用
+            if (!e.defaultPrevented) {
+                e.preventDefault();
+            }
+        }
+        //e.preventDefault();
+        startX = e.touches[0].pageX;
+        startY = e.touches[0].pageY;
+        //var classPath = e.path;
+
+
+        $(e.path).each(function (index,element) {
+            if(e.path[index].className == 'car-list-box' || e.path[index].className == 'car-list-box box-active'){
+                exist = true;
+                $that = $(e.path[index]);
+
+
+            }
+        });
+
+
+    }, false);
+
+    mybody.addEventListener('touchmove', function(e) {
+
+        // 判断默认行为是否可以被禁用
+        if (e.cancelable) {
+            // 判断默认行为是否已经被禁用
+            if (!e.defaultPrevented) {
+                e.preventDefault();
+            }
+        }
+
+        moveEndX = e.changedTouches[0].pageX;
+
+        moveEndY = e.changedTouches[0].pageY;
+
+        X = moveEndX - startX;
+
+        Y = moveEndY - startY;
+
+
+        /*向右滑动*/
+        if ( Math.abs(X) > Math.abs(Y) && X > 0 ) {
+            if(exist){
+                //console.log($that);
+                $that.removeClass("box-active");
+                $that.next('.car-list-del').fadeOut(300);
+                $that='';
+                exist = false;
+
+            }
+         }
+
+        /*向左滑动*/
+        if ( Math.abs(X) > Math.abs(Y) && X < 0 ) {
+            if(exist){
+                $that.addClass("box-active");
+                $that.next('.car-list-del').fadeIn(300);
+                $that='';
+                exist = false;
+
+            }
+        }
+
+        /*if ( Math.abs(Y) > Math.abs(X) && Y > 0) {
+
+         console.log("向下");
+
+         }*/
+
+        /*if ( Math.abs(Y) > Math.abs(X) && Y < 0 ) {
+
+         console.log("向上");
+
+         }*/
+
+        /*else{
+
+         console.log("没滑动");
+
+         }*/
+
+    },false );
 </script>
 
 </html>
