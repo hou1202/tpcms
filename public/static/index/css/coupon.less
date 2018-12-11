@@ -1,0 +1,186 @@
+@rem:75rem;
+
+.address{
+    margin-top:45/@rem;
+
+    /*列表*/
+    .address-list{
+        width:90%;
+        margin-left:5%;
+        background: #f4f4f4;
+        border-radius:15/@rem;
+        padding:15/@rem 30/@rem;
+        font-size:25/@rem;
+        margin-bottom:15/@rem;
+        .list-top{
+            height:72/@rem;
+            line-height:72/@rem;
+            p{
+                width:50%;
+                float:left;
+                height:72/@rem;
+                line-height:72/@rem;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
+                &:first-child{
+                    padding-left:15/@rem;
+                }
+                &p:nth-child(2){
+                    text-align:right;
+                    padding-right:15/@rem;
+
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                    -webkit-box-orient: vertical;
+                }
+            }
+        }
+        .list-middle{
+            height:105/@rem;
+            line-height:42/@rem;
+            padding-bottom:21/@rem;
+            border-bottom:1px solid #dfdfdf;
+            p{
+                line-height:42/@rem;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
+                &:first-child{
+                    font-size:27/@rem;
+                    color:#cc7f15;
+                }
+                &:nth-child(2){
+                    color:#525252;
+                    padding-left:27/@rem;
+                }
+            }
+
+        }
+        .list-bottom{
+            height:90/@rem;
+            line-height:90/@rem;
+            margin-top:9/@rem;
+            i{
+                display:inline-block;
+                width:75/@rem;
+                height:90/@rem;
+                background:url(/static/index/images/circle.png) no-repeat center center;
+                background-size:30/@rem;
+            }
+            .circle-active{
+                background:url(/static/index/images/circle-active.png) no-repeat center center;
+                background-size:30/@rem;
+            }
+            a{
+                width:105/@rem;
+                height:54/@rem;
+                line-height:54/@rem;
+                display:block;
+                background:#cc7f15;
+                float:right;
+                text-align:center;
+                margin:18/@rem 15/@rem 0 0;
+                border-radius:15/@rem;
+                color:#fff;
+            }
+        }
+    }
+
+    /*添加新地址*/
+    .address-input{
+        height:120/@rem;
+        padding-left:45/@rem;
+        margin-bottom:15/@rem;
+        p{
+            height:60/@rem;
+            line-height:60/@rem;
+            font-size:25/@rem;
+            color:#525252;
+        }
+        input{
+            width:570/@rem;
+            height:60/@rem;
+            line-height:60/@rem;
+            font-size:25/@rem;
+            padding:0 45/@rem;
+            background:#fff;
+            border:none;
+            border-bottom:1px solid #e5e5e5;
+        }
+        .first-radio{
+            display:none;
+        }
+        i{
+            display:block;
+            width:60/@rem;
+            height:60/@rem;
+            margin-left:45/@rem;
+            background:url(/static/index/images/circle.png) no-repeat center center;
+            background-size:36/@rem;
+        }
+        .radio-active{
+            background:url(/static/index/images/circle-active.png) no-repeat center center;
+            background-size:36/@rem;
+        }
+
+    }
+}
+
+/*底部*/
+.bottom{
+    height:120/@rem;
+    line-height:90/@rem;
+    width:100%;
+    background:#fff;
+    position:fixed;
+    bottom:0;
+    padding:15/@rem 0;
+    a,button{
+        width:80%;
+        line-height:90/@rem;
+        border:none;
+        background:#cc7f15;
+        display:block;
+        margin:0 auto;
+        text-align:center;
+        color:#fff;
+        font-size:25/@rem;
+        border-radius:15/@rem;
+    }
+    i{
+        display:block;
+        width:54/@rem;
+        height: 90/@rem;
+        background:url(/static/index/images/add.png) no-repeat center center;
+        background-size:54/@rem;
+        margin:0 auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

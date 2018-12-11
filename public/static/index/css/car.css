@@ -165,6 +165,7 @@ body{
   background:#fff;
   padding:0.10666666rem 0.25333333rem 0.10666666rem 0.4rem;
   border-bottom:0.10666666rem solid #f3f3f3;
+  z-index: 99;
 }
 .balance div{
   float:left;

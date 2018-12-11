@@ -1,37 +1,51 @@
 @rem:75rem;
 
-.address{
-    margin-top:45/@rem;
 
-    /*列表*/
-    .address-list{
-        width:90%;
-        margin-left:5%;
-        background: #f4f4f4;
+
+.order{
+    padding:30/@rem 15/@rem;
+    .order-list{
+        max-width:1125/@rem;
+        background: rgba(204, 169, 25,0.08);
+        margin:0 auto;
+        margin-bottom:24/@rem;
         border-radius:15/@rem;
-        padding:15/@rem 30/@rem;
-        font-size:25/@rem;
-        margin-bottom:15/@rem;
-        .list-top{
-            height:72/@rem;
-            line-height:72/@rem;
-            p{
-                width:50%;
+        padding:30/@rem 30/@rem 15/@rem 30/@rem;
+        .order-goods{
+            overflow:hidden;
+            padding:15/@rem 0;
+            .order-list-left{
+                width:20%;
+                height:120/@rem;
+                text-align:center;
                 float:left;
-                height:72/@rem;
-                line-height:72/@rem;
-
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
-                &:first-child{
-                    padding-left:15/@rem;
+                img{
+                    width:120/@rem;
+                    border-radius:15/@rem;
                 }
-                &p:nth-child(2){
-                    text-align:right;
-                    padding-right:15/@rem;
+            }
+            .order-list-middle{
+                width:60%;
+                height:120/@rem;
+                float:left;
+                padding:0 15/@rem;
+                h2{
+                    line-height:37/@rem;
+                    font-size:23/@rem;
+                    color:#0C0C0C;
+
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* 这个表示要显示几行 */
+                    -webkit-box-orient: vertical;
+                }
+                p{
+                    height:37/@rem;
+                    line-height:37/@rem;
+                    font-size:21/@rem;
+                    color:#525252;
+                    padding-left:15/@rem;
 
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -40,140 +54,180 @@
                     -webkit-box-orient: vertical;
                 }
             }
+            .order-list-right{
+                width:20%;
+                height:120/@rem;
+                text-align:right;
+                float:left;
+                padding:30/@rem 0;
+                p{
+                    text-align:right;
+                    height:30/@rem;
+                    line-height:30/@rem;
+
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                    -webkit-box-orient: vertical;
+                    &:first-child{
+                        font-size:23/@rem;
+                        color:#cc7f15;
+                    }
+                    &:last-child{
+                        font-size:21/@rem;
+                        color:#525252;
+                    }
+                }
+            }
         }
-        .list-middle{
-            height:105/@rem;
-            line-height:42/@rem;
-            padding-bottom:21/@rem;
-            border-bottom:1px solid #dfdfdf;
+        .order-list-bottom{
+            padding:24/@rem 0;
+            overflow:hidden;
             p{
-                line-height:42/@rem;
-
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                -webkit-box-orient: vertical;
-                &:first-child{
-                    font-size:27/@rem;
-                    color:#cc7f15;
-                }
-                &:nth-child(2){
-                    color:#525252;
-                    padding-left:27/@rem;
-                }
-            }
-
-        }
-        .list-bottom{
-            height:90/@rem;
-            line-height:90/@rem;
-            margin-top:9/@rem;
-            i{
-                display:inline-block;
-                width:75/@rem;
-                height:90/@rem;
-                background:url(/static/index/images/circle.png) no-repeat center center;
-                background-size:30/@rem;
-            }
-            .circle-active{
-                background:url(/static/index/images/circle-active.png) no-repeat center center;
-                background-size:30/@rem;
+                height:45/@rem;
+                line-height:45/@rem;
+                font-size:21/@rem;
+                text-align:right;
+                color:#525252;
             }
             a{
-                width:105/@rem;
-                height:54/@rem;
-                line-height:54/@rem;
                 display:block;
+                width:150/@rem;
+                height:51/@rem;
+                line-height:51/@rem;
+                font-size:23/@rem;
                 background:#cc7f15;
-                float:right;
+                border-radius:60/@rem;
                 text-align:center;
-                margin:18/@rem 15/@rem 0 0;
-                border-radius:15/@rem;
+                float:right;
+                margin:15/@rem 9/@rem 0 18/@rem;
                 color:#fff;
+
             }
         }
     }
 
-    /*添加新地址*/
-    .address-input{
-        height:120/@rem;
-        padding-left:45/@rem;
-        margin-bottom:15/@rem;
-        p{
-            height:60/@rem;
-            line-height:60/@rem;
+}
+
+
+
+/*订单详情*/
+
+.order-time{
+    padding:30/@rem;
+    overflow:hidden;
+    display:flex;
+    align-items: center;
+
+    background: -webkit-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); /* 标准的语法 */
+    .time-cont{
+        width:525/@rem;
+        padding:30/@rem 0 30/@rem 75/@rem;
+        h2{
             font-size:25/@rem;
+            line-height:45/@rem;
+            color:#cc7f15;
+            padding-left:15/@rem;
+        }
+        p{
+            font-size:23/@rem;
+            line-height:45/@rem;
             color:#525252;
         }
-        input{
-            width:570/@rem;
-            height:60/@rem;
-            line-height:60/@rem;
-            font-size:25/@rem;
-            padding:0 45/@rem;
-            background:#fff;
-            border:none;
-            border-bottom:1px solid #e5e5e5;
-        }
-        .first-radio{
-            display:none;
-        }
-        i{
-            display:block;
-            width:60/@rem;
-            height:60/@rem;
-            margin-left:45/@rem;
-            background:url(/static/index/images/circle.png) no-repeat center center;
-            background-size:36/@rem;
-        }
-        .radio-active{
-            background:url(/static/index/images/circle-active.png) no-repeat center center;
-            background-size:36/@rem;
-        }
-
+    }
+    img{
+        width:90/@rem;
+        transform:rotate(8deg);
     }
 }
 
-/*底部*/
-.bottom{
-    height:120/@rem;
-    line-height:90/@rem;
-    width:100%;
-    background:#fff;
-    position:fixed;
-    bottom:0;
-    padding:15/@rem 0;
-    a,button{
-        width:80%;
-        line-height:90/@rem;
-        border:none;
-        background:#cc7f15;
-        display:block;
-        margin:0 auto;
-        text-align:center;
-        color:#fff;
-        font-size:25/@rem;
-        border-radius:15/@rem;
-    }
+.order-address{
+    height:150/@rem;
+    display:flex;
+    padding:0 45/@rem;
     i{
         display:block;
-        width:54/@rem;
-        height: 90/@rem;
-        background:url(/static/index/images/add.png) no-repeat center center;
-        background-size:54/@rem;
-        margin:0 auto;
+        height:126/@rem;
+        width:45/@rem;
+        background:url(/static/index/images/address.png) no-repeat center center;
+        background-size:45/@rem;
+    }
+    .address-cont{
+        width:600/@rem;
+        padding-left:30/@rem;
+        p{
+            line-height:42/@rem;
+            font-size:24/@rem;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+            -webkit-box-orient: vertical;
+            &:first-child{
+                padding-right:30/@rem;
+            }
+        }
+        span{
+            font-size:23/@rem;
+            float:right;
+            color:#525252;
+        }
+    }
+
+}
+
+.order-info{
+    padding:0 45/@rem;
+    color:#525252;
+    h2{
+        height:75/@rem;
+        line-height:75/@rem;
+        font-size:24/@rem;
+        background: rgba(229, 229, 229, 0.3);
+        padding-left:15/@rem;
+    }
+    p{
+        line-height:45/@rem;
+        padding-left:45/@rem;
+        font-size:23/@rem;
+
     }
 }
 
-
-
-
-
-
-
-
-
+.order-bottom{
+    width:100%;
+    height:90/@rem;
+    font-size:25/@rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background:#fff;
+    padding:15/@rem 30/@rem;
+    a{
+        width:165/@rem;
+        height:60/@rem;
+        line-height:60/@rem;
+        text-align:center;
+        margin-right:30/@rem;
+        display:block;
+        border-radius:150/@rem;
+        float:right;
+        border:1px solid #ccc;
+        &:first-child{
+            color: #666666;
+            border:1px solid #666666;
+        }
+        &:last-child{
+            color:#cc7f15;
+            border:1px solid #cc7f15;
+        }
+    }
+}
 
 
 

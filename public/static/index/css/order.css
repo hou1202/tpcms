@@ -16,7 +16,6 @@
 .order .order-list .order-goods{
   overflow:hidden;
   padding:0.2rem 0;
-  /*border-bottom:1px solid #e3e3e3;*/
 }
 .order .order-list .order-goods .order-list-left{
   width:20%;
@@ -35,7 +34,7 @@
   padding:0 0.2rem;
 }
 .order .order-list .order-goods .order-list-middle h2{
-  line-height:0.5rem;
+  line-height:0.49333333rem;
   font-size:0.30666666rem;
   color:#0C0C0C;
 
@@ -46,8 +45,8 @@
   -webkit-box-orient: vertical;
 }
 .order .order-list .order-goods .order-list-middle p{
-  height:0.5rem;
-  line-height:0.5rem;
+  height:0.49333333rem;
+  line-height:0.49333333rem;
   font-size:0.28rem;
   color:#525252;
   padding-left:0.2rem;
@@ -85,7 +84,7 @@
   color:#525252;
 }
 .order .order-list .order-list-bottom{
-  padding:0.34rem 0;
+  padding:0.32rem 0;
   overflow:hidden;
 }
 .order .order-list .order-list-bottom p{

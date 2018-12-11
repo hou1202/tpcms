@@ -1,0 +1,109 @@
+
+
+.roll-nav .swiper-slide{
+    width:33.33% !important;
+    margin:0 !important;
+}
+
+
+.coupon{
+
+}
+.coupon .coupon-list{
+    padding:0.4rem 1rem;
+}
+.coupon .coupon-list .coupon-list-top{
+    height:1.6rem;
+    border:2px dotted #cc7f15;
+    border-radius:0.24rem;
+
+   /* background: -webkit-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); !* Safari 5.1 - 6.0 *!
+    background: -o-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); !* Opera 11.1 - 12.0 *!
+    background: -moz-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); !* Firefox 3.6 - 15 *!
+    background: linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); !* 标准的语法 *!
+    */
+}
+.coupon .coupon-list .coupon-list-top .list-top-type{
+    width:40%;
+    float:left;
+    text-align:center;
+}
+.coupon .coupon-list .coupon-list-top .list-top-type p{
+    line-height:0.6rem;
+    font-size:0.30666666rem;
+    color:#ccc;
+}
+.coupon .coupon-list .coupon-list-top .list-top-type h2{
+    line-height:1rem;
+    font-size:0.33333333rem;
+    color: #095619;
+
+}
+.coupon .coupon-list .coupon-list-top .list-top-money{
+    width:60%;
+    float:right;
+    text-align:center;
+    line-height:1.6rem;
+}
+.coupon .coupon-list .coupon-list-top .list-top-money p{
+    line-height:1.6rem;
+    height:1.6rem;
+    font-size:1.2rem;
+    color:#cc7f15;
+}
+.coupon .coupon-list .coupon-list-top .list-top-money span{
+    font-size:0.6rem;
+}
+.coupon .coupon-list .coupon-list-bottom{
+    padding:0.24rem 0.6rem;
+    font-size:0.32rem;
+    border:2px solid #cc7f15;
+    border-top:none;
+    border-bottom-left-radius:0.24rem;
+    border-bottom-right-radius:0.24rem;
+}
+.coupon .coupon-list .coupon-list-bottom p{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    width:100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+    -webkit-box-orient: vertical;
+    color: #3f3f3f;
+}
+.coupon .coupon-list .coupon-list-bottom span{
+    color:#525252;
+}
+.coupon .coupon-list .coupon-status{
+    width:2.4rem;
+    height:2.4rem;
+    float:right;
+    position:relative;
+    top:-3rem;
+    right:0.4rem;
+}
+.coupon .coupon-list .coupon-status i{
+    display:block;
+    width:2.4rem;
+    height:2.4rem;
+}
+i.coupon-icon-ready{
+    background:url(/static/index/images/already.png) no-repeat center center;
+    background-size:2rem;
+}
+i.coupon-icon-overdue{
+    background:url(/static/index/images/overdue.png) no-repeat center center;
+    background-size:2rem;
+
+}
+
+
+
+
+
+
+
+

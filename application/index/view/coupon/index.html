@@ -1,0 +1,150 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="优惠券列表" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/roll-nav.css" /}
+{load href="/static/index/css/coupon.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>优惠券</h2>
+</header>
+
+<!--模块导航-->
+<div class="roll-nav">
+    <div class="swiper-container" id="orderSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide nav-active" id="notUse">
+                <span>未使用</span>
+            </div>
+            <div class="swiper-slide" id="alReady">
+                <span>已使用</span>
+            </div>
+            <div class="swiper-slide" id="overDue">
+                <span>已过期</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--列表模块-->
+<div class="coupon">
+    <div class="coupon-list">
+        <div class="coupon-list-top">
+            <div class="list-top-type">
+                <p>类型</p>
+                <h2>全场通用</h2>
+            </div>
+            <div class="list-top-money">
+                <p><span>￥</span>50</p>
+            </div>
+        </div>
+        <div class="coupon-list-bottom">
+            <p><span>金额：</span> 满￥300减￥20</p>
+            <p><span>商品：</span> 小米MX 3青春有你-我们不见不散不见不散不见不散</p>
+            <p><span>有效期：</span> 2018-12-12</p>
+        </div>
+        <div class="coupon-status">
+            <i class=""></i>
+        </div>
+    </div>
+
+    <div class="coupon-list">
+        <div class="coupon-list-top">
+            <div class="list-top-type">
+                <p>类型</p>
+                <h2>全场通用</h2>
+            </div>
+            <div class="list-top-money">
+                <p><span>￥</span>50</p>
+            </div>
+        </div>
+        <div class="coupon-list-bottom">
+            <p><span>金额：</span> 满￥300减￥20</p>
+            <p><span>商品：</span> 小米MX 3青春有你-我们不见不散不见不散不见不散</p>
+            <p><span>有效期：</span> 2018-12-12</p>
+        </div>
+        <div class="coupon-status">
+            <i class=""></i>
+        </div>
+    </div>
+
+    <div class="coupon-list">
+        <div class="coupon-list-top">
+            <div class="list-top-type">
+                <p>类型</p>
+                <h2>全场通用</h2>
+            </div>
+            <div class="list-top-money">
+                <p><span>￥</span>50</p>
+            </div>
+        </div>
+        <div class="coupon-list-bottom">
+            <p><span>金额：</span> 满￥300减￥20</p>
+            <p><span>商品：</span> 小米MX 3青春有你-我们不见不散不见不散不见不散</p>
+            <p><span>有效期：</span> 2018-12-12</p>
+        </div>
+        <div class="coupon-status">
+            <i class=""></i>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!--引入加载footer文件-->
+<div class="bottom-content"></div>
+
+</body>
+
+
+
+<script>
+
+    var orderSwiper = new Swiper('#orderSwiper', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false,
+    });
+
+    /*NAV 切换模式*/
+    orderSwiper.on('click',function(){
+        $(".swiper-slide").removeClass('nav-active');
+        $("#"+this.clickedSlide.id).addClass('nav-active');
+    });
+
+    $("#notUse").click(function() {
+        $('.coupon-status').find("i").removeClass();
+    });
+    $("#alReady").click(function() {
+        $('.coupon-status').find("i").removeClass().addClass("coupon-icon-ready");
+    });
+    $("#overDue").click(function() {
+        $('.coupon-status').find("i").removeClass().addClass("coupon-icon-overdue");
+    });
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</html>
