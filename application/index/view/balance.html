@@ -1,0 +1,195 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="订单结算" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/balance.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>订单结算</h2>
+</header>
+
+
+<!--结算模块-->
+<div class="order">
+    <form id="orderForm">
+    <!--结算地址-->
+    <div class="order-address">
+        <div class="address-info">
+            <div class="address-title">
+                <p>收货人： 李白是一个诗人，一个好诗人</p>
+                <p>13564078415</p>
+            </div>
+            <div class="address-posit">
+                <div class="address-posit-img">
+                    <img src="/static/index/images/address.png">
+                </div>
+                <div class="address-posit-info">
+                    <p>安徽省 . 合肥市 . 蜀山区</p>
+                    <p>望江西路亚夏汽车大楼1902室合肥科技信息技术</p>
+                </div>
+            </div>
+        </div>
+        <!--<div class="address-null">
+            添加购物地址 ....
+        </div>-->
+        <div class="address-select">
+            <img src="/static/index/images/open.png">
+        </div>
+        <input type="hidden" name="address" value="1">
+    </div>
+
+    <!--结算产品-->
+    <div class="order-goods">
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+            <input type="hidden" name="goods[]" value="1" />
+        </div>
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+            <input type="hidden" name="goods[]" value="2" />
+        </div>
+        <div class="order-goods-list">
+            <div class="goods-list-img">
+                <img src="/static/index/images/goods1.jpg">
+            </div>
+            <div class="goods-list-cont">
+                <h2>小米 MIX2 为发烧的你而做</h2>
+                <div class="list-cont-param">
+                    <p>移动版</span></p>
+                    <p>￥2500.00</p>
+                </div>
+                <div class="list-cont-num">
+                    x 1
+                </div>
+            </div>
+            <input type="hidden" name="goods[]" value="3" />
+        </div>
+    </div>
+
+    <!--优惠信息-->
+    <div class="order-discount">
+        <div class="discount-info">
+            <span>优惠券</span>
+            <a href=""><i></i></a>
+            <p>满200减50</p>
+            <input type="hidden" name="discount" value="0">
+        </div>
+        <div class="discount-info">
+            <span>留言</span>
+            <input type="text" name="message" placeholder="和平台说点什么吧（选填）"/>
+        </div>
+    </div>
+
+    <!--支付方式-->
+    <div class="order-pay">
+        <h2>支付方式</h2>
+        <div class="pay-select">
+            <i class="ali"></i>
+            <p>支付宝支付</p>
+            <div class="pay-select-sure pay-active">
+                <input type="radio" name="pay" value="1" class="paySelect" checked="checked">
+            </div>
+        </div>
+        <div class="pay-select">
+            <i class="wx"></i>
+            <p>微信支付</p>
+            <div class="pay-select-sure">
+                <input type="radio" name="pay" value="2" class="paySelect">
+            </div>
+        </div>
+        <div class="pay-select">
+            <i class="ye"></i>
+            <p>余额支付 <span>(余额：250.00)</span></p>
+            <div class="pay-select-sure" id="balance">
+                <input type="radio" name="pay" value="3" class="paySelect">
+            </div>
+        </div>
+    </div>
+
+    <!--结算信息-->
+    <div class="order-info">
+        <h2>订单结算</h2>
+        <p>总金额：￥<sapn>2500.00</sapn></p>
+        <p>优惠金额：￥<sapn>10.00</sapn></p>
+        <p>运费金额：￥<sapn>0.00</sapn></p>
+        <p>实付金额：￥<sapn>2490.00</sapn></p>
+        <p>订单积分：<sapn>249</sapn></p>
+    </div>
+
+    </form>
+</div>
+
+
+<!--订单提交模块-->
+<div class="balance">
+    <div class="balance-sum">
+        <p>结算金额：￥<span class="periceSum">30.00</span></p>
+    </div>
+    <div class="balance-button">
+        <button type="button" id="submitForm" form="orderForm"> 订单支付 </button>
+    </div>
+
+</div>
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+<script>
+
+    var balance = 25;
+    /*支付方式选择控制*/
+    $(".pay-select-sure").click(function(){
+        if($(this).attr('id') == 'balance' && parseInt($(".periceSum").text()) > parseInt(balance))
+            return alertConfirm("余额不足，请选择其他支付方式");
+        $(".pay-select-sure").removeClass("pay-active");
+        $(".paySelect").attr("checked",false);
+        $(this).addClass("pay-active");
+        $(this).children("input").attr("checked",true);
+    });
+
+
+    $("#submitForm").click(function(){
+       //console.log($("#orderForm").serialize()) ;
+       //console.log($("#orderForm").serializeArray()) ;
+       $.post('/post',$("#orderForm").serialize(),function(obj){
+           console.log(obj);
+       })
+    });
+
+</script>
+
+</html>

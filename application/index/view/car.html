@@ -328,7 +328,7 @@
     /*购物数量减法控制*/
     $(".icon-left").click(function(){
         var numObj = $(this).next();            //商品数量对象
-        if(parseInt(numObj.val()) <= 1 ) return autoAlert('已经不能再少了');
+        if(parseInt(numObj.val()) <= 1 ) return alertConfirm('已经不能再少了');
         $(numObj).val(numObj.val()-1);
         if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
             var sumObj = $(".periceSum");
@@ -341,7 +341,7 @@
         var numObj = $(this).prev();            //商品数量对象
         var stock = parseInt($(this).parent().prev().children().find(".goodsStock").text());        //商品库存
         if(parseInt(numObj.val()) < 0 ) return $(numObj).val(1);
-        if(parseInt(numObj.val())+1 > stock) return autoAlert('真的不能再多了');
+        if(parseInt(numObj.val())+1 > stock) return alertConfirm('真的不能再多了');
             $(numObj).val(parseInt(numObj.val())+1);
             if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
                 var sumObj = $(".periceSum");
@@ -368,7 +368,7 @@
     });
 
     $("#submitForm").click(function(){
-        window.location.href="/pay";
+        window.location.href="/balance";
        //console.log($("#carFrom").serialize()) ;
        //console.log($("#carFrom").serializeArray()) ;
     });

@@ -15,6 +15,7 @@ Route::get('think', function () {
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
 Route::get('/car','index/index/car');
+Route::get('/balance','index/index/balance');
 Route::get('/pay','index/index/pay');
 Route::get('/category','index/index/category');
 Route::get('/list','index/index/goodsList');
@@ -26,6 +27,8 @@ Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
 Route::get('/coupon','index/index/coupon');
 Route::get('/collect','index/index/collect');
+Route::get('/wallet','index/index/wallet');
+Route::get('/integral','index/index/integral');
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');

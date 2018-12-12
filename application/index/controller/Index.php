@@ -25,6 +25,9 @@ class Index extends BaseController
         return view('/car');
     }
 
+    public function balance(){
+        return view('/balance');
+    }
     public function pay(){
         return view('/pay');
     }
@@ -62,6 +65,12 @@ class Index extends BaseController
     }
     public function collect(){
         return view('/collect');
+    }
+    public function wallet(){
+        return view('/wallet');
+    }
+    public function integral(){
+        return view('/integral');
     }
 
     public function post(Request $request){

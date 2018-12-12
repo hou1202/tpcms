@@ -2,7 +2,7 @@
  *	jQuery文件上传插件,封装UI,上传处理操作采用Baidu WebUploader;
  *  主要用于H5前端单张图片上传
  *	@Author Aoogi;
- *  注意：修改js中的alert,	autoAlert为自定义提示
+ *
  */
 (function( $ ) {
 
@@ -14,7 +14,7 @@
         diyUpload:function( opt, serverCallBack ) {
 
             if ( typeof opt != "object" ) {
-                autoAlert('参数错误!');
+                alert('参数错误!');
                 return;
             }
 
@@ -60,7 +60,7 @@
             var webUploader = getUploader( opt );
 
             if ( !WebUploader.Uploader.support() ) {
-                autoAlert( ' 上传组件不支持您的浏览器！');
+                alert( ' 上传组件不支持您的浏览器！');
                 return false;
             }
 
@@ -127,7 +127,7 @@
                         successCallBack( response );
                     }
                 }else{
-                    autoAlert( '上传失败，请重新上传' );
+                    alert( '上传失败，请重新上传' );
                 }
 
 
@@ -161,7 +161,7 @@
                     default : text = '未知错误!';
                         break;
                 }
-                autoAlert( text );
+                alert( text );
             });
              return webUploader;
         }

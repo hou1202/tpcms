@@ -1,0 +1,92 @@
+@rem:75rem;
+
+
+
+
+
+
+.wallet{
+    padding-top:60/@rem;
+    .wallet-money{
+        width:600/@rem;
+        border:2px dotted #cc7f15;
+        border-radius:15/@rem;
+        margin:0 auto;
+        text-align:center;
+        padding:45/@rem 0;
+        p{
+            height:75/@rem;
+            line-height:75/@rem;
+            font-size:51/@rem;
+            color:#cc7f15;
+        }
+        span{
+            font-size:24/@rem;
+            color:#969696;
+            padding-right:30/@rem;
+        }
+        strong{
+            font-size:39/@rem;
+        }
+    }
+    .wallet-info{
+        width:100%;
+        padding-top:30/@rem;
+        h2{
+            height:75/@rem;
+            line-height:75/@rem;
+            font-size:25/@rem;
+            color:#525252;
+            padding-left:30/@rem;
+            background:rgba(229, 229, 229, 0.3);
+        }
+        .wallet-list{
+            height:75/@rem;
+            overflow:hidden;
+            padding:0 30/@rem;
+            display:flex;
+            p{
+                height:75/@rem;
+                line-height: 75/@rem;
+                font-size:24/@rem;
+                color:#525252;
+                overflow: hidden;
+                float:left;
+                &:first-child{
+                    flex-shrink: 0;
+                    width:150/@rem;
+                }
+                &:nth-child(2){
+                    padding:0 24/@rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                    -webkit-box-orient: vertical;
+                }
+                &:last-child{
+                    flex-shrink: 0;
+                    width:150/@rem;
+                    color:#cc7f15;
+                    align-self:flex-end;
+
+
+                }
+            }
+
+
+        }
+    }
+
+}
+.integral{
+    display:block !important;
+    p{
+        &:nth-child(2){
+            padding:0 30/@rem 0 45/@rem !important;
+            width:375/@rem;
+        }
+    }
+}
+
+

@@ -172,17 +172,6 @@
 
 <script>
 
-    var orderSwiper = new Swiper('#orderSwiper', {
-        slidesPerView: "auto",
-        freeMode:true,
-        freeModeMomentum:false,
-    });
-
-    /*NAV 切换模式*/
-    orderSwiper.on('click',function(){
-        $(".swiper-slide").removeClass('nav-active');
-        $("#"+this.clickedSlide.id).addClass('nav-active');
-    });
 
     $("#notUse").click(function() {
         $('.coupon-status').find("i").removeClass();
