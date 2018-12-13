@@ -69,11 +69,11 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/config/"+"{$Conf.id}",data.field,function(res){
+        $.post("/aoogi/config/"+"{$Conf.id}",data.field,function(res){
             layer.msg(res.data);
-            if(res.code === 1){
+            if(res.url != "")
                 window.location.href="#"+res.url;
-            }
+
         });
         return false;
     });

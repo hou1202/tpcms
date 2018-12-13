@@ -82,7 +82,7 @@ class Admin extends AdminController
         if(!$validate->scene('save')->check($data))
             return $this->returnJson($validate->getError());
 
-        return AdminM::create($data) ? $this ->returnJson('新增成功',1,'/adminer') : $this ->returnJson('添加失败',0);
+        return AdminM::create($data) ? $this ->returnJson('新增成功',1,'/aoogi/adminer') : $this ->returnJson('添加失败',0);
 
     }
 
@@ -141,7 +141,7 @@ class Admin extends AdminController
         if(!$validate->sceneEdit()->check($data))
             return $this->returnJson($validate->getError());
 
-        return $adminer -> save($data) ? $this ->returnJson('更新成功') : $this ->returnJson('更新失败');
+        return $adminer -> save($data) ? $this ->returnJson('更新成功',1,'/aoogi/adminer') : $this ->returnJson('更新失败');
     }
 
     /**

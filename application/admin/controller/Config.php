@@ -64,7 +64,7 @@ class Config extends AdminController
         if(!$validate->check($data)){
             return $this->returnJson($validate->getError());
         }
-        return ConfigM::create($data) ? $this->returnJson('新增成功',1,'/config') : $this->returnJson('添加失败',0);
+        return ConfigM::create($data) ? $this->returnJson('新增成功',1,'/aoogi/config') : $this->returnJson('添加失败',0);
     }
 
     /**
@@ -114,7 +114,7 @@ class Config extends AdminController
         if(!$validate->check($data)){
             return $this->returnJson($validate->getError());
         }
-        return $config->save($data) ? $this->returnJson('更新成功',1,'/config') : $this->returnJson('更新失败',0);
+        return $config->save($data) ? $this->returnJson('更新成功',1,'/aoogi/config') : $this->returnJson('更新失败',0);
     }
 
     /**

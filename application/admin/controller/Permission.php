@@ -76,7 +76,7 @@ class Permission extends AdminController
             return $this->returnJson($validate->getError());
 
         $data['router_id'] = implode('-',$data['router_id']);
-        return PermissionM::create($data) ? $this->returnJson('新增成功',1,'/permission') : $this->returnJson('添加失败',0);
+        return PermissionM::create($data) ? $this->returnJson('新增成功',1,'/aoogi/permission') : $this->returnJson('添加失败',0);
     }
 
     /**
@@ -133,7 +133,7 @@ class Permission extends AdminController
             return $this->returnJson($validate->getError());
 
         $data['router_id'] = implode('-',$data['router_id']);
-        return $permission->save($data) ? $this->returnJson('更新成功') : $this->returnJson('更新失败');
+        return $permission->save($data) ? $this->returnJson('更新成功',1,'/aoogi/permission') : $this->returnJson('更新失败');
     }
 
     /**

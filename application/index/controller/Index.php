@@ -77,6 +77,13 @@ class Index extends BaseController
         return view('/login');
     }
 
+    public function register(){
+        return view('/register');
+    }
+    public function forget(){
+        return view('/forget');
+    }
+
     public function post(Request $request){
         var_dump($request->post());
     }

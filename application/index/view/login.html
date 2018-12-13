@@ -21,8 +21,8 @@
             <button type="button" id="submitForm">登录</button>
         </div>
         <div class="login-reg">
-            <a href>立即注册</a>
-            <a href>忘记密码？</a>
+            <a href="/register">立即注册</a>
+            <a href="/forget">忘记密码？</a>
         </div>
 
 
@@ -49,6 +49,7 @@
        //console.log($("#orderForm").serializeArray()) ;
        $.post('/post',$("#loginForm").serialize(),function(obj){
            console.log(obj);
+           window.location.href="/personal";
        })
     });
 

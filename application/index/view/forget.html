@@ -1,0 +1,95 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="重置密码" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/login.css" /}
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+</header>
+
+
+<!--结算模块-->
+<div class="login register">
+    <h2>重置密码</h2>
+    <form id="forgetForm">
+        <div class="login-cont">
+            <div class="cont-input">
+                <input type="text" name="phone" placeholder="帐户" id="phone"/>
+            </div>
+            <div class="cont-input">
+                <input type="text" name="code" placeholder="验证码" class="input-code"/>
+                <button type="button" id="getCode">获取验证码</button>
+            </div>
+            <div class="cont-input">
+                <input type="password" name="password" placeholder="设置新密码" />
+            </div>
+
+        </div>
+        <div class="login-button">
+            <button type="button" id="submitForm">重置密码</button>
+        </div>
+
+
+
+
+    </form>
+</div>
+
+
+
+
+
+<!--引入加载footer文件-->
+<div class="bottom-content"></div>
+
+</body>
+
+
+
+<script>
+
+    $("#getCode").click(function(){
+
+        //倒计时时间
+        var countdown=10;
+
+        //验证手机号码是否正确
+        if(!(/^1[345678]\d{9}$/.test($("#phone").val())))
+           return alertConfirm('请输入正确的手机号码');
+
+        setTime();
+
+        //倒计时
+        function setTime() {
+
+            if (countdown == 0) {
+                $("#getCode").attr("disabled",false).removeClass('code-active').text('重新获取');
+                countdown = 60;
+                return false;
+            } else {
+                $("#getCode").attr("disabled", true).addClass('code-active').text(''+countdown+' S');
+                countdown--;
+            }
+            setTimeout(function() {
+                setTime();
+            },1000);
+        }
+
+
+    });
+
+    /*$("#forgetForm").click(function(){
+       //console.log($("#orderForm").serialize()) ;
+       //console.log($("#orderForm").serializeArray()) ;
+       $.post('/post',$("#loginForm").serialize(),function(obj){
+           console.log(obj);
+       })
+    });*/
+
+</script>
+
+</html>

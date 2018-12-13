@@ -2,91 +2,97 @@
 
 
 
-
-
-
-.wallet{
-    padding-top:60/@rem;
-    .wallet-money{
-        width:600/@rem;
-        border:2px dotted #cc7f15;
-        border-radius:15/@rem;
-        margin:0 auto;
+body{
+    background: -webkit-linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(rgba(204,127,21,0.2),rgba(237, 237, 237, 0.2)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* 标准的语法 */
+    font-size:25/@rem;
+}
+.login{
+    margin-top:150/@rem;
+    h2{
+        height:75/@rem;
+        line-height: 75/@rem;
         text-align:center;
-        padding:45/@rem 0;
-        p{
-            height:75/@rem;
-            line-height:75/@rem;
-            font-size:51/@rem;
-            color:#cc7f15;
-        }
-        span{
-            font-size:24/@rem;
-            color:#969696;
-            padding-right:30/@rem;
-        }
-        strong{
-            font-size:39/@rem;
-        }
+        color:#cc7f15;
+        font-size:30/@rem;
+        font-weight:800;
+        letter-spacing:45/@rem;
     }
-    .wallet-info{
-        width:100%;
-        padding-top:30/@rem;
-        h2{
-            height:75/@rem;
-            line-height:75/@rem;
-            font-size:25/@rem;
-            color:#525252;
-            padding-left:30/@rem;
-            background:rgba(229, 229, 229, 0.3);
-        }
-        .wallet-list{
-            height:75/@rem;
-            overflow:hidden;
-            padding:0 30/@rem;
-            display:flex;
-            p{
-                height:75/@rem;
-                line-height: 75/@rem;
+    .login-cont{
+        padding:75/@rem 0;
+        .cont-input{
+            width:70%;
+            max-width:750/@rem;
+            margin:0 auto;
+            padding:45/@rem 0;
+            input{
+                width:100%;
+                height:60/@rem;
+                line-height:60/@rem;
                 font-size:24/@rem;
-                color:#525252;
-                overflow: hidden;
-                float:left;
-                &:first-child{
-                    flex-shrink: 0;
-                    width:150/@rem;
-                }
-                &:nth-child(2){
-                    padding:0 24/@rem;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                    -webkit-box-orient: vertical;
-                }
-                &:last-child{
-                    flex-shrink: 0;
-                    width:150/@rem;
-                    color:#cc7f15;
-                    align-self:flex-end;
-
-
-                }
+                /*text-align:center;*/
+                padding-left:30/@rem;
+                color:#cc7f15;
+                border:none;
+                border-radius:0;
+                background:none;
+                border-bottom:1px solid #cc7f15;
+            }
+            .input-code{
+                width:50%;
+            }
+            button{
+                width:180/@rem;
+                height:60/@rem;
+                background:none;
+                border:1px solid #cc7f15;
+                border-radius:15/@rem;
+                font-size:24/@rem;
+                color:#cc7f15;
+                float:right;
+            }
+            .code-active{
+                background:#cc7f15;
+                color:#fff;
             }
 
-
         }
     }
+    .login-button{
+        text-align:center;
+        button{
+            width:70%;
+            max-width:750/@rem;
+            height:75/@rem;
+            line-height:75/@rem;
+            letter-spacing:30/@rem;
+            font-size:27/@rem;
+            color:#fff;
+            background:#cc7f15;
+            border:none;
+            border-radius:15/@rem;
+        }
+    }
+    .login-reg{
 
-}
-.integral{
-    display:block !important;
-    p{
-        &:nth-child(2){
-            padding:0 30/@rem 0 45/@rem !important;
-            width:375/@rem;
+        width:65%;
+        max-width:750/@rem;
+        margin:60/@rem auto;
+        a{
+            font-size:24/@rem;
+            color: #7f7f7f;
+            &:first-child{
+
+            }
+            &:last-child{
+                float:right;
+            }
         }
     }
 }
 
-
+.register{
+    margin-top:60/@rem;
+}

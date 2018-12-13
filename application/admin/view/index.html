@@ -129,7 +129,7 @@
             layer = layui.layer;
         //退出登录
         $("#logout").on('click',function(){
-            $.post('/logout','',function(res){
+            $.post('/aoogi/logout','',function(res){
                 layer.msg(res.data);
                 setTimeout(function() {
                     window.location.href=res.url;

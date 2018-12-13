@@ -14,7 +14,7 @@ class Authority
         $baseUrl = $request->module().'/'.$request->controller().'/'.$request->action();
         if(strtolower($baseUrl) == Config::get('admin_main')){
             //判断用户登录情况
-            if(!User::check()) return redirect($request->domain().'/login');
+            if(!User::check()) return redirect($request->domain().'/adminLogin');
             $refresh = true;
         }else{
             $refresh = false;
@@ -23,7 +23,7 @@ class Authority
             if(isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($request->server('HTTP_X_REQUESTED_WITH')) =='xmlhttprequest'){
                 return json(['code' => 0, 'data' => '你暂无权限进行该操作',]);
             }else{
-                return redirect('/error');
+                return redirect('/aoogi/error');
             }
         }
         return $next($request);

@@ -24,7 +24,7 @@ class Home extends AdminController
    //主体框架加载信息
     public function home()
     {
-        if(!$admin = User::user()) return redirect(Request::domain().'/login');
+        if(!$admin = User::user()) return redirect(Request::domain().'/adminLogin');
         $info = \app\admin\model\Config::field('param')->where('id','in',[1,2])->select();
         $this->assign('Info',$info);
         $this->assign('User',$admin);
@@ -41,7 +41,7 @@ class Home extends AdminController
     {
         User::logout();
         Auth::authOut();
-        return $this ->returnJson('退出成功',1,Request::domain().'/login');
+        return $this ->returnJson('退出成功',1,Request::domain().'/adminLogin');
 
     }
 

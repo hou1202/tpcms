@@ -26,14 +26,14 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">系统路由</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="router" lay-verify="router" autocomplete="off" placeholder="设置系统路由,例：/admin" class="layui-input">
+                                    <input type="text" name="router" lay-verify="router" autocomplete="off" placeholder="设置系统路由,例：/aoogi (后台路由以/aoogi/开头)" class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">菜单路由</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="menu" lay-verify="router" autocomplete="off" placeholder="设置菜单路由,例：/admin（原则上保持唯一性）" class="layui-input">
+                                    <input type="text" name="menu" lay-verify="router" autocomplete="off" placeholder="设置菜单路由,例：/aoogi（原则上保持唯一性）" class="layui-input">
                                 </div>
                             </div>
 
@@ -159,11 +159,11 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        $.post("/router",data.field,function(res){
+        $.post("/aoogi/router",data.field,function(res){
             layer.msg(res.data);
-            if(res.code === 1){
-                window.location.href="#"+res.url;
-            }
+            if(res.url != "")
+                window.location.href = "#" + res.url;
+
         });
         return false;
     });
