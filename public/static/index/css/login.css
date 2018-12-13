@@ -22,10 +22,32 @@ body{
 }
 .login .login-cont .cont-input{
     width:70%;
+    height:2rem;
+    overflow:hidden;
     max-width:10rem;
     margin:0 auto;
     padding:0.6rem 0;
 
+}
+.login .login-cont .cont-input i{
+    display:block;
+    width:0.6rem;
+    height:0.6rem;
+    position:relative;
+    top:-0.8rem;
+
+}
+i.icon-account{
+    background:url(/static/index/images/account.png) no-repeat center center;
+    background-size:0.48rem;
+}
+i.icon-pwd{
+    background:url(/static/index/images/pwd.png) no-repeat center center;
+    background-size:0.48rem;
+}
+i.icon-code{
+    background:url(/static/index/images/code.png) no-repeat center center;
+    background-size:0.48rem;
 }
 .login .login-cont .cont-input input{
     width:100%;
@@ -33,7 +55,7 @@ body{
     line-height:0.8rem;
     font-size:0.32rem;
     /*text-align:center;*/
-    padding-left:0.4rem;
+    padding-left:1rem;
     color:#cc7f15;
     border:none;
     border-radius:0;
