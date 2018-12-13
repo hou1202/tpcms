@@ -35,6 +35,7 @@ body{
     text-align:center;
     color:#cc7f15;
     border:none;
+    border-radius:0;
     background:none;
     border-bottom:1px solid #cc7f15;
 }
