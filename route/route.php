@@ -29,6 +29,7 @@ Route::get('/coupon','index/index/coupon');
 Route::get('/collect','index/index/collect');
 Route::get('/wallet','index/index/wallet');
 Route::get('/integral','index/index/integral');
+Route::get('/indexLogin','index/index/login');
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');

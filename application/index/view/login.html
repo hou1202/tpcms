@@ -1,0 +1,57 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="登录" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/login.css" /}
+
+
+<!--结算模块-->
+<div class="login">
+    <h2>登录</h2>
+    <form id="loginForm">
+        <div class="login-cont">
+            <div class="cont-input">
+                <input type="text" name="account" placeholder="登录帐户" />
+            </div>
+            <div class="cont-input">
+                <input type="password" name="password" placeholder="登录密码" />
+            </div>
+        </div>
+        <div class="login-button">
+            <button type="button" id="submitForm">登录</button>
+        </div>
+        <div class="login-reg">
+            <a href>立即注册</a>
+            <a href>忘记密码？</a>
+        </div>
+
+
+
+    </form>
+</div>
+
+
+
+
+
+<!--引入加载footer文件-->
+<div class="bottom-content"></div>
+
+</body>
+
+
+
+<script>
+
+
+    $("#submitForm").click(function(){
+       //console.log($("#orderForm").serialize()) ;
+       //console.log($("#orderForm").serializeArray()) ;
+       $.post('/post',$("#loginForm").serialize(),function(obj){
+           console.log(obj);
+       })
+    });
+
+</script>
+
+</html>

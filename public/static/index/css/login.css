@@ -1,0 +1,72 @@
+body{
+    background: -webkit-linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(rgba(204,127,21,0.2),rgba(237, 237, 237, 0.2)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(rgba(204,127,21,0.2), rgba(237, 237, 237, 0.2)); /* 标准的语法 */
+    font-size:0.33333333rem;
+}
+.login{
+    margin-top:2rem;
+}
+.login h2{
+    height:1rem;
+    line-height: 1rem;
+    text-align:center;
+    color:#cc7f15;
+    font-size:0.4rem;
+    font-weight:800;
+    letter-spacing:0.6rem;
+}
+.login .login-cont{
+    padding:1rem 0;
+}
+.login .login-cont .cont-input{
+    width:60%;
+    max-width:10rem;
+    margin:0 auto;
+    padding:0.6rem 0;
+
+}
+.login .login-cont .cont-input input{
+    width:100%;
+    height:0.8rem;
+    line-height:0.8rem;
+    font-size:0.32rem;
+    text-align:center;
+    color:#cc7f15;
+    border:none;
+    background:none;
+    border-bottom:1px solid #cc7f15;
+}
+.login .login-button{
+    text-align:center;
+}
+.login .login-button button{
+    width:70%;
+    max-width:10rem;
+    height:1rem;
+    line-height:1rem;
+    letter-spacing:0.4rem;
+    font-size:0.36rem;
+    color:#fff;
+    background:#cc7f15;
+    border:none;
+    border-radius:0.2rem;
+}
+.login .login-reg{
+
+    width:65%;
+    max-width:10rem;
+    margin:0.8rem auto;
+}
+.login .login-reg a{
+    font-size:0.32rem;
+    color: #7f7f7f;
+
+}
+.login .login-reg a:first-child{
+
+}
+.login .login-reg a:last-child{
+    float:right;
+}

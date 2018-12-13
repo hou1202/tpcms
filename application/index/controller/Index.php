@@ -73,6 +73,10 @@ class Index extends BaseController
         return view('/integral');
     }
 
+    public function login(){
+        return view('/login');
+    }
+
     public function post(Request $request){
         var_dump($request->post());
     }
