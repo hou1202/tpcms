@@ -11,7 +11,7 @@
     <form id="loginForm">
         <div class="login-cont">
             <div class="cont-input">
-                <input type="text" name="account" placeholder="登录帐户" />
+                <input type="text" name="phone" placeholder="登录帐户" />
                 <i class="icon-account"></i>
             </div>
             <div class="cont-input">
@@ -47,11 +47,10 @@
 
 
     $("#submitForm").click(function(){
-       //console.log($("#orderForm").serialize()) ;
-       //console.log($("#orderForm").serializeArray()) ;
        $.post('/post',$("#loginForm").serialize(),function(obj){
            console.log(obj);
-           window.location.href="/personal";
+
+           //window.location.href="/personal";
        })
     });
 

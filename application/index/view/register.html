@@ -2,6 +2,7 @@
 <!--引入头部文件-->
 {include file="default/header" title="注册" keywords="Aoogi商城系统"}
 
+
 {load href="/static/index/css/login.css" /}
 
 <!--头部标题模块-->
@@ -15,18 +16,21 @@
 <!--结算模块-->
 <div class="login register">
     <h2>注册</h2>
-    <form id="registerForm">
+    <form id="registerForm" ><!--method="post" action="/register"-->
+        {:token()}
+        <!--<input type="hidden" name="__token__" value="{$Request.token}" />-->
+
         <div class="login-cont">
             <div class="cont-input">
-                <input type="text" name="phone" placeholder="注册号码" id="phone"/>
+                <input type="text" name="phone" placeholder="注册号码" value="13564078419" id="phone"/>
                 <i class="icon-account"></i>
             </div>
             <div class="cont-input">
-                <input type="password" name="password" placeholder="设置密码" />
+                <input type="password" name="password" placeholder="设置密码" value="123456789" id="pwd"/>
                 <i class="icon-pwd"></i>
             </div>
             <div class="cont-input">
-                <input type="text" name="code" placeholder="验证码" class="input-code"/>
+                <input type="text" name="code" placeholder="验证码" class="input-code" value="111111" id="code"/>
                 <button type="button" id="getCode">获取验证码</button>
                 <i class="icon-code"></i>
             </div>
@@ -56,6 +60,9 @@
 
 <script>
 
+    /*
+    * 获取验证码处理
+    * */
     $("#getCode").click(function(){
 
         //倒计时时间
@@ -86,13 +93,27 @@
 
     });
 
-    /*$("#registerForm").click(function(){
-       //console.log($("#orderForm").serialize()) ;
-       //console.log($("#orderForm").serializeArray()) ;
-       $.post('/post',$("#loginForm").serialize(),function(obj){
-           console.log(obj);
-       })
-    });*/
+    $("#submitForm").click(function(){
+        var phone = $.trim($('#phone').val());
+        var password = $.trim($('#pwd').val());
+        var code = $.trim($('#code').val());
+
+        //数据验证
+        if(!(/^1[345678]\d{9}$/.test(phone))) return alertConfirm('注册号码不正确');
+        if(password == '' || password.length < 6) return alertConfirm('密码长度应大于6位');
+        if(!(/\d{6}/.test(code))) return alertConfirm('验证码不正确');
+
+        //提交注册
+        $.post('/register',$("#registerForm").serialize(),function(obj){
+            if(obj.code == 1){
+                alertConfirm(obj.data);
+                timeOutUrl('/login',1000);
+            }else{
+                alertConfirm(obj.data);
+                resetToken('registerForm');
+            }
+        })
+    });
 
 </script>
 

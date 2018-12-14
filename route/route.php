@@ -6,12 +6,30 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+//
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
+/*
+ *
+ * 前端路由处理模块
+ *
+ * */
+
+
+//登录Route
+Route::get('login','index/login/index');
+Route::post('login','index/login/login');
+Route::get('/register','index/register/index');
+Route::post('/register','index/register/register');
+Route::get('/forget','index/index/forget');
+
+
+Route::post('resetToken','index/SelfFunction/resetToken');
+
+
+
+
+
+
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
 Route::get('/car','index/index/car');
@@ -29,51 +47,18 @@ Route::get('/coupon','index/index/coupon');
 Route::get('/collect','index/index/collect');
 Route::get('/wallet','index/index/wallet');
 Route::get('/integral','index/index/integral');
-Route::get('/indexLogin','index/index/login');
-Route::get('/register','index/index/register');
-Route::get('/forget','index/index/forget');
+
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
 Route::get('hello','index/index/hello');
 
+
+
 //图片上传处理
 Route::post('/upLoader','index/uploader/uploader');
 
-//后台管理模块路由-admin
 
-Route::get('setting','admin/set/index');
-Route::get('table_two','admin/set/tableTwo');
 
-//主体框架加载Route
-Route::get('admin','admin/home/home');
-Route::get('aoogi/main','admin/home/main');
-Route::post('aoogi/logout','admin/home/logout');
-Route::get('aoogi/menu','admin/home/menu');                   //导航栏加载
-Route::post('aoogi/opts','admin/home/opts');                   //导航栏加载
-Route::get('aoogi/error','admin/error/index');      //ERROR页面
-
-//登录Route
-Route::get('adminLogin','admin/login/index');
-Route::post('adminLogin','admin/login/login');
-
-//管理员管理Route
-Route::resource('aoogi/adminer','admin/admin')->rest('edit',['GET', '/edit/:id','edit']);
-Route::post('aoogi/adminer/data','admin/admin/getData');
-Route::post('aoogi/adminer/status','admin/admin/setStatus');
-
-//路由管理Route
-Route::resource('aoogi/router','admin/router')->rest('edit',['GET', '/edit/:id','edit']);
-Route::post('aoogi/router/data','admin/router/getData');
-Route::post('aoogi/router/status','admin/router/setStatus');
-
-//权限管理permission
-Route::resource('aoogi/permission','admin/permission')->rest('edit',['GET', '/edit/:id','edit']);
-Route::post('aoogi/permission/data','admin/permission/getData');
-Route::post('aoogi/permission/status','admin/permission/setStatus');
-
-//参数设置模块config
-Route::resource('aoogi/config','admin/config')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
-Route::post('aoogi/config/data','admin/config/getData');
 
 
 

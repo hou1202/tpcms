@@ -72,7 +72,7 @@ class AdminController extends Controller
      * @param  string     $url       跳转路由
      * @return      redirect
      * */
-    protected function redirectError($msg='抱歉，你暂无权限进行该操作.',$url='/error')
+    protected function redirectError($msg='抱歉，你暂无权限进行该操作.',$url='/aoogi/error')
     {
         return $this->redirect($url,['msg'=>$msg]);
     }

@@ -24,7 +24,7 @@ class CommonValidate extends Validate
      * @param  mixed     $rule  验证规则 格式：数据表,字段名,主键名
      * @param  array     $data  数据
      * @param  string    $field  验证字段名
-     * @return bool
+     * @return bool      存在返回TRUE；不存在返回FALSE
      */
     protected function isExist($value, $rule, $data, $field)
     {
