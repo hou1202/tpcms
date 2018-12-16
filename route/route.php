@@ -23,8 +23,13 @@ Route::post('/register','index/register/register');
 Route::get('/forget','index/index/forget');
 
 
-Route::post('resetToken','index/SelfFunction/resetToken');
 
+
+
+//重置Token
+Route::post('resetToken','index/SelfFunction/resetToken');
+//获取验证码处理
+Route::post('/getCode/:mobile/:type/[:over]','index/Verify/getCode');
 
 
 
@@ -56,6 +61,7 @@ Route::get('hello','index/index/hello');
 
 //图片上传处理
 Route::post('/upLoader','index/uploader/uploader');
+
 
 
 

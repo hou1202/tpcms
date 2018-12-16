@@ -67,12 +67,17 @@
 
         //倒计时时间
         var countdown=60;
+        var mobile = $("#phone").val();
 
         //验证手机号码是否正确
-        if(!(/^1[345678]\d{9}$/.test($("#phone").val())))
+        if(!(/^1[345678]\d{9}$/.test(mobile)))
            return alertConfirm('请输入正确的手机号码');
 
-        setTime();
+        $.post('/getCode/'+mobile+'/'+1,'',function(obj){
+            console.log(obj);
+        });
+
+        //setTime();
 
         //倒计时
         function setTime() {
@@ -107,7 +112,8 @@
         $.post('/register',$("#registerForm").serialize(),function(obj){
             if(obj.code == 1){
                 alertConfirm(obj.data);
-                timeOutUrl('/login',1000);
+                //timeOutUrl('/login',1000);
+                resetToken('registerForm');
             }else{
                 alertConfirm(obj.data);
                 resetToken('registerForm');
