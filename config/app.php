@@ -41,7 +41,7 @@ return [
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'         => '',
+    'default_filter'         => 'trim,htmlentities,htmlspecialchars',
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
@@ -143,9 +143,14 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
-    //自定义配置项
+    /*
+     * 自定义配置项
+     * */
 
-    //Admin权限及用户验证配置项
+    /*
+     * Admin权限及用户验证配置项
+     * */
+
     //加密、解密密钥
     'crypt_key'         => '84e7871c139909e1982c05be74c3d06d',
     //默认系统超级管理员帐户名称
@@ -155,7 +160,26 @@ return [
     //默认管理员帐户字段名
     'admin_name'            => 'account',
     //kit_admin主框架路由
-    'admin_main'            =>  'admin/home/home'
+    'admin_main'            =>  'admin/home/home',
 
+    /*
+     * 前台用户验证配置项
+     * */
+
+    //加密、解密密钥
+    'crypt_user_key'         => '84e7871c139909e1982c05be74c3d06d',
+    //默认用户表
+    'user_table'           => 'user',
+    //默认帐户字段名
+    'user_name'            => 'phone',
+
+
+    /*
+     * 短信验证码配置项
+     * */
+    //帐户
+    'sms_account'       => '8E00048',
+    //密码
+    'sms_password'      =>'8E0004888'
 
 ];

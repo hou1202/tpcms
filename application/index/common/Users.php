@@ -6,21 +6,23 @@
  * Time: 15:29
  */
 
-namespace app\admin\common;
+namespace app\index\common;
 
 use think\facade\Config;
 use think\Db;
 
-class User
+class Users
 {
 
-
+    /*
+     *前台用户检测专用
+     *  */
 
     /**
-     * 生成session的key
+     * 生成cache的key
      * var string
      */
-    private static $sessionKey;
+    private static $cacheKey;
     /**
      * 用户加密密钥
      * var string
@@ -48,18 +50,18 @@ class User
      * 初始化
      */
     public static function init(){
-        self::$sessionKey = 'login_'.md5('user');
-        self::$authKey = Config::get('crypt_key');
+        self::$cacheKey = 'login_'.md5('user');
+        self::$authKey = Config::get('crypt_user_key');
         self::$handler = true;  // 标记为初始化成功
-        self::$table = Config::get('admin_table');
-        self::$name = Config::get('admin_name');
+        self::$table = Config::get('user_table');
+        self::$name = Config::get('user_name');
     }
 
     /**
      * 内容信息定义
      * @param   string  $uid        用户ID
      * @param   string  $token      $user[id].$user[password]
-     * @param   string  $uuid       用户account
+     * @param   string  $uuid       用户phone
      * */
 
     /**
@@ -92,8 +94,8 @@ class User
 
     public static function check(){
         !self::$handler && self::init(); // 初始化
-        //获取并判断session存储的用户信息
-        if (!$sArrs = session(self::$sessionKey)) {
+        //获取并判断cache存储的用户信息
+        if (!$sArrs = cache(self::$cacheKey)) {
             return false;
         }
         if (!array_key_exists('uid', $sArrs) || !array_key_exists('token', $sArrs)) {
@@ -131,18 +133,19 @@ class User
 
     public static function login($uuid){
         !self::$handler && self::init(); // 初始化
-        if (empty($uuid)) return false;
+        if (empty($uuid))
+            return false;
         // 读取用户信息
         $user = self::user($uuid);
         if (!$user) return false;
-        // 加密用户信息并生成session
+        // 加密用户信息并生成cache
         $tokenStr = $user['id'].$user['password'];
         $sArrs    = array(
             'uid'       => encrypt($user['id'], self::$authKey),
             'token'     => encrypt($tokenStr, self::$authKey),
             'timestamp' => time()
         );
-        session(self::$sessionKey, $sArrs);
+        cache(self::$cacheKey, $sArrs);
         return true;
     }
 
@@ -151,7 +154,7 @@ class User
      */
     public static function logout(){
         !self::$handler && self::init(); // 初始化
-        session(self::$sessionKey, null);
+        cache(self::$cacheKey, null);
     }
 
     /**

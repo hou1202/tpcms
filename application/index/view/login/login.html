@@ -9,13 +9,16 @@
 <div class="login">
     <h2>登录</h2>
     <form id="loginForm">
+
+        {:token()}
+
         <div class="login-cont">
             <div class="cont-input">
-                <input type="text" name="phone" placeholder="登录帐户" />
+                <input type="text" name="phone" placeholder="登录帐户" value="13564078415" id="phone"/>
                 <i class="icon-account"></i>
             </div>
             <div class="cont-input">
-                <input type="password" name="password" placeholder="登录密码" />
+                <input type="password" name="password" placeholder="登录密码" value="111111" id="pwd"/>
                 <i class="icon-pwd"></i>
             </div>
         </div>
@@ -45,13 +48,27 @@
 
 <script>
 
-
+    /*
+     * 登录提交处理
+     * */
     $("#submitForm").click(function(){
-       $.post('/post',$("#loginForm").serialize(),function(obj){
-           console.log(obj);
+        var phone = $.trim($('#phone').val());
+        var password = $.trim($('#pwd').val());
 
-           //window.location.href="/personal";
-       })
+        //数据验证
+        if(!(/^1[345678]\d{9}$/.test(phone))) return alertConfirm('登录帐户不正确');
+        if(password == '' || password.length < 6) return alertConfirm('密码不正确');
+
+        //登录提交
+        $.post('/login',$("#loginForm").serialize(),function(obj){
+           if(obj.code == 1){
+               alertConfirm(obj.data);
+               timeOutUrl(obj.url)
+           }else{
+               alertConfirm(obj.data);
+               resetToken('loginForm');
+           }
+        })
     });
 
 </script>

@@ -9,10 +9,10 @@
 <!--头部标题模块-->
 <header class="header-personal">
     <div class="header-img">
-        <img src="/static/index/images/goods1.jpg">
+        <img src="{$User.portrait|default='/static/index/images/default-head-0.png'}">
     </div>
     <div class="header-info">
-        <p>看啥看啊</p>
+        <p>{$User.name}</p>
     </div>
 
 </header>
@@ -24,7 +24,7 @@
     </div>
     <div class="wallet-cont">
         <a href="/wallet">
-            <p>帐户余额 ： <span> ￥2500.00</span></p>
+            <p>帐户余额 ： <span> ￥{$User.balance}</span></p>
         </a>
     </div>
 </div>
@@ -124,7 +124,7 @@
     </div>
 
     <div class="personal-out">
-        <a href="/login">
+        <a href="/logout">
             退出登录
         </a>
     </div>

@@ -18,12 +18,14 @@
 //登录Route
 Route::get('login','index/login/index');
 Route::post('login','index/login/login');
-Route::get('/register','index/register/index');
-Route::post('/register','index/register/register');
-Route::get('/forget','index/index/forget');
+Route::get('logout','index/login/logout');
+Route::get('register','index/register/index');
+Route::post('register','index/register/register');
+Route::get('forget','index/forget/index');
+Route::post('forget','index/forget/forget');
 
-
-
+//个人中心
+Route::get('/personal','index/personal/index');
 
 
 //重置Token

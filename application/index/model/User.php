@@ -13,6 +13,11 @@ class User extends Model
     protected $pk = 'id';
 
     /*
+     * $field   过滤非数据表字段
+     * */
+    protected $field = true;
+
+    /*
      *$table    当前模型对应表名，为完整表名
      * */
     protected $table = 'user';
@@ -20,7 +25,7 @@ class User extends Model
     /*
      * $readonly    定义只读字段保护
      * */
-    protected $readonly = ['id'];
+    protected $readonly = ['id','phone'];
 
     /*
      *模型初始化

@@ -16,18 +16,21 @@
 <div class="login register">
     <h2>重置密码</h2>
     <form id="forgetForm">
+
+        {:token()}
+
         <div class="login-cont">
             <div class="cont-input">
-                <input type="text" name="phone" placeholder="帐户" id="phone"/>
+                <input type="text" name="phone" placeholder="帐户" value="13564078415" id="phone"/>
                 <i class="icon-account"></i>
             </div>
             <div class="cont-input">
-                <input type="text" name="code" placeholder="验证码" class="input-code"/>
+                <input type="text" name="code" placeholder="验证码" class="input-code" id="code" value="111111"/>
                 <button type="button" id="getCode">获取验证码</button>
                 <i class="icon-code"></i>
             </div>
             <div class="cont-input">
-                <input type="password" name="password" placeholder="设置新密码" />
+                <input type="password" name="password" placeholder="设置新密码" id="pwd" value="111111"/>
                 <i class="icon-pwd"></i>
             </div>
 
@@ -58,13 +61,22 @@
     $("#getCode").click(function(){
 
         //倒计时时间
-        var countdown=10;
+        var countdown=60;
+        var mobile = $("#phone").val();
 
         //验证手机号码是否正确
-        if(!(/^1[345678]\d{9}$/.test($("#phone").val())))
-           return alertConfirm('请输入正确的手机号码');
+        if(!(/^1[345678]\d{9}$/.test(mobile)))
+            return alertConfirm('请输入正确的手机号码');
 
-        setTime();
+        $.post('/getCode/'+mobile+'/'+2,'',function(obj){
+            if(obj.code == 1){
+                alertConfirm(obj.msg);
+                setTime();
+            }else{
+                alertConfirm(obj.msg);
+            }
+
+        });
 
         //倒计时
         function setTime() {
@@ -85,13 +97,31 @@
 
     });
 
-    /*$("#forgetForm").click(function(){
-       //console.log($("#orderForm").serialize()) ;
-       //console.log($("#orderForm").serializeArray()) ;
-       $.post('/post',$("#loginForm").serialize(),function(obj){
-           console.log(obj);
-       })
-    });*/
+    /*
+     * 忘记密码提交处理
+     * */
+    $("#submitForm").click(function(){
+        var phone = $.trim($('#phone').val());
+        var password = $.trim($('#pwd').val());
+        var code = $.trim($('#code').val());
+
+        //数据验证
+        if(!(/^1[345678]\d{9}$/.test(phone))) return alertConfirm('帐户号码不正确');
+        if(password == '' || password.length < 6) return alertConfirm('密码长度应大于6位');
+        if(!(/\d{6}/.test(code))) return alertConfirm('验证码不正确');
+
+        //提交表单
+        $.post('/forget',$("#forgetForm").serialize(),function(obj){
+            if(obj.code == 1){
+                alertConfirm(obj.data);
+                timeOutUrl(obj.url)
+            }else{
+                alertConfirm(obj.data);
+                resetToken('forgetForm');
+            }
+        })
+    });
+
 
 </script>
 

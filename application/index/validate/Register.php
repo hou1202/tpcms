@@ -33,8 +33,8 @@ class Register extends CommonValidate
         'code.require' => '验证码不正确',
         'code.number' => '验证码不正确',
         'code.length' => '验证码不正确',
-        '__token__.require' => '无效提交，请重新注册',
-        '__token__.token' => '无效提交，请重新注册',
+        '__token__.require' => '无效提交，请重新操作',
+        '__token__.token' => '无效提交，请重新操作',
     ];
 
     /*
@@ -45,6 +45,7 @@ class Register extends CommonValidate
         'login' => ['__token__','phone','password'],
         'forget' =>['__token__','phone','password','code'],
     ];
+
 
     /*
      * 定义编辑 Register 模式下，验证场景

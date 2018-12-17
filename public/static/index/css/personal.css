@@ -190,8 +190,8 @@ i.per-icon-open{
   font-size:0.33333333rem;
 }
 .personal .personal-out{
-  height:1.4rem;
-  line-height:1.4rem;
+  height:1.2rem;
+  line-height:1.2rem;
   background:#cc7f15;
   border-radius:0.10666666rem;
   font-size:0.4rem;
@@ -200,6 +200,7 @@ i.per-icon-open{
 }
 .personal .personal-out a{
   color:#fff;
+  display:block;
 }
 
 
