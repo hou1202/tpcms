@@ -2,11 +2,11 @@
 
 namespace app\index\controller;
 
-use think\Controller;
+use app\common\controller\IndexController;
 use think\Request;
 use app\index\common\Users;
 
-class Personal extends Controller
+class Personal extends IndexController
 {
     /**
      * 显示资源

@@ -9,14 +9,14 @@
 namespace app\index\controller;
 
 
-use app\common\controller\IndexController;
+use app\common\controller\BaseController;
 use app\index\validate\Register;
 use think\Request;
 use app\index\model\User;
 use app\index\common\Users;
 use think\facade\Cache;
 
-class Login extends IndexController
+class Login extends BaseController
 {
 
 

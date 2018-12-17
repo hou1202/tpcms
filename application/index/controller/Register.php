@@ -9,13 +9,13 @@
 namespace app\index\controller;
 
 
-use app\common\controller\IndexController;
+use app\common\controller\BaseController;
 use think\Request;
 use app\index\validate\Register as RegisterV;
 use app\index\model\User;
 use app\index\common\Users;
 
-class Register extends IndexController
+class Register extends BaseController
 {
     /*
      * @ index  注册页面

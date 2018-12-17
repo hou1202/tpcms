@@ -28,6 +28,9 @@ Route::post('forget','index/forget/forget');
 Route::get('/personal','index/personal/index');
 
 
+//购物车Route
+Route::get('/car','index/car/index');
+
 //重置Token
 Route::post('resetToken','index/SelfFunction/resetToken');
 //获取验证码处理
@@ -39,7 +42,6 @@ Route::post('/getCode/:mobile/:type/[:over]','index/Verify/getCode');
 
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
-Route::get('/car','index/index/car');
 Route::get('/balance','index/index/balance');
 Route::get('/pay','index/index/pay');
 Route::get('/category','index/index/category');
