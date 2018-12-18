@@ -62,20 +62,19 @@
 .layui-upload-imgs{
     width: 100px;
     height:65px;
-    border-radius:7px;
+    border-radius:5px;
     margin:0 10px 5px 0;
 }
 
 
-.layui-table-img {
+.layui-quote-ban{
     width:fit-content;
     width:-webkit-fit-content;
     width:-moz-fit-content;
-    overflow-y:hidden;
-    border:1px dotted #ccc;
-    padding:5px 15px;
-    margin-bottom:5px;
-    border-radius:7px;
+    min-width:120px;
+}
+.layui-table-img {
+    overflow: hidden;
 }
 .layui-table-img .layui-img-list{
     width:100px;
@@ -86,7 +85,7 @@
 .layui-table-img .layui-img-list img{
     width: 100px;
     height:65px;
-    border-radius:7px;
+    border-radius:5px;
     margin-bottom:5px;
 }
 .layui-table-img .layui-img-list button{

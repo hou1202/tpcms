@@ -45,14 +45,10 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">产品轮播图</label>
                                 <div class="layui-input-block">
-                                    <div class="layui-table-img" id="imgView">
-                                        <!--<div class="layui-img-list">
-                                            <img src="/uploads/20181218/5c18c05d9b208.png" />
-                                            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
-                                        </div>-->
-
-                                    </div>
-
+                                    <blockquote class="layui-elem-quote layui-quote-nm layui-quote-ban" >
+                                        预览图：
+                                        <div class="layui-table-img" id="imgView"></div>
+                                    </blockquote>
                                     <button type="button" class="layui-btn layui-btn-normal" id="banUpload"><i class="layui-icon">&#xe61f;</i>选择文件</button>
                                     <button type="button" class="layui-btn" id="banAction"><i class="layui-icon">&#xe67c;</i>开始上传</button>
                                 </div>
@@ -99,7 +95,7 @@
     form.render();
 
     //缩略图执行实例
-    var uploadThumbnail = upload.render({
+    uploadThumbnail = upload.render({
       elem: '#thumImg' //绑定元素
       ,url: '/static/plugin/aoupload/upload.php' //上传接口
       ,accept:'images'  //指定允许上传时校验的文件类型
@@ -125,87 +121,52 @@
       }
     });
 
-    //轮播图执行实例
-    var uploadBanner = upload.render({
-      elem: '#banImg' //绑定元素
-      ,url: '/static/plugin/aoupload/upload.php' //上传接口
-      ,accept:'images'  //指定允许上传时校验的文件类型
-      ,acceptMime:'image/jpg,image/jpeg,image/png'  //规定打开文件选择框时，筛选出的文件类型
-      ,exts:'jpg|jpeg|png'  //允许上传的文件后缀,一般结合 accept 参数类设定
-      ,auto:true    //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
-      ,size:3072     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
-      ,multiple:true     //是否允许多文件上传
-      ,number:5         //设置同时可上传的文件数量，一般配合 multiple 参数出现
-      ,drag:true        //是否接受拖拽的文件上传
 
-      ,done: function(res){     //执行上传请求后的回调
-          var banView = $('.banView');
-            banView.append('<img src="' + res.url + '" alt="" class="layui-upload-imgs">').append('<input type="hidden" name="banner[]" value="' + res.url + '" />');
-          if(banView.find('img').length >= 5){
-              $('#banImg').hide();
-          }
-          //上传完毕回调
-      }
-      ,error: function(){
-          //请求异常回调
-      }
-    });
+    //多图执行实例
+    bannerUpload = upload.render({
+      elem: '#banUpload',
+      url: '/static/plugin/aoupload/upload.php',
+      accept: 'file',
+      acceptMime:'image/jpg,image/jpeg,image/png',  //规定打开文件选择框时，筛选出的文件类型
+      exts:'jpg|jpeg|png',  //允许上传的文件后缀,一般结合 accept 参数类设定
+      size:3072,     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
+      multiple: true,
+      auto: false,
+      bindAction: '#banAction',
+      choose: function(obj) {
+          var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+          console.log(obj);
+          console.log(this.files);
 
-      var imgView = $('#imgView'),
-      uploadListIns = upload.render({
-          elem: '#banUpload',
-          url: '/static/plugin/aoupload/upload.php',
-          accept: 'file',
-          multiple: true,
-          auto: false,
-          bindAction: '#banAction',
-          choose: function(obj) {
-              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-              //读取本地文件
-              obj.preview(function(index, file, result) {
-                  var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name + '</td>', '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>', '<td>等待上传</td>', '<td>', '<button class="layui-btn layui-btn-mini demo-reload layui-hide">重传</button>', '<button class="layui-btn layui-btn-mini layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'].join(''));
+          console.log(files);
+          //读取本地文件
+          obj.preview(function(index, file, result) {
+              var htm =$(['<div class="layui-img-list" id="upload-' + index + '">','<img src="'+result+'" />','<button type="button" class="layui-btn layui-btn-danger layui-btn-sm uploadDel"><i class="layui-icon">&#xe640;</i>删除</button>','</div>'].join(''));
 
-                  var htm =$(['<div class="layui-img-list" id="upload-' + index + '">','<img src="'+result+'" />','<button type="button" class="layui-btn layui-btn-danger layui-btn-sm uploadDel"><i class="layui-icon">&#xe640;</i>删除</button>','</div>'].join(''));
-
-                 /* //单个重传
-                  tr.find('.demo-reload').on('click', function() {
-                      obj.upload(index, file);
-                  });
-*/
-                  //删除
-                  htm.find('.uploadDel').on('click', function() {
-                      delete files[index]; //删除对应的文件
-                      htm.remove();
-                      uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                  });
-
-                  imgView.append(htm);
+              //删除
+              htm.find('.uploadDel').on('click', function() {
+                  delete files[index]; //删除对应的文件
+                  htm.remove();
+                  bannerUpload.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
               });
-          },
-          done: function(res, index, upload) {
-              console.log(res);
-              console.log(index);
-              console.log(upload);
-              if (res.error == 0) { //上传成功
-                  var divIndex = $('#upload-' + index);
-                  var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>上传成功</button>','<input type="hidden" name="banner[]" value="'+res.url+'">'].join(''));
-                  divIndex.find('.uploadDel').hide();
-                  divIndex.append(suc);
-                  return delete this.files[index]; //删除文件队列已经上传成功的文件
-              }
-              this.error(index, upload);
-          },
-          error: function(index, upload) {
-              /*var tr = imgView.find('tr#upload-' + index),
-                  tds = tr.children();
-              tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
-              tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传*/
+              $('#imgView').append(htm);
+          });
+      },
+      done: function(res, index, upload) {
+          if (res.error == 0) { //上传成功
               var divIndex = $('#upload-' + index);
-              var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>重新上传</button>'].join(''));
+              var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>上传成功</button>','<input type="hidden" name="banner[]" value="'+res.url+'">'].join(''));
               divIndex.find('.uploadDel').hide();
               divIndex.append(suc);
+              return delete this.files[index]; //删除文件队列已经上传成功的文件
           }
-      });
+          this.error(index, upload);
+      },
+      error: function(index, upload) {
+          $('#upload-' + index).remove();
+          return delete this.files[index]; //删除文件队列上传失败的文件
+      }
+    });
 
 
 
