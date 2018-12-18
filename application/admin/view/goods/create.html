@@ -1,0 +1,358 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">产品名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="产品名称" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">产品副标题</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="info" lay-verify="required|title" autocomplete="off" placeholder="产品副标题" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">产品缩略图</label>
+                                <div class="layui-input-block">
+                                    <div class="thumView">
+                                    </div>
+                                    <div class="layui-upload-drag layui-upload-drag-middle" id="thumImg">
+                                        <i class="layui-icon"></i>
+                                        <p>上传图片</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">产品轮播图</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-table-img" id="imgView">
+                                        <!--<div class="layui-img-list">
+                                            <img src="/uploads/20181218/5c18c05d9b208.png" />
+                                            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i>删除</button>
+                                        </div>-->
+
+                                    </div>
+
+                                    <button type="button" class="layui-btn layui-btn-normal" id="banUpload"><i class="layui-icon">&#xe61f;</i>选择文件</button>
+                                    <button type="button" class="layui-btn" id="banAction"><i class="layui-icon">&#xe67c;</i>开始上传</button>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">路由状态</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--上传文件引入文件-->
+{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/js/diyUpload.js" /}
+
+<script>
+  layui.use(['form', 'layedit', 'route','upload'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        route = layui.route,
+        layer = layui.layer,
+        upload = layui.upload;
+
+    //设置nav标题
+    $("#navTitle").text(route.getRoute().name);
+
+    form.render();
+
+    //缩略图执行实例
+    var uploadThumbnail = upload.render({
+      elem: '#thumImg' //绑定元素
+      ,url: '/static/plugin/aoupload/upload.php' //上传接口
+      ,accept:'images'  //指定允许上传时校验的文件类型
+      ,acceptMime:'image/jpg,image/jpeg,image/png'  //规定打开文件选择框时，筛选出的文件类型
+      ,exts:'jpg|jpeg|png'  //允许上传的文件后缀,一般结合 accept 参数类设定
+      ,auto:true    //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
+      ,size:3072     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
+      ,multiple:false     //是否允许多文件上传
+      ,drag:false        //是否接受拖拽的文件上传
+      ,done: function(res, index, upload){     //执行上传请求后的回调
+            console.log(res);
+            console.log(index);
+            console.log(upload);
+            var thumView = $('.thumView');
+            thumView.append('<img src="' + res.url + '" alt="" class="layui-upload-imgs">').append('<input type="hidden" name="thumbnail" value="' + res.url + '" />');
+            if(thumView.find('img').length >= 1){
+              $('#thumImg').hide();
+            }
+          //上传完毕回调
+      }
+      ,error: function(){
+          //请求异常回调
+      }
+    });
+
+    //轮播图执行实例
+    var uploadBanner = upload.render({
+      elem: '#banImg' //绑定元素
+      ,url: '/static/plugin/aoupload/upload.php' //上传接口
+      ,accept:'images'  //指定允许上传时校验的文件类型
+      ,acceptMime:'image/jpg,image/jpeg,image/png'  //规定打开文件选择框时，筛选出的文件类型
+      ,exts:'jpg|jpeg|png'  //允许上传的文件后缀,一般结合 accept 参数类设定
+      ,auto:true    //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
+      ,size:3072     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
+      ,multiple:true     //是否允许多文件上传
+      ,number:5         //设置同时可上传的文件数量，一般配合 multiple 参数出现
+      ,drag:true        //是否接受拖拽的文件上传
+
+      ,done: function(res){     //执行上传请求后的回调
+          var banView = $('.banView');
+            banView.append('<img src="' + res.url + '" alt="" class="layui-upload-imgs">').append('<input type="hidden" name="banner[]" value="' + res.url + '" />');
+          if(banView.find('img').length >= 5){
+              $('#banImg').hide();
+          }
+          //上传完毕回调
+      }
+      ,error: function(){
+          //请求异常回调
+      }
+    });
+
+      var imgView = $('#imgView'),
+      uploadListIns = upload.render({
+          elem: '#banUpload',
+          url: '/static/plugin/aoupload/upload.php',
+          accept: 'file',
+          multiple: true,
+          auto: false,
+          bindAction: '#banAction',
+          choose: function(obj) {
+              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+              //读取本地文件
+              obj.preview(function(index, file, result) {
+                  var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name + '</td>', '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>', '<td>等待上传</td>', '<td>', '<button class="layui-btn layui-btn-mini demo-reload layui-hide">重传</button>', '<button class="layui-btn layui-btn-mini layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'].join(''));
+
+                  var htm =$(['<div class="layui-img-list" id="upload-' + index + '">','<img src="'+result+'" />','<button type="button" class="layui-btn layui-btn-danger layui-btn-sm uploadDel"><i class="layui-icon">&#xe640;</i>删除</button>','</div>'].join(''));
+
+                 /* //单个重传
+                  tr.find('.demo-reload').on('click', function() {
+                      obj.upload(index, file);
+                  });
+*/
+                  //删除
+                  htm.find('.uploadDel').on('click', function() {
+                      delete files[index]; //删除对应的文件
+                      htm.remove();
+                      uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                  });
+
+                  imgView.append(htm);
+              });
+          },
+          done: function(res, index, upload) {
+              console.log(res);
+              console.log(index);
+              console.log(upload);
+              if (res.error == 0) { //上传成功
+                  var divIndex = $('#upload-' + index);
+                  var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>上传成功</button>','<input type="hidden" name="banner[]" value="'+res.url+'">'].join(''));
+                  divIndex.find('.uploadDel').hide();
+                  divIndex.append(suc);
+                  return delete this.files[index]; //删除文件队列已经上传成功的文件
+              }
+              this.error(index, upload);
+          },
+          error: function(index, upload) {
+              /*var tr = imgView.find('tr#upload-' + index),
+                  tds = tr.children();
+              tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+              tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传*/
+              var divIndex = $('#upload-' + index);
+              var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>重新上传</button>'].join(''));
+              divIndex.find('.uploadDel').hide();
+              divIndex.append(suc);
+          }
+      });
+
+
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 1 || value.length > 25) {
+                return '路由名称长度应在1-25个字符之间';
+            }
+        },
+        router:function(value) {
+            if(value != ''){
+                var ret = /(^\/)\w*/;
+                if(!ret.test(value)){
+                    return '路由错误格式,例：/admin';
+                }
+            }
+        },
+        path:function(value){
+            if(value != ''){
+                var ret = /(^[a-zA-Z])\w*/;
+                if(!ret.test(value)){
+                    return '系统路径错误格式,例：admin/index/index';
+                }
+            }
+        },
+        icon:function(value) {
+            if(value != ''){
+                var ret = /(^#)[a-z0-9]{5}(;)$/;
+                if(!ret.test(value)){
+                    return '路由图标格式错误，例：#xe653;';
+                }
+            }
+        }
+    });
+
+
+    //监听提交
+    form.on('submit(form_submit)', function(data) {
+        $.post("/aoogi/goods",data.field,function(res){
+            layer.msg(res.data);
+            if(res.url != "")
+                window.location.href = "#" + res.url;
+
+        });
+        return false;
+    });
+
+  });
+</script>
+
+<script>
+
+    //上传图片
+    var $thumbnailUpload = $('#thumbnailUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/static/plugin/aoupload/upload.php',
+        //最大上传的文件数量
+        fileNumLimit:1,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'thumbnail',
+            //input加入ID，只适用于单个上传图片
+            inputId:'thum_id'
+        },
+        success:function( data ) {
+        },
+        error:function( err ) { }
+    });
+
+
+</script>
+
+<script>
+
+    //上传图片
+    var $bannerUpload = $('#bannerUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:99,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:true,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/static/plugin/aoupload/upload.php',
+        //最大上传的文件数量
+        fileNumLimit:5,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'banner[]',
+            //input加入ID，只适用于单个上传图片
+            inputId:'ban_id'
+        },
+        success:function( data ) {
+        },
+        error:function( err ) { }
+    });
+
+
+</script>
+
+<style scoped>
+
+</style>

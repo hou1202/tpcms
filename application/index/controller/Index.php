@@ -6,6 +6,7 @@ use think\facade\Env;
 use think\Request;
 use think\Db;
 use app\index\model\Index as User;
+use app\index\common\Users;
 
 
 class Index extends BaseController
@@ -13,7 +14,8 @@ class Index extends BaseController
 
     public function index()
     {
-
+        //var_dump($uid = Users::user());
+        //var_dump(cache('login_'.md5(18297905432)));
         return view('/index');
     }
 

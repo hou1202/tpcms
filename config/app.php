@@ -172,6 +172,8 @@ return [
     'user_table'           => 'user',
     //默认帐户字段名
     'user_name'            => 'phone',
+    //默认帐户密码字段名
+    'user_pwd'            => 'password',
 
 
     /*
