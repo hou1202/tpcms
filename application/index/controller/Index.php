@@ -44,7 +44,7 @@ class Index extends BaseController
         return view('/personal');
     }
     public function personalData(){
-        return view('/data');
+        return view('/personal/data');
     }
     public function address(){
         return view('address/address');
