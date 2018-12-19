@@ -12,7 +12,19 @@ class Goods extends CommonValidate
      *
      * @var array
      */	
-	protected $rule = [];
+	protected $rule = [
+	    'title|产品标题' => 'require|length:4,30',
+	    'info|产品副标题' => 'require|length:4,30',
+	    'thumbnail|缩略图' => 'require',
+	    'banner|轮播图' => 'require',
+	    'origin-price|产品原价' => 'require|number',
+	    'sell-price' => 'require',
+	    'cost-price' => 'require',
+	    'franking' => 'require',
+	    'volume' => 'require',
+	    'address' => 'require',
+	    'spec' => 'require',
+    ];
     
     /**
      * 定义错误信息

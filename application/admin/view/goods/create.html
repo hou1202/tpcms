@@ -227,11 +227,9 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
-        var goodsForm = $("#goodsForm");
-        var thumbnail = $("input[name='thumbnail']");
-        var banner = $("input[name='banner']");
-        console.log(banner);
-        if(thumbnail.val() == '' || thumbnail.length == 0){
+
+        var banner = $("input[name='banner[0]']");
+        if(data.field.thumbnail == undefined){
             layer.msg('缩略图不能为空');
             return false;
         }
@@ -243,7 +241,7 @@
             layer.msg(res.data);
             /*if(res.url != "")
                 window.location.href = "#" + res.url;*/
-
+            return false;
         });
         return false;
     });
@@ -296,6 +294,7 @@
         error:function( err ) { }
     });
 
+    /*轮播图执行实例*/
     var bannerUpload = $('#bannerUpload').diyUpload({
         buttonText : '',
         //类型限制;
@@ -335,7 +334,7 @@
         },
         error:function( err ) { }
     });
-    /*轮播图执行实例*/
+
     $('#banAction').click(function(){
         bannerUpload.upload();
     });
