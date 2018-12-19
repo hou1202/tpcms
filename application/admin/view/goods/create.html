@@ -13,61 +13,145 @@
                     </div>
 
                     <div class="layui-card-body">
+                        <form class="layui-form" id="goodsForm" lay-filter="formVal">
+                            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
-                        <form class="layui-form">
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">基本信息</li>
+                                    <li>规格设置</li>
+                                    <li>参数设置</li>
+                                </ul>
 
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">产品名称</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="产品名称" class="layui-input">
-                                </div>
-                            </div>
+                                <div class="layui-tab-content">
+                                    <!--产品基本信息-->
+                                    <div class="layui-tab-item layui-show">
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="产品名称" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
 
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">产品副标题</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="info" lay-verify="required|title" autocomplete="off" placeholder="产品副标题" class="layui-input">
-                                </div>
-                            </div>
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品副标题</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="info" lay-verify="required|title" autocomplete="off" placeholder="产品副标题" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
 
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">产品缩略图</label>
-                                <div class="layui-input-block">
-                                    <div class="thumView">
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品缩略图</label>
+                                            <div class="layui-input-inline">
+                                                <ul class="upload-ul clearfix">
+                                                    <li class="upload-pick">
+                                                        <div class="webuploader-container clearfix" id="thumbnailUpload"></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填(尺寸比例 1:1)</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品轮播图</label>
+                                            <div class="layui-input-inline">
+                                                <ul class="upload-ul clearfix">
+                                                    <li class="upload-pick">
+                                                        <div class="webuploader-container clearfix" id="bannerUpload"></div>
+                                                    </li>
+                                                </ul>
+                                                <button type="button" class="layui-btn" id="banAction" style="display:block"><i class="layui-icon">&#xe67c;</i>开始上传</button>
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填(尺寸比例 1:1)</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品原价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="origin-price" lay-verify="required|price" autocomplete="off" placeholder="产品原价;例：100.00" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品售价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="sell-price" lay-verify="required|price" autocomplete="off" placeholder="产品售价;例：100.00" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品成本价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="cost-price" lay-verify="required|price" autocomplete="off" placeholder="产品成本价;例：100.00" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品邮费</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="franking" lay-verify="num" value="0" autocomplete="off" placeholder="产品邮费：为 0 则为包邮" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">默认销量</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="volume" lay-verify="num" autocomplete="off" value="0" placeholder="默认销量" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">发货地址</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="address" lay-verify="required|address" autocomplete="off" placeholder="发货地址" class="layui-input">
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">*必填</div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品状态</label>
+                                            <div class="layui-input-inline">
+                                                <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="上架|下架">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="layui-upload-drag layui-upload-drag-middle" id="thumImg">
-                                        <i class="layui-icon"></i>
-                                        <p>上传图片</p>
+
+                                    <!--产品规格信息-->
+                                    <div class="layui-tab-item">
+
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="spec[0][name]" lay-verify="required|specName" autocomplete="off" placeholder="规格名称" class="layui-input">
+                                            </div>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="spec[0][price]" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">
+                                            </div>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="spec[0][stock]" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <button type="button" class="layui-btn layui-btn-normal" id="addSpec"><i class="layui-icon">&#xe654;</i>  增 加 新 规 格</button>
+                                    </div>
+
+                                    <!--产品参数信息-->
+                                    <div class="layui-tab-item">
+
+                                        <button type="button" class="layui-btn layui-btn-normal" id="addParam"><i class="layui-icon">&#xe654;</i>  增 加 新 参 数</button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">产品轮播图</label>
-                                <div class="layui-input-block">
-                                    <blockquote class="layui-elem-quote layui-quote-nm layui-quote-ban" >
-                                        预览图：
-                                        <div class="layui-table-img" id="imgView"></div>
-                                    </blockquote>
-                                    <button type="button" class="layui-btn layui-btn-normal" id="banUpload"><i class="layui-icon">&#xe61f;</i>选择文件</button>
-                                    <button type="button" class="layui-btn" id="banAction"><i class="layui-icon">&#xe67c;</i>开始上传</button>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">路由状态</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
-                                </div>
-                            </div>
-
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
                                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                 </div>
                             </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -82,134 +166,83 @@
 {load href="/static/plugin/aoupload/js/diyUpload.js" /}
 
 <script>
-  layui.use(['form', 'layedit', 'route','upload'], function() {
+  layui.use(['element','form', 'layedit', 'route'], function() {
     var $ = layui.jquery,
+        element = layui.element,
         form = layui.form,
         route = layui.route,
-        layer = layui.layer,
-        upload = layui.upload;
+        layer = layui.layer;
 
     //设置nav标题
     $("#navTitle").text(route.getRoute().name);
 
     form.render();
 
-    //缩略图执行实例
-    uploadThumbnail = upload.render({
-      elem: '#thumImg' //绑定元素
-      ,url: '/static/plugin/aoupload/upload.php' //上传接口
-      ,accept:'images'  //指定允许上传时校验的文件类型
-      ,acceptMime:'image/jpg,image/jpeg,image/png'  //规定打开文件选择框时，筛选出的文件类型
-      ,exts:'jpg|jpeg|png'  //允许上传的文件后缀,一般结合 accept 参数类设定
-      ,auto:true    //是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
-      ,size:3072     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
-      ,multiple:false     //是否允许多文件上传
-      ,drag:false        //是否接受拖拽的文件上传
-      ,done: function(res, index, upload){     //执行上传请求后的回调
-            console.log(res);
-            console.log(index);
-            console.log(upload);
-            var thumView = $('.thumView');
-            thumView.append('<img src="' + res.url + '" alt="" class="layui-upload-imgs">').append('<input type="hidden" name="thumbnail" value="' + res.url + '" />');
-            if(thumView.find('img').length >= 1){
-              $('#thumImg').hide();
-            }
-          //上传完毕回调
-      }
-      ,error: function(){
-          //请求异常回调
-      }
+    //表单默认值
+    form.val("formVal", {
+      "title": "小米MX3" // "name": "value"
+      ,"info": "青春有你，我们不见不散"
+      ,"origin-price": 3000.00
+      ,"sell-price": 2500.00
+      ,"cost-price": 2000.00
+      ,"address": "合肥"
+      ,"spec[0][name]": "移动版"
+      ,"spec[0][price]": 2650.00
+      ,"spec[0][stock]": 560
     });
-
-
-    //多图执行实例
-    bannerUpload = upload.render({
-      elem: '#banUpload',
-      url: '/static/plugin/aoupload/upload.php',
-      accept: 'file',
-      acceptMime:'image/jpg,image/jpeg,image/png',  //规定打开文件选择框时，筛选出的文件类型
-      exts:'jpg|jpeg|png',  //允许上传的文件后缀,一般结合 accept 参数类设定
-      size:3072,     //设置文件最大可允许上传的大小，单位 KB,0（即不限制）
-      multiple: true,
-      auto: false,
-      bindAction: '#banAction',
-      choose: function(obj) {
-          var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-          console.log(obj);
-          console.log(this.files);
-
-          console.log(files);
-          //读取本地文件
-          obj.preview(function(index, file, result) {
-              var htm =$(['<div class="layui-img-list" id="upload-' + index + '">','<img src="'+result+'" />','<button type="button" class="layui-btn layui-btn-danger layui-btn-sm uploadDel"><i class="layui-icon">&#xe640;</i>删除</button>','</div>'].join(''));
-
-              //删除
-              htm.find('.uploadDel').on('click', function() {
-                  delete files[index]; //删除对应的文件
-                  htm.remove();
-                  bannerUpload.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-              });
-              $('#imgView').append(htm);
-          });
-      },
-      done: function(res, index, upload) {
-          if (res.error == 0) { //上传成功
-              var divIndex = $('#upload-' + index);
-              var suc = $(['<button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe674;</i>上传成功</button>','<input type="hidden" name="banner[]" value="'+res.url+'">'].join(''));
-              divIndex.find('.uploadDel').hide();
-              divIndex.append(suc);
-              return delete this.files[index]; //删除文件队列已经上传成功的文件
-          }
-          this.error(index, upload);
-      },
-      error: function(index, upload) {
-          $('#upload-' + index).remove();
-          return delete this.files[index]; //删除文件队列上传失败的文件
-      }
-    });
-
-
 
     //自定义验证规则
     form.verify({
         title: function(value) {
-            if (value.length < 1 || value.length > 25) {
-                return '路由名称长度应在1-25个字符之间';
+            if (value.length < 4 || value.length > 30) {
+                return '内容长度应在4-30个字符之间';
             }
         },
-        router:function(value) {
-            if(value != ''){
-                var ret = /(^\/)\w*/;
-                if(!ret.test(value)){
-                    return '路由错误格式,例：/admin';
-                }
+        price: [/^[0-9]+(.?)([0-9]{2})$/, '价格设置有误；例：10.00 或10.50'],
+        num: [/^[0-9]*$/, '数值设置有误，应该为整数；例：10'],
+        address: function(value) {
+            if (value.length < 2 || value.length > 15) {
+                return '内容长度应在2-15个字符之间';
             }
         },
-        path:function(value){
-            if(value != ''){
-                var ret = /(^[a-zA-Z])\w*/;
-                if(!ret.test(value)){
-                    return '系统路径错误格式,例：admin/index/index';
-                }
+        specName: function(value) {
+            if (value.length < 2 || value.length > 6) {
+                return '规格标题长度应在2-6个字符之间';
             }
         },
-        icon:function(value) {
-            if(value != ''){
-                var ret = /(^#)[a-z0-9]{5}(;)$/;
-                if(!ret.test(value)){
-                    return '路由图标格式错误，例：#xe653;';
-                }
+        specPrice: [/^[0-9]+(.?)([0-9]{2})$/, '规格价格设置有误；例：10.00 或10.50'],
+        specNum: [/^[0-9]*$/, '库存设置有误，应该为整数；例：10'],
+        paramTitle: function(value) {
+            if (value.length < 2 || value.length > 15) {
+                return '参数标题长度应在2-15个字符之间';
             }
-        }
+        },
+        paramContent: function(value) {
+            if (value.length < 2 || value.length > 15) {
+                return '参数值长度应在2-15个字符之间';
+            }
+        },
     });
 
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
+        var goodsForm = $("#goodsForm");
+        var thumbnail = $("input[name='thumbnail']");
+        var banner = $("input[name='banner']");
+        console.log(banner);
+        if(thumbnail.val() == '' || thumbnail.length == 0){
+            layer.msg('缩略图不能为空');
+            return false;
+        }
+        if(banner.val() == '' || banner.length == 0){
+            layer.msg('轮播图不能为空');
+            return false;
+        }
         $.post("/aoogi/goods",data.field,function(res){
             layer.msg(res.data);
-            if(res.url != "")
-                window.location.href = "#" + res.url;
+            /*if(res.url != "")
+                window.location.href = "#" + res.url;*/
 
         });
         return false;
@@ -218,10 +251,12 @@
   });
 </script>
 
+
 <script>
 
     //上传图片
-    var $thumbnailUpload = $('#thumbnailUpload').diyUpload({
+    /*缩略图执行实例*/
+    var thumbnailUpload = $('#thumbnailUpload').diyUpload({
         buttonText : '',
         //类型限制;
         accept: {
@@ -255,21 +290,13 @@
         //自定义内容信息
         custom:{
             inputName:'thumbnail',
-            //input加入ID，只适用于单个上传图片
-            inputId:'thum_id'
         },
         success:function( data ) {
         },
         error:function( err ) { }
     });
 
-
-</script>
-
-<script>
-
-    //上传图片
-    var $bannerUpload = $('#bannerUpload').diyUpload({
+    var bannerUpload = $('#bannerUpload').diyUpload({
         buttonText : '',
         //类型限制;
         accept: {
@@ -289,7 +316,7 @@
         //是否支持多文件上传
         multiple:true,
         //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
-        auto:true,
+        auto:false,
         //文件上传方式,POST或者GET
         method:"POST",
         //服务器地址;
@@ -302,17 +329,74 @@
         fileSingleSizeLimit:50000 * 1024,
         //自定义内容信息
         custom:{
-            inputName:'banner[]',
-            //input加入ID，只适用于单个上传图片
-            inputId:'ban_id'
+            inputName:'banner[]'
         },
         success:function( data ) {
         },
         error:function( err ) { }
     });
+    /*轮播图执行实例*/
+    $('#banAction').click(function(){
+        bannerUpload.upload();
+    });
+
+    /*规格操作*/
+    var specNum = 1;
+    //添加规格信息
+    $("#addSpec").click(function(){
+        var specInfo = $(['<div class="layui-form-item">',
+                          '<div class="layui-input-inline">',
+                          '<input type="text" name="spec['+specNum+'][name]" lay-verify="required|specName" autocomplete="off" placeholder="规格名称" class="layui-input">',
+                          '</div>',
+                          '<div class="layui-input-inline">',
+                          '<input type="number" name="spec['+specNum+'][price]" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">',
+                          '</div>',
+                          '<div class="layui-input-inline">',
+                          '<input type="number" name="spec['+specNum+'][stock]" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">',
+                          '</div>',
+                          '<div class="layui-form-mid layui-word-aux delSpec">',
+                          '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
+                          '<i class="layui-icon">&#xe640;</i>',
+                          '</button>',
+                          '</div>',
+                          '</div>'].join(''));
+        $(this).before(specInfo);
+        specNum++;
+    });
+    //删除规格信息
+    $(document).on("click",".delSpec",function(){
+        $(this).parent().remove();
+    });
+
+    /*参数操作*/
+    var paramNum = 0;
+    //添加规格信息
+    $("#addParam").click(function(){
+        var paramInfo = $(['<div class="layui-form-item">',
+            '<div class="layui-input-inline">',
+            '<input type="text" name="param['+paramNum+'][name]" lay-verify="required|paramTitle" autocomplete="off" placeholder="参数名称" class="layui-input">',
+            '</div>',
+            '<div class="layui-input-inline">',
+            '<input type="text" name="param['+paramNum+'][price]" lay-verify="required|paramContent" autocomplete="off" placeholder="参数值" class="layui-input">',
+            '</div>',
+            '<div class="layui-form-mid layui-word-aux delSpec">',
+            '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
+            '<i class="layui-icon">&#xe640;</i>',
+            '</button>',
+            '</div>',
+            '</div>'].join(''));
+        $(this).before(paramInfo);
+        specNum++;
+    });
+    //删除规格信息
+    $(document).on("click",".delParam",function(){
+        $(this).parent().remove();
+    });
+
 
 
 </script>
+
 
 <style scoped>
 

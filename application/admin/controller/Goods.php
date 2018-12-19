@@ -38,6 +38,7 @@ class Goods extends AdminController
     public function save(Request $request)
     {
         //
+        var_dump($request->param());
     }
 
     /**

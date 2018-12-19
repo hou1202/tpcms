@@ -1,10 +1,14 @@
-.layui-input-sm{
-    width:30%;
-}
-.layui-input-md{
+/*定义input输入框长度*/
+.layui-input-md .layui-input-inline{
     width:50%;
 }
-.layui-input-bg{
+.layui-input-md .layui-input-block{
+    width:50%;
+}
+.layui-input-bg .layui-input-inline{
+    width:80%;
+}
+.layui-input-bg .layui-input-block{
     width:80%;
 }
 
@@ -12,6 +16,7 @@
     display:inline;
     float:left;
 }
+/*定义搜索*/
 .self-search{
     float:left;
     margin:0 20px;
@@ -52,42 +57,7 @@
 }
 
 
-.layui-upload-drag-middle{
-    padding:15px 30px !important;
-    border-radius:5px;
-}
-.layui-upload-drag-middle .layui-icon{
-    font-size:30px !important;
-}
-.layui-upload-imgs{
-    width: 100px;
-    height:65px;
-    border-radius:5px;
-    margin:0 10px 5px 0;
-}
 
 
-.layui-quote-ban{
-    width:fit-content;
-    width:-webkit-fit-content;
-    width:-moz-fit-content;
-    min-width:120px;
-}
-.layui-table-img {
-    overflow: hidden;
-}
-.layui-table-img .layui-img-list{
-    width:100px;
-    margin:0 10px 5px 0;
-    text-align:center;
-    float:left;
-}
-.layui-table-img .layui-img-list img{
-    width: 100px;
-    height:65px;
-    border-radius:5px;
-    margin-bottom:5px;
-}
-.layui-table-img .layui-img-list button{
-    margin-left:0 !important;
-}
+
+
