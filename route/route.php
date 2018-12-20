@@ -64,7 +64,7 @@ Route::get('hello','index/index/hello');
 
 
 //图片上传处理
-Route::post('/upLoader','index/uploader/uploader');
+Route::get('uploader','admin/Uploader/uploader');
 
 
 

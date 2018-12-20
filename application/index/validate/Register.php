@@ -14,7 +14,7 @@ class Register extends CommonValidate
      */	
 	protected $rule = [
 	    '__token__' => 'require|token',
-	    'phone|帐户号码' => 'require|number|length:11|isExist:user',
+	    'phone|帐户号码' => 'require|mobile|number|length:11|isExist:user',
         'password|帐户密码' => 'require|min:6',
         'code|验证码' => 'require|number|length:6'
     ];

@@ -26,4 +26,22 @@ class Goods extends Model
      * $field   开启数据表字段验证
      * */
     protected $field = true;
+
+    /*
+     * 数据关联
+     * 关联表      goods_param
+     * */
+    public function goodsParam()
+    {
+        return $this->hasMany('GoodsParam','goods_id','id');
+    }
+
+    /*
+     * 数据关联
+     * 关联表      goods_spec
+     * */
+    public function goodsSpec()
+    {
+        return $this->hasMany('GoodsSpec','goods_id','id');
+    }
 }

@@ -69,7 +69,7 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">产品原价</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="origin-price" lay-verify="required|price" autocomplete="off" placeholder="产品原价;例：100.00" class="layui-input">
+                                                <input type="number" name="origin_price" lay-verify="required|price" autocomplete="off" placeholder="产品原价;例：100.00" class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">*必填</div>
                                         </div>
@@ -77,7 +77,7 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">产品售价</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="sell-price" lay-verify="required|price" autocomplete="off" placeholder="产品售价;例：100.00" class="layui-input">
+                                                <input type="number" name="sell_price" lay-verify="required|price" autocomplete="off" placeholder="产品售价;例：100.00" class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">*必填</div>
                                         </div>
@@ -85,7 +85,7 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">产品成本价</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="cost-price" lay-verify="required|price" autocomplete="off" placeholder="产品成本价;例：100.00" class="layui-input">
+                                                <input type="number" name="cost_price" lay-verify="required|price" autocomplete="off" placeholder="产品成本价;例：100.00" class="layui-input">
                                             </div>
                                             <div class="layui-form-mid layui-word-aux">*必填</div>
                                         </div>
@@ -118,6 +118,15 @@
                                                 <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="上架|下架">
                                             </div>
                                         </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">产品详情</label>
+                                            <div class="layui-input-block">
+                                                <!--<textarea id="textEditor" style="display: none;"></textarea>-->
+                                                <textarea id="editor" name="content"></textarea>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <!--产品规格信息-->
@@ -141,7 +150,7 @@
                                     <!--产品参数信息-->
                                     <div class="layui-tab-item">
 
-                                        <button type="button" class="layui-btn layui-btn-normal" id="addParam"><i class="layui-icon">&#xe654;</i>  增 加 新 参 数</button>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="addParams"><i class="layui-icon">&#xe654;</i>  增 加 新 参 数</button>
                                     </div>
                                 </div>
                             </div>
@@ -164,27 +173,32 @@
 {load href="/static/plugin/aoupload/css/globle.css" /}
 {load href="/static/plugin/aoupload/js/webuploader.min.js" /}
 {load href="/static/plugin/aoupload/js/diyUpload.js" /}
+{load href="/static/plugin/kind/kind-all-min.js" /}
+
+
 
 <script>
-  layui.use(['element','form', 'layedit', 'route'], function() {
+  layui.use(['element','form', 'route'], function() {
     var $ = layui.jquery,
         element = layui.element,
         form = layui.form,
         route = layui.route,
         layer = layui.layer;
 
+
     //设置nav标题
     $("#navTitle").text(route.getRoute().name);
 
+    //表单渲染
     form.render();
 
     //表单默认值
     form.val("formVal", {
       "title": "小米MX3" // "name": "value"
       ,"info": "青春有你，我们不见不散"
-      ,"origin-price": 3000.00
-      ,"sell-price": 2500.00
-      ,"cost-price": 2000.00
+      ,"origin_price": 3000.00
+      ,"sell_price": 2500.00
+      ,"cost_price": 2000.00
       ,"address": "合肥"
       ,"spec[0][name]": "移动版"
       ,"spec[0][price]": 2650.00
@@ -198,7 +212,7 @@
                 return '内容长度应在4-30个字符之间';
             }
         },
-        price: [/^[0-9]+(.?)([0-9]{2})$/, '价格设置有误；例：10.00 或10.50'],
+        price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
         num: [/^[0-9]*$/, '数值设置有误，应该为整数；例：10'],
         address: function(value) {
             if (value.length < 2 || value.length > 15) {
@@ -206,19 +220,19 @@
             }
         },
         specName: function(value) {
-            if (value.length < 2 || value.length > 6) {
+            if (value.length < 2 || value.length > 8) {
                 return '规格标题长度应在2-6个字符之间';
             }
         },
-        specPrice: [/^[0-9]+(.?)([0-9]{2})$/, '规格价格设置有误；例：10.00 或10.50'],
+        specPrice: [/^\d*(?:.\d{0,2})?$/, '规格价格设置有误；例：10 或10.50'],
         specNum: [/^[0-9]*$/, '库存设置有误，应该为整数；例：10'],
-        paramTitle: function(value) {
-            if (value.length < 2 || value.length > 15) {
+        paramsKey: function(value) {
+            if (value.length < 1 || value.length > 15) {
                 return '参数标题长度应在2-15个字符之间';
             }
         },
-        paramContent: function(value) {
-            if (value.length < 2 || value.length > 15) {
+        paramsValue: function(value) {
+            if (value.length < 1 || value.length > 15) {
                 return '参数值长度应在2-15个字符之间';
             }
         },
@@ -278,7 +292,7 @@
         //文件上传方式,POST或者GET
         method:"POST",
         //服务器地址;
-        server:'/static/plugin/aoupload/upload.php',
+        server:'/uploader',
         //最大上传的文件数量
         fileNumLimit:1,
         //总文件大小(单位字节);
@@ -368,15 +382,15 @@
     });
 
     /*参数操作*/
-    var paramNum = 0;
-    //添加规格信息
-    $("#addParam").click(function(){
-        var paramInfo = $(['<div class="layui-form-item">',
+    var paramsNum = 0;
+    //添加参数信息
+    $("#addParams").click(function(){
+        var paramsInfo = $(['<div class="layui-form-item">',
             '<div class="layui-input-inline">',
-            '<input type="text" name="param['+paramNum+'][name]" lay-verify="required|paramTitle" autocomplete="off" placeholder="参数名称" class="layui-input">',
+            '<input type="text" name="params['+paramsNum+'][p_key]" lay-verify="required|paramsKey" autocomplete="off" placeholder="参数名称" class="layui-input">',
             '</div>',
             '<div class="layui-input-inline">',
-            '<input type="text" name="param['+paramNum+'][price]" lay-verify="required|paramContent" autocomplete="off" placeholder="参数值" class="layui-input">',
+            '<input type="text" name="params['+paramsNum+'][p_value]" lay-verify="required|paramsValue" autocomplete="off" placeholder="参数值" class="layui-input">',
             '</div>',
             '<div class="layui-form-mid layui-word-aux delSpec">',
             '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
@@ -384,15 +398,35 @@
             '</button>',
             '</div>',
             '</div>'].join(''));
-        $(this).before(paramInfo);
-        specNum++;
+        $(this).before(paramsInfo);
+        paramsNum++;
     });
-    //删除规格信息
-    $(document).on("click",".delParam",function(){
+    //删除参数信息
+    $(document).on("click",".delParams",function(){
         $(this).parent().remove();
     });
 
 
+    //实例化KindEditor编辑器
+    KindEditor.create($('#editor'), {
+        allowImageRemote: false,
+        basePath: '/static/plugin/kind/',
+        themesPath: '/static/plugin/kind/themes/',
+        pluginsPath: '/static/plugin/kind/plugins/',
+        langPath: '/static/plugin/kind/lang/',
+        uploadJson: '/uploader',
+        filePostName: 'file',    //imgFile是编辑器中图片上传的默认表单域名称
+        width: '100%',
+        minHeight: 400,    //最小高度，不用写px单位
+        resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+        allowImageUpload: true,       //允许本地上传图片
+        extraFileUploadParams: '',       //上传图片、Flash、视音频、文件时，支持添加别的参数一并传到服务器
+        afterBlur: function () {
+            //编辑器失去焦点时，同步编辑器中的内容到textarea，在异步提交内容的时候，必须写！否则textarea中的值是不会改变的
+            this.sync();
+        }
+
+    });
 
 </script>
 

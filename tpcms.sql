@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2018-12-16 22:41:21
+# Date: 2018-12-20 18:23:47
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -53,7 +53,7 @@ CREATE TABLE `adminer` (
 # Data for table "adminer"
 #
 
-INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1543908656,21,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',1,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
+INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1545297396,26,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',1,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
 
 #
 # Structure for table "banner"
@@ -232,14 +232,15 @@ CREATE TABLE `goods` (
   `title` varchar(255) DEFAULT NULL COMMENT '产品标题',
   `info` varchar(255) DEFAULT NULL COMMENT '副标题',
   `thumbnail` varchar(255) DEFAULT NULL COMMENT '缩略图',
-  `banner` varchar(255) DEFAULT NULL COMMENT '轮播图；多图拼接',
-  `origin-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '原价',
-  `sell-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '售价',
-  `cost-price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '成本价',
+  `banner` text COMMENT '轮播图；多图拼接，分割符 -',
+  `origin_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '原价',
+  `sell_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '售价',
+  `cost_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '成本价',
   `franking` float(6,2) DEFAULT NULL COMMENT '邮费：为空则为免邮费',
   `volume` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '销量',
   `address` varchar(255) DEFAULT NULL COMMENT '发货地',
   `content` text COMMENT '图文详情',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '产品状态：1=》上架；0=》下架',
   `isdelete` int(10) DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -259,8 +260,8 @@ DROP TABLE IF EXISTS `goods_param`;
 CREATE TABLE `goods_param` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) unsigned DEFAULT NULL COMMENT '产品ID',
-  `title` varchar(255) DEFAULT NULL COMMENT '参数标题',
-  `content` varchar(255) DEFAULT NULL COMMENT '参数内容',
+  `p_key` varchar(255) DEFAULT NULL COMMENT '参数标题',
+  `p_value` varchar(255) DEFAULT NULL COMMENT '参数值',
   PRIMARY KEY (`id`),
   KEY `goods_param` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品参数表';
@@ -271,29 +272,11 @@ CREATE TABLE `goods_param` (
 
 
 #
-# Structure for table "goods-param"
+# Structure for table "goods_spec"
 #
 
-DROP TABLE IF EXISTS `goods-param`;
-CREATE TABLE `goods-param` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `goods_id` int(11) unsigned DEFAULT NULL COMMENT '产品ID',
-  `title` varchar(255) DEFAULT NULL COMMENT '参数标题',
-  `content` varchar(255) DEFAULT NULL COMMENT '参数内容',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品参数表';
-
-#
-# Data for table "goods-param"
-#
-
-
-#
-# Structure for table "goods-spec"
-#
-
-DROP TABLE IF EXISTS `goods-spec`;
-CREATE TABLE `goods-spec` (
+DROP TABLE IF EXISTS `goods_spec`;
+CREATE TABLE `goods_spec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) unsigned DEFAULT NULL COMMENT '产品ID',
   `name` varchar(255) DEFAULT NULL COMMENT '规格名称',
@@ -305,7 +288,7 @@ CREATE TABLE `goods-spec` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品规格表';
 
 #
-# Data for table "goods-spec"
+# Data for table "goods_spec"
 #
 
 
@@ -473,13 +456,13 @@ CREATE TABLE `router` (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `router_key` (`id`,`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
 
 #
 # Data for table "router"
 #
 
-INSERT INTO `router` VALUES (1,'/main','/','','控制面板','#xe679;',0,0,1,1,1,'2018-10-26 14:44:54'),(2,'','','','系统设置','#xe66a;',0,0,1,1,1,'2018-10-26 16:57:59'),(3,'/adminer','/adminer','admin/admin/index','管理员设置','#xe653;',2,0,1,1,1,'2018-10-26 16:59:16'),(4,'/adminer/data','/adminer/data','admin/admin/getData','管理员列表','',3,0,0,1,0,'2018-10-26 17:02:06'),(5,'/adminer/create','/adminer/create','admin/admin/create','新增管理员','',3,0,0,1,1,'2018-10-26 17:03:30'),(6,'/adminer','/adminer/save','admin/admin/save','保存管理员','',3,0,0,1,0,'2018-10-26 17:04:09'),(7,'/adminer/edit/:id','/adminer/edit/*','admin/admin/edit','编辑管理员','',3,0,0,1,1,'2018-10-26 17:05:38'),(8,'/adminer/:id','/adminer/update/*','admin/admin/update','更新管理员','',3,0,0,1,0,'2018-10-26 17:06:30'),(9,'/adminer/:id','/adminer/del/*','admin/admin/delete','删除管理员','',3,0,0,1,1,'2018-10-26 17:07:14'),(10,'/router','/router','admin/router/index','路由设置','#xe653;',2,0,1,1,1,'2018-10-30 10:41:29'),(11,'/router/data','/router/data','admin/router/getData','路由列表','',10,0,0,1,0,'2018-10-30 10:44:59'),(12,'/router/create','/router/create','admin/router/create','新增路由','',10,0,0,1,1,'2018-10-30 10:47:36'),(13,'/router','/router/save','admin/router/save','保存路由','',10,0,0,1,0,'2018-11-05 11:00:01'),(14,'/router/edit/:id','/router/edit/*','admin/router/edit','编辑路由','',10,0,0,1,1,'2018-11-05 11:44:50'),(15,'/router/:id','/router/update/*','admin/router/update','更新路由','',10,0,0,1,0,'2018-11-05 11:47:04'),(16,'/router/:id','/router/del/*','admin/router/delete','删除路由','',10,0,0,1,0,'2018-11-05 11:47:34'),(17,'/permission','/permission','admin/permission/index','权限设置','#xe653;',2,0,1,1,1,'2018-11-05 15:03:03'),(18,'/adminer/status','/adminer/status','admin/admin/setStatus','管理员状态','',3,0,0,1,0,'2018-11-07 09:12:01'),(19,'/router/status','/router/status','admin/router/setStatus','路由状态','',10,0,0,1,0,'2018-11-07 09:12:35'),(20,'/permission/data','/permission/data','admin/permission/getData','权限组列表','',17,0,0,1,0,'2018-11-07 09:14:05'),(21,'/permission/status','/permission/status','admin/permission/setStatus','权限组状态','',17,0,0,1,0,'2018-11-07 09:15:14'),(22,'/permission/create','/permission/create','admin/permission/create','新增权限组','',17,0,0,1,1,'2018-11-07 09:15:50'),(23,'/permission','/permission/save','admin/permission/save','保存权限组','',17,0,0,1,0,'2018-11-07 09:16:24'),(24,'/permission/edit/:id','/permission/edit/*','admin/permission/edit','编辑权限组','',17,0,0,1,1,'2018-11-07 09:16:52'),(25,'/permission/:id','/permission/update*','admin/permission/update','更新权限组','',17,0,0,1,0,'2018-11-07 09:17:36'),(26,'/permission/:id','/permission/del/*','admin/permission/delete','删除权限组','',17,0,0,1,0,'2018-11-07 09:18:20'),(27,'/router/:id','/router/read/*','admin/router/read','查看路由','',10,0,0,1,1,'2018-11-08 10:48:00'),(28,'/adminer/:id','/adminer/read/*','admin/admin/read','查看管理员','',3,0,0,1,1,'2018-11-09 14:07:38'),(29,'/logout','/logout','admin/home/logout','退出登录','',1,0,0,1,1,'2018-11-12 14:00:40'),(30,'/error','/error','admin/error/index','403错误','',1,0,0,1,1,'2018-11-13 14:07:32'),(31,'/main','/','admin/home/main','主页','',1,0,0,1,1,'2018-11-15 12:02:01'),(32,'/permission/:id','/permission/read/*','admin/permission/read','查看权限组','',17,0,0,1,1,'2018-11-15 15:19:31'),(33,'/config','/config','admin/config/index','参数设置','#xe653;',2,0,1,1,1,'2018-11-15 16:35:12'),(34,'/config/create','/config/create','admin/config/create','新增参数','',33,0,0,1,1,'2018-11-15 16:44:30'),(35,'/config','/config/save','admin/config/save','保存参数','',33,0,0,1,0,'2018-11-15 17:05:08'),(36,'/config/edit/:id','/config/edit/*','admin/config/edit','编辑参数','',33,0,0,1,1,'2018-11-15 17:09:08'),(37,'/config/:id','/config/update/*','admin/config/update','更新参数','',33,0,0,1,0,'2018-11-16 10:34:21'),(38,'/admin/*','/admin/del/*','admin/config/delete','删除参数','',33,0,0,1,0,'2018-11-23 11:51:30');
+INSERT INTO `router` VALUES (1,'/aoogi/main','/','','控制面板','#xe679;',0,0,1,1,1,'2018-10-26 14:44:54'),(2,'','','','系统设置','#xe66a;',0,0,1,1,1,'2018-10-26 16:57:59'),(3,'/aoogi/adminer','/aoogi/adminer','admin/admin/index','管理员设置','#xe653;',2,0,1,1,1,'2018-10-26 16:59:16'),(4,'/aoogi/adminer/data','/aoogi/adminer/data','admin/admin/getData','管理员列表','',3,0,0,1,0,'2018-10-26 17:02:06'),(5,'/aoogi/adminer/create','/aoogi/adminer/create','admin/admin/create','新增管理员','',3,0,0,1,1,'2018-10-26 17:03:30'),(6,'/aoogi/adminer','/aoogi/adminer/save','admin/admin/save','保存管理员','',3,0,0,1,0,'2018-10-26 17:04:09'),(7,'/aoogi/adminer/edit/:id','/aoogi/adminer/edit/*','admin/admin/edit','编辑管理员','',3,0,0,1,1,'2018-10-26 17:05:38'),(8,'/aoogi/adminer/:id','/aoogi/adminer/update/*','admin/admin/update','更新管理员','',3,0,0,1,0,'2018-10-26 17:06:30'),(9,'/aoogi/adminer/:id','/aoogi/adminer/del/*','admin/admin/delete','删除管理员','',3,0,0,1,1,'2018-10-26 17:07:14'),(10,'/aoogi/router','/aoogi/router','admin/router/index','路由设置','#xe653;',2,0,1,1,1,'2018-10-30 10:41:29'),(11,'/aoogi/router/data','/aoogi/router/data','admin/router/getData','路由列表','',10,0,0,1,0,'2018-10-30 10:44:59'),(12,'/aoogi/router/create','/aoogi/router/create','admin/router/create','新增路由','',10,0,0,1,1,'2018-10-30 10:47:36'),(13,'/aoogi/router','/aoogi/router/save','admin/router/save','保存路由','',10,0,0,1,0,'2018-11-05 11:00:01'),(14,'/aoogi/router/edit/:id','/aoogi/router/edit/*','admin/router/edit','编辑路由','',10,0,0,1,1,'2018-11-05 11:44:50'),(15,'/aoogi/router/:id','/aoogi/router/update/*','admin/router/update','更新路由','',10,0,0,1,0,'2018-11-05 11:47:04'),(16,'/aoogi/router/:id','/aoogi/router/del/*','admin/router/delete','删除路由','',10,0,0,1,0,'2018-11-05 11:47:34'),(17,'/aoogi/permission','/aoogi/permission','admin/permission/index','权限设置','#xe653;',2,0,1,1,1,'2018-11-05 15:03:03'),(18,'/aoogi/adminer/status','/aoogi/adminer/status','admin/admin/setStatus','管理员状态','',3,0,0,1,0,'2018-11-07 09:12:01'),(19,'/aoogi/router/status','/aoogi/router/status','admin/router/setStatus','路由状态','',10,0,0,1,0,'2018-11-07 09:12:35'),(20,'/aoogi/permission/data','/aoogi/permission/data','admin/permission/getData','权限组列表','',17,0,0,1,0,'2018-11-07 09:14:05'),(21,'/aoogi/permission/status','/aoogi/permission/status','admin/permission/setStatus','权限组状态','',17,0,0,1,0,'2018-11-07 09:15:14'),(22,'/aoogi/permission/create','/aoogi/permission/create','admin/permission/create','新增权限组','',17,0,0,1,1,'2018-11-07 09:15:50'),(23,'/aoogi/permission','/aoogi/permission/save','admin/permission/save','保存权限组','',17,0,0,1,0,'2018-11-07 09:16:24'),(24,'/aoogi/permission/edit/:id','/aoogi/permission/edit/*','admin/permission/edit','编辑权限组','',17,0,0,1,1,'2018-11-07 09:16:52'),(25,'/aoogi/permission/:id','/aoogi/permission/update*','admin/permission/update','更新权限组','',17,0,0,1,0,'2018-11-07 09:17:36'),(26,'/aoogi/permission/:id','/aoogi/permission/del/*','admin/permission/delete','删除权限组','',17,0,0,1,0,'2018-11-07 09:18:20'),(27,'/aoogi/router/:id','/aoogi/router/read/*','admin/router/read','查看路由','',10,0,0,1,1,'2018-11-08 10:48:00'),(28,'/aoogi/adminer/:id','/aoogi/adminer/read/*','admin/admin/read','查看管理员','',3,0,0,1,1,'2018-11-09 14:07:38'),(29,'/aoogi/logout','/aoogi/logout','admin/home/logout','退出登录','',1,0,0,1,1,'2018-11-12 14:00:40'),(30,'/aoogi/error','/aoogi/error','admin/error/index','403错误','',1,0,0,1,1,'2018-11-13 14:07:32'),(31,'/aoogi/main','/','admin/home/main','主页','',1,0,0,1,1,'2018-11-15 12:02:01'),(32,'/aoogi/permission/:id','/aoogi/permission/read/*','admin/permission/read','查看权限组','',17,0,0,1,1,'2018-11-15 15:19:31'),(33,'/aoogi/config','/aoogi/config','admin/config/index','参数设置','#xe653;',2,0,1,1,1,'2018-11-15 16:35:12'),(34,'/aoogi/config/create','/aoogi/config/create','admin/config/create','新增参数','',33,0,0,1,1,'2018-11-15 16:44:30'),(35,'/aoogi/config','/aoogi/config/save','admin/config/save','保存参数','',33,0,0,1,0,'2018-11-15 17:05:08'),(36,'/aoogi/config/edit/:id','/aoogi/config/edit/*','admin/config/edit','编辑参数','',33,0,0,1,1,'2018-11-15 17:09:08'),(37,'/aoogi/config/:id','/aoogi/config/update/*','admin/config/update','更新参数','',33,0,0,1,0,'2018-11-16 10:34:21'),(38,'/aoogi/admin/*','/aoogi/admin/del/*','admin/config/delete','删除参数','',33,0,0,1,0,'2018-11-23 11:51:30'),(39,'','','','用户管理','#xe66a;',0,0,1,1,1,'2018-12-18 13:15:40'),(40,'/aoogi/user','/aoogi/user','admin/user/index','用户列表','#xe653;',39,0,1,1,1,'2018-12-18 13:17:55'),(41,'','','','产品管理','#xe66a;',0,0,1,1,1,'2018-12-18 13:20:09'),(42,'/aoogi/goods','/aoogi/goods','admin/goods/index','产品列表','#xe653;',41,0,1,1,1,'2018-12-18 13:21:47'),(43,'/aoogi/goods/data','/aoogi/goods/data','admin/goods/getData','产品数据','',42,0,0,1,1,'2018-12-18 13:24:18'),(44,'/aoogi/goods/create','/aoogi/goods/create','admin/goods/create','新增产品','',42,0,0,1,1,'2018-12-18 13:25:31'),(45,'/aoogi/goods/edit/:id','/aoogi/goods/edit/*','admin/goods/edit','编辑产品','',42,0,0,1,1,'2018-12-18 13:27:01'),(46,'/aoogi/goods/:id','/aoogi/goods/update/*','admin/goods/update','更新产品','',42,0,0,1,0,'2018-12-18 13:29:30'),(47,'/aoogi/goods','/aoogi/goods/save','admin/goods/save','保存产品','',42,0,0,1,0,'2018-12-18 13:30:39'),(48,'/aoogi/goods/:id','/aoogi/goods/del/*','admin/goods/delete','删除产品','',42,0,0,1,0,'2018-12-18 13:32:56'),(49,'/aoogi/goods/:id','/aoogi/goods/read/*','admin/goods/read','查看产品','',42,0,0,1,1,'2018-12-18 13:34:19');
 
 #
 # Structure for table "user"
@@ -500,34 +483,13 @@ CREATE TABLE `user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 #
 # Data for table "user"
 #
 
-INSERT INTO `user` VALUES (1,'Libai','96e79218965eb72c92a549dd5a330112','18297905432',NULL,0.00,0,NULL,0,NULL,'2018-10-10 15:08:34',NULL),(2,'Wangwei','96e79218965eb72c92a549dd5a330112','13564078415',NULL,0.00,0,NULL,0,NULL,'2018-10-10 15:08:55',NULL),(3,'Dufu','96e79218965eb72c92a549dd5a330112','17333007330',NULL,0.00,0,NULL,0,NULL,'2018-10-10 15:09:11',NULL),(4,'用户1733','25f9e794323b453885f5181f1b624d0b','13564078419','/static/index/images/default-head-1.png',0.00,1,NULL,1,NULL,'2018-12-16 18:29:53',NULL);
-
-#
-# Structure for table "users"
-#
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `mobile` varchar(11) DEFAULT NULL,
-  `delete_time` timestamp NULL DEFAULT NULL,
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-#
-# Data for table "users"
-#
-
-INSERT INTO `users` VALUES (1,'Libai','96e79218965eb72c92a549dd5a330112','18297905432',NULL,'2018-10-10 15:08:34'),(2,'Wangwei','96e79218965eb72c92a549dd5a330112','13564078415',NULL,'2018-10-10 15:08:55'),(3,'Dufu','96e79218965eb72c92a549dd5a330112','17333007330',NULL,'2018-10-10 15:09:11');
+INSERT INTO `user` VALUES (1,'Libai','96e79218965eb72c92a549dd5a330112','18297905432',NULL,0.00,1,NULL,1,NULL,'2018-10-10 15:08:34','2018-12-18 10:21:59'),(2,'Wangwei','96e79218965eb72c92a549dd5a330112','13564078415',NULL,0.00,1,NULL,1,NULL,'2018-10-10 15:08:55','2018-12-17 18:05:49'),(3,'Dufu','96e79218965eb72c92a549dd5a330112','17333007330',NULL,0.00,0,NULL,0,NULL,'2018-10-10 15:09:11',NULL),(4,'用户1733','25f9e794323b453885f5181f1b624d0b','13564078419','/static/index/images/default-head-1.png',0.00,1,NULL,1,NULL,'2018-12-16 18:29:53',NULL),(5,'用户7006','96e79218965eb72c92a549dd5a330112','13564078416','/static/index/images/default-head-0.png',0.00,0,NULL,0,NULL,'2018-12-17 14:00:49','2018-12-17 15:52:18'),(6,'用户7088','96e79218965eb72c92a549dd5a330112','13564078418','/static/index/images/default-head-1.png',0.00,1,NULL,1,NULL,'2018-12-17 14:02:38',NULL);
 
 #
 # Structure for table "verify"
@@ -538,14 +500,16 @@ CREATE TABLE `verify` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `phone` varchar(11) NOT NULL DEFAULT '' COMMENT '发送手机号码',
   `code` varchar(11) NOT NULL DEFAULT '' COMMENT '验证码',
-  `typ` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '类型：1=》注册；2=》修改密码',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '类型：1=》注册；2=》修改密码',
+  `ip` varchar(15) DEFAULT NULL COMMENT '获取验证码用户IP',
   `use_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '使用时间',
   `over_time` int(11) unsigned NOT NULL DEFAULT '300' COMMENT '过期时间，单 秒 ；默认时间 300秒',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='验证短信表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='验证短信表';
 
 #
 # Data for table "verify"
 #
 
+INSERT INTO `verify` VALUES (1,'18297315431','230351',1,'127.0.0.1',NULL,4000,'2018-12-17 13:09:20'),(2,'18297315431','653572',1,'127.0.0.1',NULL,4000,'2018-12-17 13:46:05'),(3,'18297315431','745018',1,'127.0.0.1',NULL,3000,'2018-12-17 13:57:20'),(4,'13564078415','245074',1,'127.0.0.1',NULL,3000,'2018-12-17 18:04:37'),(5,'13564078415','137861',2,'127.0.0.1','2018-12-17 18:05:49',3000,'2018-12-17 18:05:33');

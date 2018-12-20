@@ -13,17 +13,24 @@ class Goods extends CommonValidate
      * @var array
      */	
 	protected $rule = [
+	    'id|产品ID'   =>  'required|number|isExist:goods,id',
 	    'title|产品标题' => 'require|length:4,30',
 	    'info|产品副标题' => 'require|length:4,30',
-	    'thumbnail|缩略图' => 'require',
-	    'banner|轮播图' => 'require',
-	    'origin-price|产品原价' => 'require|number',
-	    'sell-price' => 'require',
-	    'cost-price' => 'require',
-	    'franking' => 'require',
-	    'volume' => 'require',
-	    'address' => 'require',
-	    'spec' => 'require',
+	    'thumbnail|缩略图' => 'require|max:254',
+	    'banner|轮播图' => 'require|array',
+	    'origin_price|产品原价' => 'require|float',
+	    'sell_price|产品售价' => 'require|float',
+	    'cost_price|产品成本价' => 'require|float',
+	    'franking|产品邮费' => 'require|number|integer',
+	    'volume|产品销量' => 'require|number|integer',
+	    'address|发货地址' => 'require|length:1,15',
+	    'spec|产品规格' => 'require|array',
+        'name|产品规格名称' =>  'require|length:2,8',
+        'price|产品规格价格' =>  'require|float',
+        'stock|产品规格库存' =>  'require|number|integer',
+        'params|产品参数' =>  'array',
+        'p_key|产品参数名称' =>  'require|max:8',
+        'p_value|产品参数值' =>  'require|max:8',
     ];
     
     /**
@@ -32,5 +39,32 @@ class Goods extends CommonValidate
      *
      * @var array
      */	
-    protected $message = [];
+    protected $message = [
+        'id.require' => '非有效产品信息',
+        'id.number' => '非有效产品信息',
+        'id.isExist' => '非有效产品信息',
+        'banner.array' => '轮播图信息有误',
+        'origin_price.float' => '产品原价设置有误。例：10 或 10.25',
+        'sell_price.float' => '产品售价设置有误。例：10 或 10.25',
+        'cost_price.float' => '产品成本价设置有误。例：10 或 10.25',
+        'franking.number' => '产品邮费设置有误，应该为整数。例：10',
+        'franking.integer' => '产品邮费设置有误，应该为整数。例：10',
+        'volume.number' => '产品销量设置有误，应该为整数。例：10',
+        'volume.integer' => '产品销量设置有误，应该为整数。例：10',
+        'spec.array' => '产品规格信息有误',
+        'price.float' => '产品规格价格设置有误。例：10 或 10.25',
+        'stock.number' => '产品规格库存设置有误，应该为整数。例：10',
+        'stock.integer' => '产品规格库存设置有误，应该为整数。例：10',
+        'params.array' => '产品参数信息有误',
+    ];
+
+    /*
+     * 定义验证场景
+     * 格式：'场景名' => ['字段名1','字段名2']
+     * */
+    protected $scene = [
+        'create' => ['title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','spec','params'],
+        'spec' => ['name','price','stock'],
+        'params' => ['p_key','p_value']
+    ];
 }

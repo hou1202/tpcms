@@ -52,7 +52,8 @@ Route::resource('aoogi/goods','admin/goods')->rest('edit',['GET', '/edit/:id','e
 Route::post('aoogi/goods/data','admin/goods/getData');
 
 
-
+//图片上传处理
+Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);
 
 
 return [
