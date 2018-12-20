@@ -50,6 +50,7 @@ Route::post('aoogi/config/data','admin/config/getData');
 //Route::get('aoogi/goods/create','admin/goods/create');
 Route::resource('aoogi/goods','admin/goods')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/goods/data','admin/goods/getData');
+Route::post('aoogi/goods/status','admin/goods/setStatus');
 
 
 //图片上传处理

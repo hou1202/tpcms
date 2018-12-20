@@ -11,7 +11,7 @@ use think\Db;
 class Goods extends AdminController
 {
     /**
-     * 显示资源列表
+     * index    显示资源列表
      *
      * @return \think\Response
      */
@@ -19,6 +19,45 @@ class Goods extends AdminController
     {
         //
         return view('goods/index');
+    }
+
+    /*
+     * getData  获取资源信息
+     *
+     * @return json
+     * */
+    public function getData(Request $request)
+    {
+        $data = $request -> param();
+        $map[] = ['delete_time','=',0];
+        if(isset($data['keyword']) && !empty($data['keyword'])){
+            $map[] = ['id|title|sell_price|franking|address','like','%'.trim($data['keyword']).'%'];
+        }
+        $list = GoodsM::where($map)
+            ->order('id desc')
+            ->limit(($data['page']-1)*$data['limit'],$data['limit'])
+            ->select();
+        $count = GoodsM::where($map)->count('id');
+        return $this->kitJson($list,$count);
+
+    }
+
+
+    /*
+     * setStatus    获取资源信息
+     *
+     * @return json
+     * */
+    public function setStatus(Request $request)
+    {
+        $data = $request -> param();
+        $validate = new GoodsV();
+        if(!$validate->scene('status')->check($data))
+            return $this->failJson($validate->getError());
+
+        $goods = GoodsM::get($data['id']);
+        if(!$goods) return $this->failJson('非有效数据信息');
+        return $goods->save($data) ? $this->successJson('状态更新成功') : $this->failJson('状态更新失败');
     }
 
     /**
@@ -40,8 +79,7 @@ class Goods extends AdminController
      */
     public function save(Request $request)
     {
-        //
-        //var_dump($request->param());
+
         $data = $request->param();
         $validate = new GoodsV();
 
@@ -97,7 +135,15 @@ class Goods extends AdminController
      */
     public function edit($id)
     {
-        //
+        $goods = GoodsM::get($id);
+        $goods['banner'] = explode('-',$goods['banner']);
+        $specs = $goods->goodsSpec;
+        $params = $goods->goodsParam;
+        //var_dump($goods);die;
+        $this->assign('Goods',$goods);
+        $this->assign('Specs',$specs);
+        $this->assign('Params',$params);
+        return view('goods/edit');
     }
 
     /**

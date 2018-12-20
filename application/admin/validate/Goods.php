@@ -13,7 +13,7 @@ class Goods extends CommonValidate
      * @var array
      */	
 	protected $rule = [
-	    'id|产品ID'   =>  'required|number|isExist:goods,id',
+	    'id|产品ID'   =>  'require|number|isExist:goods,id',
 	    'title|产品标题' => 'require|length:4,30',
 	    'info|产品副标题' => 'require|length:4,30',
 	    'thumbnail|缩略图' => 'require|max:254',
@@ -24,13 +24,15 @@ class Goods extends CommonValidate
 	    'franking|产品邮费' => 'require|number|integer',
 	    'volume|产品销量' => 'require|number|integer',
 	    'address|发货地址' => 'require|length:1,15',
+        'status|产品状态' =>'in:0,1',
 	    'spec|产品规格' => 'require|array',
         'name|产品规格名称' =>  'require|length:2,8',
         'price|产品规格价格' =>  'require|float',
         'stock|产品规格库存' =>  'require|number|integer',
         'params|产品参数' =>  'array',
-        'p_key|产品参数名称' =>  'require|max:8',
-        'p_value|产品参数值' =>  'require|max:8',
+        'p_key|产品参数名称' =>  'require|max:15',
+        'p_value|产品参数值' =>  'require|max:15',
+
     ];
     
     /**
@@ -56,6 +58,7 @@ class Goods extends CommonValidate
         'stock.number' => '产品规格库存设置有误，应该为整数。例：10',
         'stock.integer' => '产品规格库存设置有误，应该为整数。例：10',
         'params.array' => '产品参数信息有误',
+        'status.in' => '产品状态信息有误',
     ];
 
     /*
@@ -63,8 +66,9 @@ class Goods extends CommonValidate
      * 格式：'场景名' => ['字段名1','字段名2']
      * */
     protected $scene = [
-        'create' => ['title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','spec','params'],
+        'create' => ['title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'],
         'spec' => ['name','price','stock'],
-        'params' => ['p_key','p_value']
+        'params' => ['p_key','p_value'],
+        'status' =>['id','status'],
     ];
 }

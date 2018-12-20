@@ -23,7 +23,7 @@ class Admin extends AdminController
     }
 
     /*
-     * 获取管理员资源信息
+     * 获取资源信息
      *
      * @return json
      * */

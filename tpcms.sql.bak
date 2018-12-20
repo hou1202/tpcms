@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2018-12-21 01:00:02
+# Date: 2018-12-20 18:23:47
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -241,17 +241,16 @@ CREATE TABLE `goods` (
   `address` varchar(255) DEFAULT NULL COMMENT '发货地',
   `content` text COMMENT '图文详情',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '产品状态：1=》上架；0=》下架',
-  `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除，若删除则为删除时间戳',
+  `isdelete` int(10) DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='产品表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品表';
 
 #
 # Data for table "goods"
 #
 
-INSERT INTO `goods` VALUES (1,'Apple iPhone X (A1865) 64GB 银色','Apple产品年末狂欢特惠，限时限量抢购，券后价6299元','/uploads/20181220/5c1ba78e1e3ee.jpg','/uploads/20181220/5c1ba7947d25d.jpg-/uploads/20181220/5c1ba794794de.jpg-/uploads/20181220/5c1ba79474c00.jpg-/uploads/20181220/5c1ba794707cf.jpg',6499.00,6299.00,5500.00,10.00,532,'合肥','&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1ba7c28c6d8.jpg&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1ba7c2a9930.jpg&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1ba7c2b5a5e.jpg&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1ba7c2c5c8c.jpg&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1ba7c2d69cc.jpg&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;',1,0,'2018-12-20 22:38:38','2018-12-20 23:43:08'),(2,'华为HUAWEI Mate20 X 幻影银(6G+128G)','发现美丽的眼睛  这是深藏智慧的目光','/uploads/20181220/5c1bba29d6f72.png','/uploads/20181220/5c1bbb7dda9ad.png-/uploads/20181220/5c1bbb7ede770.png-/uploads/20181220/5c1bbb7ed1a26.png-/uploads/20181220/5c1bbb7dcfc1f.png',5000.00,4899.00,4500.00,0.00,899,'合肥','&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1bba5aaf1e7.png&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1bba5abc7b8.png&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1bba5acdefa.png&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1bba5adf13e.png&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n\t&lt;img src=&quot;/uploads/20181220/5c1bba5aee315.png&quot; alt=&quot;&quot; /&gt;\n&lt;/p&gt;',1,0,'2018-12-20 23:57:32','2018-12-20 23:59:29');
 
 #
 # Structure for table "goods_param"
@@ -271,7 +270,6 @@ CREATE TABLE `goods_param` (
 # Data for table "goods_param"
 #
 
-INSERT INTO `goods_param` VALUES (1,1,'品牌','Apple'),(2,1,'系列型号','iPhone X'),(3,1,'入网型号','A1865'),(4,1,'上市年份','2017年'),(5,1,'操作系统','IOS'),(6,1,'ROM','6G'),(7,1,'屏幕尺寸','5.8英寸'),(8,1,'摄像头','700万像素'),(9,2,'品牌','华为'),(10,2,'系列型号','Mate20 X'),(11,2,'颜色','银色'),(12,2,'CPU','Hisilicon'),(13,2,'操作系统','Android'),(14,2,'屏幕尺寸','7.2英寸'),(15,2,'摄像头','2400万像素'),(16,2,'上市年份','2018年');
 
 #
 # Structure for table "goods_spec"
@@ -284,16 +282,15 @@ CREATE TABLE `goods_spec` (
   `name` varchar(255) DEFAULT NULL COMMENT '规格名称',
   `price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '产品价格',
   `stock` int(11) unsigned NOT NULL DEFAULT '1' COMMENT '产品库存',
-  `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除，若删除则为删除时间戳',
+  `isdelete` int(10) unsigned DEFAULT NULL COMMENT '是否删除，若删除则为删除时间戳',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='产品规格表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品规格表';
 
 #
 # Data for table "goods_spec"
 #
 
-INSERT INTO `goods_spec` VALUES (1,1,'移动版',6399.00,500,0,'2018-12-20 22:38:38'),(2,1,'联通版',6499.00,260,0,'2018-12-20 22:38:38'),(3,1,'电信版',6599.00,320,0,'2018-12-20 22:38:38'),(4,2,'6+128G',4999.00,1200,0,'2018-12-20 23:57:32'),(5,2,'8+256G',5999.00,1100,0,'2018-12-20 23:57:32');
 
 #
 # Structure for table "laud"

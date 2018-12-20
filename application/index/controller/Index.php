@@ -21,7 +21,7 @@ class Index extends BaseController
 
     public function goods(){
         $a=Db::name('goods')->find(3);
-        $a['content'] = html_entity_decode($a['content']);
+        //$a['content'] = html_entity_decode($a['content']);
         $this->assign('goods',$a);
         return view('/details');
     }

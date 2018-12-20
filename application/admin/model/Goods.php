@@ -3,6 +3,7 @@
 namespace app\admin\model;
 
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Goods extends Model
 {
@@ -26,6 +27,14 @@ class Goods extends Model
      * $field   开启数据表字段验证
      * */
     protected $field = true;
+
+    /*
+     * $deleteTime  定义数据软删除
+     * $defaultSoftDelete       定义软删除字段默认值 0
+     * */
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+    protected $defaultSoftDelete = 0;
 
     /*
      * 数据关联

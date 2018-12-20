@@ -14,6 +14,8 @@
 
                     <div class="layui-card-body">
                         <form class="layui-form" id="goodsForm" lay-filter="formVal">
+
+                            <input type="hidden" name="id">
                             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
                                 <ul class="layui-tab-title">
@@ -45,6 +47,13 @@
                                             <label class="layui-form-label">产品缩略图</label>
                                             <div class="layui-input-inline">
                                                 <ul class="upload-ul clearfix">
+
+                                                    <li id="fileBox_WU_FILE" class="uploadList">
+                                                        <div class="viewThumb">
+                                                            <img src="{$Goods['thumbnail']}">
+                                                        </div>
+                                                    </li>
+
                                                     <li class="upload-pick">
                                                         <div class="webuploader-container clearfix" id="thumbnailUpload"></div>
                                                     </li>
@@ -57,6 +66,13 @@
                                             <label class="layui-form-label">产品轮播图</label>
                                             <div class="layui-input-inline">
                                                 <ul class="upload-ul clearfix">
+                                                    {volist name="Goods['banner']" id="banners"}
+                                                        <li  class="bannerList uploadList">
+                                                            <div class="viewThumb">
+                                                                <img src="{$banners}">
+                                                            </div>
+                                                        </li>
+                                                    {/volist}
                                                     <li class="upload-pick">
                                                         <div class="webuploader-container clearfix" id="bannerUpload"></div>
                                                     </li>
@@ -122,7 +138,7 @@
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">产品详情</label>
                                             <div class="layui-input-block">
-                                                <textarea id="editor" name="content"></textarea>
+                                                <textarea id="editor" name="content">{:html_entity_decode($Goods['content'])}</textarea>
                                             </div>
                                         </div>
 
@@ -130,25 +146,38 @@
 
                                     <!--产品规格信息-->
                                     <div class="layui-tab-item">
-
-                                        <div class="layui-form-item">
-                                            <div class="layui-input-inline">
-                                                <input type="text" name="spec[0][name]" lay-verify="required|specName" autocomplete="off" placeholder="规格名称" class="layui-input">
+                                        {volist name="Specs" id="spec" key="k"}
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="spec[{$k}][name]" value="{$spec.name}" lay-verify="required|specName" autocomplete="off" placeholder="规格名称" class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="spec[{$k}][stock]" value="{$spec.stock}" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="spec[{$k}][stock]" value="{$spec.stock}" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">
+                                                </div>
                                             </div>
-                                            <div class="layui-input-inline">
-                                                <input type="number" name="spec[0][price]" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">
-                                            </div>
-                                            <div class="layui-input-inline">
-                                                <input type="number" name="spec[0][stock]" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">
-                                            </div>
-                                        </div>
+                                        {/volist}
 
                                         <button type="button" class="layui-btn layui-btn-normal" id="addSpec"><i class="layui-icon">&#xe654;</i>  增 加 新 规 格</button>
                                     </div>
 
                                     <!--产品参数信息-->
                                     <div class="layui-tab-item">
-
+                                        {volist name="Params" id="param" key="k"}
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="params[{$k}][p_key]" value="{$param.p_key}" lay-verify="required|paramsKey" autocomplete="off" placeholder="参数名称" class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="params[{$k}][p_value]" value="{$param.p_value}" lay-verify="required|paramsValue" autocomplete="off" placeholder="参数值" class="layui-input">
+                                                </div>
+                                                <div class="layui-form-mid layui-word-aux delSpec">
+                                                    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+                                                </div>
+                                            </div>
+                                        {/volist}
                                         <button type="button" class="layui-btn layui-btn-normal" id="addParams"><i class="layui-icon">&#xe654;</i>  增 加 新 参 数</button>
                                     </div>
                                 </div>
@@ -193,15 +222,18 @@
 
     //表单默认值
     form.val("formVal", {
-      "title": "小米MX3" // "name": "value"
-      ,"info": "青春有你，我们不见不散"
-      ,"origin_price": 3000.00
-      ,"sell_price": 2500.00
-      ,"cost_price": 2000.00
-      ,"address": "合肥"
-      ,"spec[0][name]": "移动版"
-      ,"spec[0][price]": 2650.00
-      ,"spec[0][stock]": 560
+      "id":"{$Goods['id']}",
+      "title": "{$Goods['title']}",
+      "info": "{$Goods['info']}",
+      "origin_price": "{$Goods['origin_price']}",
+      "sell_price": "{$Goods['sell_price']}",
+      "cost_price": "{$Goods['cost_price']}",
+      "franking": "{$Goods['franking']}",
+      "volume": "{$Goods['volume']}",
+      "address": "{$Goods['address']}",
+      "spec[0][name]": "移动版",
+      "spec[0][price]": 2650.00,
+      "spec[0][stock]": 560,
     });
 
     //自定义验证规则

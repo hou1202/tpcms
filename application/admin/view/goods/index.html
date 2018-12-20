@@ -36,7 +36,12 @@
 
                         <!--状态显示控制-->
                         <script type="text/html" id="setStatus">
-                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="开启|禁用" value="{{d.id}}">
+                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="上架|下架" value="{{d.id}}">
+                        </script>
+
+                        <!--缩略图显示控制-->
+                        <script type="text/html" id="setImg">
+                            <img src="{{d.thumbnail}}" alt="" style="width:50px;height:50px;">
                         </script>
 
                     </div>
@@ -68,26 +73,26 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/aoogi/router/data', //数据接口
+            url: '/aoogi/goods/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'title', title: '路由名称', align: 'center'
+                        field: 'title', title: '产品名称', align: 'center'
                     }, {
-                        field: 'router', title: '系统路由', align: 'center'
+                        field: 'thumbnail', title: '缩略图', align: 'center', minWidth: 110, templet:'#setImg'
                     }, {
-                        field: 'menu', title: '菜单路由', align: 'center'
+                        field: 'sell_price', title: '产品售价', align: 'center'
                     },{
-                        field: 'path', title: '系统路径', align: 'center'
+                        field: 'franking', title: '邮费', align: 'center'
                     }, {
-                        field: 'icon', title: '路由图标', align: 'center'
+                        field: 'volume', title: '销量', align: 'center'
                     }, {
-                        field: 'pid', title: '父级ID',align: 'center'
+                        field: 'address', title: '发货地',align: 'center'
                     },{
-                        field: 'status', title: '路由状态',align: 'center', minWidth: 110, templet:'#setStatus'
+                        field: 'status', title: '产品状态',align: 'center', minWidth: 110, templet:'#setStatus'
                     },{
                         fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
@@ -98,7 +103,7 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.post("/aoogi/router/status",{"id":data.value,"status":status},function(res){
+            $.post("/aoogi/goods/status",{"id":data.value,"status":status},function(res){
                 layer.msg(res.data);
                 tableLoad.reload();
             });
@@ -107,12 +112,12 @@
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'detail'){
-                window.location.href ='#/aoogi/router/read/'+obj.data.id;
+                window.location.href ='#/aoogi/goods/read/'+obj.data.id;
             }else if(obj.event === 'edit'){
-                window.location.href ='#/aoogi/router/edit/'+obj.data.id;
+                window.location.href ='#/aoogi/goods/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该条路由?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/aoogi/router/'+obj.data.id,{'_method':'DELETE'},function(res){
+                layer.confirm('确定删除该产品?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/aoogi/goods/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.data);
                         table.reload('tableHash');
                     });
