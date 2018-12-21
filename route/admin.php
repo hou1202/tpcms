@@ -12,6 +12,11 @@
  * 例： aoogi/*
  * */
 
+//设置全局变量规则
+Route::pattern([
+    'id'   => '\d+',
+]);
+
 Route::get('setting','admin/set/index');
 Route::get('table_two','admin/set/tableTwo');
 
@@ -37,21 +42,25 @@ Route::resource('aoogi/router','admin/router')->rest('edit',['GET', '/edit/:id',
 Route::post('aoogi/router/data','admin/router/getData');
 Route::post('aoogi/router/status','admin/router/setStatus');
 
-//权限管理permission
+//权限管理Route
 Route::resource('aoogi/permission','admin/permission')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/permission/data','admin/permission/getData');
 Route::post('aoogi/permission/status','admin/permission/setStatus');
 
-//参数设置模块config
+//参数设置模块Route
 Route::resource('aoogi/config','admin/config')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/config/data','admin/config/getData');
 
-//产品管理goods
-//Route::get('aoogi/goods/create','admin/goods/create');
+//产品管理Route
 Route::resource('aoogi/goods','admin/goods')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/goods/data','admin/goods/getData');
 Route::post('aoogi/goods/status','admin/goods/setStatus');
+Route::delete('aoogi/goods/delOld/:id/:mode','admin/goods/delOld')->pattern(['mode' => '[1|2]']);   // 删除产品规格/参数    mode    1=>spec;2=>param
 
+//Banner管理Route
+Route::resource('aoogi/banner','admin/banner')->rest('edit',['GET', '/edit/:id','edit']);
+Route::post('aoogi/banner/data','admin/banner/getData');
+Route::post('aoogi/banner/status','admin/banner/setStatus');
 
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);

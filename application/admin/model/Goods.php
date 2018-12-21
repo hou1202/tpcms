@@ -29,6 +29,11 @@ class Goods extends Model
     protected $field = true;
 
     /*
+     * $ autoWriteTimestamp   开启自动写入时间戳字段
+     * */
+    //protected $autoWriteTimestamp = 'datetime';
+
+    /*
      * $deleteTime  定义数据软删除
      * $defaultSoftDelete       定义软删除字段默认值 0
      * */

@@ -1,0 +1,237 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+                        <form class="layui-form" lay-filter="formVal">
+
+                            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">基本信息</li>
+                                    <li>规格设置</li>
+                                    <li>参数设置</li>
+                                </ul>
+
+                                <div class="layui-tab-content">
+                                    <!--产品基本信息-->
+                                    <div class="layui-tab-item layui-show">
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="title" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品副标题</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="info" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品缩略图</label>
+                                            <div class="layui-input-inline">
+                                                <ul class="upload-ul clearfix">
+
+                                                    <li id="fileBox_WU_FILE" class="uploadList">
+                                                        <div class="viewThumb">
+                                                            <img src="{$Goods.thumbnail}">
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品轮播图</label>
+                                            <div class="layui-input-inline">
+                                                <ul class="upload-ul clearfix">
+                                                    {volist name="Goods['banner']" id="banners"}
+                                                        <li  class="bannerList uploadList">
+                                                            <div class="viewThumb">
+                                                                <img src="{$banners}">
+                                                            </div>
+                                                        </li>
+                                                    {/volist}
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品原价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="origin_price" autocomplete="off" readonly class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品售价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="sell_price" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品成本价</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="cost_price" readonly autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品邮费</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="franking" readonly  autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">默认销量</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="volume" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">发货地址</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="address" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品状态</label>
+                                            <div class="layui-input-inline">
+                                                <input type="checkbox" {$Goods.status ?= "checked" } disabled  lay-skin="switch" lay-text="上架|下架">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">产品详情</label>
+                                            <div class="layui-input-block">
+                                                <textarea id="editor" readonly>{:html_entity_decode($Goods.content)}</textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!--产品规格信息-->
+                                    <div class="layui-tab-item">
+                                        {volist name="Specs" id="spec" key="k"}
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                    <input type="text" readonly value="{$spec.name}"  autocomplete="off"  class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" readonly value="{$spec.stock}"  autocomplete="off"  class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" readonly value="{$spec.stock}"  autocomplete="off"  class="layui-input">
+                                                </div>
+                                            </div>
+                                        {/volist}
+                                    </div>
+
+                                    <!--产品参数信息-->
+                                    <div class="layui-tab-item">
+                                        {volist name="Params" id="param" key="k"}
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                    <input type="text" readonly value="{$param.p_key}"  autocomplete="off" class="layui-input">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" readonly value="{$param.p_value}"  autocomplete="off"  class="layui-input">
+                                                </div>
+                                            </div>
+                                        {/volist}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--上传文件引入文件-->
+{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+{load href="/static/plugin/kind/kind-all-min.js" /}
+
+
+
+<script>
+  layui.use(['element','form', 'route'], function() {
+    var $ = layui.jquery,
+        element = layui.element,
+        form = layui.form,
+        route = layui.route,
+        layer = layui.layer;
+
+
+    //设置nav标题
+    $("#navTitle").text(route.getRoute().name);
+
+    //表单渲染
+    form.render();
+
+    //表单默认值
+    form.val("formVal", {
+        "title": "{$Goods.title}",
+        "info": "{$Goods.info}",
+        "origin_price": "{$Goods.origin_price}",
+        "sell_price": "{$Goods.sell_price}",
+        "cost_price": "{$Goods.cost_price}",
+        "franking": "{$Goods.franking}",
+        "volume": "{$Goods.volume}",
+        "address": "{$Goods.address}"
+    });
+  });
+</script>
+
+
+<script>
+
+    //实例化KindEditor编辑器
+    KindEditor.create($('#editor'), {
+        allowImageRemote: false,
+        basePath: '/static/plugin/kind/',
+        themesPath: '/static/plugin/kind/themes/',
+        pluginsPath: '/static/plugin/kind/plugins/',
+        langPath: '/static/plugin/kind/lang/',
+        uploadJson: '/uploader',
+        filePostName: 'file',    //imgFile是编辑器中图片上传的默认表单域名称
+        width: '100%',
+        minHeight: 400,    //最小高度，不用写px单位
+        resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+        allowImageUpload: true,       //允许本地上传图片
+        extraFileUploadParams: '',       //上传图片、Flash、视音频、文件时，支持添加别的参数一并传到服务器
+        items:[],
+        afterBlur: function () {
+            //编辑器失去焦点时，同步编辑器中的内容到textarea，在异步提交内容的时候，必须写！否则textarea中的值是不会改变的
+            this.sync();
+        }
+
+    });
+
+</script>
+
+
+<style scoped>
+
+</style>

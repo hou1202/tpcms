@@ -1,0 +1,244 @@
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form" id="goodsForm" lay-filter="formVal">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">Banner标题</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="Banner标题" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">Banner类型</label>
+                                <div class="layui-input-inline ">
+                                    <select name="type">
+                                        <option value="1">无链接类型</option>
+                                        <option value="2">产品链接类型</option>
+                                        <option value="3">分类链接类型</option>
+                                        <option value="4">外部链接类型</option>
+                                    </select>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">链接地址</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="url" lay-verify="required|title" autocomplete="off" placeholder="链接地址" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">Banner状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="开启|禁用">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">Banner图</label>
+                                <div class="layui-input-inline">
+                                    <ul class="upload-ul clearfix">
+                                        <li class="upload-pick">
+                                            <div class="webuploader-container clearfix" id="thumbnailUpload"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填(尺寸比例 12:5)</div>
+                            </div>
+
+                            <!--<div class="layui-form-item">
+                                <label class="layui-form-label">Banner详情</label>
+                                <div class="layui-input-block">
+                                    <textarea id="editor" name="content"></textarea>
+                                </div>
+                            </div>-->
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--上传文件引入文件-->
+{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/js/diyUpload.js" /}
+{load href="/static/plugin/kind/kind-all-min.js" /}
+
+
+
+<script>
+  layui.use(['form', 'route'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        route = layui.route,
+        layer = layui.layer;
+
+
+    //设置nav标题
+    $("#navTitle").text(route.getRoute().name);
+
+    //表单渲染
+    form.render();
+
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 4 || value.length > 50) {
+                return '内容长度应在4-50个字符之间';
+            }
+        },
+        price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
+        num: [/^[0-9]*$/, '数值设置有误，应该为整数；例：10'],
+        address: function(value) {
+            if (value.length < 2 || value.length > 15) {
+                return '内容长度应在2-15个字符之间';
+            }
+        },
+        specName: function(value) {
+            if (value.length < 2 || value.length > 8) {
+                return '规格标题长度应在2-6个字符之间';
+            }
+        },
+        specPrice: [/^\d*(?:.\d{0,2})?$/, '规格价格设置有误；例：10 或10.50'],
+        specNum: [/^[0-9]*$/, '库存设置有误，应该为整数；例：10'],
+        paramsKey: function(value) {
+            if (value.length < 1 || value.length > 15) {
+                return '参数标题长度应在2-15个字符之间';
+            }
+        },
+        paramsValue: function(value) {
+            if (value.length < 1 || value.length > 15) {
+                return '参数值长度应在2-15个字符之间';
+            }
+        },
+    });
+
+
+    //监听提交
+    form.on('submit(form_submit)', function(data) {
+
+        var banner = $("input[name='banner[0]']");
+        if(data.field.thumbnail == undefined){
+            layer.msg('缩略图不能为空');
+            return false;
+        }
+
+        $.post("/aoogi/goods",data.field,function(res){
+            layer.msg(res.data);
+            if(res.url)
+                window.location.href = "#" + res.url;
+            return false;
+        });
+        return false;
+    });
+
+  });
+</script>
+
+
+<script>
+
+    //上传图片
+    /*缩略图执行实例*/
+    $('#thumbnailUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/uploader',
+        //最大上传的文件数量
+        fileNumLimit:1,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'thumbnail',
+        },
+        success:function( data ) {
+        },
+        error:function( err ) { }
+    });
+
+
+
+
+
+
+    //实例化KindEditor编辑器
+    KindEditor.create($('#editor'), {
+        allowImageRemote: false,
+        basePath: '/static/plugin/kind/',
+        themesPath: '/static/plugin/kind/themes/',
+        pluginsPath: '/static/plugin/kind/plugins/',
+        langPath: '/static/plugin/kind/lang/',
+        uploadJson: '/uploader',
+        filePostName: 'file',    //imgFile是编辑器中图片上传的默认表单域名称
+        width: '100%',
+        minHeight: 400,    //最小高度，不用写px单位
+        resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+        allowImageUpload: true,       //允许本地上传图片
+        extraFileUploadParams: '',       //上传图片、Flash、视音频、文件时，支持添加别的参数一并传到服务器
+        afterBlur: function () {
+            //编辑器失去焦点时，同步编辑器中的内容到textarea，在异步提交内容的时候，必须写！否则textarea中的值是不会改变的
+            this.sync();
+        }
+
+    });
+
+</script>
+
+
+<style scoped>
+
+</style>

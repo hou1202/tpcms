@@ -15,7 +15,8 @@
                     <div class="layui-card-body">
                         <form class="layui-form" id="goodsForm" lay-filter="formVal">
 
-                            <input type="hidden" name="id">
+                            <input type="hidden" name="_method" value="PUT" >
+
                             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
                                 <ul class="layui-tab-title">
@@ -48,9 +49,9 @@
                                             <div class="layui-input-inline">
                                                 <ul class="upload-ul clearfix">
 
-                                                    <li id="fileBox_WU_FILE" class="uploadList">
+                                                    <li id="fileBox_WU_FILE" class="thumbnailList">
                                                         <div class="viewThumb">
-                                                            <img src="{$Goods['thumbnail']}">
+                                                            <img src="{$Goods.thumbnail}">
                                                         </div>
                                                     </li>
 
@@ -67,7 +68,7 @@
                                             <div class="layui-input-inline">
                                                 <ul class="upload-ul clearfix">
                                                     {volist name="Goods['banner']" id="banners"}
-                                                        <li  class="bannerList uploadList">
+                                                        <li  class="bannerList">
                                                             <div class="viewThumb">
                                                                 <img src="{$banners}">
                                                             </div>
@@ -131,14 +132,14 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">产品状态</label>
                                             <div class="layui-input-inline">
-                                                <input type="checkbox" checked="" name="status" value="1" lay-skin="switch" lay-text="上架|下架">
+                                                <input type="checkbox" {$Goods.status ?= "checked" } name="status" value="1" lay-skin="switch" lay-text="上架|下架">
                                             </div>
                                         </div>
 
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">产品详情</label>
                                             <div class="layui-input-block">
-                                                <textarea id="editor" name="content">{:html_entity_decode($Goods['content'])}</textarea>
+                                                <textarea id="editor" name="content">{:html_entity_decode($Goods.content)}</textarea>
                                             </div>
                                         </div>
 
@@ -148,14 +149,20 @@
                                     <div class="layui-tab-item">
                                         {volist name="Specs" id="spec" key="k"}
                                             <div class="layui-form-item">
+                                                <input type="hidden" name="spec[{$k}][id]" value="{$spec.id}" class="oldId">
                                                 <div class="layui-input-inline">
                                                     <input type="text" name="spec[{$k}][name]" value="{$spec.name}" lay-verify="required|specName" autocomplete="off" placeholder="规格名称" class="layui-input">
                                                 </div>
                                                 <div class="layui-input-inline">
-                                                    <input type="number" name="spec[{$k}][stock]" value="{$spec.stock}" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">
+                                                    <input type="number" name="spec[{$k}][price]" value="{$spec.price}" lay-verify="required|specPrice" autocomplete="off" placeholder="产品价格" class="layui-input">
                                                 </div>
                                                 <div class="layui-input-inline">
                                                     <input type="number" name="spec[{$k}][stock]" value="{$spec.stock}" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">
+                                                </div>
+                                                <div class="layui-form-mid layui-word-aux delSpec">
+                                                    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">
+                                                        <i class="layui-icon">&#xe640;</i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         {/volist}
@@ -167,13 +174,14 @@
                                     <div class="layui-tab-item">
                                         {volist name="Params" id="param" key="k"}
                                             <div class="layui-form-item">
+                                                <input type="hidden" name="params[{$k}][id]" value="{$param.id}" class="oldId">
                                                 <div class="layui-input-inline">
                                                     <input type="text" name="params[{$k}][p_key]" value="{$param.p_key}" lay-verify="required|paramsKey" autocomplete="off" placeholder="参数名称" class="layui-input">
                                                 </div>
                                                 <div class="layui-input-inline">
                                                     <input type="text" name="params[{$k}][p_value]" value="{$param.p_value}" lay-verify="required|paramsValue" autocomplete="off" placeholder="参数值" class="layui-input">
                                                 </div>
-                                                <div class="layui-form-mid layui-word-aux delSpec">
+                                                <div class="layui-form-mid layui-word-aux delParams">
                                                     <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
                                                 </div>
                                             </div>
@@ -222,25 +230,22 @@
 
     //表单默认值
     form.val("formVal", {
-      "id":"{$Goods['id']}",
-      "title": "{$Goods['title']}",
-      "info": "{$Goods['info']}",
-      "origin_price": "{$Goods['origin_price']}",
-      "sell_price": "{$Goods['sell_price']}",
-      "cost_price": "{$Goods['cost_price']}",
-      "franking": "{$Goods['franking']}",
-      "volume": "{$Goods['volume']}",
-      "address": "{$Goods['address']}",
-      "spec[0][name]": "移动版",
-      "spec[0][price]": 2650.00,
-      "spec[0][stock]": 560,
+      "id":"{$Goods.id}",
+      "title": "{$Goods.title}",
+      "info": "{$Goods.info}",
+      "origin_price": "{$Goods.origin_price}",
+      "sell_price": "{$Goods.sell_price}",
+      "cost_price": "{$Goods.cost_price}",
+      "franking": "{$Goods.franking}",
+      "volume": "{$Goods.volume}",
+      "address": "{$Goods.address}"
     });
 
     //自定义验证规则
     form.verify({
         title: function(value) {
-            if (value.length < 4 || value.length > 30) {
-                return '内容长度应在4-30个字符之间';
+            if (value.length < 4 || value.length > 50) {
+                return '内容长度应在4-50个字符之间';
             }
         },
         price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
@@ -272,17 +277,10 @@
 
     //监听提交
     form.on('submit(form_submit)', function(data) {
+        if(!data.field.status)
+            data.field.status = 0;
 
-        var banner = $("input[name='banner[0]']");
-        if(data.field.thumbnail == undefined){
-            layer.msg('缩略图不能为空');
-            return false;
-        }
-        if(banner.val() == '' || banner.length == 0){
-            layer.msg('轮播图不能为空');
-            return false;
-        }
-        $.post("/aoogi/goods",data.field,function(res){
+        $.post("/aoogi/goods/"+"{$Goods.id}",data.field,function(res){
             layer.msg(res.data);
             if(res.url)
                 window.location.href = "#" + res.url;
@@ -298,6 +296,7 @@
 <script>
 
     //上传图片
+
     /*缩略图执行实例*/
     $('#thumbnailUpload').diyUpload({
         buttonText : '',
@@ -335,6 +334,7 @@
             inputName:'thumbnail',
         },
         success:function( data ) {
+            $('.thumbnailList').hide()
         },
         error:function( err ) { }
     });
@@ -376,16 +376,21 @@
             inputName:'banner[]'
         },
         success:function( data ) {
+
         },
         error:function( err ) { }
     });
-
+    //轮播图新图加入队列前，隐藏老li
+    bannerUpload.on('fileQueued',function(file){
+        $('.bannerList').hide()
+    });
+    //轮播图上传执行操作
     $('#banAction').click(function(){
         bannerUpload.upload();
     });
 
     /*规格操作*/
-    var specNum = 1;
+    var specNum = 99;
     //添加规格信息
     $("#addSpec").click(function(){
         var specInfo = $(['<div class="layui-form-item">',
@@ -398,22 +403,22 @@
                           '<div class="layui-input-inline">',
                           '<input type="number" name="spec['+specNum+'][stock]" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">',
                           '</div>',
-                          '<div class="layui-form-mid layui-word-aux delSpec">',
+                          '<div class="layui-form-mid layui-word-aux delAdd">',
                           '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
                           '<i class="layui-icon">&#xe640;</i>',
                           '</button>',
                           '</div>',
                           '</div>'].join(''));
         $(this).before(specInfo);
-        specNum++;
+        specNum--;
     });
-    //删除规格信息
-    $(document).on("click",".delSpec",function(){
-        $(this).parent().remove();
+    //删除已有规格信息
+    $(".delSpec").on("click",function(){
+        delOld($(this),'确定删除该规格?',1)
     });
 
     /*参数操作*/
-    var paramsNum = 0;
+    var paramsNum = 99;
     //添加参数信息
     $("#addParams").click(function(){
         var paramsInfo = $(['<div class="layui-form-item">',
@@ -423,17 +428,37 @@
             '<div class="layui-input-inline">',
             '<input type="text" name="params['+paramsNum+'][p_value]" lay-verify="required|paramsValue" autocomplete="off" placeholder="参数值" class="layui-input">',
             '</div>',
-            '<div class="layui-form-mid layui-word-aux delSpec">',
+            '<div class="layui-form-mid layui-word-aux delAdd">',
             '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
             '<i class="layui-icon">&#xe640;</i>',
             '</button>',
             '</div>',
             '</div>'].join(''));
         $(this).before(paramsInfo);
-        paramsNum++;
+        paramsNum--;
     });
-    //删除参数信息
-    $(document).on("click",".delParams",function(){
+    //删除已有参数信息
+    $(".delParams").on("click",function(){
+        delOld($(this),'确定删除该参数?',2)
+    });
+
+    //规格、参数删除执行操作
+    function delOld($this,msg,mode){
+        var id = $this.parent().find(".oldId").val();
+        var that = $this;
+        layer.confirm(msg, {icon: 3, title:'提示'}, function(index){
+            layer.close(index);
+            $.post('/aoogi/goods/delOld/'+id+'/'+mode,{'_method':'DELETE'},function(res){
+                if(res.code == 1)
+                    that.parent().remove();
+                layer.msg(res.data);
+                return false;
+            });
+        });
+    }
+
+    //删除新增规格/参数信息
+    $(document).on("click",".delAdd",function(){
         $(this).parent().remove();
     });
 

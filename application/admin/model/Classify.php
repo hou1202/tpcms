@@ -4,7 +4,7 @@ namespace app\admin\model;
 
 use think\Model;
 
-class GoodsParam extends Model
+class Classify extends Model
 {
     /*
     * $pk      设置主键
@@ -15,24 +15,15 @@ class GoodsParam extends Model
     /*
      *$table    当前模型对应表名，为完整表名
      * */
-    protected $table = 'goods_param';
+    protected $table = 'classify';
 
     /*
      * $readonly    定义只读字段保护
      * */
-    protected $readonly = ['id','goods_id'];
+    protected $readonly = ['id'];
 
     /*
      * $field   开启数据表字段验证
      * */
     protected $field = true;
-
-    /*
-     * 数据关联
-     * 关联表      goods
-     * */
-    public function goods()
-    {
-        return $this->belongsTo('goods');
-    }
 }

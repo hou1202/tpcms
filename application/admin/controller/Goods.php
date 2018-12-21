@@ -2,6 +2,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\GoodsParam;
+use app\admin\model\GoodsSpec;
 use app\common\controller\AdminController;
 use think\Request;
 use app\admin\validate\Goods as GoodsV;
@@ -124,7 +126,14 @@ class Goods extends AdminController
      */
     public function read($id)
     {
-        //
+        $goods = GoodsM::get($id);
+        $goods['banner'] = explode('-',$goods['banner']);
+        $specs = $goods->goodsSpec;
+        $params = $goods->goodsParam;
+        $this->assign('Goods',$goods);
+        $this->assign('Specs',$specs);
+        $this->assign('Params',$params);
+        return view('goods/read');
     }
 
     /**
@@ -139,7 +148,7 @@ class Goods extends AdminController
         $goods['banner'] = explode('-',$goods['banner']);
         $specs = $goods->goodsSpec;
         $params = $goods->goodsParam;
-        //var_dump($goods);die;
+
         $this->assign('Goods',$goods);
         $this->assign('Specs',$specs);
         $this->assign('Params',$params);
@@ -155,7 +164,46 @@ class Goods extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $data = $request->param();
+        $validate = new GoodsV();
+
+        /*验证产品基本信息*/
+        if(!$validate->sceneEdit()->check($data))
+            return $this->failJson($validate->getError());
+        /*验证规格信息*/
+        foreach($data['spec'] as $spec){
+            if(!$validate->scene('spec')->check($spec))
+                return $this->failJson($validate->getError());
+        }
+        /*验证参数信息*/
+        if(!empty($data['params'])){
+            foreach($data['params'] as $params){
+                if(!$validate->scene('params')->check($params))
+                    return $this->failJson($validate->getError());
+            }
+        }
+
+        //banner图拼装
+        if(isset($data['banner']))
+            $data['banner'] = implode("-",$data['banner']);
+
+        $goods = GoodsM::get($id);
+        Db::startTrans();
+        try {
+            $goods->save($data);
+            $goods->goodsSpec()->saveAll($data['spec']);
+            if(!empty($data['params']))
+                $goods->goodsParam()->saveAll($data['params']);
+            // 提交事务
+            Db::commit();
+        } catch(\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return $this->failJson('更新失败');
+        }
+        return $this->successJson('更新成功','/aoogi/goods');
+
     }
 
     /**
@@ -166,6 +214,47 @@ class Goods extends AdminController
      */
     public function delete($id)
     {
-        //
+        Db::startTrans();
+        try {
+            GoodsM::destroy($id);
+            GoodsSpec::where('goods_id',$id)->update(['delete_time'=>time()]);
+            goodsParam::where('goods_id',$id)->delete();
+            // 提交事务
+            Db::commit();
+        } catch(\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return $this->failJson('产品删除失败');
+        }
+        return $this->successJson('产品删除成功');
+    }
+
+
+    /**
+     * 删除指定规格资源
+     *
+     * @param  int  $id
+     * @param  int  $mode   资源模型
+     *      1   spec    规格  默认
+     *      2   param   参数
+     * @return \think\Response
+     */
+    public function delOld($id,$mode)
+    {
+        switch($mode){
+            case 1:
+                $res = GoodsSpec::get($id);
+                break;
+            case 2:
+                $res = GoodsParam::get($id);
+                break;
+            default:
+                return $this->failJson('无效的操作');
+                break;
+        }
+        if(!$res->delete())
+            return $this->failJson('删除失败');
+        return $this->successJson('删除成功');
+
     }
 }

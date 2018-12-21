@@ -191,24 +191,12 @@
     //表单渲染
     form.render();
 
-    //表单默认值
-    form.val("formVal", {
-      "title": "小米MX3" // "name": "value"
-      ,"info": "青春有你，我们不见不散"
-      ,"origin_price": 3000.00
-      ,"sell_price": 2500.00
-      ,"cost_price": 2000.00
-      ,"address": "合肥"
-      ,"spec[0][name]": "移动版"
-      ,"spec[0][price]": 2650.00
-      ,"spec[0][stock]": 560
-    });
 
     //自定义验证规则
     form.verify({
         title: function(value) {
-            if (value.length < 4 || value.length > 30) {
-                return '内容长度应在4-30个字符之间';
+            if (value.length < 4 || value.length > 50) {
+                return '内容长度应在4-50个字符之间';
             }
         },
         price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
@@ -366,7 +354,7 @@
                           '<div class="layui-input-inline">',
                           '<input type="number" name="spec['+specNum+'][stock]" lay-verify="required|specNum" autocomplete="off" placeholder="产品库存" class="layui-input">',
                           '</div>',
-                          '<div class="layui-form-mid layui-word-aux delSpec">',
+                          '<div class="layui-form-mid layui-word-aux delAdd">',
                           '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
                           '<i class="layui-icon">&#xe640;</i>',
                           '</button>',
@@ -374,10 +362,6 @@
                           '</div>'].join(''));
         $(this).before(specInfo);
         specNum++;
-    });
-    //删除规格信息
-    $(document).on("click",".delSpec",function(){
-        $(this).parent().remove();
     });
 
     /*参数操作*/
@@ -391,7 +375,7 @@
             '<div class="layui-input-inline">',
             '<input type="text" name="params['+paramsNum+'][p_value]" lay-verify="required|paramsValue" autocomplete="off" placeholder="参数值" class="layui-input">',
             '</div>',
-            '<div class="layui-form-mid layui-word-aux delSpec">',
+            '<div class="layui-form-mid layui-word-aux delAdd">',
             '<button type="button" class="layui-btn  layui-btn-danger layui-btn-sm">',
             '<i class="layui-icon">&#xe640;</i>',
             '</button>',
@@ -400,10 +384,12 @@
         $(this).before(paramsInfo);
         paramsNum++;
     });
-    //删除参数信息
-    $(document).on("click",".delParams",function(){
+
+    //删除新增规格/参数信息
+    $(document).on("click",".delAdd",function(){
         $(this).parent().remove();
     });
+
 
 
     //实例化KindEditor编辑器

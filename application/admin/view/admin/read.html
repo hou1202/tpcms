@@ -61,7 +61,7 @@
                             <div class="layui-form-item layui-input-md" pane="" >
                                 <label class="layui-form-label">帐户状态</label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {if $Adminer.status} checked {/if} >
+                                    <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" disabled {$Adminer.status ?= "checked"} >
                                 </div>
                             </div>
 

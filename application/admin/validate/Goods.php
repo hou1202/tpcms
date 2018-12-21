@@ -14,8 +14,8 @@ class Goods extends CommonValidate
      */	
 	protected $rule = [
 	    'id|产品ID'   =>  'require|number|isExist:goods,id',
-	    'title|产品标题' => 'require|length:4,30',
-	    'info|产品副标题' => 'require|length:4,30',
+	    'title|产品标题' => 'require|length:4,50',
+	    'info|产品副标题' => 'require|length:4,50',
 	    'thumbnail|缩略图' => 'require|max:254',
 	    'banner|轮播图' => 'require|array',
 	    'origin_price|产品原价' => 'require|float',
@@ -70,5 +70,16 @@ class Goods extends CommonValidate
         'spec' => ['name','price','stock'],
         'params' => ['p_key','p_value'],
         'status' =>['id','status'],
+
     ];
+
+    /*
+     * 定义编辑 edit 模式下，验证场景
+     * */
+    public function sceneEdit()
+    {
+        return $this -> only(['id','title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'])
+            ->remove('thumbnail','require')
+            ->remove('banner','require');
+    }
 }
