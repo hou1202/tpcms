@@ -73,7 +73,7 @@ class Router extends AdminController
         if(!$validate->scene('save')->check($data)){
             return $this->returnJson($validate->getError());
         }
-        return RouteM::create($data) ? $this->returnJson('新增成功',1,'/aoogi/router') : $this->returnJson('添加失败',0);
+        return RouteM::create($data) ?$this->successJson('新增成功','/aoogi/router') : $this->failJson('添加失败');
     }
 
     /**

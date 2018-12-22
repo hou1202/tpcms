@@ -19,14 +19,6 @@
                                 <span>新增</span>
                             </a>
                         </div>
-                        <div class="self-search">
-                            <form class="layui-form">
-                                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索关键字..." />
-                                <button class=" self-search-btn" lay-submit="" lay-filter="formSubmit">
-                                    <i class="layui-icon">&#xe615;</i>
-                                </button>
-                            </form>
-                        </div>
                     </div>
 
                     <div class="layui-card-body">
@@ -47,7 +39,18 @@
 
                         <!--缩略图显示控制-->
                         <script type="text/html" id="setImg">
-                            <img src="{{d.thumbnail}}" alt="" style="width:35px;height:35px;">
+                            <img src="{{d.thumbnail}}" alt="" style="width:70px;height:35px;">
+                        </script>
+                        <script type="text/html" id="setLink">
+                            {{# if (d.type=== 4) { }}  
+                                {{d.url}}
+                            {{# } else if(d.type=== 2) { }}  
+                                {{d.goods_id}}
+                            {{# } else if(d.type=== 3) { }}  
+                                {{d.classify_id}}
+                            {{# } else { }} 
+                                无
+                            {{# } }}  
                         </script>
 
                     </div>
@@ -79,26 +82,22 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/aoogi/goods/data', //数据接口
+            url: '/aoogi/banner/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'title', title: '产品名称', align: 'center'
+                        field: 'title', title: 'Banner标题', align: 'center'
                     }, {
-                        field: 'thumbnail', title: '缩略图', align: 'center', minWidth: 110, templet:'#setImg'
+                        field: 'thumbnail', title: 'Banner图', align: 'center', minWidth: 110, templet:'#setImg'
                     }, {
-                        field: 'sell_price', title: '产品售价', align: 'center'
+                        field: 'type_text', title: 'Banner类型', align: 'center'
                     },{
-                        field: 'franking', title: '邮费', align: 'center'
+                        title: '链接地址', align: 'center', templet:'#setLink'
                     }, {
-                        field: 'volume', title: '销量', align: 'center'
-                    }, {
-                        field: 'address', title: '发货地',align: 'center'
-                    },{
-                        field: 'status', title: '产品状态',align: 'center', minWidth: 110, templet:'#setStatus'
+                        field: 'status', title: 'Banner状态',align: 'center', minWidth: 110, templet:'#setStatus'
                     },{
                         fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
@@ -109,7 +108,7 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.post("/aoogi/goods/status",{"id":data.value,"status":status},function(res){
+            $.post("/aoogi/banner/status",{"id":data.value,"status":status},function(res){
                 layer.msg(res.data);
                 tableLoad.reload();
             });
@@ -118,12 +117,12 @@
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'detail'){
-                window.location.href ='#/aoogi/goods/read/'+obj.data.id;
+                window.location.href ='#/aoogi/banner/read/'+obj.data.id;
             }else if(obj.event === 'edit'){
-                window.location.href ='#/aoogi/goods/edit/'+obj.data.id;
+                window.location.href ='#/aoogi/banner/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该产品?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/aoogi/goods/'+obj.data.id,{'_method':'DELETE'},function(res){
+                layer.confirm('确定删除该Banner?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/aoogi/banner/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.data);
                         table.reload('tableHash');
                     });
@@ -131,18 +130,6 @@
                 });
 
             }
-        });
-
-        //监听搜索提交
-        form.on('submit(formSubmit)', function(data) {
-            if(data.field.keyword === ''){
-                layer.msg('请输入搜索关键词');
-                return false;
-            }
-            tableLoad.reload({
-                where:{keyword:data.field.keyword}
-            });
-            return false;
         });
 
     });

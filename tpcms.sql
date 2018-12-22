@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2018-12-21 18:29:54
+# Date: 2018-12-22 18:44:59
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -53,7 +53,7 @@ CREATE TABLE `adminer` (
 # Data for table "adminer"
 #
 
-INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1545356130,27,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',0,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
+INSERT INTO `adminer` VALUES (1,'admin','96e79218965eb72c92a549dd5a330112','Amdin',1,1,1,'admin12sdf','127.0.0.1',1545440736,28,'2018-10-23 13:54:17'),(2,'guest','96e79218965eb72c92a549dd5a330112','guest',1,2,0,'guest','127.0.0.1',1542962077,7,'2018-10-23 15:16:25'),(3,'tests','96e79218965eb72c92a549dd5a330112','Test',1,2,0,'TEST',NULL,NULL,0,'2018-11-14 13:13:10'),(4,'test123','96e79218965eb72c92a549dd5a330112','TEST',0,1,0,'TEST',NULL,NULL,0,'2018-11-23 13:53:09');
 
 #
 # Structure for table "banner"
@@ -71,12 +71,13 @@ CREATE TABLE `banner` (
   `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态：1=》开启；0=》关闭',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='广告图';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='广告图';
 
 #
 # Data for table "banner"
 #
 
+INSERT INTO `banner` VALUES (1,'圣诞派对','/uploads/20181222/5c1e082093cd8.jpg',1,'',0,0,1,'2018-12-22 17:47:14'),(2,'元旦派对','/uploads/20181222/5c1e0c0c5f500.jpg',2,'',1,0,1,'2018-12-22 18:03:57'),(3,'春节派对','/uploads/20181222/5c1e0c242a170.jpg',3,'',0,1,1,'2018-12-22 18:04:21'),(4,'元宵派对','/uploads/20181222/5c1e0c3ea0fc8.jpg',4,'https://www.baidu.com',0,0,1,'2018-12-22 18:04:47');
 
 #
 # Structure for table "car"
@@ -118,6 +119,7 @@ CREATE TABLE `classify` (
 # Data for table "classify"
 #
 
+INSERT INTO `classify` VALUES (1,'Apple iPhone','/uploads/20181222/5c1dfe16c32a8.jpg',0,'2018-12-22 17:06:05'),(2,'小米 MIX','/uploads/20181222/5c1dfe16c32a8.jpg',0,'2018-12-22 17:06:53'),(3,'Honor Magic','/uploads/20181222/5c1dfe16c32a8.jpg',0,'2018-12-22 17:07:01');
 
 #
 # Structure for table "collect"
@@ -248,7 +250,7 @@ CREATE TABLE `goods` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='产品表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='产品表';
 
 #
 # Data for table "goods"
@@ -268,7 +270,7 @@ CREATE TABLE `goods_param` (
   `p_value` varchar(255) DEFAULT NULL COMMENT '参数值',
   PRIMARY KEY (`id`),
   KEY `goods_param` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='产品参数表';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='产品参数表';
 
 #
 # Data for table "goods_param"
@@ -290,7 +292,7 @@ CREATE TABLE `goods_spec` (
   `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除，若删除则为删除时间戳',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='产品规格表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='产品规格表';
 
 #
 # Data for table "goods_spec"
@@ -462,7 +464,7 @@ CREATE TABLE `router` (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `router_key` (`id`,`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='路由规则表';
 
 #
 # Data for table "router"

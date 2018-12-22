@@ -4,6 +4,9 @@ namespace app\admin\controller;
 
 use app\common\controller\AdminController;
 use think\Request;
+use app\admin\model\Classify as Classify;
+use app\admin\model\Banner as BannerM;
+use app\admin\validate\Banner as BannerV;
 
 class Banner extends AdminController
 {
@@ -18,6 +21,24 @@ class Banner extends AdminController
         return view('banner/index');
     }
 
+    /*
+     * getData  获取资源信息
+     *
+     * @return json
+     * */
+    public function getData(Request $request)
+    {
+        $data = $request -> param();
+        $list = BannerM::order('id desc')
+            ->limit(($data['page']-1)*$data['limit'],$data['limit'])
+            ->append(['type_text'])
+            ->select()
+            ->toArray();
+        $count = BannerM::count('id');
+        return $this->kitJson($list,$count);
+
+    }
+
     /**
      * 显示创建资源表单页.
      *
@@ -26,6 +47,8 @@ class Banner extends AdminController
     public function create()
     {
         //
+        $classify = Classify::field('id,title')->select();
+        $this->assign('Classify',$classify);
         return view('');
     }
 
@@ -37,7 +60,12 @@ class Banner extends AdminController
      */
     public function save(Request $request)
     {
-        //
+        $data = $request->param();
+        $validate = new BannerV();
+        /*验证基本信息*/
+        if(!$validate->scene('create')->check($data))
+            return $this->failJson($validate->getError());
+        return BannerM::create($data) ? $this->successJson('新增成功','/aoogi/banner') : $this->failJson('添加失败');
     }
 
     /**

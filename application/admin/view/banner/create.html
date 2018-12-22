@@ -1,3 +1,11 @@
+<style>
+    .layui-table-view .layui-table{
+       /* width:100% !important;*/
+    }
+    .typeOpt{
+        display:none;
+    }
+</style>
 <div class="layui-fluid">
     <div class="layui-row">
         <div class="layui-col-xs12">
@@ -27,7 +35,7 @@
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">Banner类型</label>
                                 <div class="layui-input-inline ">
-                                    <select name="type" lay-filter="typeSelect">
+                                    <select name="type" lay-verify="required|number|bType" lay-filter="typeSelect">
                                         <option value="1">无链接类型</option>
                                         <option value="2">产品链接类型</option>
                                         <option value="3">分类链接类型</option>
@@ -37,36 +45,36 @@
                                 <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md">
+                            <div class="layui-form-item layui-input-md typeOpt" id="typeClassify">
                                 <label class="layui-form-label">链接分类</label>
                                 <div class="layui-input-inline ">
                                     <select name="classify_id" lay-search="" lay-filter="classifySelect">
-                                        <option value="1">Apple iPhone</option>
-                                        <option value="2">华为 Honar</option>
-                                        <option value="3">小米 mi</option>
-                                        <option value="4">OPPO</option>
-                                        <option value="5">VIVO</option>
+                                        <option value="">搜索或选择分类</option>
+                                        {volist name="Classify" id="data"}
+                                            <option value="{$data.id}">{$data.title}</option>
+                                        {/volist}
+
                                     </select>
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md">
+                            <div class="layui-form-item layui-input-md typeOpt" id="typeUrl">
                                 <label class="layui-form-label">链接地址</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="url" lay-verify="required|title" autocomplete="off" placeholder="链接地址" class="layui-input">
+                                    <input type="text" name="url" autocomplete="off" placeholder="链接地址,以http://或https://开头" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
-                            <div class="layui-form-item layui-input-md">
+                            <div class="layui-form-item layui-input-md typeOpt" id="typeGoods">
                                 <label class="layui-form-label">链接产品</label>
                                 <div class="layui-input-inline">
-                                    <input type="text"  placeholder="链接产品" readonly value="小米Mix3 黑色  全网通4G 全面屏拍照游戏智能手机" class="layui-input">
-                                    <input type="hidden" name="goods_id" lay-verify="required|title" class="layui-input">
+                                    <input type="text"  placeholder="选择链接产品" readonly id="goodsTitle" class="layui-input">
+                                    <input type="hidden" name="goods_id" id="goodsValue" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux" style="padding:4px 0!important;">
-                                    <button type="button" class="layui-btn layui-btn-sm" lay-filter="selectGoods"><i class="layui-icon">&#xe608;</i>选择商品</button>
+                                    <button type="button" id="selectGoods" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i>选择商品</button>
                                 </div>
                             </div>
 
@@ -86,7 +94,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="layui-form-mid layui-word-aux">*必填(尺寸比例 12:5)</div>
+                                <div class="layui-form-mid layui-word-aux">*必填(尺寸保持一致，建议 2:1)</div>
                             </div>
 
                             <!--<div class="layui-form-item">
@@ -99,7 +107,7 @@
 
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
+                                    <button class="layui-btn" lay-submit lay-filter="form_submit">立即提交</button>
                                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                 </div>
                             </div>
@@ -110,12 +118,12 @@
         </div>
     </div>
 </div>
-<div class="layui-card" id="goodsTips">
+<div class="layui-card" id="goodsTips" style="display:none">
     <div class="layui-card-header">
         <div class="self-search">
             <form class="layui-form">
-                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索关键字..." />
-                <button type="button" class="self-search-btn" lay-submit="" lay-filter="formSubmit">
+                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索产品关键字..." />
+                <button class="self-search-btn" lay-submit lay-filter="searchSubmit">
                     <i class="layui-icon">&#xe615;</i>
                 </button>
             </form>
@@ -131,9 +139,10 @@
         </script>
 
         <!--产品选择控制-->
-        <script type="text/html" id="goodsFix">
-            <input type="radio" name="sex" value="{{d.id}}">
-        </script>
+        <!--<script type="text/html" id="goodsFix">-->
+        <!--<script type="text/html" id="barHash">
+            <input type="radio" name="ss" value="{{d.id}}">
+        </script>-->
     </div>
 </div>
 
@@ -160,7 +169,10 @@
     //表单渲染
     form.render();
 
-
+      //表单默认值
+      /*form.val("formVal", {
+          "title": "首页Banner"
+      })*/;
 
     //表格数据获取及定义
     var tableLoad = table.render({
@@ -168,26 +180,32 @@
       limit: 10,
       limits:[10,20],
       elem: '#tableHash',
+      id: 'tableHash',
       height: 'full-235',
       url: '/aoogi/goods/data', //数据接口
+      text:'我们很努力，但是没有数据哦 ^_^',
       page: true, //开启分页
-      cols: [
-          [ //表头
-          {
-              fixed: 'left', title: 'ID', width: 80, sort: true, align: 'center', templet:'#goodsFix'
-          }, {
-              field: 'id', title: 'ID', align: 'center'
-          }, {
-              field: 'title', title: '产品名称', align: 'center'
-          }, {
-              field: 'status', title: '产品状态', width:100, align: 'center', templet:'#showStatus'
-          }
-          ]
+      cols: [   //表头
+          [
+          {field: 'id', title: 'ID', align: 'center', width:100},
+          {field: 'title', title: '产品名称', align: 'center', width:459},
+          {field: 'status', title: '产品状态', width:100, align: 'center', templet:'#showStatus'},
+          {fixed: 'right', field:'id' ,title:'选择', align: 'center', width: 100, type: 'radio'}
+           ]
       ]
     });
 
+    /*
+    * 监听Radio链接产品选择
+    * @ checkGoods  array   定义选择产品接收变量
+    * */
+    var checkGoods = '';
+    table.on('radio(tIndex)', function(obj){
+      checkGoods=obj.data;
+    });
+
     //监听搜索提交
-    form.on('submit(formSubmit)', function(data) {
+    form.on('submit(searchSubmit)', function(data) {
       if(data.field.keyword === ''){
           layer.msg('请输入搜索关键词');
           return false;
@@ -198,39 +216,51 @@
       return false;
     });
 
-    var openTip = layer.open({
-        type: 2,
-        title: '选择链接产品', //不显示标题栏
-        closeBtn: false,
-        area: ['800px', '500px'],
-        shade: 0.8,
-        shadeClose:true,
-        id: 'LAY_layuipro_hash', //设定一个id，防止重复弹出
-        btn: ['火速围观', '残忍拒绝'],
-        btnAlign: 'c',
-        moveType: 1 //拖拽模式，0或者1
-        ,
-        content:$("#goodsTips")
-        ,success: function(layero) {
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-                href: 'http://www.layui.com/',
-                target: '_blank'
-            });
-        }
-    });
-
+    //监听弹层产品选择
     $("#selectGoods").on("click",function(){
-        openTip();
+        layer.open({
+            type: 1,
+            title: '选择链接产品', //不显示标题栏
+            closeBtn: false,
+            area: ['800px', '500px'],
+            shade: 0,
+            shadeClose: true,
+            id: 'LAY_layuipro_hash', //设定一个id，防止重复弹出
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            moveType: 1 ,//拖拽模式，0或者1
+            content: $("#goodsTips"),
+            end: function(){    //层销毁后触发的回调
+                //隐藏弹层
+                $("#goodsTips").hide();
+            },
+            yes: function(index, layero){   //确定按钮回调方法
+                $("#goodsTitle").val(checkGoods.title);
+                $("#goodsValue").val(checkGoods.id);
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
     });
-    //监听产品选择
 
 
-
-    //监听分类类型选择
+    //监听Banner类型选择
     form.on('select(typeSelect)',function(data){
-      console.log(data);
-      console.log(data.value);
+        $(".typeOpt").hide().find("input,select").val('');
+        switch(data.value){
+            case "1":
+                break;
+            case "2":
+                $("#typeGoods").show();
+                break;
+            case "3":
+                $("#typeClassify").show();
+                break;
+            case "4":
+                $("#typeUrl").show();
+                break;
+            default :
+                break;
+        }
     });
 
 
@@ -241,42 +271,47 @@
                 return '标题长度应在2-30个字符之间';
             }
         },
-        price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
-        num: [/^[0-9]*$/, '数值设置有误，应该为整数；例：10'],
-        address: function(value) {
-            if (value.length < 2 || value.length > 15) {
-                return '内容长度应在2-15个字符之间';
-            }
-        },
-        specName: function(value) {
-            if (value.length < 2 || value.length > 8) {
-                return '规格标题长度应在2-6个字符之间';
-            }
-        },
-        specPrice: [/^\d*(?:.\d{0,2})?$/, '规格价格设置有误；例：10 或10.50'],
-        specNum: [/^[0-9]*$/, '库存设置有误，应该为整数；例：10'],
-        paramsKey: function(value) {
-            if (value.length < 1 || value.length > 15) {
-                return '参数标题长度应在2-15个字符之间';
-            }
-        },
-        paramsValue: function(value) {
-            if (value.length < 1 || value.length > 15) {
-                return '参数值长度应在2-15个字符之间';
-            }
-        },
+        bType:[/[1|2|3|4]/,'Banner类型有误']
     });
 
-    //监听提交
+    //监听Banner提交
     form.on('submit(form_submit)', function(data) {
 
-        var banner = $("input[name='banner[0]']");
         if(data.field.thumbnail == undefined){
             layer.msg('缩略图不能为空');
             return false;
         }
 
-        $.post("/aoogi/goods",data.field,function(res){
+        //验证类型选择
+        switch(data.field.type){
+            case "1":
+                break;
+            case "2":
+                if(!(/^[1-9]\d*$/).test(data.field.goods_id)){
+                    layer.msg('产品选择有误');
+                    return false;
+                }
+                break;
+            case "3":
+                if(!(/^[1-9]\d*$/).test(data.field.classify_id)){
+                    layer.msg('分类选择有误');
+                    return false;
+                }
+                break;
+            case "4":
+                var str = "((http|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?";
+                if(!new RegExp(str).test(data.field.url)){
+                    layer.msg('Url链接地址有误');
+                    return false;
+                }
+                break;
+            default :
+                layer.msg('Banner类型有误');
+                return false;
+                break;
+        }
+
+        $.post("/aoogi/banner",data.field,function(res){
             layer.msg(res.data);
             if(res.url)
                 window.location.href = "#" + res.url;
