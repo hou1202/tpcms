@@ -58,9 +58,14 @@ Route::post('aoogi/goods/status','admin/goods/setStatus');
 Route::delete('aoogi/goods/delOld/:id/:mode','admin/goods/delOld')->pattern(['mode' => '[1|2]']);   // 删除产品规格/参数    mode    1=>spec;2=>param
 
 //Banner管理Route
-Route::resource('aoogi/banner','admin/banner')->rest('edit',['GET', '/edit/:id','edit']);
+Route::resource('aoogi/banner','admin/banner')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/banner/data','admin/banner/getData');
 Route::post('aoogi/banner/status','admin/banner/setStatus');
+
+//分类管理Route
+Route::resource('aoogi/classify','admin/classify')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
+Route::post('aoogi/classify/data','admin/classify/getData');
+Route::post('aoogi/classify/status','admin/classify/setStatus');
 
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);

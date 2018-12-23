@@ -16,6 +16,7 @@ class Goods extends CommonValidate
 	    'id|产品ID'   =>  'require|number|isExist:goods,id',
 	    'title|产品标题' => 'require|length:4,50',
 	    'info|产品副标题' => 'require|length:4,50',
+        'classify|产品分类' => 'require:number|isExist:classify,id',
 	    'thumbnail|缩略图' => 'require|max:254',
 	    'banner|轮播图' => 'require|array',
 	    'origin_price|产品原价' => 'require|float',
@@ -45,6 +46,8 @@ class Goods extends CommonValidate
         'id.require' => '非有效产品信息',
         'id.number' => '非有效产品信息',
         'id.isExist' => '非有效产品信息',
+        'classify.number' => '产品分类信息有误',
+        'classify.isExist' => '产品分类信息有误',
         'banner.array' => '轮播图信息有误',
         'origin_price.float' => '产品原价设置有误。例：10 或 10.25',
         'sell_price.float' => '产品售价设置有误。例：10 或 10.25',
@@ -66,7 +69,7 @@ class Goods extends CommonValidate
      * 格式：'场景名' => ['字段名1','字段名2']
      * */
     protected $scene = [
-        'create' => ['title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'],
+        'create' => ['title','info','classify','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'],
         'spec' => ['name','price','stock'],
         'params' => ['p_key','p_value'],
         'status' =>['id','status'],
@@ -78,7 +81,7 @@ class Goods extends CommonValidate
      * */
     public function sceneEdit()
     {
-        return $this -> only(['id','title','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'])
+        return $this -> only(['id','title','classify','info','thumbnail','banner','origin_price','sell_price','cost_price','franking','volume','address','status','spec','params'])
             ->remove('thumbnail','require')
             ->remove('banner','require');
     }

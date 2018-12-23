@@ -14,7 +14,7 @@
 
                     <div class="layui-card-header">
                         <div class="self-card-header">
-                            <a href="#/aoogi/banner/create" class="layui-btn layui-btn-sm">
+                            <a href="#/aoogi/classify/create" class="layui-btn layui-btn-sm">
                                 <i class="layui-icon">&#xe654;</i>
                                 <span>新增</span>
                             </a>
@@ -37,7 +37,7 @@
                         </script>
                         <!--缩略图显示控制-->
                         <script type="text/html" id="setImg">
-                            <img src="{{d.thumbnail}}" alt="" style="width:100px;height:50px;">
+                            <img src="{{d.thumbnail}}" alt="" style="width:45px;height:45px;">
                         </script>
                         <!--类型链接显示控制-->
                         <script type="text/html" id="setLink">
@@ -77,22 +77,18 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/aoogi/banner/data', //数据接口
+            url: '/aoogi/classify/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'title', title: 'Banner标题', align: 'center'
+                        field: 'title', title: '分类标题', align: 'center'
                     }, {
-                        field: 'thumbnail', title: 'Banner图', align: 'center', minWidth: 110, templet:'#setImg'
+                        field: 'thumbnail', title: '分类图标', align: 'center', templet:'#setImg'
                     }, {
-                        title: 'Banner类型', align: 'center', templet:'#setType'
-                    },{
-                        title: '链接地址', align: 'center', templet:'#setLink'
-                    }, {
-                        field: 'status', title: 'Banner状态',align: 'center', minWidth: 110, templet:'#setStatus'
+                        field: 'p_id', title: '父级分类ID', align: 'center',
                     },{
                         fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
@@ -103,7 +99,7 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.post("/aoogi/banner/status",{"id":data.value,"status":status},function(res){
+            $.post("/aoogi/classify/status",{"id":data.value,"status":status},function(res){
                 layer.msg(res.data);
                 tableLoad.reload();
             });
@@ -112,10 +108,10 @@
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'edit'){
-                window.location.href ='#/aoogi/banner/edit/'+obj.data.id;
+                window.location.href ='#/aoogi/classify/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该Banner?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/aoogi/banner/'+obj.data.id,{'_method':'DELETE'},function(res){
+                layer.confirm('确定删除该分类?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/aoogi/classify/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.data);
                         table.reload('tableHash');
                     });

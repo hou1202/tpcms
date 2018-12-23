@@ -118,8 +118,8 @@ class Router extends AdminController
     {
         //
         $route = RouteM::get($id);
-        if(!$route) return $this->returnJson('非有效数据信息');
-        $data = $request -> post();
+        if(!$route) return $this->failJson('非有效数据信息');
+        $data = $request -> param();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data))
             return $this->returnJson($validate->getError());

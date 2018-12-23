@@ -51,4 +51,13 @@ class Banner extends CommonValidate
         'status' =>['id','status'],
 
     ];
+
+    /*
+     * 定义编辑 edit 模式下，验证场景
+     * */
+    public function sceneEdit()
+    {
+        return $this -> only(['id','title','type','thumbnail','status','url','goods_id','classify_id'])
+            ->remove('thumbnail','require');
+    }
 }

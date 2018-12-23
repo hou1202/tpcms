@@ -9,6 +9,7 @@ use think\Request;
 use app\admin\validate\Goods as GoodsV;
 use app\admin\model\Goods as GoodsM;
 use think\Db;
+use app\admin\model\Classify;
 
 class Goods extends AdminController
 {
@@ -46,7 +47,7 @@ class Goods extends AdminController
 
 
     /*
-     * setStatus    获取资源信息
+     * setStatus    设置资源状态
      *
      * @return json
      * */
@@ -69,7 +70,8 @@ class Goods extends AdminController
      */
     public function create()
     {
-        //
+        $classify = Classify::all();
+        $this->assign('Classify',$classify);
         return view('goods/create');
     }
 
@@ -144,8 +146,11 @@ class Goods extends AdminController
      */
     public function edit($id)
     {
-        $goods = GoodsM::get($id);
+        if(!$goods = GoodsM::get($id))
+            return $this->failJson('非有效数据信息');
         $goods['banner'] = explode('-',$goods['banner']);
+        $classify = Classify::all();
+        $this->assign('Classify',$classify);
         $specs = $goods->goodsSpec;
         $params = $goods->goodsParam;
 
