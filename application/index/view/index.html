@@ -14,7 +14,7 @@
                 <div class="swiper-slide">
                     {switch b.type}
                         {case 1}<a>{/case}
-                        {case 2}<a href="/details">{/case}
+                        {case 2}<a href="/goods/{$b.goods_id}">{/case}
                         {case 3}<a href="/list">{/case}
                         {case 4}<a href="{$b.url}">{/case}
                         {default /}<a>

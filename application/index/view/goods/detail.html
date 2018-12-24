@@ -391,9 +391,9 @@
 <!--底部功能选项模块-->
 <div class="bottom-param">
     <div class="bottom-param-title">
-        <img src="/static/index/images/goods2.jpg" id="goodsImg">
+        <img src="{$Goods.thumbnail}" id="goodsImg">
         <div class="param-title-middle">
-            <h2>小米MIX3 - 有你有我不见不散</h2>
+            <h2>{$Goods.title}</h2>
             <div class="param-title-middle-price">
                 <p>￥ </p><span id="goodsPrice">2500.00</span>
             </div>
@@ -416,15 +416,17 @@
         </div>
 
         <div class="bottom-param-spec">
-            <div class="spec-radio radio-active">
-                <input type="radio" name="spec" checked value="0"/>
-                <span>MIX3 移动版</span>
-                <div class="spec-radio-hidden">
-                    <p class="specImg">/static/index/images/goods2.jpg</p>
-                    <p class="specPrice">2500</p>
-                    <p class="specStock">1000</p>
+            {volist name="Spec" id="s"}
+                <div class="spec-radio radio-active">
+                    <input type="radio" name="spec" checked value="{$s.id}"/>
+                    <span>{$s.name}</span>
+                    <div class="spec-radio-hidden">
+                        <!--<p class="specImg">/static/index/images/goods2.jpg</p>-->
+                        <p class="specPrice">{$s.price}</p>
+                        <p class="specStock">{$s.stock}</p>
+                    </div>
                 </div>
-            </div>
+            {/volist}
             <div class="spec-radio">
                 <input type="radio" name="spec" value="1"/>
                 <span>MIX3 联通版</span>
@@ -461,6 +463,10 @@
 
     </form>
 
+</div>
+
+<div class="img-big" >
+    <img src="/static/index/images/goods2.jpg">
 </div>
 
 
@@ -533,7 +539,7 @@
         $(this).siblings().removeClass("radio-active");
         $(this).addClass("radio-active");
         $(this).children('input').attr('checked','checked');
-        $('#goodsImg').attr('src',$(this).find('.specImg').text());
+        /*$('#goodsImg').attr('src',$(this).find('.specImg').text());*/
         $('#goodsPrice').text($(this).find('.specPrice').text());
         $('#goodsStock').text($(this).find('.specStock').text());
         if(parseInt($("#goodsNum").val()) > parseInt($(this).find('.specStock').text()))

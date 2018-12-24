@@ -425,4 +425,22 @@
 }
 
 
+.img-big{
+  z-index: 9999;
+  width:100%;
+  height:100%;
+
+  background:rgba(25,25,25,0.5);
+  position:fixed;
+  top:0;
+  left:0;
+
+  display: flex;            /*容器为伸缩盒*/
+  align-items: center;  /*纵轴方向上的对齐方式设置为居中*/
+
+}
+.img-big img{
+  width:100%;
+}
+
 

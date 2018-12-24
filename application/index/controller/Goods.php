@@ -56,7 +56,7 @@ class Goods extends BaseController
         $specs = $goods->goodsSpec;
         $param = $goods->goodsParam;
         $this->assign('Goods',$goods);
-        $this->assign('Specs',$specs);
+        $this->assign('Spec',$specs);
         $this->assign('Param',$param);
         return view();
     }
