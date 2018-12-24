@@ -50,15 +50,15 @@
                                                 <select name="classify_id" lay-verify="required|number" lay-search="">
                                                     <option value="">请选择分类</option>
                                                     {volist name="Classify" id="c"}
-                                                    {if $c.p_id == 0}
-                                                    <optgroup label="{$c.title}">
-                                                        {volist name="Classify" id="cc"}
-                                                        {if $c.id == $cc.p_id}
-                                                        <option value="{$cc.id}">{$cc.title}</option>
+                                                        {if $c.p_id == 0}
+                                                            <optgroup label="{$c.title}">
+                                                                {volist name="Classify" id="cc"}
+                                                                    {if $c.id == $cc.p_id}
+                                                                        <option value="{$cc.id}">{$cc.title}</option>
+                                                                    {/if}
+                                                                {/volist}
+                                                            </optgroup>
                                                         {/if}
-                                                        {/volist}
-                                                    </optgroup>
-                                                    {/if}
                                                     {/volist}
                                                 </select>
                                             </div>
@@ -151,6 +151,13 @@
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">是否推荐</label>
+                                            <div class="layui-input-inline">
+                                                <input type="checkbox" {$Goods.recom ?= "checked" } name="recom" value="1" lay-skin="switch" lay-text="推荐|暂不">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">产品状态</label>
                                             <div class="layui-input-inline">
                                                 <input type="checkbox" {$Goods.status ?= "checked" } name="status" value="1" lay-skin="switch" lay-text="上架|下架">
@@ -214,7 +221,6 @@
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit="" lay-filter="form_submit">立即提交</button>
-                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                 </div>
                             </div>
                         </form>
@@ -301,6 +307,8 @@
     form.on('submit(form_submit)', function(data) {
         if(!data.field.status)
             data.field.status = 0;
+        if(!data.field.recom)
+            data.field.recom = 0;
 
         $.post("/aoogi/goods/"+"{$Goods.id}",data.field,function(res){
             layer.msg(res.data);

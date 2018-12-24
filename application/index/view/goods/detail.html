@@ -8,15 +8,12 @@
 <header class="banner">
     <div class="swiper-container" id="banner">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="/static/index/images/goods1.jpg"/>
-            </div>
-            <div class="swiper-slide">
-                <img src="/static/index/images/goods2.jpg"/>
-            </div>
-            <div class="swiper-slide">
-                <img src="/static/index/images/goods3.jpg"/>
-            </div>
+            {volist name="Goods['banner']" id="b"}
+                <div class="swiper-slide">
+                    <img src="{$b}"/>
+                </div>
+            {/volist}
+
         </div>
     </div>
 </header>
@@ -30,16 +27,16 @@
 <!--商品标题模块-->
 <div class="details-title">
     <div class="title-main">
-        <h3>iPhone XR-大屏幕上见</h3>
-        <p>畅想科技未来不得不见的可以来现</p>
-        <span class="left">￥2500.00</span>
-        <span class="right">￥3000.00</span>
+        <h3>{$Goods.title}</h3>
+        <p>{$Goods.info}</p>
+        <span class="left">￥{$Goods.sell_price}</span>
+        <span class="right">￥{$Goods.origin_price}</span>
     </div>
 
     <div class="title-vice">
-        <p>发货地：合肥 </p>
-        <p>销量：1200 </p>
-        <p>邮费：￥0.00 </p>
+        <p>发货地：{$Goods.address} </p>
+        <p>销量：{$Goods.volume} </p>
+        <p>邮费：￥{$Goods.franking} </p>
     </div>
 
     <!--图标-->
@@ -66,18 +63,13 @@
 
         <!--参数信息-->
         <div class="param-info" id="paramInfo">
-            <div class="param-info-con">
-                <span>品牌 ：</span>
-                <p>小米</p>
-            </div>
-            <div class="param-info-con">
-                <span>系列 ：</span>
-                <p>MINX</p>
-            </div>
-            <div class="param-info-con">
-                <span>处理器 ：</span>
-                <p>Crole 9</p>
-            </div>
+            {volist name="Param" id="p"}
+                <div class="param-info-con">
+                    <span>{$p.p_key} ：</span>
+                    <p>{$p.p_value}</p>
+                </div>
+            {/volist}
+
         </div>
     </div>
 </div>
@@ -269,7 +261,7 @@
 
                 <div class="swiper-slide">
                     <div class="info-con-img">
-                        {:html_entity_decode($goods['content'])}
+                        {:html_entity_decode($Goods['content'])}
                     </div>
                 </div>
                 <div class="swiper-slide">

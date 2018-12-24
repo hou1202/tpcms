@@ -1,6 +1,11 @@
 <?php
 namespace app\index\controller;
 use app\common\controller\BaseController;
+
+use app\common\model\Banner;
+use app\common\model\Recom;
+use app\common\model\Goods;
+
 use think\facade\Config;
 use think\facade\Env;
 use think\Request;
@@ -14,8 +19,12 @@ class Index extends BaseController
 
     public function index()
     {
-        //var_dump($uid = Users::user());
-        //var_dump(cache('login_'.md5(18297905432)));
+        $banner = Banner::where('status',1)->all();
+        $recom = Recom::where('status',1)->all();
+        $goods = Goods::where('status',1)->where('recom',1)->all();
+        $this->assign('Banner',$banner);
+        $this->assign('Recom',$recom);
+        $this->assign('Goods',$goods);
         return view('/index');
     }
 

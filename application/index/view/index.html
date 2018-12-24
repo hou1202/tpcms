@@ -10,15 +10,20 @@
 <header class="carousel">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="/static/index/images/banner11.jpg"/>
-            </div>
-            <div class="swiper-slide">
-                <img src="/static/index/images/banner11.jpg"/>
-            </div>
-            <div class="swiper-slide">
-                <img src="/static/index/images/banner11.jpg"/>
-            </div>
+            {volist name="Banner" id="b"}
+                <div class="swiper-slide">
+                    {switch b.type}
+                        {case 1}<a>{/case}
+                        {case 2}<a href="/details">{/case}
+                        {case 3}<a href="/list">{/case}
+                        {case 4}<a href="{$b.url}">{/case}
+                        {default /}<a>
+                    {/switch}
+                        <img src="{$b.thumbnail}"/>
+                    </a>
+                </div>
+            {/volist}
+
         </div>
     </div>
 </header>
@@ -44,28 +49,19 @@
 
 <!--推荐-->
 <div class="recom">
-    <div class="recom-list">
-        <div class="recom-img">
-            <img src="/static/index/images/recom.jpg"/>
+    {volist name="Recom" id="r" key="k"}
+        <div class="recom-list">
+            <div class="recom-img {$k%2 ?= 'img-right'}">
+                <img src="{$r.thumbnail}"/>
+            </div>
+            <a href="/details" class="recom-com {$k%2 ?= 'com-right'}">
+                <h2>{$r.title}</h2>
+                <span>{$r.goods_title}</span>
+                <p>{$r.info}</p>
+                <img src="/static/index/images/more.png"/>
+            </a>
         </div>
-        <a href="/details" class="recom-com">
-            <h2>iPhone XR</h2>
-            <span>大屏幕上见</span>
-            <p>通过 Apple GiveBack 回馈计划，你可以用符合条件的智能手机来以旧换新，享受最高达 RMB 4045 的折抵优惠**。这既有益于你，也有益于地球。</p>
-            <img src="/static/index/images/more.png"/>
-        </a>
-    </div>
-    <div class="recom-list">
-        <div class="recom-img img-right">
-            <img src="/static/index/images/recom.jpg"/>
-        </div>
-        <a href="" class="recom-com com-right">
-            <h2>iPhone XR</h2>
-            <span>大屏幕上见</span>
-            <p>通过 Apple GiveBack 回馈计划，你可以用符合条件的智能手机来以旧换新，享受最高达 RMB 4045 的折抵优惠**。这既有益于你，也有益于地球。</p>
-            <img src="/static/index/images/more.png"/>
-        </a>
-    </div>
+    {/volist}
 
 </div>
 
@@ -78,36 +74,24 @@
 </div>
 
 <div class="list">
-    <div class="list-block" title="1">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见-与你相约</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥2500.00</p>
-                <p>￥3000.00</p>
+    {volist name="Goods" id="g"}
+        <div class="list-block" title="{$g.id}">
+            <div class="block-img">
+                <img src="{$g.thumbnail}">
             </div>
-        </div>
-
-    </div>
-
-    <div class="list-block" title="2">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
+            <div class="block-info">
+                <h2>{$g.title}</h2>
+                <h3>{$g.info}</h3>
+                <div class="block-info-price">
+                    <p>￥{$g.sell_price}</p>
+                    <p>￥{$g.origin_price}</p>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="list-block" title="3">
+        </div>
+    {/volist}
+
+    <!--<div class="list-block" title="8">
         <div class="block-img">
             <img src="/static/index/images/goods1.jpg">
         </div>
@@ -119,77 +103,7 @@
                 <p>￥<span>3000.00</span></p>
             </div>
         </div>
-    </div>
-
-    <div class="list-block" title="4">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="list-block" title="5">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="list-block" title="6">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="list-block" title="7">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="list-block" title="8">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>
+    </div>-->
 
 </div>
 
@@ -205,6 +119,11 @@
         loop: true,
         effect:'coverflow',
         autoplay: true,
+    });
+
+    $(".list-block").on("click",function(){
+        var detail = $(this).attr('title');
+        window.location.href='/goods/'+detail;
     });
 
     window.addEventListener('touchmove', function(evt) {

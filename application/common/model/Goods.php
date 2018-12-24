@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\model;
+namespace app\common\model;
 
 use think\Model;
 use think\model\concern\SoftDelete;
@@ -57,5 +57,19 @@ class Goods extends Model
     public function goodsSpec()
     {
         return $this->hasMany('GoodsSpec','goods_id','id');
+    }
+
+    /*
+     * 获取器
+     * 追加获取classify文字值
+     * */
+    public function getClassifyTextAttr($value,$data)
+    {
+        $res = Classify::field('id,title')->cache('classify_res',60)->all();
+        $classify_text = array();
+        foreach($res as $val){
+            $classify_text[$val['id']] = $val['title'];
+        }
+        return $classify_text[$data['classify_id']];
     }
 }

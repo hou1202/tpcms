@@ -2,14 +2,17 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\GoodsParam;
-use app\admin\model\GoodsSpec;
+
 use app\common\controller\AdminController;
 use think\Request;
-use app\admin\validate\Goods as GoodsV;
-use app\admin\model\Goods as GoodsM;
 use think\Db;
-use app\admin\model\Classify;
+
+use app\admin\validate\Goods as GoodsV;
+
+use app\common\model\Goods as GoodsM;
+use app\common\model\GoodsParam;
+use app\common\model\GoodsSpec;
+use app\common\model\Classify;
 
 class Goods extends AdminController
 {
@@ -39,7 +42,8 @@ class Goods extends AdminController
         $list = GoodsM::where($map)
             ->order('id desc')
             ->limit(($data['page']-1)*$data['limit'],$data['limit'])
-            ->select();
+            ->append(['classify_text'])
+            ->all();
         $count = GoodsM::where($map)->count('id');
         return $this->kitJson($list,$count);
 
@@ -57,10 +61,26 @@ class Goods extends AdminController
         $validate = new GoodsV();
         if(!$validate->scene('status')->check($data))
             return $this->failJson($validate->getError());
-
         $goods = GoodsM::get($data['id']);
         if(!$goods) return $this->failJson('非有效数据信息');
         return $goods->save($data) ? $this->successJson('状态更新成功') : $this->failJson('状态更新失败');
+    }
+
+    /*
+     * setStatus    设置资源推荐
+     *
+     * @return json
+     * */
+    public function setRecom(Request $request)
+    {
+
+        $data = $request -> param();
+        $validate = new GoodsV();
+        if(!$validate->scene('recom')->check($data))
+            return $this->failJson($validate->getError());
+        $goods = GoodsM::get($data['id']);
+        if(!$goods) return $this->failJson('非有效数据信息');
+        return $goods->save($data) ? $this->successJson('推荐更新成功') : $this->failJson('推荐更新失败');
     }
 
     /**
@@ -169,7 +189,7 @@ class Goods extends AdminController
      */
     public function update(Request $request, $id)
     {
-
+        //var_dump($request->param());die;
         $data = $request->param();
         $validate = new GoodsV();
 

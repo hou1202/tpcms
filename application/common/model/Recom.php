@@ -1,10 +1,10 @@
 <?php
 
-namespace app\admin\model;
+namespace app\common\model;
 
 use think\Model;
 
-class Classify extends Model
+class Recom extends Model
 {
     /*
     * $pk      设置主键
@@ -15,7 +15,7 @@ class Classify extends Model
     /*
      *$table    当前模型对应表名，为完整表名
      * */
-    protected $table = 'classify';
+    protected $table = 'recom';
 
     /*
      * $readonly    定义只读字段保护

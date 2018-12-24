@@ -32,29 +32,30 @@ Route::get('aoogi/error','admin/error/index');      //ERROR页面
 Route::get('adminLogin','admin/login/index');
 Route::post('adminLogin','admin/login/login');
 
-//管理员管理Route
+//管理员adminer管理Route
 Route::resource('aoogi/adminer','admin/admin')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/adminer/data','admin/admin/getData');
 Route::post('aoogi/adminer/status','admin/admin/setStatus');
 
-//路由管理Route
+//路由router管理Route
 Route::resource('aoogi/router','admin/router')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/router/data','admin/router/getData');
 Route::post('aoogi/router/status','admin/router/setStatus');
 
-//权限管理Route
+//权限permission管理Route
 Route::resource('aoogi/permission','admin/permission')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/permission/data','admin/permission/getData');
 Route::post('aoogi/permission/status','admin/permission/setStatus');
 
-//参数设置模块Route
+//参数config设置模块Route
 Route::resource('aoogi/config','admin/config')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/config/data','admin/config/getData');
 
-//产品管理Route
+//产品goods管理Route
 Route::resource('aoogi/goods','admin/goods')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/goods/data','admin/goods/getData');
 Route::post('aoogi/goods/status','admin/goods/setStatus');
+Route::post('aoogi/goods/recom','admin/goods/setRecom');
 Route::delete('aoogi/goods/delOld/:id/:mode','admin/goods/delOld')->pattern(['mode' => '[1|2]']);   // 删除产品规格/参数    mode    1=>spec;2=>param
 
 //Banner管理Route
@@ -62,10 +63,15 @@ Route::resource('aoogi/banner','admin/banner')->rest('edit',['GET', '/edit/:id',
 Route::post('aoogi/banner/data','admin/banner/getData');
 Route::post('aoogi/banner/status','admin/banner/setStatus');
 
-//分类管理Route
+//分类classify管理Route
 Route::resource('aoogi/classify','admin/classify')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/classify/data','admin/classify/getData');
 Route::post('aoogi/classify/status','admin/classify/setStatus');
+
+//推荐recom管理Route
+Route::resource('aoogi/recom','admin/recom')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
+Route::post('aoogi/recom/data','admin/recom/getData');
+Route::post('aoogi/recom/status','admin/recom/setStatus');
 
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);

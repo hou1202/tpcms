@@ -4,10 +4,13 @@ namespace app\admin\controller;
 
 use app\common\controller\AdminController;
 use think\Request;
-use app\admin\model\Classify as Classify;
-use app\admin\model\Banner as BannerM;
-use app\admin\validate\Banner as BannerV;
 use think\Db;
+
+use app\common\model\Classify;
+use app\common\model\Banner as BannerM;
+
+use app\admin\validate\Banner as BannerV;
+
 
 class Banner extends AdminController
 {

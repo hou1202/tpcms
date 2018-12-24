@@ -3,14 +3,13 @@
 namespace app\admin\controller;
 
 use app\common\controller\AdminController;
-use app\common\model\Goods;
 use think\Request;
 
-use app\common\model\Classify as ClassifyM;
+use app\common\model\Recom as RecomM;
 
-use app\admin\validate\Classify  as ClassifyV;
+use app\admin\validate\Recom as RecomV;
 
-class Classify extends AdminController
+class Recom extends AdminController
 {
     /**
      * 显示资源列表
@@ -19,24 +18,39 @@ class Classify extends AdminController
      */
     public function index()
     {
-        //
         return view('');
     }
 
     /*
-     * getData  获取资源信息
-     *
-     * @return json
-     * */
+    * getData  获取资源信息
+    *
+    * @return json
+    * */
     public function getData(Request $request)
     {
         $data = $request -> param();
-        $list = ClassifyM::order('id desc')
+        $resource = RecomM::order('id desc')
             ->limit(($data['page']-1)*$data['limit'],$data['limit'])
             ->select();;
-        $count = ClassifyM::count('id');
-        return $this->kitJson($list,$count);
+        $count = RecomM::count('id');
+        return $this->kitJson($resource,$count);
+    }
 
+    /*
+ * setStatus    设置资源状态
+ *
+ * @return json
+ * */
+    public function setStatus(Request $request)
+    {
+        $data = $request -> param();
+        $validate = new RecomV();
+        if(!$validate->scene('status')->check($data))
+            return $this->failJson($validate->getError());
+
+        $resource = RecomM::get($data['id']);
+        if(!$resource) return $this->failJson('非有效数据信息');
+        return $resource->save($data) ? $this->successJson('状态更新成功') : $this->failJson('状态更新失败');
     }
 
     /**
@@ -46,9 +60,7 @@ class Classify extends AdminController
      */
     public function create()
     {
-
-        $this->assign('Classify',ClassifyM::all());
-        return view('');
+        return view();
     }
 
     /**
@@ -60,13 +72,24 @@ class Classify extends AdminController
     public function save(Request $request)
     {
         $data = $request->param();
-        $validate = new ClassifyV();
+        $validate = new RecomV();
         /*验证基本信息*/
         if(!$validate->scene('create')->check($data))
             return $this->failJson($validate->getError());
-        return ClassifyM::create($data) ? $this->successJson('新增成功','/aoogi/classify') : $this->failJson('添加失败');
+        return RecomM::create($data) ? $this->successJson('新增成功','/aoogi/recom') : $this->failJson('添加失败');
+
     }
 
+    /**
+     * 显示指定的资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function read($id)
+    {
+        //
+    }
 
     /**
      * 显示编辑资源表单页.
@@ -76,12 +99,10 @@ class Classify extends AdminController
      */
     public function edit($id)
     {
-        $classify = ClassifyM::get($id);
-        if(!$classify)
+        $resource = RecomM::get($id);
+        if(!$resource)
             return $this->failJson('非有效数据信息');
-        $all = ClassifyM::all();
-        $this->assign('Classify',$classify);
-        $this->assign('All',$all);
+        $this->assign('Recom',$resource);
         return view('');
     }
 
@@ -96,11 +117,11 @@ class Classify extends AdminController
     {
         $data = $request->param();
         /*验证基本信息*/
-        $validate = new ClassifyV();
+        $validate = new RecomV();
         if(!$validate->sceneEdit()->check($data))
             return $this->failJson($validate->getError());
-        $classify = ClassifyM::get($id);
-        return $classify->save($data) ? $this->successJson('更新成功','/aoogi/classify') : $this->failJson('更新失败');
+        $resource = RecomM::get($id);
+        return $resource->save($data) ? $this->successJson('更新成功','/aoogi/recom') : $this->failJson('更新失败');
     }
 
     /**
@@ -111,13 +132,7 @@ class Classify extends AdminController
      */
     public function delete($id)
     {
-
-        $child = ClassifyM::where('p_id',$id)->column('id');
-        $strId =implode(',',$child);
-        $resource = Goods::whereIn('classify_id',$strId) ->whereOr('classify_id',$id)->find();
-        if($resource)
-            return $this->failJson('该分类或子分类下有上架产品，请先调整产品分类信息');
-        if(!ClassifyM::whereIn('id',$id.','.$strId)->delete())
+        if(!RecomM::destroy($id))
             return $this->failJson('删除失败');
         return $this->successJson('删除成功');
     }

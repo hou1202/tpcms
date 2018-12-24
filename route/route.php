@@ -27,9 +27,16 @@ Route::post('forget','index/forget/forget');
 //个人中心
 Route::get('/personal','index/personal/index');
 
+/*产品路由*/
+    //新产品详情
+    Route::get('goods/:id','index/Goods/detail');
+    //购物车Route
+    Route::get('/car','index/car/index');
 
-//购物车Route
-Route::get('/car','index/car/index');
+
+
+
+
 
 //重置Token
 Route::post('resetToken','index/SelfFunction/resetToken');

@@ -44,6 +44,10 @@
                         <script type="text/html" id="setStatus">
                             <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="上架|下架" value="{{d.id}}">
                         </script>
+                        <!--状态显示控制-->
+                        <script type="text/html" id="setRecom">
+                            <input type="checkbox" name="recom" lay-filter="switchRecom" lay-skin="switch" {{# if(d.recom){ }}checked{{#} }} lay-text="推荐|暂不" value="{{d.id}}">
+                        </script>
 
                         <!--缩略图显示控制-->
                         <script type="text/html" id="setImg">
@@ -86,19 +90,19 @@
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'title', title: '产品名称', align: 'center'
+                        field: 'title', title: '产品名称', minWidth:200, align: 'center'
                     }, {
-                        field: 'thumbnail', title: '缩略图', align: 'center', minWidth: 110, templet:'#setImg'
+                        field: 'thumbnail', title: '缩略图', align: 'center', minWidth: 80, templet:'#setImg'
                     }, {
                         field: 'sell_price', title: '产品售价', align: 'center'
-                    },{
-                        field: 'franking', title: '邮费', align: 'center'
                     }, {
                         field: 'volume', title: '销量', align: 'center'
                     }, {
-                        field: 'address', title: '发货地',align: 'center'
-                    },{
-                        field: 'status', title: '产品状态',align: 'center', minWidth: 110, templet:'#setStatus'
+                        field: 'classify_text', title: '分类',align: 'center'
+                    }, {
+                        field: 'recom', title: '是否推荐', align: 'center',minWidth: 100, templet:'#setRecom'
+                    }, {
+                        field: 'status', title: '产品状态',align: 'center', minWidth: 100, templet:'#setStatus'
                     },{
                         fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
@@ -110,6 +114,15 @@
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
             $.post("/aoogi/goods/status",{"id":data.value,"status":status},function(res){
+                layer.msg(res.data);
+                tableLoad.reload();
+            });
+        });
+
+        //监听推荐开关
+        form.on('switch(switchRecom)', function(data) {
+            var recom = this.checked ? 1 : 0 ;
+            $.post("/aoogi/goods/recom",{"id":data.value,"recom":recom},function(res){
                 layer.msg(res.data);
                 tableLoad.reload();
             });
