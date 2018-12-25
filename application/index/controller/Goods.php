@@ -17,9 +17,9 @@ class Goods extends BaseController
      * 验证用户登录情况
      * @ except   排除不需要验证方法
      * */
-    protected $middleware = [
+    /*protected $middleware = [
         'UserVerify' => ['except' => ['detail']]
-    ];
+    ];*/
 
     /**
      * 显示指定的资源
@@ -66,10 +66,14 @@ class Goods extends BaseController
      * @param  int  $id
      * @return \think\Response
      */
-    public function collect($id)
+    public function collect(Request $request, $id)
     {
         //
-        var_dump(Users::user());
+        if($request->isAjax()){
+            var_dump('is ajax');
+        }
+         //return redirect('/login');
+        var_dump($request->isAjax());
     }
 
     /**
