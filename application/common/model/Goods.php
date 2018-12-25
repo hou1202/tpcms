@@ -44,6 +44,7 @@ class Goods extends Model
     /*
      * 数据关联
      * 关联表      goods_param
+     * 关联表内容    产品参数
      * */
     public function goodsParam()
     {
@@ -53,10 +54,21 @@ class Goods extends Model
     /*
      * 数据关联
      * 关联表      goods_spec
+     * 关联表内容    产品规格
      * */
     public function goodsSpec()
     {
         return $this->hasMany('GoodsSpec','goods_id','id');
+    }
+
+    /*
+     * 数据关联
+     * 关联表      comment
+     * 关联表内容    产品规格
+     * */
+    public function comments()
+    {
+        return $this->hasMany('Comments','goods_id','id');
     }
 
     /*

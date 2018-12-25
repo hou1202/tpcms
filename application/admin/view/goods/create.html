@@ -222,8 +222,8 @@
     //自定义验证规则
     form.verify({
         title: function(value) {
-            if (value.length < 4 || value.length > 50) {
-                return '内容长度应在4-50个字符之间';
+            if (value.length < 4 || value.length > 150) {
+                return '内容长度应在4-150个字符之间';
             }
         },
         price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
@@ -234,20 +234,20 @@
             }
         },
         specName: function(value) {
-            if (value.length < 2 || value.length > 8) {
-                return '规格标题长度应在2-6个字符之间';
+            if (value.length < 2 || value.length > 20) {
+                return '规格标题长度应在2-20个字符之间';
             }
         },
         specPrice: [/^\d*(?:.\d{0,2})?$/, '规格价格设置有误；例：10 或10.50'],
         specNum: [/^[0-9]*$/, '库存设置有误，应该为整数；例：10'],
         paramsKey: function(value) {
-            if (value.length < 1 || value.length > 15) {
-                return '参数标题长度应在2-15个字符之间';
+            if (value.length < 1 || value.length > 30) {
+                return '参数标题长度应在1-30个字符之间';
             }
         },
         paramsValue: function(value) {
-            if (value.length < 1 || value.length > 15) {
-                return '参数值长度应在2-15个字符之间';
+            if (value.length < 1 || value.length > 30) {
+                return '参数值长度应在1-30个字符之间';
             }
         },
     });

@@ -30,6 +30,8 @@ Route::get('/personal','index/personal/index');
 /*产品路由*/
     //新产品详情
     Route::get('goods/:id','index/Goods/detail');
+    //收藏产品
+    Route::post('goods/collect/:id','index/Goods/collect');
     //购物车Route
     Route::get('/car','index/car/index');
 

@@ -124,6 +124,7 @@ class Goods extends AdminController
         }
         //banner图拼装
         $data['banner'] = implode("-",$data['banner']);
+        $data['classify_top'] = Classify::where('id',$data['classify_id'])->value('p_id');
         Db::startTrans();
         try {
             $goods = GoodsM::create($data);
@@ -212,7 +213,7 @@ class Goods extends AdminController
         //banner图拼装
         if(isset($data['banner']))
             $data['banner'] = implode("-",$data['banner']);
-
+        $data['classify_top'] = Classify::where('id',$data['classify_id'])->value('p_id');
         $goods = GoodsM::get($id);
         Db::startTrans();
         try {

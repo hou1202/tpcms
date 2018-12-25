@@ -111,13 +111,10 @@ class Classify extends AdminController
      */
     public function delete($id)
     {
-
-        $child = ClassifyM::where('p_id',$id)->column('id');
-        $strId =implode(',',$child);
-        $resource = Goods::whereIn('classify_id',$strId) ->whereOr('classify_id',$id)->find();
+        $resource = Goods::where('classify_top',$id) ->whereOr('classify_id',$id)->find();
         if($resource)
             return $this->failJson('该分类或子分类下有上架产品，请先调整产品分类信息');
-        if(!ClassifyM::whereIn('id',$id.','.$strId)->delete())
+        if(!ClassifyM::where('id',$id)->whereOr('p_id',$id)->delete())
             return $this->failJson('删除失败');
         return $this->successJson('删除成功');
     }

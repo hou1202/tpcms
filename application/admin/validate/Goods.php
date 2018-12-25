@@ -14,8 +14,8 @@ class Goods extends CommonValidate
      */	
 	protected $rule = [
 	    'id|产品ID'   =>  'require|number|isExist:goods,id',
-	    'title|产品标题' => 'require|length:4,50',
-	    'info|产品副标题' => 'require|length:4,50',
+	    'title|产品标题' => 'require|length:4,150',
+	    'info|产品副标题' => 'require|length:4,150',
         'classify_id|产品分类' => 'require|number|isExist:classify,id',
 	    'thumbnail|缩略图' => 'require|max:254',
 	    'banner|轮播图' => 'require|array',
@@ -28,12 +28,12 @@ class Goods extends CommonValidate
         'status|产品状态' =>'in:0,1',
         'recom|产品推荐' =>'in:0,1',
 	    'spec|产品规格' => 'require|array',
-        'name|产品规格名称' =>  'require|length:2,8',
+        'name|产品规格名称' =>  'require|length:2,20',
         'price|产品规格价格' =>  'require|float',
         'stock|产品规格库存' =>  'require|number|integer',
         'params|产品参数' =>  'array',
-        'p_key|产品参数名称' =>  'require|max:15',
-        'p_value|产品参数值' =>  'require|max:15',
+        'p_key|产品参数名称' =>  'require|max:30',
+        'p_value|产品参数值' =>  'require|max:30',
 
     ];
     
