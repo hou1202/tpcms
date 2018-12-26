@@ -109,7 +109,7 @@
     //监听分类提交
     form.on('submit(form_submit)', function(data) {
         $.post("/aoogi/classify/"+"{$Classify.id}",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url)
                 window.location.href = "#" + res.url;
             return false;

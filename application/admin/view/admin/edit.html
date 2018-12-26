@@ -121,7 +121,7 @@
     form.on('submit(form_submit)', function(data) {
         if(!data.field.status){ data.field.status = 0 }
         $.post("/aoogi/adminer/"+"{$Adminer.id}",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url != ""){
                 window.location.href="#"+res.url;
             }

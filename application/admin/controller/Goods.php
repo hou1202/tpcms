@@ -190,7 +190,6 @@ class Goods extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //var_dump($request->param());die;
         $data = $request->param();
         $validate = new GoodsV();
 

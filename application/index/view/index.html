@@ -6,21 +6,19 @@
 {load href="/static/index/css/goods-list.css" /}
 {load href="/static/index/lib/swiper-4.3.3.min.css" /}
 
-
+<!--banner图-->
 <header class="carousel">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             {volist name="Banner" id="b"}
                 <div class="swiper-slide">
                     {switch b.type}
-                        {case 1}<a>{/case}
-                        {case 2}<a href="/goods/{$b.goods_id}">{/case}
-                        {case 3}<a href="/list">{/case}
-                        {case 4}<a href="{$b.url}">{/case}
-                        {default /}<a>
+                        {case 1}<a><img src="{$b.thumbnail}"/></a>{/case}
+                        {case 2}<a href="/goods/{$b.goods_id}"><img src="{$b.thumbnail}"/></a>{/case}
+                        {case 3}<a href="/list"><img src="{$b.thumbnail}"/></a>{/case}
+                        {case 4}<a href="{$b.url}"><img src="{$b.thumbnail}"/></a>{/case}
+                        {default /}<a><img src="{$b.thumbnail}"/></a>
                     {/switch}
-                        <img src="{$b.thumbnail}"/>
-                    </a>
                 </div>
             {/volist}
 
@@ -28,6 +26,7 @@
     </div>
 </header>
 
+<!--导航-->
 <div class="nav">
     <a href="/details">
         <img src="/static/index/images/nav3.png" />
@@ -54,7 +53,7 @@
             <div class="recom-img {$k%2 ?= 'img-right'}">
                 <img src="{$r.thumbnail}"/>
             </div>
-            <a href="/details" class="recom-com {$k%2 ?= 'com-right'}">
+            <a href="/goods/{$r.goods_id}" class="recom-com {$k%2 ?= 'com-right'}">
                 <h2>{$r.title}</h2>
                 <span>{$r.goods_title}</span>
                 <p>{$r.info}</p>
@@ -75,7 +74,7 @@
 
 <div class="list">
     {volist name="Goods" id="g"}
-        <div class="list-block" title="{$g.id}">
+        <a class="list-block"  href="/goods/{$g.id}">
             <div class="block-img">
                 <img src="{$g.thumbnail}">
             </div>
@@ -88,22 +87,8 @@
                 </div>
             </div>
 
-        </div>
+        </a>
     {/volist}
-
-    <!--<div class="list-block" title="8">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥<span>2500.00</span></p>
-                <p>￥<span>3000.00</span></p>
-            </div>
-        </div>
-    </div>-->
 
 </div>
 
@@ -121,10 +106,10 @@
         autoplay: true,
     });
 
-    $(".list-block").on("click",function(){
+    /*$(".list-block").on("click",function(){
         var detail = $(this).attr('title');
         window.location.href='/goods/'+detail;
-    });
+    });*/
 
     window.addEventListener('touchmove', function(evt) {
         evt.preventDefault()

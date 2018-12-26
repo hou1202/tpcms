@@ -54,6 +54,7 @@ class Comments extends Model
             ->field('c.id,c.content,c.img,c.laud,c.create_time,u.name,u.portrait')
             ->join('user u', 'c.user_id = u.id')
             ->where('c.goods_id', $id)
+            ->where('c.delete_time',0)
             ->group('c.id')
             ->select();
     }

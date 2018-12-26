@@ -40,11 +40,11 @@ class Router extends AdminController
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('status')->check($data))
-            return $this->returnJson($validate->getError());
+            return $this->failJson($validate->getError());
 
         $route = RouteM::get($data['id']);
-        if(!$route) return $this->returnJson('非有效数据信息');
-        return $route->save($data) ? $this->returnJson('状态更新成功') : $this->returnJson('状态更新失败');
+        if(!$route) return $this->failJson('非有效数据信息');
+        return $route->save($data) ? $this->successJson('状态更新成功') : $this->failJson('状态更新失败');
     }
 
     /**
@@ -71,7 +71,7 @@ class Router extends AdminController
         $data = $request -> post();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data)){
-            return $this->returnJson($validate->getError());
+            return $this->failJson($validate->getError());
         }
         return RouteM::create($data) ?$this->successJson('新增成功','/aoogi/router') : $this->failJson('添加失败');
     }
@@ -122,8 +122,8 @@ class Router extends AdminController
         $data = $request -> param();
         $validate = new RouterV();
         if(!$validate->scene('save')->check($data))
-            return $this->returnJson($validate->getError());
-        return $route->save($data) ? $this->returnJson('更新成功',1,'/aoogi/router') : $this->returnJson('更新失败');
+            return $this->failJson($validate->getError());
+        return $route->save($data) ? $this->successJson('更新成功','/aoogi/router') : $this->failJson('更新失败');
     }
 
     /**
@@ -136,8 +136,8 @@ class Router extends AdminController
     {
         //
         if(RouteM::where('pid',$id)->find())
-            return $this->returnJson('该路由为主路由，若要删除请先删除所属子路由');
-        return RouteM::destroy($id) ? $this->returnJson('删除成功') : $this->returnJson('删除失败');
+            return $this->failJson('该路由为主路由，若要删除请先删除所属子路由');
+        return RouteM::destroy($id) ? $this->successJson('删除成功') : $this->failJson('删除失败');
 
     }
 }

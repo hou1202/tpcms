@@ -14,11 +14,12 @@ class BaseController extends Controller
      * @param  string     $url        跳转路由
      * @return      json
      * */
-    protected function successJson($data,$url='')
+    protected function successJson($msg,$url='',$data='')
     {
         $res = [
-            'data' => $data,
+            'msg' => $msg,
             'url' => $url,
+            'data' => $data,
             'code' => 1,
         ];
         return json($res);
@@ -30,11 +31,12 @@ class BaseController extends Controller
  * @param  string     $url        跳转路由
  * @return      json
  * */
-    protected function failJson($data,$url='')
+    protected function failJson($msg,$url='',$data='')
     {
         $res = [
-            'data' => $data,
+            'msg' => $msg,
             'url' => $url,
+            'data' => $data,
             'code' => 0,
         ];
         return json($res);

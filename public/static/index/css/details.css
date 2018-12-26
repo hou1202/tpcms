@@ -148,6 +148,7 @@
 /*商品详情底部模块*/
 .goods-bottom{
   font-size:0.33333333rem;
+  color:#fff;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -174,11 +175,27 @@
  }
 .goods-bottom .goods-bottom-icon .goods-bottom-icon-img{
   float:left;
-  padding-top:0.30666666rem;
 }
-.goods-bottom .goods-bottom-icon .goods-bottom-icon-img img{
-  width:0.54666666rem;
-  margin:0 0.2rem;
+.goods-bottom .goods-bottom-icon .goods-bottom-icon-img i{
+  width:0.94666666rem;
+  height:1.33333333rem;
+  display:block;
+}
+i.icon-col{
+  background:url(/static/index/images/collection.png) no-repeat center center;
+  background-size:0.54666666rem;
+}
+i.icon-col-active{
+  background:url(/static/index/images/collection-true.png) no-repeat center center;
+  background-size:0.54666666rem;
+}
+i.icon-share{
+  background:url(/static/index/images/share.png) no-repeat center center;
+  background-size:0.54666666rem;
+}
+i.icon-car{
+  background:url(/static/index/images/car.png) no-repeat center center;
+  background-size:0.54666666rem;
 }
 .goods-bottom .goods-bottom-now{
   width:2.8rem;

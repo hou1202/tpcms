@@ -68,12 +68,12 @@
         if(!(/^1[345678]\d{9}$/.test(mobile)))
             return alertConfirm('请输入正确的手机号码');
 
-        $.post('/getCode/'+mobile+'/'+2,'',function(obj){
-            if(obj.code == 1){
-                alertConfirm(obj.msg);
+        $.post('/getCode/'+mobile+'/'+2,'',function(res){
+            if(res.code == 1){
+                alertConfirm(res.msg);
                 setTime();
             }else{
-                alertConfirm(obj.msg);
+                alertConfirm(res.msg);
             }
 
         });
@@ -111,12 +111,12 @@
         if(!(/\d{6}/.test(code))) return alertConfirm('验证码不正确');
 
         //提交表单
-        $.post('/forget',$("#forgetForm").serialize(),function(obj){
-            if(obj.code == 1){
-                alertConfirm(obj.data);
-                timeOutUrl(obj.url)
+        $.post('/forget',$("#forgetForm").serialize(),function(res){
+            if(res.code == 1){
+                alertConfirm(res.msg);
+                timeOutUrl(res.url)
             }else{
-                alertConfirm(obj.data);
+                alertConfirm(res.msg);
                 resetToken('forgetForm');
             }
         })

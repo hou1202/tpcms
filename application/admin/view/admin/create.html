@@ -113,7 +113,7 @@
     //监听提交
     form.on('submit(form_submit)', function(data) {
         $.post("/aoogi/adminer",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url != "")
                 window.location.href="#"+res.url;
 

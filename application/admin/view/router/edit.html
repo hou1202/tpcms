@@ -172,7 +172,7 @@
             data.field.main = 0;
         }
         $.post("/aoogi/router/"+"{$Route.id}",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url != "")
                 window.location.href = "#" + res.url;
 

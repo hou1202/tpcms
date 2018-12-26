@@ -157,26 +157,26 @@
 <div class="goods-bottom">
     <div class="goods-bottom-icon">
         <div class="goods-bottom-icon-img" id="collect">
-            <img src="/static/index/images/collection.png"/>
+            <i class="icon-col {$Collect ?='icon-col-active'}"></i>
         </div>
         <div class="goods-bottom-icon-img">
             <a href="">
-                <img src="/static/index/images/share.png"/>
+                <i class="icon-share"></i>
             </a>
         </div>
         <div class="goods-bottom-icon-img">
             <a href="/car">
-                <img src="/static/index/images/car.png"/>
+                <i class="icon-car"></i>
             </a>
         </div>
 
     </div>
-    <div class="goods-bottom-now">
-        <a href="/logout">
+    <div class="goods-bottom-now nowPanel specPanel">
+        <!--<a href="/logout">-->
             立即购买
-        </a>
+       <!-- </a>-->
     </div>
-    <div class="goods-bottom-car">
+    <div class="goods-bottom-car carPanel specPanel">
         加入购物车
     </div>
 </div>
@@ -194,13 +194,12 @@
                 <p>库存：</p><span id="goodsStock">{$Spec.0.stock}</span>
             </div>
         </div>
-        <div class="param-title-close">
+        <div class="param-title-close closePanel">
             <img src="/static/index/images/close.png">
         </div>
     </div>
 
     <form id="car_form">
-        <input type="hidden" name="id" value="1" />
         <div class="bottom-param-num">
             <span>购买数量：</span>
             <i class="param-num-icon icon-left"></i>
@@ -210,8 +209,8 @@
 
         <div class="bottom-param-spec">
             {volist name="Spec" id="s"}
-                <div class="spec-radio">
-                    <input type="radio" name="spec" value="{$s.id}"/>
+                <div class="spec-radio specRadio">
+                    <input type="radio" name="spec_id" value="{$s.id}"/>
                     <span>{$s.name}</span>
                     <div class="spec-radio-hidden">
                         <p class="specPrice">{$s.price}</p>
@@ -222,7 +221,7 @@
         </div>
 
         <div class="bottom-param-button">
-            <button type="button" id="submit"> 确 定 </button>
+            <button type="button" id="submitForm"> 确 定 </button>
         </div>
 
     </form>
@@ -270,14 +269,20 @@
     });
 
 
-
-
     /*收藏功能处理*/
     $("#collect").click(function(){
-        $.post('/goods/collect/1','',function(res){
-            console.log(res);
+        var _that = $(this);
+        $.post('/goods/collect/'+"{$Goods.id}",'',function(res){
+            if(res.code === 2){
+                alertConfirm(res.msg);
+            }else if(res.code === 1){
+                alertConfirm(res.msg);
+                _that.children("i").toggleClass('icon-col-active')
+            }else{
+                alertConfirm(res.msg);
+            }
+            return false
         });
-        $(this).children('img').attr('src','/static/index/images/collection-true.png')
     });
 
 
@@ -294,8 +299,16 @@
 
     /*评论点赞*/
     $(".comAgree").on("click",function(){
-        $(this).find("i").addClass('agree-active');
-        $(this).find("p").text('10');
+        var _that = $(this);
+        var comId = _that.attr('data-comment-id');
+        var num = parseInt(_that.find("p").text());
+        $.post('/agree/'+comId,'',function(res){
+            if(res.code === 1){
+                _that.find("i").addClass('agree-active');
+                _that.find('p').text(""+(num+1)+"");
+            }
+            alertConfirm(res.msg);
+        });
     });
 
 
@@ -322,17 +335,7 @@
     });
 
 
-    /*显示参数面板*/
-    $(".goods-bottom-car").click(function(){
-        $(".bottom-param").toggle();
-    });
-    /*关闭参数面板*/
-    $(".param-title-close").click(function(){
-        $(".bottom-param").hide();
-    });
-    /*默认选中第一个参数规格*/
-    $(".bottom-param-spec").children("div:first").addClass("radio-active").find("input").attr("checked",true);
-    /*切换参数规格显示模式*/
+    /*切换参数列表展开/收起显示模式*/
     $("#paramTitle").click(function(){
         $("#paramInfo").toggle('slow',function(e){
             console.log(e);
@@ -346,12 +349,30 @@
             }
         });
     });
-    /*商品参数选择控制*/
-    $(".spec-radio").click(function(){
+
+    var panelUrl='';
+    /*显示规格面板*/
+    $(".nowPanel").click(function(){
+        panelUrl = '/car/buy/';
+        $(".bottom-param").toggle();
+    });
+    $(".carPanel").click(function(){
+        panelUrl = '/car/join/';
+        $(".bottom-param").toggle();
+    });
+    /*关闭规格面板*/
+    $(".closePanel").click(function(){
+        $(".bottom-param").hide();
+    });
+    /*默认选中第一个规格*/
+    $(".bottom-param-spec").children("div:first").addClass("radio-active").find("input").attr("checked",true);
+
+    /*商品规格选择控制*/
+    $(".specRadio").click(function(){
         $(this).siblings().removeClass("radio-active");
         $(this).addClass("radio-active");
-        $(this).children('input').attr('checked','checked');
-        /*$('#goodsImg').attr('src',$(this).find('.specImg').text());*/
+        $(this).parent().find("input").attr('checked',false);
+        $(this).children('input').attr('checked',true);
         $('#goodsPrice').text($(this).find('.specPrice').text());
         $('#goodsStock').text($(this).find('.specStock').text());
         if(parseInt($("#goodsNum").val()) > parseInt($(this).find('.specStock').text()))
@@ -359,10 +380,12 @@
 
     });
 
-    /*参数提交*/
-    $("#submit").click(function(){
-        alertConfirm($("#car_form").serialize());
+    /*表单提交*/
+    $("#submitForm").click(function(){
         $(".bottom-param").hide();
+        $.post(panelUrl+"{$Goods.id}",$("#car_form").serialize(),function(res){
+            alertConfirm(res.msg);
+        });
     });
 
 

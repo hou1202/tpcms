@@ -311,7 +311,7 @@
             data.field.recom = 0;
 
         $.post("/aoogi/goods/"+"{$Goods.id}",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url)
                 window.location.href = "#" + res.url;
             return false;
@@ -481,7 +481,7 @@
             $.post('/aoogi/goods/delOld/'+id+'/'+mode,{'_method':'DELETE'},function(res){
                 if(res.code == 1)
                     that.parent().remove();
-                layer.msg(res.data);
+                layer.msg(res.msg);
                 return false;
             });
         });

@@ -60,12 +60,12 @@
         if(password == '' || password.length < 6) return alertConfirm('密码不正确');
 
         //登录提交
-        $.post('/login',$("#loginForm").serialize(),function(obj){
-           if(obj.code == 1){
-               alertConfirm(obj.data);
-               timeOutUrl(obj.url)
+        $.post('/login',$("#loginForm").serialize(),function(res){
+           if(res.code == 1){
+               alertConfirm(res.msg);
+               timeOutUrl(res.url)
            }else{
-               alertConfirm(obj.data);
+               alertConfirm(res.msg);
                resetToken('loginForm');
            }
         })

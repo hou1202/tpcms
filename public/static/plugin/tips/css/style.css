@@ -27,8 +27,8 @@
 /*confirm效果*/
 .alertBox .confirmBox{
   font-size:0.33333333rem;
-  color:#525252;
-  background:#fff;
+  color:#fff;
+  background:rgba(39,39,39,0.9);
   padding:0.6rem 1rem;
   border-radius:0.2rem;
   width:8rem;
@@ -75,11 +75,12 @@
 }
 .alertBox .confirmBox .btnBox .ok{
   float:right;
-  background:#cc7f15;
+  background:rgba(145, 169, 51, 0.4);
 }
 .alertBox .confirmBox .btnBox .cancel{
   float:left;
   background: #ccba6c;
+  background:rgba(215, 215, 215, 0.3);
 }
 
 

@@ -90,7 +90,7 @@
             }else if(obj.event === 'del'){
                 layer.confirm('配置参数非常重要，请慎重操作！确定删除该条配置参数?', {icon: 3, title:'提示'}, function(index){
                     $.post('/aoogi/config/'+obj.data.id,{'_method':'DELETE'},function(res){
-                        layer.msg(res.data);
+                        layer.msg(res.msg);
                         table.reload('tableHash');
                     });
                     layer.close(index);

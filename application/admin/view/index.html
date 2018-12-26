@@ -127,7 +127,7 @@
         //退出登录
         $("#logout").on('click',function(){
             $.post('/aoogi/logout','',function(res){
-                layer.msg(res.data);
+                layer.msg(res.msg);
                 setTimeout(function() {
                     window.location.href=res.url;
                 }, 1000);

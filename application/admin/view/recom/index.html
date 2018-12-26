@@ -94,7 +94,7 @@
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
             $.post("/aoogi/recom/status",{"id":data.value,"status":status},function(res){
-                layer.msg(res.data);
+                layer.msg(res.msg);
                 tableLoad.reload();
             });
         });
@@ -106,7 +106,7 @@
             }else if(obj.event === 'del'){
                 layer.confirm('确定删除该分类?', {icon: 3, title:'提示'}, function(index){
                     $.post('/aoogi/recom/'+obj.data.id,{'_method':'DELETE'},function(res){
-                        layer.msg(res.data);
+                        layer.msg(res.msg);
                         table.reload('tableHash');
                     });
                     layer.close(index);

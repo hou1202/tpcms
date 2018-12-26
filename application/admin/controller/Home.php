@@ -41,7 +41,7 @@ class Home extends AdminController
     {
         User::logout();
         Auth::authOut();
-        return $this ->returnJson('退出成功',1,Request::domain().'/adminLogin');
+        return $this ->successJson('退出成功',Request::domain().'/adminLogin');
 
     }
 

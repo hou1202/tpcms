@@ -1,0 +1,32 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="分类" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/category.css" /}
+
+<!--产品分类列表模块-->
+<div class="category">
+    {volist name="Classify" id="c"}
+        <div class="category-list">
+            <a href="/goods/index/{$c.id}">
+                <img src="{$c.thumbnail}" />
+                <h2>{$c.title}</h2>
+            </a>
+        </div>
+    {/volist}
+</div>
+
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+
+<script>
+
+
+
+</script>
+
+</html>

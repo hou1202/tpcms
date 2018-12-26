@@ -102,7 +102,7 @@
         }
 
         $.post("/aoogi/classify",data.field,function(res){
-            layer.msg(res.data);
+            layer.msg(res.msg);
             if(res.url)
                 window.location.href = "#" + res.url;
             return false;

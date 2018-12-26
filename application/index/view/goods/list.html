@@ -19,28 +19,17 @@
 <div class="roll-nav">
     <div class="swiper-container" id="categorySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide nav-active" id="1">
-                <span>iPhone X</span>
-            </div>
-            <div class="swiper-slide" id="2">
+            <!--<div class="swiper-slide nav-active" id="1">
+                <span>iPHONE MX</span>
+            </div>-->
+            {volist name="Classify" id="c" key="k"}
+                <div class="swiper-slide classifySlide {$k==1 ?= 'nav-active'} " data-classify-id="{$c.id}" id="{$c.id}">
+                    <span>{$c.title}</span>
+                </div>
+            {/volist}
+            <!--<div class="swiper-slide" id="2">
                 <span>小米MX3</span>
-            </div>
-            <div class="swiper-slide" id="3">
-                <span>iPhone XR</span>
-            </div>
-            <div class="swiper-slide" id="4">
-                <span>荣耀Pro10</span>
-            </div>
-            <div class="swiper-slide" id="5">
-                小米MX3
-            </div>
-            <div class="swiper-slide" id="6">
-                iPhone XR
-            </div>
-            <div class="swiper-slide" id="7">
-                荣耀Pro10
-            </div>
-
+            </div>-->
         </div>
     </div>
 
@@ -48,20 +37,21 @@
 
 <!--产品列表模块-->
 <div class="list">
-    <div class="list-block" title="1">
-        <div class="block-img">
-            <img src="/static/index/images/goods1.jpg">
-        </div>
-        <div class="block-info">
-            <h2>iPhone XR-大屏幕上见-与你相约</h2>
-            <h3>畅想科技未来不得不见的可以来现</h3>
-            <div class="block-info-price">
-                <p>￥2500.00</p>
-                <p>￥3000.00</p>
+    {volist name="Goods" id="g"}
+        <div class="list-block" title="1">
+            <div class="block-img">
+                <img src="{$g.thumbnail}">
+            </div>
+            <div class="block-info">
+                <h2>{$g.title}</h2>
+                <h3>{$g.info}</h3>
+                <div class="block-info-price">
+                    <p>￥{$g.sell_price}</p>
+                    <p>￥{$g.origin_price}</p>
+                </div>
             </div>
         </div>
-
-    </div>
+    {/volist}
 
     <div class="list-block" title="2">
         <div class="block-img">
@@ -170,6 +160,7 @@
 {include file="default/footer" /}
 
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
+{load href="/static/index/js/aoogiLoad.js" /}
 
 <script>
     var categorySwiper = new Swiper('#categorySwiper', {
@@ -178,15 +169,32 @@
         freeModeMomentum:false,
     });
 
-    categorySwiper.on('click',function(){
+ /*   categorySwiper.on('click',function(res){
+
+        console.log(res);
+        console.log(this);
         $(".swiper-slide").removeClass('nav-active');
         $("#"+this.clickedSlide.id).addClass('nav-active');
+    });*/
+
+    //分类slide点击切换
+    $(".classifySlide").on("click",function(){
+        $(".classifySlide").removeClass("nav-active");
+        $(this).addClass("nav-active");
     });
 
     $(".list-block").click(function(){
         //console.log($(this).attr('title'));
         window.location.href="/details";
-    })
+    });
+
+    var dataLoad = aoogiLoad({
+        url:'/goods/pageData',
+        id:'abc',
+        startPage:'1',
+        limit:'20',
+        classify:'5'
+    });
 
 </script>
 
