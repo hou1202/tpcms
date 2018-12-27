@@ -12,14 +12,26 @@
             //追加数据父级ID
             var id = opt.id;
 
-            //数据访问起始页
-            var startPage = opt.startPage;
-
-            //数据访问分页量
-            var limit = opt.limt;
-
             //分类ID
             var classify = opt.classify;
+
+            /*
+            * 数据访问起始页
+            * 默认值   1
+            * */
+            var startPage = 1;
+            if( opt.startPage ) {
+                startPage = opt.startPage;
+            }
+
+            /*
+            * 数据访问分页量
+            * 默认值   20
+            * */
+            var limit = 20;
+            if( opt.limt ) {
+                limt = opt.limt;
+            }
 
             //组装页面数据格式
             var html = $(['<a class="list-block" href="2">',

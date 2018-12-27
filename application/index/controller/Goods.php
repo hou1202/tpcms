@@ -123,14 +123,33 @@ class Goods extends BaseController
 
     public function pageData($id,$page,$limit){
 
-        $resource = GoodsM::field('id,title,info,thumbnail,sell_price,origin_price')
+        $resources = GoodsM::field('id,title,info,thumbnail,sell_price,origin_price')
             ->where('classify_id',$id)
             ->order('id desc')
             ->limit(($page-1)*$limit,$limit)
             ->all()
             ->toArray();
+        $html = null;
+        /*foreach($resources as $resource){
+            $html .='<a class="list-block" href="/goods/'.$resource['id'].'">';
+            $html .='<div class="block-img">';
+            $html .='<img src="'.$resource['thumbnail'].'">';
+            $html .='</div>';
+            $html .='<div class="block-info">';
+            $html .='<h2>'.$resource['title'].'</h2>';
+            $html .='<h3>'.$resource['info'].'</h3>';
+            $html .='<div class="block-info-price">';
+            $html .='<p>￥<span>'.$resource['sell_price'].'</span></p>';
+            $html .='<p>￥<span>'.$resource['origin_price'].'</span></p>';
+            $html .='</div>';
+            $html .='</div>';
+            $html .='</a>';
+        }*/
 
-        return $this->successJson('获取成功','',$resource);
+
+        return $this->successJson('获取成功','',$resources);
+        //echo $html;
+
     }
 
 
