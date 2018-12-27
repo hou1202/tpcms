@@ -178,7 +178,8 @@ layui.define(['jquery', 'utils', 'axios'], function(exports) { //提示：模块
       var that = this;
       var curr = [];
       _.forEach(datas, function(item, index) {
-        if (item.pid === pid)
+        //if (item.pid === pid)
+        if (item.pid == pid)
           curr.push(item);
       });
       if (curr.length > 0) {
