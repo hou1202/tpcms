@@ -23,13 +23,14 @@
 }
 .list .list-block .block-info h2{
   font-size:0.34666666rem;
+  color: #060606;
 }
 .list .list-block .block-info h3{
   font-size:0.32rem;
   color:#505050;
 }
 .list .list-block .block-info h2,h3{
-  color: #060606;
+
   height:0.48rem;
   line-height:0.48rem;
 
