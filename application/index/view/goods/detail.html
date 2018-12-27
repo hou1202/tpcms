@@ -29,8 +29,8 @@
     <div class="title-main">
         <h3>{$Goods.title}</h3>
         <p>{$Goods.info}</p>
-        <span class="left">￥{$Goods.sell_price}</span>
-        <span class="right">￥{$Goods.origin_price}</span>
+        <span class="left">￥{$Goods.sell_price|float}</span>
+        <span class="right">￥{$Goods.origin_price|float}</span>
     </div>
 
     <div class="title-vice">
@@ -86,7 +86,7 @@
                             <img src="{$r.thumbnail}">
                             <div class="recomm-list-con">
                                 <h3>{$r.title}</h3>
-                                <p>￥{$r.sell_price}</p>
+                                <p>￥{$r.sell_price|float}</p>
                             </div>
                         </a>
                     </div>
@@ -188,7 +188,7 @@
         <div class="param-title-middle">
             <h2>{$Goods.title}</h2>
             <div class="param-title-middle-price">
-                <p>￥ </p><span id="goodsPrice">{$Spec.0.price}</span>
+                <p>￥ </p><span id="goodsPrice">{$Spec.0.price|float}</span>
             </div>
             <div class="param-title-middle-price">
                 <p>库存：</p><span id="goodsStock">{$Spec.0.stock}</span>
@@ -213,7 +213,7 @@
                     <input type="radio" name="spec_id" value="{$s.id}"/>
                     <span>{$s.name}</span>
                     <div class="spec-radio-hidden">
-                        <p class="specPrice">{$s.price}</p>
+                        <p class="specPrice">{$s.price|float}</p>
                         <p class="specStock">{$s.stock}</p>
                     </div>
                 </div>

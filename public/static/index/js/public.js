@@ -55,3 +55,28 @@ function timeOutUrl(url , time){
 }
 
 
+
+/*
+ * 数字类型转换
+ * @ param string $value    需转换字符串
+ * @ return float 转换后保留两位小数的浮点数
+ * */
+function changeFloat(value) {
+    var f = parseFloat(value);
+    if (isNaN(f)) {
+        return value;
+    }
+    var f = Math.round(value*100)/100;
+    var s = f.toString();
+    var rs = s.indexOf('.');
+    if (rs < 0) {
+        rs = s.length;
+        s += '.';
+    }
+    while (s.length <= rs + 2) {
+        s += '0';
+    }
+    return s;
+}
+
+

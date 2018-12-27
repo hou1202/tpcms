@@ -97,3 +97,12 @@ function decrypt($txt, $key = '', $ttl = 0){
     }
     return $tmp;
 }
+
+/*
+ * 格式化字符串
+ * @ param string $value    需格式化字符串
+ * @ return float 格式化后保留两位小数的浮点数
+ * */
+function float($value){
+    return number_format($value,2,'.','');
+}
