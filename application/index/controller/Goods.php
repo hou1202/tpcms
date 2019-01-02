@@ -20,7 +20,7 @@ class Goods extends BaseController
      * @ except   排除不需要验证方法
      * */
     protected $middleware = [
-        'UserVerify' => ['except' => ['detail']]
+        'UserVerify' => ['except' => ['detail','index','pageData']]
     ];
 
     /**
@@ -31,13 +31,58 @@ class Goods extends BaseController
      */
     public function index($id)
     {
-
-        $classify = Classify::where('p_id',$id)->select();
-       /* $classId = implode(',',$classify);*/
+        /*$classify = Classify::where('p_id',$id) ->select();*/
+        $classify = Classify::where('p_id',$id)
+            ->whereOr('p_id','=',function($query) use($id){
+                $query->table('classify')->where('id',$id)->where('p_id','<>',0)->field('p_id');
+            })->select();
+        //资源不存在 ，进行分类列表
+        if(!count($classify))
+            return redirect('/classify');
         $resource = GoodsM::whereIn('classify_id',$classify[0]['id'])->select();
         $this->assign('Classify',$classify);
         $this->assign('Goods',$resource);
         return view('goods/list');
+
+    }
+
+    /**
+     * 获取资源列表数据
+     *
+     * @param  int  $id         产品二级分类ID
+     * @param  int  $page       分页起始页
+     * @param  int  $limit      分布显示条数
+     * @return \think\Response
+     */
+    public function pageData($id,$page,$limit){
+
+
+        $resources = GoodsM::field('id,title,info,thumbnail,sell_price,origin_price')
+            ->where('classify_id',$id)
+            ->order('id desc')
+            ->limit(($page-1)*$limit,$limit)
+            ->all()
+            ->toArray();
+        $html = null;
+        /*foreach($resources as $resource){
+            $html .='<a class="list-block" href="/goods/'.$resource['id'].'">';
+            $html .='<div class="block-img">';
+            $html .='<img src="'.$resource['thumbnail'].'">';
+            $html .='</div>';
+            $html .='<div class="block-info">';
+            $html .='<h2>'.$resource['title'].'</h2>';
+            $html .='<h3>'.$resource['info'].'</h3>';
+            $html .='<div class="block-info-price">';
+            $html .='<p>￥<span>'.$resource['sell_price'].'</span></p>';
+            $html .='<p>￥<span>'.$resource['origin_price'].'</span></p>';
+            $html .='</div>';
+            $html .='</div>';
+            $html .='</a>';
+        }*/
+
+
+        return $this->successJson('获取成功','',$resources);
+        //echo $html;
 
     }
 
@@ -121,36 +166,6 @@ class Goods extends BaseController
 
 
 
-    public function pageData($id,$page,$limit){
-
-        $resources = GoodsM::field('id,title,info,thumbnail,sell_price,origin_price')
-            ->where('classify_id',$id)
-            ->order('id desc')
-            ->limit(($page-1)*$limit,$limit)
-            ->all()
-            ->toArray();
-        $html = null;
-        /*foreach($resources as $resource){
-            $html .='<a class="list-block" href="/goods/'.$resource['id'].'">';
-            $html .='<div class="block-img">';
-            $html .='<img src="'.$resource['thumbnail'].'">';
-            $html .='</div>';
-            $html .='<div class="block-info">';
-            $html .='<h2>'.$resource['title'].'</h2>';
-            $html .='<h3>'.$resource['info'].'</h3>';
-            $html .='<div class="block-info-price">';
-            $html .='<p>￥<span>'.$resource['sell_price'].'</span></p>';
-            $html .='<p>￥<span>'.$resource['origin_price'].'</span></p>';
-            $html .='</div>';
-            $html .='</div>';
-            $html .='</a>';
-        }*/
-
-
-        return $this->successJson('获取成功','',$resources);
-        //echo $html;
-
-    }
 
 
 
