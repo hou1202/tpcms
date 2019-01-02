@@ -152,6 +152,9 @@
         </div>-->
 
 </div>
+<div class="load" style='width:100%;height:1.2rem;line-height: 1.2rem;color: #838383;text-align:center;font-size:0.3rem;'>
+    <p id='loadP'></p>
+</div>
 
 
 
@@ -160,10 +163,12 @@
 <!--{include file="default/footer" /}-->
 
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
+<!--
 {load href="/static/index/js/aoogiLoad.js" /}
 {load href="/static/index/js/aoload.js" /}
 {load href="/static/plugin/dropload/dropload.css" /}
 {load href="/static/plugin/dropload/dropload.js" /}
+-->
 
 <script>
     var categorySwiper = new Swiper('#categorySwiper', {
@@ -211,32 +216,66 @@
 
 </script>
 <script>
+    var classify = 5;
 
-    // 页数
-    var page = 0;    // 每页展示5个
-    var size = 8;    // dropload调用
 
-    var classify = 5;    //分类
-    var timer = true;
+    var pageAjax = {
+        pageNo : 1,                 //开始页码
+        pageSize : 6,              //分布数据数量
+        loader : $(".mui-loading"), //加载中
+        endText : $(".mui-end"),     //结束
+        loadMore : $(".mui-more"),  //加载更多
+        promotion_id : $("input[name='promotion_id']").val(),
+        curNavIndex : $(".pro-top .active").data('id'),
+        shiftNav : $(".product-search .pro-top").find("li"),
 
-    var dataLoad = $('#goodsList').dropload({
-        scrollArea : window,
-        loadDownFn : function(me){
-            page++;            // 拼接HTML
-            var result = '';
-            console.log(page);
-            console.log(size);
-            console.log(classify);
-            /*return false;*/
-            $.ajax({
-                type: 'get',
-                url: '/goods/pageData/'+classify+'/'+page+'/'+size,//配合后台接口
-                dataType: 'json',
-                success: function(res){
-                    //return console.log(res);
-                    var arrLen = res.data.length;
-                    if(arrLen > 0){
-                        for(var i=0; i<arrLen; i++){
+        //loadDivC : "<div class='load' style='width:100%;height:1.2rem;line-height: 1.2rem;color: #838383;text-align:center;font-size:0.3rem;'><p id='loadP'></p></div>",
+        loading : "加载中......",
+        loadingUp : "上拉可以加载更多哦@#￥%……&",
+        loadingEnd : "=== 我们的底线已经暴露了 ===",
+        loadDiv : $('.load'),
+        loadP : $('#loadP'),
+        onOff : true,
+
+
+        throttle : function(func,delay){     //延缓滚动加载次数  防止抖动
+            var timer = null;
+            var startTime = Date.now();
+            return function(){
+                var curTime = Date.now();
+                var remaining = delay - (curTime - startTime);
+                var context = this;
+                var args = arguments;
+                clearTimeout(timer);
+                if(remaining <= 0){
+                    func.apply(context,args);
+                    startTime = Date.now();
+                }else{
+                    timer = setTimeout(func,remaining);
+                }
+            }
+        },
+        //获取数据
+        getDataInit : function(dataId){
+            var mui = $;
+            pageAjax.onOff = false;
+            console.log(mui);
+            mui.ajax("/goods/pageData/"+classify+"/"+pageAjax.pageNo+"/"+pageAjax.pageSize+"",{
+                dataType:'json',
+                type:'get',
+                timeout:10000,
+                headers:{'Content-Type':'application/json'},
+                beforeSend:function(){
+                    pageAjax.loadP.html(pageAjax.loading);
+                    /*pageAjax.loader.show();
+                    pageAjax.loadMore.hide();
+                    pageAjax.endText.hide();*/
+                },
+                success:function(res){
+                    console.log(res);
+                    if(res.code == 1){
+                        var result = '';
+                        $.each(res.data,function(i,val){
                             result +=   '<a class="list-block" href="/goods/'+res.data[i].id+'">'
                                 +'<div class="block-img">'
                                 +'<img src="'+res.data[i].thumbnail+'">'
@@ -250,23 +289,94 @@
                                 +'</div>'
                                 +'</div>'
                                 +'</a>';
-                        }                    // 如果没有数据
-                    }else{                        // 锁定
-                        me.lock();                        // 无数据
-                        me.noData();
+                        });
+                        console.log(res.data.length);
+                        $("#goodsList").append(result);     //追加数据
+                        if(res.data.length < pageAjax.pageSize){
+                            pageAjax.loadP.html(pageAjax.loadingEnd);
+                        }else{
+                            pageAjax.onOff = true;
+                            pageAjax.loadP.html(pageAjax.loadingUp);
+                        }
+
+                    }
+                    if(res.code == 0){
+                        pageAjax.onOff = true;
+                        pageAjax.loadP.html(pageAjax.loadingUp);
+                        /*pageAjax.endText.show();
+                        pageAjax.loader.hide();
+                        pageAjax.loadMore.hide();*/
                     }
 
-                    // 插入数据到页面，放到最后面
-                    $('#goodsList').append(result);                        // 每次数据插入，必须重置
-                    me.resetload();
-
+                    /*if(data.code == 200){
+                        var list = data.data;
+                        var html = $("#goodsTemp").render(list);
+                        $("#goodsList").append(html);
+                        pageAjax.loadMore.show();
+                    }
+                    if(data.code == 400){
+                        pageAjax.endText.show();
+                        pageAjax.loader.hide();
+                        pageAjax.loadMore.hide();
+                    }*/
                 },
-                error: function(xhr, type){
-                    /*alert('Ajax error!');*/                    // 即使加载出错，也得重置
-                    me.resetload();
+                error:function(data){
+                    console.log(data);
+                    pageAjax.onOff = true;
                 }
             });
+        },
+        //检查请求情况
+        clickAjax : function(){
+            pageAjax.shiftNav.on("tap",function(){
+                pageAjax.pageNo = 1;             //重置页码为1
+                $("#goodsList").html("");         //清空容器内容
+                pageAjax.loadMore.hide();        //清空加载更多
+                var cat_id = $(this).data("id"); //获取类别id
+                $(this).addClass("active").siblings("li").removeClass("active");
+                pageAjax.getDataInit(cat_id);
+            });
+        },
+        //计算页面滚动情况
+        scrollFuc : function(){
+            $(window).scroll(pageAjax.throttle(function(){
+                var scrollTop = $(this).scrollTop();    //滚动条距离顶部的高度
+                var scrollHeight = $(document).height();   //当前页面的总高度
+                var clientHeight = $(this).height();    //当前可视的页面高度
+                if(scrollTop + clientHeight >= scrollHeight - 200){   //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
+                    if($(".mui-end").is(":hidden")){
+                        pageAjax.pageNo++;
+                        var cat_id = $(".pro-top").find("li.active").data("id");
+                        pageAjax.getDataInit(cat_id);
+                    }else{
+                        pageAjax.loadMore.hide();
+                    }
+                }
+            },2000));
         }
+
+    };
+
+    $(function(){
+        var mui = this;
+       // mui.init();
+        /*$.views.settings.delimiters("<%", "%>");
+        $.views.converters({
+            parseNum: function(value){
+                console.log(value);
+                return parseInt(value);
+            }
+        });*/
+        $(".mui-loading,.mui-end").hide();
+
+
+        /*$('body').append(pageAjax.loadDivC);*/
+        if(!pageAjax.onOff){
+            return false;
+        }
+        pageAjax.clickAjax();
+        pageAjax.scrollFuc();
+        pageAjax.getDataInit(pageAjax.curNavIndex);
     });
 
 </script>

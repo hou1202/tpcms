@@ -151,3 +151,15 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+
+/*加载*/
+/*
+.load{
+  width:100%;
+  height:1.2rem;
+  line-height: 1.2rem;
+  color: #838383;
+  text-align:center;
+  font-size:0.3rem;
+}*/
