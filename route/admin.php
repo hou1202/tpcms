@@ -73,6 +73,11 @@ Route::resource('aoogi/recom','admin/recom')->rest('edit',['GET', '/edit/:id','e
 Route::post('aoogi/recom/data','admin/recom/getData');
 Route::post('aoogi/recom/status','admin/recom/setStatus');
 
+//用户User管理Route
+Route::resource('aoogi/user','admin/user')->rest('edit',['GET', '/edit/:id','edit'])->except(['create','save']);
+Route::post('aoogi/user/data','admin/user/getData');
+Route::post('aoogi/user/status','admin/user/setStatus');
+
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);
 

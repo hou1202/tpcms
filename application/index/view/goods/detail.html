@@ -272,7 +272,7 @@
     /*收藏功能处理*/
     $("#collect").click(function(){
         var _that = $(this);
-        $.post('/goods/collect/'+"{$Goods.id}",'',function(res){
+        $.post('/whether/'+"{$Goods.id}",'',function(res){
             if(res.code === 2){
                 alertConfirm(res.msg);
             }else if(res.code === 1){

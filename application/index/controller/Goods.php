@@ -6,6 +6,7 @@ use app\common\controller\BaseController;
 use app\common\model\Classify;
 use app\common\model\Collect;
 use think\Request;
+use think\facade\Cache;
 
 use app\common\model\Goods as GoodsM;
 use app\common\model\Comments;
@@ -14,14 +15,8 @@ use app\index\common\Users;
 
 class Goods extends BaseController
 {
-    /*
-     * 控制器验证中间键
-     * 验证用户登录情况
-     * @ except   排除不需要验证方法
-     * */
-    protected $middleware = [
-        'UserVerify' => ['except' => ['detail','index','pageData']]
-    ];
+    //产品列表缓存前缀
+    private $goodsVer = 'aooGoods';
 
     /**
      * 显示资源列表
@@ -55,7 +50,10 @@ class Goods extends BaseController
      * @return \think\Response
      */
     public function pageData($id,$page,$limit){
-
+        //获取存在，返回缓存数据
+        if($cacheRes = Cache::get($this->goodsVer.$id.'_'.$page.'_'.$limit)){
+            return $this->successJson('获取成功','',$cacheRes);
+        }
 
         $resources = GoodsM::field('id,title,info,thumbnail,sell_price,origin_price')
             ->where('classify_id',$id)
@@ -63,8 +61,16 @@ class Goods extends BaseController
             ->limit(($page-1)*$limit,$limit)
             ->all()
             ->toArray();
+
+        if($resources){
+            Cache::set($this->goodsVer.$id.'_'.$page.'_'.$limit,$resources,600);
+            return $this->successJson('获取成功','',$resources);
+        }else{
+            return $this->failJson('获取失败');
+        }
+        /*
         $html = null;
-        /*foreach($resources as $resource){
+        foreach($resources as $resource){
             $html .='<a class="list-block" href="/goods/'.$resource['id'].'">';
             $html .='<div class="block-img">';
             $html .='<img src="'.$resource['thumbnail'].'">';
@@ -78,11 +84,11 @@ class Goods extends BaseController
             $html .='</div>';
             $html .='</div>';
             $html .='</a>';
-        }*/
+        }
+        */
 
 
-        return $this->successJson('获取成功','',$resources);
-        //echo $html;
+
 
     }
 
@@ -132,37 +138,9 @@ class Goods extends BaseController
         return view();
     }
 
-    /**
-     * 收藏/取消 产品
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function collect($id)
-    {
-        $user = Users::user();
-        $collect = Collect::where('user_id',$user['id'])->where('goods_id',$id)->find();
-        if($collect)//取消收藏
-            return $collect->delete() ? $this->successJson('取消收藏成功') : $this->failJson('取消收藏失败');
-        //收藏
-        if(Collect::create(['user_id'=>$user['id'], 'goods_id'=>$id]))
-            return $this->successJson('收藏成功');
-        return $this->failJson('收藏失败');
-    }
 
-    /**
-     * 评论点赞
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function agree($id)
-    {
-        if(!$comments = Comments::get($id))
-            return $this->failJson('非有效评论信息');
-        return $comments->setInc('laud') ? $this->successJson('听说点赞的人最美！') : $this ->failJson('系统打盹，再来一次！');
-    }
+
+
 
 
 

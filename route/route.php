@@ -30,8 +30,8 @@ Route::get('/personal','index/personal/index');
 /*产品路由*/
     Route::get('goods/index/:id','index/goods/index');               //产品列表
     Route::get('goods/:id','index/Goods/detail');               //产品详情
-    Route::post('goods/collect/:id','index/goods/collect');     //收藏产品
-    Route::post('agree/:id','index/goods/agree');           //评论点赞
+    Route::post('whether/:id','index/collect/whether');     //收藏产品
+    Route::post('agree/:id','index/collect/agree');           //评论点赞
     Route::get('goods/pageData/:id/:page/:limit','index/goods/pageData');           //分页产品数据
     Route::post('car/join/:goods_id','index/car/join')->pattern(['goods_id'=> '\d+',]);           //加入购物车
     Route::post('car/buy/:goods_id','index/car/buy')->pattern(['goods_id'=> '\d+',]);           //立即购买
