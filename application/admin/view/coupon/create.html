@@ -1,0 +1,195 @@
+
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form" id="userForm" lay-filter="formVal">
+
+                            <input type="hidden" name="_method" value="PUT" />
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">用户昵称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="name" lay-verify="required|title" autocomplete="off"  placeholder="用户昵称" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">手机号码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" readonly autocomplete="off"  class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">帐户密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" autocomplete="off" lay-verify="pwd" placeholder="******" class="layui-input">
+                                </div>
+                            </div>
+
+
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">帐户余额</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="balance" lay-verify="required|balance" autocomplete="off"  placeholder="帐户余额" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">生日</label>
+                                <div class="layui-input-inline">
+                                    <input type="date" name="birthday"  lay-verify="date" autocomplete="off" placeholder="生日" class="layui-input">
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">帐户状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="checkbox"  name="status" value="1" lay-skin="switch" lay-text="正常|禁用">
+                                </div>
+                            </div>
+
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="form_submit">立即提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--上传文件引入文件-->
+{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/js/diyUpload.js" /}
+
+<script>
+  layui.use(['form', 'route', 'jquery'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        route = layui.route,
+        layer = layui.layer;
+
+    //设置nav标题
+    $("#navTitle").text(route.getRoute().name);
+
+    //表单渲染
+    form.render();
+
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 1 || value.length > 15) {
+                return '昵称长度应在1-15个字符之间';
+            }
+        },
+        pwd: function(value) {
+            if(value != '')
+            if (value.length < 6) {
+                return "密码长度不得小于6个字符";
+            }
+        },
+        balance:[/^\d*(?:.\d{0,2})?$/, '帐户余额设置有误'],
+    });
+
+    //监听recom提交
+    form.on('submit(form_submit)', function(data) {
+
+        if(!data.field.status)
+            data.field.status = 0;
+
+        $.post("/aoogi/user/",data.field,function(res){
+            layer.msg(res.msg);
+            if(res.url)
+                window.location.href = "#" + res.url;
+            return false;
+        });
+        return false;
+    });
+
+  });
+</script>
+
+
+<script>
+
+    //上传图片
+    /*缩略图执行实例*/
+    $('#thumbnailUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:false,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/uploader',
+        //最大上传的文件数量
+        fileNumLimit:1,
+        //总文件大小(单位字节);
+        fileSizeLimit:500000 * 1024,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:50000 * 1024,
+        //自定义内容信息
+        custom:{
+            inputName:'portrait',
+        },
+        success:function( data ) {
+            if(data.error == 0)
+                $(".thumbnailList").hide();
+                $(".upload-pick").hide();
+        },
+        error:function( err ) { }
+    });
+
+
+</script>
+
+
+<style scoped>
+
+</style>

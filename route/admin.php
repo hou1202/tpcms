@@ -78,6 +78,11 @@ Route::resource('aoogi/user','admin/user')->rest('edit',['GET', '/edit/:id','edi
 Route::post('aoogi/user/data','admin/user/getData');
 Route::post('aoogi/user/status','admin/user/setStatus');
 
+//优惠券Coupon管理Route
+Route::resource('aoogi/coupon','admin/coupon')->rest('edit',['GET', '/edit/:id','edit'])->except(['']);
+Route::post('aoogi/coupon/data','admin/coupon/getData');
+Route::post('aoogi/coupon/status','admin/coupon/setStatus');
+
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);
 
