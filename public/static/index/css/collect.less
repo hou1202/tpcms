@@ -7,20 +7,34 @@
 .list{
     .list-block{
         .block-del{
-            padding:12/@rem 0;
+            padding:9/@rem 75/@rem;
             button{
-                width:150/@rem;
+                width:54/@rem;
                 height:54/@rem;
                 line-height:54/@rem;
                 font-size:24/@rem;
                 color:#525252;
                 border:1px solid #cc7f15;
-                border-radius:15/@rem;
+                border-radius:50%;
                 background:none;
                 &:last-child{
                     float:right;
                 }
             }
+            i{
+                display:block;
+                width:45/@rem;
+                height:45/@rem;
+                margin:0 auto;
+            }
         }
     }
+}
+i.c_car{
+    background:url(/static/index/images/c_car.png) no-repeat center center;
+    background-size: 45/@rem;
+}
+i.c_del{
+    background:url(/static/index/images/c_del.png) no-repeat center center;
+    background-size: 45/@rem;
 }

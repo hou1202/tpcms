@@ -8,8 +8,10 @@ use app\index\common\Users;
 use app\common\model\Collect as CollectM;
 use app\common\model\Comments;
 
+/*收藏Collect控制器*/
 class Collect extends IndexController
 {
+
     /**
      * 显示资源列表
      *
@@ -17,7 +19,9 @@ class Collect extends IndexController
      */
     public function index()
     {
-        //
+        $resource = CollectM::where('user_id',$this->user_info['id'])->select();
+        $this->assign('Collect',$resource);
+        return view('personal/collect');
     }
 
     /**

@@ -43,7 +43,8 @@ Route::post('forget','index/forget/forget');
 /*个人中心*/
     Route::get('personal','index/personal/index');     //个人主页
     Route::resource('address','index/address')->except(['read']);     //收货地址
-    Route::post('address/choice/:id','index/address/choice');
+    Route::post('address/choice/:id','index/address/choice');       //默认收货地址设置
+    Route::get('collect','index/collect/index');
 
 
 
@@ -72,7 +73,7 @@ Route::get('/data','index/index/personalData');
 Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
 Route::get('/coupon','index/index/coupon');
-Route::get('/collect','index/index/collect');
+
 Route::get('/wallet','index/index/wallet');
 Route::get('/integral','index/index/integral');
 

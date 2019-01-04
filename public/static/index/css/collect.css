@@ -1,18 +1,32 @@
 
 
 .list .list-block .block-del{
-    padding:0.16rem 0;
+    padding:0.12rem 1rem;
 }
 .list .list-block .block-del button{
-    width:2rem;
+    width:0.72rem;
     height:0.72rem;
     line-height:0.72rem;
     font-size:0.32rem;
     color:#525252;
     border:1px solid #cc7f15;
-    border-radius:0.2rem;
+    border-radius:50%;
     background:none;
 }
 .list .list-block .block-del button:last-child{
     float:right;
+}
+.block-del i{
+    display:block;
+    width:0.6rem;
+    height:0.6rem;
+    margin:0 auto;
+}
+i.c_car{
+    background:url(/static/index/images/c_car.png) no-repeat center center;
+    background-size: 0.6rem;
+}
+i.c_del{
+    background:url(/static/index/images/c_del.png) no-repeat center center;
+    background-size: 0.6rem;
 }
