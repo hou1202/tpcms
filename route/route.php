@@ -24,9 +24,6 @@ Route::post('register','index/register/register');
 Route::get('forget','index/forget/index');
 Route::post('forget','index/forget/forget');
 
-//个人中心
-Route::get('/personal','index/personal/index');
-
 /*产品路由*/
     Route::get('goods/index/:id','index/goods/index');               //产品列表
     Route::get('goods/:id','index/Goods/detail');               //产品详情
@@ -37,10 +34,17 @@ Route::get('/personal','index/personal/index');
     Route::post('car/buy/:goods_id','index/car/buy')->pattern(['goods_id'=> '\d+',]);           //立即购买
 
     //分类页面
-    Route::get('classify','index/classify/index');
+    Route::get('classify','index/classify/index')->except(['read']);
 
     //购物车Route
-    Route::get('/car','index/car/index');
+    Route::get('car','index/car/index');
+
+
+/*个人中心*/
+    Route::get('personal','index/personal/index');     //个人主页
+    Route::resource('address','index/address')->except(['read']);     //收货地址
+    Route::post('address/choice/:id','index/address/choice');
+
 
 
 
@@ -63,8 +67,8 @@ Route::get('/pay','index/index/pay');
 Route::get('/list','index/index/goodsList');
 Route::get('/personal','index/index/personal');
 Route::get('/data','index/index/personalData');
-Route::get('/address','index/index/address');
-Route::get('/addressCreate','index/index/addressCreate');
+
+
 Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
 Route::get('/coupon','index/index/coupon');

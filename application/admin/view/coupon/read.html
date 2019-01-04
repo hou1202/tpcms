@@ -1,4 +1,11 @@
-
+<style>
+    .typeOpt{
+        display:none;
+    }
+    .typeActive{
+        display:block;
+    }
+</style>
 <div class="layui-fluid">
     <div class="layui-row">
         <div class="layui-col-xs12">
@@ -15,73 +22,56 @@
 
                     <div class="layui-card-body">
 
-                        <form class="layui-form" id="userForm" lay-filter="formVal">
+                        <form class="layui-form" id="couponForm" lay-filter="formVal">
 
-                            <input type="hidden" name="_method" value="PUT" />
+                            <input type="hidden" name="_method" value="PUT" >
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">用户昵称</label>
+                                <label class="layui-form-label">优惠券标题</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" readonly value="{$User.name}"  class="layui-input">
+                                    <input type="text" name="title" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">手机号码</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" readonly autocomplete="off" value="{$User.phone}" class="layui-input">
+                                <label class="layui-form-label">优惠券类型</label>
+                                <div class="layui-input-inline ">
+                                    <input type="text" name="type_text" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户密码</label>
-                                <div class="layui-input-inline">
-                                    <input type="password" readonly placeholder="******" class="layui-input">
+                                <label class="layui-form-label">关联标题</label>
+                                <div class="layui-input-inline ">
+                                    <input type="text" name="relation_title" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">用户头像</label>
+                                <label class="layui-form-label">满足金额</label>
                                 <div class="layui-input-inline">
-                                    <ul class="upload-ul clearfix">
-
-                                        <li id="fileBox_WU_FILE" class="thumbnailList">
-                                            <div class="viewThumb">
-                                                <img src="{$User.portrait}" style="width:100px;height:100px">
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-
-                            </div>
-
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户余额</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" readonly value="{$User.balance}" class="layui-input">
+                                    <input type="number" name="money_satisfy" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">性别</label>
+                                <label class="layui-form-label">减免金额</label>
                                 <div class="layui-input-inline">
-                                    <input type="checkbox" {$User.sex ?="checked"} disabled lay-skin="switch" lay-text="男|女">
+                                    <input type="number" name="money_derate" readonly class="layui-input">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">生日</label>
+                                <label class="layui-form-label">有效时间</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" readonly value="{$User.birthday}"  class="layui-input">
+                                    <input type="text" name="end_time"  readonly class="layui-input">
                                 </div>
                             </div>
 
-
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户状态</label>
+                                <label class="layui-form-label">优惠券状态</label>
                                 <div class="layui-input-inline">
-                                    <input type="checkbox" {$User.status ?="checked"} disabled lay-skin="switch" lay-text="正常|禁用">
+                                    <input type="checkbox"  disabled  {$Coupon.status ?= "checked" } lay-skin="switch" lay-text="发放|待发">
                                 </div>
                             </div>
 
@@ -108,10 +98,20 @@
     //表单渲染
     form.render();
 
+    //表单默认值
+    form.val("formVal", {
+      "title": "{$Coupon.title}",
+      "type_text":"{$Coupon.type_text}",
+      "goods_id":"{$Coupon.goods_id}",
+      "classify_id":"{$Coupon.classify_id}",
+      "money_satisfy":"{$Coupon.money_satisfy}",
+      "money_derate":"{$Coupon.money_derate}",
+      "end_time":"{$Coupon.end_time}",
+      "relation_title":"{$Coupon.relation_title}",
+    });
 
   });
 </script>
-
 
 
 

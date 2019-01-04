@@ -79,7 +79,7 @@ Route::post('aoogi/user/data','admin/user/getData');
 Route::post('aoogi/user/status','admin/user/setStatus');
 
 //优惠券Coupon管理Route
-Route::resource('aoogi/coupon','admin/coupon')->rest('edit',['GET', '/edit/:id','edit'])->except(['']);
+Route::resource('aoogi/coupon','admin/coupon')->rest('edit',['GET', '/edit/:id','edit']);
 Route::post('aoogi/coupon/data','admin/coupon/getData');
 Route::post('aoogi/coupon/status','admin/coupon/setStatus');
 

@@ -7,7 +7,7 @@
 
 <!--头部标题模块-->
 <header class="header-title">
-    <a href="Javascript:history.go(-1);">
+    <a href="/personal">
         <img src="/static/index/images/back.png">
     </a>
     <h2>收货地址</h2>
@@ -16,40 +16,25 @@
 <!--列表模块-->
 <div class="address">
 
-    <div class="address-list">
-        <div class="list-top">
-            <p>李白</p>
-            <p>13564078415</p>
+    {volist name="Address" id="a"}
+        <div class="address-list">
+            <div class="list-top">
+                <p>{$a.name}</p>
+                <p>{$a.phone}</p>
+            </div>
+            <div class="list-middle">
+                <p>{$a.city}</p>
+                <p>{$a.street}</p>
+            </div>
+            <div class="list-bottom">
+                <i class="circle {$a.choice ?='circle-active'}" data-id="{$a.id}"></i>
+                <a href="/address/{$a.id}/edit">编辑</a>
+                <a data-id="{$a.id}" class="del">删除</a>
+            </div>
         </div>
-        <div class="list-middle">
-            <p>安徽省 . 合肥市 . 蜀山区</p>
-            <p>望江西路亚夏汽车大厦1902室</p>
-        </div>
-        <div class="list-bottom">
-            <i class="circle circle-active"></i>
-            <a href="">编辑</a>
-            <a href="">删除</a>
-        </div>
-    </div>
+    {/volist}
 
-    <div class="address-list">
-        <div class="list-top">
-            <p>李白</p>
-            <p>13564078415</p>
-        </div>
-        <div class="list-middle">
-            <p>安徽省 . 合肥市 . 蜀山区</p>
-            <p>望江西路亚夏汽车大厦1902室</p>
-        </div>
-        <div class="list-bottom">
-            <i class="circle"></i>
-            <a href="">编辑</a>
-            <a href="">删除</a>
-        </div>
-
-    </div>
-
-    <div class="address-list">
+    <!--<div class="address-list">
         <div class="list-top">
             <p>李白</p>
             <p>13564078415</p>
@@ -82,17 +67,33 @@
         </div>
 
     </div>
+
+    <div class="address-list">
+        <div class="list-top">
+            <p>李白</p>
+            <p>13564078415</p>
+        </div>
+        <div class="list-middle">
+            <p>安徽省 . 合肥市 . 蜀山区</p>
+            <p>望江西路亚夏汽车大厦1902室</p>
+        </div>
+        <div class="list-bottom">
+            <i class="circle"></i>
+            <a href="">编辑</a>
+            <a href="">删除</a>
+        </div>
+
+    </div>-->
 
 
 </div>
 
 <!--引入加载footer文件-->
-<div class="bottom-content"></div>
+
 <div class="bottom">
-    <a href="/addressCreate">
+    <a href="/address/create">
         <i></i>
     </a>
-
 </div>
 
 </body>
@@ -101,16 +102,43 @@
 
 <script>
 
+    /**
+    * 更新默认地址
+    * */
     $(".circle").click(function(){
-        $(".circle").removeClass('circle-active');
-        $(this).addClass('circle-active');
+        var id = $(this).attr('data-id');
+        var _that = $(this);
+        $.post('/address/choice/'+id,'',function(obj){
+            if(obj.code == 1){
+                alertConfirm(obj.msg);
+                $(".circle").removeClass('circle-active');
+                _that.addClass('circle-active');
+            }else{
+                alertConfirm(obj.msg);
+            }
+
+        });
+    });
+
+    /**
+     * 删除地址
+     * */
+    $(".del").click(function(){
+        var id = $(this).attr('data-id');
+        var _that = $(this);
+        $.post('/address/'+id,{'_method':'DELETE'},function(obj){
+            if(obj.code == 1){
+                alertConfirm(obj.msg);
+                _that.parent().parent().remove();
+            }else{
+                alertConfirm(obj.msg);
+            }
+
+        });
     });
 
 
-    //数据提交
-    $("#dataSubmit").click(function(){
-        console.log($("#dataForm").serializeArray()); //这里可以得到后台返回的数据
-    });
+
 
 </script>
 

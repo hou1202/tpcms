@@ -35,4 +35,33 @@ class Coupon extends Model
     use SoftDelete;
     protected $deleteTime = 'delete_time';
     protected $defaultSoftDelete = 0;
+
+
+    //设置产品ID写入格式化
+    public function setGoodsIdAttr($value){
+        if(!empty($value))
+            return $value;
+    }
+
+    //设置分类ID写入格式化
+    public function setClassifyIdAttr($value){
+        if(!empty($value))
+            return $value;
+    }
+
+    //设置结束时间转化为时间戳
+    public function setEndTimeAttr($value){
+        return strtotime($value);
+    }
+
+    //设置结束时间戳转化为日期
+    public function getEndTimeAttr($value){
+        return date('Y-m-d',$value);
+    }
+
+    //设置类型文字状态
+    public function getTypeTextAttr($value,$data){
+        $type_text = [1=>"通用型",2=>"产品型",3=>"分类型"];
+        return $type_text[$data['type']];
+    }
 }

@@ -1,4 +1,8 @@
-
+<style>
+    .typeOpt{
+        display:none;
+    }
+</style>
 <div class="layui-fluid">
     <div class="layui-row">
         <div class="layui-col-xs12">
@@ -15,60 +19,82 @@
 
                     <div class="layui-card-body">
 
-                        <form class="layui-form" id="userForm" lay-filter="formVal">
-
-                            <input type="hidden" name="_method" value="PUT" />
+                        <form class="layui-form" id="couponForm" lay-filter="formVal">
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">用户昵称</label>
+                                <label class="layui-form-label">优惠券标题</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="name" lay-verify="required|title" autocomplete="off"  placeholder="用户昵称" class="layui-input">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off"  placeholder="优惠券标题" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">手机号码</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" readonly autocomplete="off"  class="layui-input">
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户密码</label>
-                                <div class="layui-input-inline">
-                                    <input type="password" name="password" autocomplete="off" lay-verify="pwd" placeholder="******" class="layui-input">
-                                </div>
-                            </div>
-
-
-
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户余额</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="balance" lay-verify="required|balance" autocomplete="off"  placeholder="帐户余额" class="layui-input">
+                                <label class="layui-form-label">优惠券类型</label>
+                                <div class="layui-input-inline ">
+                                    <select name="type" lay-verify="required|number|cType" lay-filter="typeSelect">
+                                        <option value="1">全场通用型</option>
+                                        <option value="2">指定产品型</option>
+                                        <option value="3">指定分类型</option>
+                                    </select>
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
+                            <div class="layui-form-item layui-input-md typeOpt" id="typeClassify">
+                                <label class="layui-form-label">链接分类</label>
+                                <div class="layui-input-inline ">
+                                    <select name="classify_id" lay-search=""  lay-filter="classifySelect">
+                                        <option value="">搜索或选择分类</option>
+                                        {volist name="Classify" id="data"}
+                                            <option value="{$data.id}">{$data.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
 
-
-                            <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">生日</label>
+                            <div class="layui-form-item layui-input-md typeOpt" id="typeGoods">
+                                <label class="layui-form-label">链接产品</label>
                                 <div class="layui-input-inline">
-                                    <input type="date" name="birthday"  lay-verify="date" autocomplete="off" placeholder="生日" class="layui-input">
+                                    <input type="text"  placeholder="选择链接产品" readonly id="goodsTitle" class="layui-input">
+                                    <input type="hidden" name="goods_id" id="goodsValue" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux" style="padding:4px 0!important;">
+                                    <button type="button" id="selectGoods" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i>选择商品</button>
                                 </div>
                             </div>
 
-
                             <div class="layui-form-item layui-input-md">
-                                <label class="layui-form-label">帐户状态</label>
+                                <label class="layui-form-label">满足金额</label>
                                 <div class="layui-input-inline">
-                                    <input type="checkbox"  name="status" value="1" lay-skin="switch" lay-text="正常|禁用">
+                                    <input type="number" name="money_satisfy" lay-verify="required|price" autocomplete="off"  placeholder="满足金额（若为0或为空，则无条件使用）" class="layui-input">
                                 </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
                             </div>
 
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">减免金额</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="money_derate" lay-verify="required|price" autocomplete="off"  placeholder="减免金额:10" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
 
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">有效时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="end_time" id="endTime" lay-verify="required|date" placeholder="有效时间:yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">优惠券状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="checkbox"  name="status" value="1" lay-skin="switch" lay-text="发放|待发">
+                                </div>
+                            </div>
 
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -82,19 +108,37 @@
         </div>
     </div>
 </div>
+<div class="layui-card" id="goodsTips" style="display:none">
+    <div class="layui-card-header">
+        <div class="self-search">
+            <form class="layui-form">
+                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索产品关键字..." />
+                <button class="self-search-btn" lay-submit lay-filter="searchSubmit">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card-body">
+        <!--表格主体-->
+        <table id="tableHash" lay-filter="tIndex"></table>
 
+        <!--状态显示控制-->
+        <script type="text/html" id="showStatus">
+            <input type="checkbox"  disabled lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="上架|下架" >
+        </script>
 
-<!--上传文件引入文件-->
-{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
-{load href="/static/plugin/aoupload/css/globle.css" /}
-{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
-{load href="/static/plugin/aoupload/js/diyUpload.js" /}
+    </div>
+</div>
+
 
 <script>
-  layui.use(['form', 'route', 'jquery'], function() {
+  layui.use(['form', 'route', 'jquery','table','laydate'], function() {
     var $ = layui.jquery,
         form = layui.form,
         route = layui.route,
+        table = layui.table,
+        laydate = layui.laydate,
         layer = layui.layer;
 
     //设置nav标题
@@ -103,30 +147,58 @@
     //表单渲染
     form.render();
 
+    //日期渲染
+    laydate.render({
+      elem: '#endTime'
+    });
+
 
     //自定义验证规则
     form.verify({
         title: function(value) {
-            if (value.length < 1 || value.length > 15) {
-                return '昵称长度应在1-15个字符之间';
+            if (value.length < 1 || value.length > 30) {
+                return '标题长度应在1-30个字符之间';
             }
         },
-        pwd: function(value) {
-            if(value != '')
-            if (value.length < 6) {
-                return "密码长度不得小于6个字符";
+        goodsID: function(value) {
+            if(value != ''){
+                var re = /^[1-9]+[0-9]*]*$/;
+                if (!re.test(value))
+                {
+                    return '产品选择有误';
+                }
             }
         },
-        balance:[/^\d*(?:.\d{0,2})?$/, '帐户余额设置有误'],
+        cType:[/[1|2|3]/,'优惠券类型有误'],
+        price: [/^\d*(?:.\d{0,2})?$/, '价格设置有误；例：10 或10.50'],
     });
 
-    //监听recom提交
+    //监听coupon提交
     form.on('submit(form_submit)', function(data) {
 
-        if(!data.field.status)
-            data.field.status = 0;
+        //验证类型选择
+        switch(data.field.type){
+            case "1":
+                break;
+            case "2":
+                if(!(/^[1-9]\d*$/).test(data.field.goods_id)){
+                    layer.msg('产品选择有误');
+                    return false;
+                }
+                break;
+            case "3":
+                if(!(/^[1-9]\d*$/).test(data.field.classify_id)){
+                    layer.msg('分类选择有误');
+                    return false;
+                }
+                break;
+            default :
+                layer.msg('优惠券类型有误');
+                return false;
+                break;
+        }
 
-        $.post("/aoogi/user/",data.field,function(res){
+        $.post("/aoogi/coupon",data.field,function(res){
             layer.msg(res.msg);
             if(res.url)
                 window.location.href = "#" + res.url;
@@ -135,59 +207,94 @@
         return false;
     });
 
+    //监听Coupon类型选择
+    form.on('select(typeSelect)',function(data){
+      $(".typeOpt").hide().find("input,select").val('');
+      switch(data.value){
+          case "1":
+              break;
+          case "2":
+              $("#typeGoods").show();
+              break;
+          case "3":
+              $("#typeClassify").show();
+              break;
+          default :
+              break;
+      }
+    });
+
+    //弹层产品选择
+    $("#selectGoods").on("click",function(){
+      layer.open({
+          type: 1,
+          title: '选择链接产品', //不显示标题栏
+          closeBtn: false,
+          area: ['800px', '500px'],
+          shade: 0,
+          shadeClose: true,
+          id: 'LAY_layuipro_hash', //设定一个id，防止重复弹出
+          btn: ['确定', '关闭'],
+          btnAlign: 'c',
+          moveType: 1 ,//拖拽模式，0或者1
+          content: $("#goodsTips"),
+          end: function(){    //层销毁后触发的回调
+              //隐藏弹层
+              $("#goodsTips").hide();
+          },
+          yes: function(index, layero){   //确定按钮回调方法
+              $("#goodsTitle").val(checkGoods.title);
+              $("#goodsValue").val(checkGoods.id);
+              layer.close(index); //如果设定了yes回调，需进行手工关闭
+          }
+      });
+    });
+
+    //监听搜索提交
+    form.on('submit(searchSubmit)', function(data) {
+      if(data.field.keyword === ''){
+          layer.msg('请输入搜索关键词');
+          return false;
+      }
+      tableLoad.reload({
+          where:{keyword:data.field.keyword}
+      });
+      return false;
+    });
+
+    /*
+    * 监听Radio链接产品选择
+    * @ checkGoods  array   定义选择产品接收变量
+    * */
+    var checkGoods = '';
+    table.on('radio(tIndex)', function(obj){
+      checkGoods=obj.data;
+    });
+
+    //表格数据获取及定义
+    var tableLoad = table.render({
+      method: 'post',
+      limit: 10,
+      limits:[10,20],
+      elem: '#tableHash',
+      id: 'tableHash',
+      height: 'full-235',
+      url: '/aoogi/goods/data', //数据接口
+      text:'我们很努力，但是没有数据哦 ^_^',
+      page: true, //开启分页
+      cols: [   //表头
+          [
+              {field: 'id', title: 'ID', align: 'center', width:100},
+              {field: 'title', title: '产品名称', align: 'center', width:459},
+              {field: 'status', title: '产品状态', width:100, align: 'center', templet:'#showStatus'},
+              {fixed: 'right', field:'id' ,title:'选择', align: 'center', width: 100, type: 'radio'}
+          ]
+      ]
+    });
+
   });
 </script>
 
-
-<script>
-
-    //上传图片
-    /*缩略图执行实例*/
-    $('#thumbnailUpload').diyUpload({
-        buttonText : '',
-        //类型限制;
-        accept: {
-            title: "Images",
-            extensions: 'jpg,jpeg,png'
-        },
-        //配置生成缩略图的选项
-        thumb:{
-            width:50,
-            height:50,
-            quality:100,
-            allowMagnify:true,
-            crop:true,
-            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
-        },
-        swf:"/static/plugin/aoupload/Uploader.swf",
-        //是否支持多文件上传
-        multiple:false,
-        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
-        auto:true,
-        //文件上传方式,POST或者GET
-        method:"POST",
-        //服务器地址;
-        server:'/uploader',
-        //最大上传的文件数量
-        fileNumLimit:1,
-        //总文件大小(单位字节);
-        fileSizeLimit:500000 * 1024,
-        //单个文件大小(单位字节);
-        fileSingleSizeLimit:50000 * 1024,
-        //自定义内容信息
-        custom:{
-            inputName:'portrait',
-        },
-        success:function( data ) {
-            if(data.error == 0)
-                $(".thumbnailList").hide();
-                $(".upload-pick").hide();
-        },
-        error:function( err ) { }
-    });
-
-
-</script>
 
 
 <style scoped>

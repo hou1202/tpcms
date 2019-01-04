@@ -305,8 +305,7 @@
 
         if(!data.field.status)
             data.field.status = 0;
-        console.log(data.field);
-        //return false;
+
         $.post("/aoogi/banner/"+"{$Banner.id}",data.field,function(res){
             layer.msg(res.msg);
             if(res.url)

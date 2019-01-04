@@ -1,9 +1,4 @@
-<style>
-    .layui-table-cell{
-        height:35px !important;
-        line-height:35px !important;
-    }
-</style>
+
 <div class="layui-fluid">
     <div class="layui-row">
         <div class="layui-col-xs12">
@@ -44,12 +39,7 @@
 
                         <!--状态显示控制-->
                         <script type="text/html" id="setStatus">
-                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="正常|禁用" value="{{d.id}}">
-                        </script>
-
-                        <!--缩略图显示控制-->
-                        <script type="text/html" id="setImg">
-                            <img src="{{d.portrait}}" alt="" style="width:35px;height:35px;">
+                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="已发放|待发放" value="{{d.id}}">
                         </script>
 
                     </div>
@@ -81,26 +71,26 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/aoogi/user/data', //数据接口
+            url: '/aoogi/coupon/data', //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
                     {
                         field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
                     }, {
-                        field: 'name', title: '用户昵称',  align: 'center'
+                        field: 'title', title: '优惠券标题',  align: 'center'
                     }, {
-                        field: 'portrait', title: '头像', align: 'center', minWidth: 80, templet:'#setImg'
+                        field: 'type_text', title: '类型', align: 'center'
                     }, {
-                        field: 'phone', title: '手机号码', align: 'center'
+                        field: 'relation_title', title: '关联标题', align: 'center'
                     }, {
-                        field: 'balance', title: '帐户余额', align: 'center'
+                        field: 'money_satisfy', title: '条件金额', align: 'center'
                     }, {
-                        field: 'sex_text', title: '性别',align: 'center'
+                        field: 'money_derate', title: '减免金额',align: 'center'
                     }, {
-                        field: 'birthday', title: '生日', align: 'center'
+                        field: 'end_time', title: '结束时间', align: 'center'
                     }, {
-                        field: 'status', title: '帐户状态',align: 'center', minWidth: 100, templet:'#setStatus'
+                        field: 'status', title: '发放状态',align: 'center', minWidth: 100, templet:'#setStatus'
                     },{
                         fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
                     }
@@ -111,7 +101,7 @@
         //监听状态开关
         form.on('switch(switchStatus)', function(data) {
             var status = this.checked ? 1 : 0 ;
-            $.post("/aoogi/user/status",{"id":data.value,"status":status},function(res){
+            $.post("/aoogi/coupon/status",{"id":data.value,"status":status},function(res){
                 layer.msg(res.msg);
                 tableLoad.reload();
             });
@@ -121,12 +111,12 @@
         //操作栏监听
         table.on('tool(tIndex)',function(obj){
             if(obj.event === 'detail'){
-                window.location.href ='#/aoogi/user/read/'+obj.data.id;
+                window.location.href ='#/aoogi/coupon/read/'+obj.data.id;
             }else if(obj.event === 'edit'){
-                window.location.href ='#/aoogi/user/edit/'+obj.data.id;
+                window.location.href ='#/aoogi/coupon/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该用户?', {icon: 3, title:'提示'}, function(index){
-                    $.post('/aoogi/user/'+obj.data.id,{'_method':'DELETE'},function(res){
+                layer.confirm('确定删除该优惠券?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/aoogi/coupon/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.msg);
                         table.reload('tableHash');
                     });
