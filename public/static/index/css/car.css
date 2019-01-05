@@ -85,7 +85,7 @@ body{
 }
 .car .car-list .car-list-cont{
   padding-left:0.4rem;
-  min-width:5rem;
+  width:5rem;
   height:2.4rem;
   float:left;
 }
@@ -213,6 +213,26 @@ body{
 
 
 }
+
+
+
+@media screen and (min-width: 550px) {
+  .car .car-list .car-list-cont{
+    width:7rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .car .car-list .car-list-cont{
+    width:8rem;
+  }
+}
+@media screen and (min-width: 750px) {
+  .car .car-list .car-list-cont{
+    width:10.6rem;
+  }
+}
+
 
 
 

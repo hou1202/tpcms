@@ -26,4 +26,6 @@ class Collect extends Model
      * $field   开启数据表字段验证
      * */
     protected $field = true;
+
+
 }

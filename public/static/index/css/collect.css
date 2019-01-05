@@ -2,6 +2,7 @@
 
 .list .list-block .block-del{
     padding:0.12rem 1rem;
+    overflow: hidden;
 }
 .list .list-block .block-del button{
     width:0.72rem;

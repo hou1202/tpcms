@@ -31,7 +31,7 @@ Route::post('forget','index/forget/forget');
     Route::post('agree/:id','index/collect/agree');           //评论点赞
     Route::get('goods/pageData/:id/:page/:limit','index/goods/pageData');           //分页产品数据
     Route::post('car/join/:goods_id','index/car/join')->pattern(['goods_id'=> '\d+',]);           //加入购物车
-    Route::post('car/buy/:goods_id','index/car/buy')->pattern(['goods_id'=> '\d+',]);           //立即购买
+    Route::post('car/buy','index/car/buy');           //立即购买
 
     //分类页面
     Route::get('classify','index/classify/index')->except(['read']);

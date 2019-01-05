@@ -273,14 +273,10 @@
     $("#collect").click(function(){
         var _that = $(this);
         $.post('/whether/'+"{$Goods.id}",'',function(res){
-            if(res.code === 2){
-                alertConfirm(res.msg);
-            }else if(res.code === 1){
-                alertConfirm(res.msg);
-                _that.children("i").toggleClass('icon-col-active')
-            }else{
-                alertConfirm(res.msg);
-            }
+            if(res.code === 1)
+                _that.children("i").toggleClass('icon-col-active');
+
+            alertConfirm(res.msg);
             return false
         });
     });

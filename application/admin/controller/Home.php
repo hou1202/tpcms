@@ -25,7 +25,7 @@ class Home extends AdminController
     public function home()
     {
         if(!$admin = User::user()) return redirect(Request::domain().'/adminLogin');
-        $info = \app\admin\model\Config::field('param')->where('id','in',[1,2])->select();
+        $info = \app\common\model\Config::field('param')->where('id','in',[1,2])->select();
         $this->assign('Info',$info);
         $this->assign('User',$admin);
         return $this->fetch('/index');

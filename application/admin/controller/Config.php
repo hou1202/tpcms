@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use app\common\controller\AdminController;
 use think\Validate;
 use think\Request;
-use app\admin\model\Config as ConfigM;
+use app\common\model\Config as ConfigM;
 
 class Config extends AdminController
 {

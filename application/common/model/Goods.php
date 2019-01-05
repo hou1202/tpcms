@@ -72,6 +72,16 @@ class Goods extends Model
     }
 
     /*
+     * 数据关联
+     * 关联表      collect
+     * 关联表内容    收藏
+     * */
+    public function collect()
+    {
+        return $this->hasMany('Collect','goods_id','id');
+    }
+
+    /*
      * 获取器
      * 追加获取classify文字值
      * */

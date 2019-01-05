@@ -1,0 +1,262 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="购物车" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/car.css" /}
+
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+<!--购物车列表模块-->
+<div class="car">
+    <div class="car-title">
+        <p>共计 <span>{$Car|count}</span> 商品</p>
+    </div>
+    {if $Car}
+        <!--<form id="carFrom">-->
+            {volist name='Car' id='c'}
+            <form >
+                <div class="car-list">
+                    <div class="swiper-container carList">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+
+                                <div class="car-list-box">
+                                    <div class="car-list-select">
+                                        <input type="checkbox" checked name="car[{$c.id}][id]" value="{$c.id}" class="selectInput">
+                                        <div class="list-select-box"></div>
+                                    </div>
+                                    <div class="car-list-img">
+                                        <img src="{$c.thumbnail}">
+                                    </div>
+                                    <div class="car-list-cont">
+                                        <div class="list-cont-title">
+                                            <h2>{$c.title}</h2>
+                                            <p>￥<span class="goodsPrice">{$c.price}</span> <span style="float:right;margin-right:0.2rem">{$c.name}</span></p>
+                                            <p>库存：<span class="goodsStock">{$c.stock}</span></p>
+                                        </div>
+                                        <div class="list-cont-num">
+                                            <i class="cont-num-icon icon-left"></i>
+                                            <input type="number" name="car[{$c.id}][num]" value="{$c.num > $c.stock ? $c.stock : $c.num}" class="goodsNum" min="1" max="300" />
+                                            <i class="cont-num-icon icon-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="swiper-slide  del-slide">
+
+                                <div class="car-list-del carDel" data-id="{$c.id}">
+                                    删除
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {/volist}
+
+            <!--<div class="car-list">
+                <div class="swiper-container carList">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="car-list-box">
+                                <div class="car-list-select">
+                                    <input type="checkbox" name="id" value="1" class="selectInput">
+                                    <div class="list-select-box"></div>
+                                </div>
+                                <div class="car-list-img">
+                                    <img src="/static/index/images/goods1.jpg">
+                                </div>
+                                <div class="car-list-cont">
+                                    <div class="list-cont-title">
+                                        <h2>小米 MIX2 为发烧的你而做</h2>
+                                        <p>￥<span class="goodsPrice">2500</span></p>
+                                        <p>库存：<span class="goodsStock">1000</span></p>
+                                    </div>
+                                    <div class="list-cont-num">
+                                        <i class="cont-num-icon icon-left"></i>
+                                        <input type="number" name="" value="1" class="goodsNum" min="1" max="300" />
+                                        <i class="cont-num-icon icon-right"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="swiper-slide del-slide">
+                            <div class="car-list-del">
+                                删除
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+       <!-- </form>-->
+    {else /}
+
+    <!--购物车为空-->
+    <div class="car-null">
+        <img src="/static/index/images/null.png">
+    </div>
+    {/if}
+</div>
+
+<!--购物车结算模块-->
+<div class="balance">
+    <div class="balance-all">
+        <div class="balance-all-box"></div>
+    </div>
+    <div class="balance-sum">
+        <p>合计：<span class="periceSum">0.00</span></p>
+    </div>
+    <div class="balance-button">
+        <button type="button" id="submitForm" form="carForm"> 结 算 </button>
+    </div>
+
+</div>
+
+
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+<script>
+
+    var carListSwiper = new Swiper('.carList', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false
+    });
+
+
+    /**
+    * 变量定义
+    * var   price       string    单个商品价格
+    * var   priceObj    obj       商品价格对象
+    * var   sumPrice    string    商品总价格
+    * var   sumObj      obj       商品总价格对象
+    * var   num         string    单个商品数量
+    * var   numObj      obj       商品数量对象
+    * var   stock       string    单个商品库存
+    * */
+
+    /*购物车列表产品单个状态操作*/
+    $(".list-select-box").click(function(){
+        $(this).toggleClass('select-box-active');
+        var sumObj = $(".periceSum");                                           //商品总价格对象
+        var price = $(this).parent().parent().find(".goodsPrice").text();       //操作商品单价
+        var numObj = $(this).parent().parent().find(".goodsNum");               //操作商品数量对象
+        if($(this).hasClass('select-box-active')){
+            //选中
+            sumObj.text(Number(sumObj.text())+Number(price)*numObj.val());  //计算显示总价格
+
+            $(this).parents("form").addClass("carFrom");
+            //$(this).prev().attr("checked", true);
+            //numObj.attr('name','num');
+        }else{
+            //取消
+            $(".balance-all-box").removeClass('all-box-active');        //取消全选状态
+            var sumPrice =Number(sumObj.text())-Number(price)*numObj.val();
+            if(sumPrice < 0) sumPrice = 0.00;
+            sumObj.text(sumPrice);
+
+            $(this).parents("form").removeClass("carFrom");
+            //numObj.attr('name','');
+            //$(this).prev().attr("checked", false);
+
+        }
+    });
+    /*购物车列表产品全选状态操作*/
+    $(".balance-all-box").click(function(){
+        $(this).toggleClass('all-box-active');
+        if($(this).hasClass('all-box-active')){
+            //选中
+            $(".list-select-box").addClass('select-box-active');
+            var priceObj = $(".goodsPrice");    //产品价格对象
+            var numObj = $(".goodsNum");        //产品数量对象
+            var sumPrice = 0.00;
+            if(priceObj.length <= 0 ) return false;
+            for(i = 0 ; i < priceObj.length ; i++){
+                /*var num = 1;
+                //num = priceObj[i].parentNode.parentNode.nextElementSibling.children[1].value;
+                num = numObj[i].value;*/
+                sumPrice = sumPrice+Number(priceObj[i].textContent)*Number(numObj[i].value);
+            }
+            $(".periceSum").text(sumPrice);
+            $("form").addClass("carFrom");
+            //$(".goodsNum").attr('name','num');
+            //$(".selectInput").attr("checked", true);
+
+        }else{
+            //取消
+            $(".list-select-box").removeClass('select-box-active');
+            $(".periceSum").text("0.00");
+            $("form").removeClass("carFrom");
+            //$(".selectInput").attr("checked", false);
+            //$(".goodsNum").attr('name','');
+
+        }
+    });
+
+    /*购物数量减法控制*/
+    $(".icon-left").click(function(){
+        var numObj = $(this).next();            //商品数量对象
+        if(Number(numObj.val()) <= 1 ) return alertConfirm('已经不能再少了');
+        $(numObj).val(numObj.val()-1);
+        if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+            var sumObj = $(".periceSum");
+            sumObj.text(Number(sumObj.text())-Number($(this).parent().prev().find('.goodsPrice').text()));
+        }
+
+    });
+    /*购物数量加法控制*/
+    $(".icon-right").click(function(){
+        var numObj = $(this).prev();            //商品数量对象
+        var stock = Number($(this).parent().prev().children().find(".goodsStock").text());        //商品库存
+        if(Number(numObj.val()) < 0 ) return $(numObj).val(1);
+        if(Number(numObj.val())+1 > stock) return alertConfirm('真的不能再多了');
+            $(numObj).val(Number(numObj.val())+1);
+            if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+                var sumObj = $(".periceSum");
+                sumObj.text(Number(sumObj.text())+Number($(this).parent().prev().find('.goodsPrice').text()));
+            }
+    });
+    /*购物数量输入合法性判断*/
+    $(".goodsNum").blur(function(){
+        var reg = /^[1-9]+[0-9]*$/;
+        var stock = Number($(this).parent().prev().children().find(".goodsStock").text());
+        if(!reg.test($(this).val())) return $(this).val(1);
+        if(Number($(this).val()) > stock) $(this).val(Number(stock));
+        if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
+            var priceObj = $(".select-box-active").parent().next().next().find(".goodsPrice");
+
+            var sumPrice = 0.00;
+            for(i = 0 ; i < priceObj.length ; i++){
+                var num = 1;
+                num = priceObj[i].parentNode.parentNode.nextElementSibling.children[1].value;
+                sumPrice = sumPrice+Number(priceObj[i].textContent)*Number(num);
+            }
+            $(".periceSum").text(sumPrice);
+        }
+    });
+
+    //提交购物车，下单
+    $("#submitForm").click(function(){
+        /*window.location.href="/balance";*/
+        var data = $(".carFrom").serialize();
+        if(!data) return alertConfirm('请选择下单产品');
+
+        $.post('/car/buy',data,function(res){
+            console.log(res.data.order);
+            alertConfirm(res.msg);
+        });
+    });
+
+
+
+
+</script>
+
+
+</html>

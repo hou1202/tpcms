@@ -4,9 +4,11 @@ namespace app\index\controller;
 
 use app\common\controller\IndexController;
 use think\Request;
-use app\index\common\Users;
+
 use app\common\model\Collect as CollectM;
 use app\common\model\Comments;
+use app\common\model\Goods;
+
 
 /*收藏Collect控制器*/
 class Collect extends IndexController
@@ -19,7 +21,12 @@ class Collect extends IndexController
      */
     public function index()
     {
-        $resource = CollectM::where('user_id',$this->user_info['id'])->select();
+        $resource = Goods::alias('g')
+            ->field('g.id,g.title,g.info,g.thumbnail,g.sell_price,g.origin_price')
+            ->join('collect c','c.goods_id = g.id')
+            ->order('c.id desc')
+            ->group('g.id')
+            ->select();
         $this->assign('Collect',$resource);
         return view('personal/collect');
     }
@@ -98,12 +105,14 @@ class Collect extends IndexController
      */
     public function whether($id)
     {
-        $user = Users::user();
-        $collect = CollectM::where('user_id',$user['id'])->where('goods_id',$id)->find();
+        if(!$goods = Goods::get($id))
+            return $this->failJson('产品信息有误');
+        $collect = $goods->collect()->where('user_id',$this->user_info['id'])->find();
         if($collect)//取消收藏
             return $collect->delete() ? $this->successJson('取消收藏成功') : $this->failJson('取消收藏失败');
         //收藏
-        if(CollectM::create(['user_id'=>$user['id'], 'goods_id'=>$id]))
+        //if(CollectM::create(['user_id'=>$this->user_info['id'], 'goods_id'=>$id]))
+        if($goods->collect()->save(['user_id'=>$this->user_info['id']]))
             return $this->successJson('收藏成功');
         return $this->failJson('收藏失败');
     }

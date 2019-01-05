@@ -64,7 +64,7 @@ class Goods extends BaseController
 
         if($resources){
             Cache::set($this->goodsVer.$id.'_'.$page.'_'.$limit,$resources,600);
-            return $this->successJson('获取成功','',$resources);
+            return $this->successJson('获取数据成功','',$resources);
         }else{
             return $this->failJson('获取失败');
         }
