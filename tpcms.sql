@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.17)
-# Date: 2019-01-05 18:29:30
+# Date: 2019-01-06 21:59:21
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -96,13 +96,13 @@ CREATE TABLE `car` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `car` (`user_id`,`goods_id`,`spec_id`,`isbuy`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='购物车表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 #
 # Data for table "car"
 #
 
-INSERT INTO `car` VALUES (1,2,1,1,4,0,0,'2018-12-26 16:08:07'),(2,2,1,2,3,0,0,'2018-12-26 16:08:12'),(4,2,2,9,50,0,0,'2018-12-26 17:23:51');
+INSERT INTO `car` VALUES (1,2,1,1,4,0,1546774470,'2018-12-26 16:08:07'),(2,2,1,2,3,0,1546695807,'2018-12-26 16:08:12'),(4,2,2,9,50,0,1546700455,'2018-12-26 17:23:51'),(5,2,26,95,1,0,0,'2019-01-06 19:32:55'),(6,2,22,83,2,0,1546774470,'2019-01-06 19:33:07'),(7,2,1,1,5,0,0,'2019-01-06 19:52:24'),(8,2,9,35,1,0,0,'2019-01-06 20:45:44'),(9,2,11,40,1,0,1546779795,'2019-01-06 20:49:03'),(10,2,21,79,1,0,1546779795,'2019-01-06 20:51:06');
 
 #
 # Structure for table "classify"
@@ -137,13 +137,13 @@ CREATE TABLE `collect` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `collect` (`user_id`,`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='我的收藏';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='我的收藏';
 
 #
 # Data for table "collect"
 #
 
-INSERT INTO `collect` VALUES (10,2,2,'2018-12-26 13:52:04'),(19,2,1,'2019-01-05 10:01:20'),(22,2,21,'2019-01-05 10:06:59'),(23,2,24,'2019-01-05 10:07:06'),(25,2,15,'2019-01-05 10:31:33');
+INSERT INTO `collect` VALUES (10,2,2,'2018-12-26 13:52:04'),(19,2,1,'2019-01-05 10:01:20'),(22,2,21,'2019-01-05 10:06:59'),(23,2,24,'2019-01-05 10:07:06'),(26,2,4,'2019-01-05 21:28:24'),(27,2,6,'2019-01-05 21:28:30');
 
 #
 # Structure for table "comments"
@@ -380,8 +380,10 @@ CREATE TABLE `log_money` (
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL COMMENT '用户ID',
   `serial` varchar(21) DEFAULT NULL COMMENT '交易流水号',
   `total_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '交易总金额',
+  `goods_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '产品总金额',
   `discount_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '优惠金额',
   `franking_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '运费金额',
   `pay_price` float(8,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '支付金额',
@@ -392,12 +394,13 @@ CREATE TABLE `order` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 #
 # Data for table "order"
 #
 
+INSERT INTO `order` VALUES (1,2,'201901056481546695807',19507.00,19497.00,0.00,10.00,19507.00,NULL,1949.70,1,0,'2019-01-05 21:43:27','2019-01-06 21:53:19'),(2,2,'201901057881546700455',399950.00,399950.00,0.00,0.00,399950.00,NULL,39995.00,1,0,'2019-01-05 23:00:55','2019-01-06 21:53:21'),(3,2,'201901066211546774470',18406.00,18396.00,0.00,10.00,18406.00,NULL,1839.60,1,0,'2019-01-06 19:34:30','2019-01-06 21:53:23'),(4,2,'201901062401546778020',6401.00,6396.00,0.00,5.00,6401.00,NULL,639.60,1,0,'2019-01-06 20:33:41','2019-01-06 21:53:25'),(5,2,'201901062951546778753',5731.00,5716.00,0.00,15.00,5731.00,NULL,571.60,1,0,'2019-01-06 20:45:53','2019-01-06 21:53:27'),(6,2,'201901065151546778950',25618.00,25598.00,0.00,20.00,25618.00,NULL,2559.80,1,0,'2019-01-06 20:49:10','2019-01-06 21:53:30'),(7,2,'201901062761546779795',13417.00,13397.00,0.00,20.00,13417.00,NULL,1339.70,1,0,'2019-01-06 21:03:15','2019-01-06 21:53:31'),(8,2,'201901069071546779851',6899.00,6899.00,0.00,0.00,6899.00,NULL,689.90,1,0,'2019-01-06 21:04:11','2019-01-06 21:53:33'),(9,2,'201901064831546780459',79423.00,19398.00,0.00,25.00,79423.00,NULL,1939.80,1,0,'2019-01-06 21:14:19','2019-01-06 21:56:25');
 
 #
 # Structure for table "order_goods"
@@ -419,12 +422,13 @@ CREATE TABLE `order_goods` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `order_goods` (`order_id`,`goods_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单产品';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单产品';
 
 #
 # Data for table "order_goods"
 #
 
+INSERT INTO `order_goods` VALUES (1,1,1,2,5,'/uploads/20181224/5c20dd1259cd1.jpg','Apple iPhone X (A1865) 64GB 银色','联通版',6499.00,3,0,'2019-01-05 21:43:27'),(2,2,2,9,5,'/uploads/20181224/5c20dd3ceca76.png','华为HUAWEI Mate20 X 幻影银(6G+128G)','16+512G',7999.00,50,0,'2019-01-05 23:00:55'),(3,3,22,83,6,'/uploads/20181224/5c2d83190dea8.jpg','华为 HUAWEI nova 3全面屏高清四摄游戏手机 6GB+128GB 亮黑色 全网通移动联通电信4G手机','樱草金',2799.00,2,0,'2019-01-06 19:34:30'),(4,3,1,1,5,'/uploads/20181224/5c20dd1259cd1.jpg','Apple iPhone X (A1865) 64GB 银色','移动版',6399.00,2,0,'2019-01-06 19:34:30'),(5,4,4,15,5,'/uploads/20181224/5c20dd988d25f.jpg','vivo X23 8GB+128GB 幻夜蓝 水滴屏全面屏 游戏手机 移动联通电信全网通4G手机','幻夜蓝',3198.00,2,0,'2019-01-06 20:33:41'),(6,5,9,33,13,'/uploads/20181224/5c20e4b938669.jpg','Beats Studio3 Wireless 录音师无线3代 头戴式 蓝牙无线游戏耳机 - 魅影灰','荒漠沙',2858.00,2,0,'2019-01-06 20:45:53'),(7,6,11,42,5,'/uploads/20181224/5c2434759aa38.png','Apple iPhone XS Max (A2104) 256GB 金色 移动联通电信4G手机','512G',12799.00,2,0,'2019-01-06 20:49:10'),(8,7,21,79,6,'/uploads/20181224/5c2d820c470b8.jpg','荣耀8X 千元屏霸 91%屏占比 2000万AI双摄 4GB+64GB 魅焰红 移动联通电信4G全面屏手机','6+128G',1899.00,2,0,'2019-01-06 21:03:15'),(9,7,11,40,5,'/uploads/20181224/5c2434759aa38.png','Apple iPhone XS Max (A2104) 256GB 金色 移动联通电信4G手机','64G',9599.00,1,0,'2019-01-06 21:03:15'),(10,8,10,38,5,'/uploads/20181224/5c2431ccf2490.jpg','Apple iPhone 8 Plus (A1864) 64GB 金色 移动联通电信4G手机','银色256G',6899.00,1,0,'2019-01-06 21:04:11'),(11,9,8,25,12,'/uploads/20181224/5c20e2c232d7f.jpg','Apple MacBook Pro 15.4英寸笔记本电脑 深空灰色 配备2018新款','8+128G银',9699.00,2,0,'2019-01-06 21:14:19');
 
 #
 # Structure for table "permissions"

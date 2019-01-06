@@ -25,7 +25,7 @@ class Collect extends IndexController
             ->field('g.id,g.title,g.info,g.thumbnail,g.sell_price,g.origin_price')
             ->join('collect c','c.goods_id = g.id')
             ->order('c.id desc')
-            ->group('g.id')
+            /*->group('g.id')*/
             ->select();
         $this->assign('Collect',$resource);
         return view('personal/collect');

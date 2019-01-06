@@ -71,7 +71,7 @@
     var sum = 30.00;
     /*支付方式选择控制*/
     $(".pay-select-sure").click(function(){
-        if($(this).attr('id') == 'balance' && parseInt(sum) > parseInt(balance))
+        if($(this).attr('id') == 'index.view.order.balance' && parseInt(sum) > parseInt(balance))
             return alertConfirm("余额不足，请选择其他支付方式");
         $(".pay-select-sure").removeClass("pay-active");
         $(".paySelect").attr("checked",false);

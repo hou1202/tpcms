@@ -349,11 +349,11 @@
     var panelUrl='';
     /*显示规格面板*/
     $(".nowPanel").click(function(){
-        panelUrl = '/car/buy/';
+        panelUrl = '/purchase/';
         $(".bottom-param").toggle();
     });
     $(".carPanel").click(function(){
-        panelUrl = '/car/join/';
+        panelUrl = '/join/';
         $(".bottom-param").toggle();
     });
     /*关闭规格面板*/
@@ -380,6 +380,9 @@
     $("#submitForm").click(function(){
         $(".bottom-param").hide();
         $.post(panelUrl+"{$Goods.id}",$("#car_form").serialize(),function(res){
+            if(res.url){
+                return window.location.href=res.url;
+            }
             alertConfirm(res.msg);
         });
     });

@@ -20,49 +20,54 @@
     <form id="orderForm">
     <!--结算地址-->
     <div class="order-address">
-        <div class="address-info">
-            <div class="address-title">
-                <p>收货人： 李白是一个诗人，一个好诗人</p>
-                <p>13564078415</p>
-            </div>
-            <div class="address-posit">
-                <div class="address-posit-img">
-                    <img src="/static/index/images/address.png">
+        {if $Address}
+            <div class="address-info">
+                <div class="address-title">
+                    <p>收货人： {$Address.name}</p>
+                    <p>{$Address.phone}</p>
                 </div>
-                <div class="address-posit-info">
-                    <p>安徽省 . 合肥市 . 蜀山区</p>
-                    <p>望江西路亚夏汽车大楼1902室合肥科技信息技术</p>
+                <div class="address-posit">
+                    <div class="address-posit-img">
+                        <img src="/static/index/images/address.png">
+                    </div>
+                    <div class="address-posit-info">
+                        <p>{$Address.city}</p>
+                        <p>{$Address.street}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--<div class="address-null">
-            添加购物地址 ....
-        </div>-->
+        {else /}
+            <div class="address-null">
+                添加购物地址 ....
+            </div>
+        {/if}
         <div class="address-select">
             <img src="/static/index/images/open.png">
         </div>
-        <input type="hidden" name="address" value="1">
+        <input type="hidden" name="address" value="{$Address.id}">
     </div>
 
     <!--结算产品-->
     <div class="order-goods">
-        <div class="order-goods-list">
-            <div class="goods-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="goods-list-cont">
-                <h2>小米 MIX2 为发烧的你而做</h2>
-                <div class="list-cont-param">
-                    <p>移动版</span></p>
-                    <p>￥2500.00</p>
+        {volist name="Goods" id="g"}
+            <div class="order-goods-list">
+                <div class="goods-list-img">
+                    <img src="{$g.thumbnail}">
                 </div>
-                <div class="list-cont-num">
-                    x 1
+                <div class="goods-list-cont">
+                    <h2>{$g.title}</h2>
+                    <div class="list-cont-param">
+                        <p>{$g.name}</p>
+                        <p>￥{$g.price|float}</p>
+                    </div>
+                    <div class="list-cont-num">
+                        x {$g.num}
+                    </div>
                 </div>
             </div>
-            <input type="hidden" name="goods[]" value="1" />
-        </div>
-        <div class="order-goods-list">
+        {/volist}
+
+        <!--<div class="order-goods-list">
             <div class="goods-list-img">
                 <img src="/static/index/images/goods1.jpg">
             </div>
@@ -77,23 +82,8 @@
                 </div>
             </div>
             <input type="hidden" name="goods[]" value="2" />
-        </div>
-        <div class="order-goods-list">
-            <div class="goods-list-img">
-                <img src="/static/index/images/goods1.jpg">
-            </div>
-            <div class="goods-list-cont">
-                <h2>小米 MIX2 为发烧的你而做</h2>
-                <div class="list-cont-param">
-                    <p>移动版</span></p>
-                    <p>￥2500.00</p>
-                </div>
-                <div class="list-cont-num">
-                    x 1
-                </div>
-            </div>
-            <input type="hidden" name="goods[]" value="3" />
-        </div>
+        </div>-->
+
     </div>
 
     <!--优惠信息-->
@@ -129,7 +119,7 @@
         </div>
         <div class="pay-select">
             <i class="ye"></i>
-            <p>余额支付 <span>(余额：250.00)</span></p>
+            <p>余额支付 <span>(余额：{$Money|float})</span></p>
             <div class="pay-select-sure" id="balance">
                 <input type="radio" name="pay" value="3" class="paySelect">
             </div>
@@ -139,11 +129,12 @@
     <!--结算信息-->
     <div class="order-info">
         <h2>订单结算</h2>
-        <p>总金额：￥<sapn>2500.00</sapn></p>
-        <p>优惠金额：￥<sapn>10.00</sapn></p>
-        <p>运费金额：￥<sapn>0.00</sapn></p>
-        <p>实付金额：￥<sapn>2490.00</sapn></p>
-        <p>订单积分：<sapn>249</sapn></p>
+        <p>交易总金额：￥<sapn>{$Order.total_price|float}</sapn></p>
+        <p>商品总金额：￥<sapn>{$Order.goods_price|float}</sapn></p>
+        <p>优惠金额：￥<sapn>{$Order.discount_price|float}</sapn></p>
+        <p>运费金额：￥<sapn>{$Order.franking_price|float}</sapn></p>
+        <p>实付金额：￥<sapn>{$Order.total_price|float}</sapn></p>
+        <p>订单积分：<sapn>{$Order.integral}</sapn></p>
     </div>
 
     </form>
@@ -153,7 +144,7 @@
 <!--订单提交模块-->
 <div class="balance">
     <div class="balance-sum">
-        <p>结算金额：￥<span class="periceSum">30.00</span></p>
+        <p>结算金额：￥<span class="periceSum">{$Order.total_price|float}</span></p>
     </div>
     <div class="balance-button">
         <button type="button" id="submitForm" form="orderForm"> 订单支付 </button>
@@ -173,7 +164,7 @@
     var balance = 25;
     /*支付方式选择控制*/
     $(".pay-select-sure").click(function(){
-        if($(this).attr('id') == 'balance' && parseInt($(".periceSum").text()) > parseInt(balance))
+        if($(this).attr('id') == 'index.view.order.balance' && parseInt($(".periceSum").text()) > parseInt(balance))
             return alertConfirm("余额不足，请选择其他支付方式");
         $(".pay-select-sure").removeClass("pay-active");
         $(".paySelect").attr("checked",false);

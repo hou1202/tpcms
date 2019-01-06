@@ -241,20 +241,37 @@
         }
     });
 
-    //提交购物车，下单
-    $("#submitForm").click(function(){
-        /*window.location.href="/balance";*/
-        var data = $(".carFrom").serialize();
-        if(!data) return alertConfirm('请选择下单产品');
+    /*删除购物车产品*/
+    $(".carDel").on('click',function(){
 
-        $.post('/car/buy',data,function(res){
-            console.log(res.data.order);
+       var _that = $(this);
+       var id = _that.attr('data-id');
+        //return console.log(id);
+        $.post('/car/'+id,{'_method':'DELETE'},function(res){
             alertConfirm(res.msg);
+            if(res.code == 1)
+                _that.parents('form').remove();
         });
     });
 
+    //提交购物车，下单
+    $("#submitForm").click(function(){
+        return window.location.href="/balance/3";
 
+        var data = $(".carFrom").serialize();
+        if(!data) return alertConfirm('请选择下单产品');
 
+        $.post('/buy',data,function(res){
+            if(res.code == 1)
+                return window.location.href=res.url;
+
+            if(res.code == 0)
+                return alertConfirm(res.msg);
+
+            return false;
+
+        });
+    });
 
 </script>
 

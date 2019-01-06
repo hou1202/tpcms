@@ -30,14 +30,19 @@ Route::post('forget','index/forget/forget');
     Route::post('whether/:id','index/collect/whether');     //收藏产品
     Route::post('agree/:id','index/collect/agree');           //评论点赞
     Route::get('goods/pageData/:id/:page/:limit','index/goods/pageData');           //分页产品数据
-    Route::post('car/join/:goods_id','index/car/join')->pattern(['goods_id'=> '\d+',]);           //加入购物车
-    Route::post('car/buy','index/car/buy');           //立即购买
+
+
 
     //分类页面
     Route::get('classify','index/classify/index')->except(['read']);
 
     //购物车Route
     Route::get('car','index/car/index');
+    Route::delete('car/:id','index/car/delete');
+    Route::post('join/:goods_id','index/car/join')->pattern(['goods_id'=> '\d+',]);           //加入购物车
+    Route::post('purchase/:goods_id','index/order/purchase')->pattern(['goods_id'=> '\d+',]);           //立即购买
+    Route::post('buy','index/order/buy');           //下单
+    Route::get('balance/:id','index/order/balance');    //订单结算页面
 
 
 /*个人中心*/
@@ -63,7 +68,7 @@ Route::post('/getCode/:mobile/:type/[:over]','index/Verify/getCode');
 
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
-Route::get('/balance','index/index/balance');
+/*Route::get('/balance','index/index/balance');*/
 Route::get('/pay','index/index/pay');
 Route::get('/list','index/index/goodsList');
 Route::get('/personal','index/index/personal');

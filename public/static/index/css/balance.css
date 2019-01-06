@@ -62,7 +62,7 @@ body{
   -webkit-box-orient: vertical;
 }
 .order .order-address .address-title p:first-child{
-  text-align:right;
+  text-align:left;
 }
 .order .order-address .address-title p:nth-child(2){
   text-align:right;
