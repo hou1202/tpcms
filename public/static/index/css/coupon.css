@@ -14,9 +14,13 @@
     padding:0.4rem 1rem;
     overflow:hidden;
 }
+.coupon .receives{
+    height:5.08rem;
+}
 .coupon .coupon-list .coupon-list-top{
     height:1.6rem;
     border:2px dotted #cc7f15;
+    border-bottom: none;
     border-radius:0.24rem;
 
    /* background: -webkit-linear-gradient(rgba(255, 255, 255, 0.2),rgba(204,127,21,0.2), rgba(255, 255, 255, 0.2)); !* Safari 5.1 - 6.0 *!
@@ -60,9 +64,7 @@
     padding:0.24rem 0.6rem;
     font-size:0.32rem;
     border:2px solid #cc7f15;
-    border-top:none;
-    border-bottom-left-radius:0.24rem;
-    border-bottom-right-radius:0.24rem;
+    border-radius:0.24rem;
 }
 .coupon .coupon-list .coupon-list-bottom p{
     height: 0.4rem;
@@ -101,6 +103,21 @@ i.coupon-icon-overdue{
     background-size:2rem;
 
 }
+.coupon .coupon-list .coupon-receives{
+    height:1rem;
+    padding:0.12rem 2rem 0 2rem;
+    text-align:center;
+    border-radius:0.24rem;
+    border:2px dotted #cc7f15;
+    border-top:none;
+}.coupon .coupon-list .coupon-receives p{
+     line-height:0.88rem;
+    background:#cc7f15;
+    color:#fff;
+    font-size:0.32rem;
+    border-radius:0.16rem;
+ }
+
 
 
 

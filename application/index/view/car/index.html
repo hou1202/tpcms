@@ -32,7 +32,7 @@
                                     <div class="car-list-cont">
                                         <div class="list-cont-title">
                                             <h2>{$c.title}</h2>
-                                            <p>￥<span class="goodsPrice">{$c.price}</span> <span style="float:right;margin-right:0.2rem">{$c.name}</span></p>
+                                            <p>￥<span class="goodsPrice">{$c.price|float}</span> <span style="float:right;margin-right:0.2rem">{$c.name}</span></p>
                                             <p>库存：<span class="goodsStock">{$c.stock}</span></p>
                                         </div>
                                         <div class="list-cont-num">
@@ -108,7 +108,7 @@
         <div class="balance-all-box"></div>
     </div>
     <div class="balance-sum">
-        <p>合计：<span class="periceSum">0.00</span></p>
+        <p>合计：￥<span class="periceSum">0.00</span></p>
     </div>
     <div class="balance-button">
         <button type="button" id="submitForm" form="carForm"> 结 算 </button>
@@ -149,7 +149,7 @@
         var numObj = $(this).parent().parent().find(".goodsNum");               //操作商品数量对象
         if($(this).hasClass('select-box-active')){
             //选中
-            sumObj.text(Number(sumObj.text())+Number(price)*numObj.val());  //计算显示总价格
+            sumObj.text(changeFloat(Number(sumObj.text())+Number(price)*numObj.val()));  //计算显示总价格
 
             $(this).parents("form").addClass("carFrom");
             //$(this).prev().attr("checked", true);
@@ -159,7 +159,7 @@
             $(".balance-all-box").removeClass('all-box-active');        //取消全选状态
             var sumPrice =Number(sumObj.text())-Number(price)*numObj.val();
             if(sumPrice < 0) sumPrice = 0.00;
-            sumObj.text(sumPrice);
+            sumObj.text(changeFloat(sumPrice));
 
             $(this).parents("form").removeClass("carFrom");
             //numObj.attr('name','');
@@ -183,7 +183,7 @@
                 num = numObj[i].value;*/
                 sumPrice = sumPrice+Number(priceObj[i].textContent)*Number(numObj[i].value);
             }
-            $(".periceSum").text(sumPrice);
+            $(".periceSum").text(changeFloat(sumPrice));
             $("form").addClass("carFrom");
             //$(".goodsNum").attr('name','num');
             //$(".selectInput").attr("checked", true);
@@ -206,7 +206,7 @@
         $(numObj).val(numObj.val()-1);
         if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
             var sumObj = $(".periceSum");
-            sumObj.text(Number(sumObj.text())-Number($(this).parent().prev().find('.goodsPrice').text()));
+            sumObj.text(changeFloat(Number(sumObj.text())-Number($(this).parent().prev().find('.goodsPrice').text())));
         }
 
     });
@@ -219,7 +219,7 @@
             $(numObj).val(Number(numObj.val())+1);
             if($(this).parent().parent().prev().prev().find(".list-select-box").hasClass("select-box-active")){
                 var sumObj = $(".periceSum");
-                sumObj.text(Number(sumObj.text())+Number($(this).parent().prev().find('.goodsPrice').text()));
+                sumObj.text(changeFloat(Number(sumObj.text())+Number($(this).parent().prev().find('.goodsPrice').text())));
             }
     });
     /*购物数量输入合法性判断*/
@@ -237,7 +237,7 @@
                 num = priceObj[i].parentNode.parentNode.nextElementSibling.children[1].value;
                 sumPrice = sumPrice+Number(priceObj[i].textContent)*Number(num);
             }
-            $(".periceSum").text(sumPrice);
+            $(".periceSum").text(changeFloat(sumPrice));
         }
     });
 

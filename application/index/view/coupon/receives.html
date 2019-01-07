@@ -1,0 +1,132 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="领取优惠券" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/roll-nav.css" /}
+{load href="/static/index/css/coupon.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>领取优惠券</h2>
+</header>
+
+<!--模块导航-->
+<!--<div class="roll-nav">
+    <div class="swiper-container" id="orderSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide nav-active" id="notUse">
+                <span>未使用</span>
+            </div>
+            <div class="swiper-slide" id="alReady">
+                <span>已使用</span>
+            </div>
+            <div class="swiper-slide" id="overDue">
+                <span>已过期</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>-->
+
+<!--列表模块-->
+<div class="coupon">
+    {if $Coupon}
+        {volist name="Coupon" id="c"}
+            <div class="coupon-list receives">
+                <div class="coupon-list-top">
+                    <div class="list-top-type">
+                        <p>类型</p>
+                        <h2>{$c.type_text}</h2>
+                    </div>
+                    <div class="list-top-money">
+                        <p><span>￥</span> {$c.money_derate}</p>
+                    </div>
+                </div>
+                <div class="coupon-list-bottom">
+                    <p><span>金额：</span> 满 ￥{$c.money_satisfy} 减 ￥{$c.money_derate}</p>
+                    <p><span>商品：</span> {$c.relation_title}</p>
+                    <p><span>有效期：</span> {$c.end_time}</p>
+                </div>
+                <div class="coupon-receives recCoupon" data-id="{$c.id}">
+                    <p>领 取 优 惠 券</p>
+                </div>
+            </div>
+        {/volist}
+    {else /}
+        <div class="empty-data">
+            <img src="/static/index/images/null.png"/>
+            <p>暂时没有优惠券哦....</p>
+        </div>
+    {/if}
+
+    <!--<div class="coupon-list">
+        <div class="coupon-list-top">
+            <div class="list-top-type">
+                <p>类型</p>
+                <h2>产品可用</h2>
+            </div>
+            <div class="list-top-money">
+                <p><span>￥</span>50</p>
+            </div>
+        </div>
+        <div class="coupon-list-bottom">
+            <p><span>金额：</span> 满￥300减￥20</p>
+            <p><span>商品：</span> 小米MX 3青春有你-我们不见不散不见不散不见不散</p>
+            <p><span>有效期：</span> 2018-12-12</p>
+        </div>
+        <div class="coupon-status">
+            <i class=""></i>
+        </div>
+    </div>-->
+
+</div>
+
+
+</body>
+
+
+
+<script>
+
+    var orderSwiper = new Swiper('#orderSwiper', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false,
+    });
+
+    /**
+     * 领取优惠券
+     * */
+    $(".recCoupon").on("click",function(){
+        var _that = $(this);
+        var id = _that.attr('data-id');
+        $.post('/receives/'+id,'',function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                _that.parents(".receives").remove();
+        })
+    })
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</html>

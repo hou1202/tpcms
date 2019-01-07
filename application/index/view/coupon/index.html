@@ -20,13 +20,13 @@
 <div class="roll-nav">
     <div class="swiper-container" id="orderSwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide nav-active" id="notUse">
+            <div class="swiper-slide nav-active" id="notUse" data-id="0">
                 <span>未使用</span>
             </div>
-            <div class="swiper-slide" id="alReady">
+            <div class="swiper-slide" id="alReady" data-id="2">
                 <span>已使用</span>
             </div>
-            <div class="swiper-slide" id="overDue">
+            <div class="swiper-slide" id="overDue" data-id="3">
                 <span>已过期</span>
             </div>
 
@@ -37,27 +37,36 @@
 
 <!--列表模块-->
 <div class="coupon">
-    <div class="coupon-list">
-        <div class="coupon-list-top">
-            <div class="list-top-type">
-                <p>类型</p>
-                <h2>全场通用</h2>
+    {if $Coupon}
+        {volist name="Coupon" id="c"}
+            <div class="coupon-list">
+                <div class="coupon-list-top">
+                    <div class="list-top-type">
+                        <p>类型</p>
+                        <h2>{$c.type_text}</h2>
+                    </div>
+                    <div class="list-top-money">
+                        <p><span>￥</span> {$c.money_derate}</p>
+                    </div>
+                </div>
+                <div class="coupon-list-bottom">
+                    <p><span>金额：</span> 满 ￥{$c.money_satisfy} 减 ￥{$c.money_derate}</p>
+                    <p><span>商品：</span> {$c.relation_title}</p>
+                    <p><span>有效期：</span> {$c.end_time}</p>
+                </div>
+                <div class="coupon-status">
+                    <i class=""></i>
+                </div>
             </div>
-            <div class="list-top-money">
-                <p><span>￥</span>50</p>
-            </div>
+        {/volist}
+    {else /}
+        <div class="empty-data">
+            <img src="/static/index/images/null.png"/>
+            <p>暂时没有优惠券哦....</p>
         </div>
-        <div class="coupon-list-bottom">
-            <p><span>金额：</span> 满￥300减￥20</p>
-            <p><span>商品：</span> 全场通用</p>
-            <p><span>有效期：</span> 2018-12-12</p>
-        </div>
-        <div class="coupon-status">
-            <i class=""></i>
-        </div>
-    </div>
+    {/if}
 
-    <div class="coupon-list">
+    <!--<div class="coupon-list">
         <div class="coupon-list-top">
             <div class="list-top-type">
                 <p>类型</p>
@@ -75,70 +84,7 @@
         <div class="coupon-status">
             <i class=""></i>
         </div>
-    </div>
-
-    <div class="coupon-list">
-        <div class="coupon-list-top">
-            <div class="list-top-type">
-                <p>类型</p>
-                <h2>分类专用</h2>
-            </div>
-            <div class="list-top-money">
-                <p><span>￥</span>50</p>
-            </div>
-        </div>
-        <div class="coupon-list-bottom">
-            <p><span>金额：</span> 满￥300减￥20</p>
-            <p><span>商品：</span> 小米系列</p>
-            <p><span>有效期：</span> 2018-12-12</p>
-        </div>
-        <div class="coupon-status">
-            <i class=""></i>
-        </div>
-    </div>
-
-    <div class="coupon-list">
-        <div class="coupon-list-top">
-            <div class="list-top-type">
-                <p>类型</p>
-                <h2>分类专用</h2>
-            </div>
-            <div class="list-top-money">
-                <p><span>￥</span>50</p>
-            </div>
-        </div>
-        <div class="coupon-list-bottom">
-            <p><span>金额：</span> 满￥300减￥20</p>
-            <p><span>商品：</span> 小米系列</p>
-            <p><span>有效期：</span> 2018-12-12</p>
-        </div>
-        <div class="coupon-status">
-            <i class=""></i>
-        </div>
-    </div>
-
-    <div class="coupon-list">
-        <div class="coupon-list-top">
-            <div class="list-top-type">
-                <p>类型</p>
-                <h2>全场通用</h2>
-            </div>
-            <div class="list-top-money">
-                <p><span>￥</span>50</p>
-            </div>
-        </div>
-        <div class="coupon-list-bottom">
-            <p><span>金额：</span> 满￥300减￥20</p>
-            <p><span>商品：</span> 小米MX 3青春有你-我们不见不散不见不散不见不散</p>
-            <p><span>有效期：</span> 2018-12-12</p>
-        </div>
-        <div class="coupon-status">
-            <i class=""></i>
-        </div>
-    </div>
-
-
-
+    </div>-->
 
 </div>
 
@@ -158,33 +104,71 @@
     });
 
     /*NAV 切换模式*/
-    orderSwiper.on('click',function(){
+    orderSwiper.on('click',function(res){
         $(".swiper-slide").removeClass('nav-active');
         $("#"+this.clickedSlide.id).addClass('nav-active');
-    });
-
-    $("#notUse").click(function() {
-        $('.coupon-status').find("i").removeClass();
-    });
-    $("#alReady").click(function() {
-        $('.coupon-status').find("i").removeClass().addClass("coupon-icon-ready");
-    });
-    $("#overDue").click(function() {
-        $('.coupon-status').find("i").removeClass().addClass("coupon-icon-overdue");
+        couponData(this.clickedSlide.dataset.id);
     });
 
 
+    /**
+     * 获取优惠券状态数据，并进行数据填充
+     * @param   $type   优惠券状态类型
+     * */
+    function couponData($type){
+        if(!(/[0|2|3]/.test($type)))
+            return alertConfirm('优惠券信息有误');
+        var emptyData = '<div class="empty-data">'
+                      +'<img src="/static/index/images/null.png"/>'
+                      +'<p>暂时没有优惠券哦....</p>'
+                      +'</div>';
+        var typeIcon = '';
+        switch($type){
+            case '2' :
+                typeIcon = 'coupon-icon-ready';
+                break;
+            case '3' :
+                typeIcon = 'coupon-icon-overdue';
+                break;
+            default :
+                typeIcon = '';
+                break;
+        }
+        var coupon = $(".coupon");
+        $.post('/coupon/'+$type,'',function(res){
+            if(res.code == 1){
+                var result = '';
+                $.each(res.data,function(i,val){
+                    result +=   '<div class="coupon-list">'
+                        +'<div class="coupon-list-top">'
+                        +'<div class="list-top-type">'
+                        +'<p>类型</p>'
+                        +'<h2>'+res.data[i].type_text+'</h2>'
+                        +'</div>'
+                        +'<div class="list-top-money">'
+                        +'<p><span>￥</span> '+res.data[i].money_derate+'</p>'
+                        +'</div>'
+                        +'</div>'
+                        +'<div class="coupon-list-bottom">'
+                        +'<p><span>金额：</span> 满 ￥'+res.data[i].money_satisfy+' 减 ￥'+res.data[i].money_derate+'</p>'
+                        +'<p><span>商品：</span> '+res.data[i].relation_title+'</p>'
+                        +'<p><span>有效期：</span> '+res.data[i].end_time+'</p>'
+                        +'</div>'
+                        +'<div class="coupon-status">'
+                        +'<i class="'+typeIcon+'"></i>'
+                        +'</div>'
+                        +'</div>';
+                });
+                coupon.html('').append(result);
 
+            }
+            if(res.code == 0){
+                coupon.html('').append(emptyData);
+            }
 
-
-
+        })
+    }
 
 </script>
-
-
-
-
-
-
 
 </html>

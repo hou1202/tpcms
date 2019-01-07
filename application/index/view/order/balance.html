@@ -42,7 +42,9 @@
             </div>
         {/if}
         <div class="address-select">
+            <a href="/address">
             <img src="/static/index/images/open.png">
+            </a>
         </div>
         <input type="hidden" name="address" value="{$Address.id}">
     </div>
@@ -106,22 +108,22 @@
         <div class="pay-select">
             <i class="ali"></i>
             <p>支付宝支付</p>
-            <div class="pay-select-sure pay-active">
-                <input type="radio" name="pay" value="1" class="paySelect" checked="checked">
+            <div class="pay-select-sure {$Order.pay_type == 1 ?='pay-active'}">
+                <input type="radio" name="pay_type" value="1" class="paySelect" {$Order.pay_type == 1 ?="checked"}>
             </div>
         </div>
         <div class="pay-select">
             <i class="wx"></i>
             <p>微信支付</p>
-            <div class="pay-select-sure">
-                <input type="radio" name="pay" value="2" class="paySelect">
+            <div class="pay-select-sure {$Order.pay_type == 2 ?='pay-active'}">
+                <input type="radio" name="pay_type" value="2" class="paySelect" {$Order.pay_type == 2 ?="checked"}>
             </div>
         </div>
         <div class="pay-select">
             <i class="ye"></i>
             <p>余额支付 <span>(余额：{$Money|float})</span></p>
-            <div class="pay-select-sure" id="balance">
-                <input type="radio" name="pay" value="3" class="paySelect">
+            <div class="pay-select-sure {$Order.pay_type == 3 ?='pay-active'}" id="balance">
+                <input type="radio" name="pay_type" value="3" class="paySelect" {$Order.pay_type == 3 ?="checked"}>
             </div>
         </div>
     </div>

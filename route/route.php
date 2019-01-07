@@ -51,6 +51,12 @@ Route::post('forget','index/forget/forget');
     Route::post('address/choice/:id','index/address/choice');       //默认收货地址设置
     Route::get('collect','index/collect/index');
 
+    //优惠券
+    Route::get('receives','index/coupon/receives');     //领取优惠券列表
+    Route::post('receives/:id','index/coupon/collar');     //领取优惠券
+    Route::get('coupon','index/coupon/index');     //我的优惠券列表
+    Route::post('coupon/:type','index/coupon/getData')->pattern(['type'=> '\d+',]);     //我的优惠券列表数据
+
 
 
 
@@ -77,7 +83,7 @@ Route::get('/data','index/index/personalData');
 
 Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
-Route::get('/coupon','index/index/coupon');
+
 
 Route::get('/wallet','index/index/wallet');
 Route::get('/integral','index/index/integral');

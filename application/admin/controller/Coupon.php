@@ -68,7 +68,7 @@ class Coupon extends AdminController
      */
     public function create()
     {
-        $classify = Classify::field('id,title')->select();
+        $classify = Classify::field('id,title')->where('p_id','<>',0)->select();
         $this->assign('Classify',$classify);
         return view('');
     }
@@ -127,7 +127,7 @@ class Coupon extends AdminController
         $resource = CouponM::get($id);
         if(!$resource)
             return $this->failJson('非有效数据信息');
-        $classify = Classify::field('id,title')->select();
+        $classify = Classify::field('id,title')->where('p_id','<>',0)->select();
         $this->assign('Classify',$classify);
         $this->assign('Coupon',$resource);
         return view('');

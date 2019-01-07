@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\common\controller\IndexController;
 use app\common\model\Config;
+use app\common\model\Coupon;
 use think\Request;
 use think\Db;
 
@@ -61,6 +62,27 @@ class Order extends IndexController
 
         $address = Address::where(['user_id'=>$order->user_id, 'choice'=>1])->find();
         $goods = $order->orderGoods()->select();
+        /*$coupon1 = Coupon::field('id,title,money_satisfy,money_derate')
+            ->where('status',1)
+            ->where('end_time',['=',0],['>',time()],'or')
+            ->where('type',1)
+            ->where('money_satisfy','>',$order->goods_price)
+            ->select();*/
+        $coupon2 = Coupon::alias('c')
+            ->field('c.*')
+            ->join('coupon_user u','c.id = u.coupon_id')
+            ->where('c.status',1)
+            ->where('c.end_time',['=',0],['>',time()],'or')
+            ->where('u.status',0)
+            ->where('u.user_id',$this->user_info['id'])
+            ->where('c.type',1)
+            ->whereOr('c.goods_id','IN',function($query) use ($id){
+                $query->table('order_goods')->where('order_id',$id)->field('goods_id');
+            })->whereOr('c.classify_id','IN',function($query) use ($id){
+                $query->table('order_goods')->where('order_id',$id)->field('classify_id');
+            })
+            ->select();
+        //var_dump($coupon2);die;
         $this->assign('Money',$this->user_info['balance']);
         $this->assign('Address',$address);
         $this->assign('Order',$order);

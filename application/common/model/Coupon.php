@@ -64,4 +64,14 @@ class Coupon extends Model
         $type_text = [1=>"通用型",2=>"产品型",3=>"分类型"];
         return $type_text[$data['type']];
     }
+
+    /*
+     * 数据关联
+     * 关联表      coupon_user
+     * 关联表内容   领取优惠券用户
+     * */
+    public function couponUser()
+    {
+        return $this->hasMany('CouponUser','coupon_id','id');
+    }
 }
