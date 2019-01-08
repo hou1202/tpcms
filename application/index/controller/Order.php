@@ -7,6 +7,7 @@ use app\common\model\Config;
 use app\common\model\Coupon;
 use think\Request;
 use think\Db;
+use think\facade\Cache;
 
 use app\common\model\Goods;
 use app\common\model\GoodsSpec;
@@ -53,37 +54,35 @@ class Order extends IndexController
      * 显示指定的资源
      *
      * @param  int  $id
+     * @param  \think\Request  $request
+     * @param  int  $coupon_id (Option)
+     * @param  int  $address_id (Option )
      * @return \think\Response
      */
-    public function balance($id)
+    public function balance(Request $request, $id)
     {
+
         if(!$order = OrderM::get($id))
             return $this->failJson('订单错误');
 
-        $address = Address::where(['user_id'=>$order->user_id, 'choice'=>1])->find();
+        //获取收货地址信息
+        if(empty($request->param('address_id'))){
+            $address = Address::where(['user_id'=>$order->user_id, 'choice'=>1])->find();
+        }else{
+            $address = Address::where(['user_id'=>$order->user_id, 'id'=>$request->param('address_id')])->find();
+        }
+
+        //获取优惠券信息
+        if(!empty($request->param('coupon_id'))){
+            $coupon = Coupon::where(['id'=>$request->param('coupon_id')])->find();
+        }else{
+            $coupon=['id'=>'','money_derate'=>'0.00'];
+        }
+
         $goods = $order->orderGoods()->select();
-        /*$coupon1 = Coupon::field('id,title,money_satisfy,money_derate')
-            ->where('status',1)
-            ->where('end_time',['=',0],['>',time()],'or')
-            ->where('type',1)
-            ->where('money_satisfy','>',$order->goods_price)
-            ->select();*/
-        $coupon2 = Coupon::alias('c')
-            ->field('c.*')
-            ->join('coupon_user u','c.id = u.coupon_id')
-            ->where('c.status',1)
-            ->where('c.end_time',['=',0],['>',time()],'or')
-            ->where('u.status',0)
-            ->where('u.user_id',$this->user_info['id'])
-            ->where('c.type',1)
-            ->whereOr('c.goods_id','IN',function($query) use ($id){
-                $query->table('order_goods')->where('order_id',$id)->field('goods_id');
-            })->whereOr('c.classify_id','IN',function($query) use ($id){
-                $query->table('order_goods')->where('order_id',$id)->field('classify_id');
-            })
-            ->select();
-        //var_dump($coupon2);die;
+
         $this->assign('Money',$this->user_info['balance']);
+        $this->assign('Coupon',$coupon);
         $this->assign('Address',$address);
         $this->assign('Order',$order);
         $this->assign('Goods',$goods);
@@ -91,14 +90,18 @@ class Order extends IndexController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * 生成支付订单.
      *
-     * @param  int  $id
+     * @param  int  $order_id
      * @return \think\Response
      */
-    public function edit($id)
+    public function payment(Request $request,$order_id)
     {
-        //
+        $data = $request->param();
+        $validate = new OrderV();
+        if(!$validate->scene('payment')->check($data))
+            $this->failJson($validate->getError());
+        var_dump($data);die;
     }
 
     /**

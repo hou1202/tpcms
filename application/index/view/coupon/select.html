@@ -1,0 +1,62 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="优惠券" keywords="Aoogi商城系统"}
+
+
+{load href="/static/index/css/coupon.css" /}
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>优惠券</h2>
+</header>
+
+<!--列表模块-->
+<div class="coupon">
+    {if $Coupon}
+        {volist name="Coupon" id="c"}
+            <a href="/balance/{$orderId}/{$c.id}/{$addressId}" class="coupon-list a-block">
+                <div class="coupon-list-top">
+                    <div class="list-top-type">
+                        <p>类型</p>
+                        <h2>{$c.type_text}</h2>
+                    </div>
+                    <div class="list-top-money">
+                        <p><span>￥</span> {$c.money_derate}</p>
+                    </div>
+                </div>
+                <div class="coupon-list-bottom">
+                    <p><span>金额：</span> 满 ￥{$c.money_satisfy} 减 ￥{$c.money_derate}</p>
+                    <p><span>商品：</span> {$c.relation_title}</p>
+                    <p><span>有效期：</span> {$c.end_time}</p>
+                </div>
+
+            </a>
+        {/volist}
+    {else /}
+        <div class="empty-data">
+            <img src="/static/index/images/null.png"/>
+            <p>暂时没有优惠券哦....</p>
+        </div>
+    {/if}
+
+</div>
+
+
+</body>
+
+
+
+<script>
+
+</script>
+
+
+
+
+
+
+
+</html>

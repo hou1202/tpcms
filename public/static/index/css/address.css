@@ -46,7 +46,7 @@
   height:1.4rem;
   line-height:0.56rem;
   padding-bottom:0.28rem;
-  border-bottom:1px solid #ccc;
+
 
 }
 .address .address-list .list-middle p{
@@ -70,7 +70,8 @@
 .address .address-list .list-bottom{
   height:1.2rem;
   line-height:1.2rem;
-  margin-top:0.12rem;
+  /*margin-top:0.12rem;*/
+  border-top:1px solid #ccc;
 }
 .address .address-list .list-bottom i{
   display:inline-block;

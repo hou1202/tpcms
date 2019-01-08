@@ -180,3 +180,8 @@ input[type="number"] {
   color: #7f7f7f;
   letter-spacing:0.08rem;
 }
+
+.a-block{
+  display:block;
+  color: #232323;
+}

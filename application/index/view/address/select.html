@@ -1,0 +1,56 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="收货地址" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/address.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>收货地址</h2>
+</header>
+
+<!--列表模块-->
+<div class="address">
+
+    {volist name="Address" id="a"}
+        <a href="/balance/{$orderId}/{$couponId}/{$a.id}" class="address-list a-block">
+            <div class="list-top">
+                <p>{$a.name}</p>
+                <p>{$a.phone}</p>
+            </div>
+            <div class="list-middle">
+                <p>{$a.city}</p>
+                <p>{$a.street}</p>
+            </div>
+            <div class="list-bottom">
+                <i class="circle {$a.choice ?='circle-active'}" data-id="{$a.id}"></i>
+                <!--<a href="/address/{$a.id}/edit">编辑</a>
+                <a data-id="{$a.id}" class="del">删除</a>-->
+            </div>
+        </a>
+    {/volist}
+
+
+</div>
+
+
+</body>
+
+
+
+<script>
+
+
+</script>
+
+
+
+
+
+
+
+</html>

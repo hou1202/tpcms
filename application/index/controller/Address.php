@@ -3,6 +3,7 @@
 namespace app\index\controller;
 
 use app\common\controller\IndexController;
+use app\common\model\Order;
 use think\Request;
 
 use app\index\validate\Address as AddressV;
@@ -19,6 +20,24 @@ class Address extends IndexController
     public function index()
     {
         $resource = AddressM::where('user_id',$this->user_info['id'])->order('choice desc')->select();
+        $this->assign("Address",$resource);
+        return view('');
+    }
+
+    /**
+     * 显示资源列表-下单选择
+     *
+     * @return \think\Response
+     */
+    public function select(Request $request, $id, $coupon_id)
+    {
+
+        if(!Order::where(['id'=>$id,'user_id'=>$this->user_info['id']])->find())
+            return redirect($request->header('referer'));
+
+        $resource = AddressM::where('user_id',$this->user_info['id'])->order('choice desc')->select();
+        $this->assign("orderId",$id);
+        $this->assign("couponId",$coupon_id);
         $this->assign("Address",$resource);
         return view('');
     }

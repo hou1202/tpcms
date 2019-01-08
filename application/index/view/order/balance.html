@@ -42,11 +42,11 @@
             </div>
         {/if}
         <div class="address-select">
-            <a href="/address">
+            <a href="/address/select/{$Order.id}/{$Coupon.id|default=0}">
             <img src="/static/index/images/open.png">
             </a>
         </div>
-        <input type="hidden" name="address" value="{$Address.id}">
+        <input type="hidden" name="address_id" value="{$Address.id}">
     </div>
 
     <!--结算产品-->
@@ -92,13 +92,13 @@
     <div class="order-discount">
         <div class="discount-info">
             <span>优惠券</span>
-            <a href=""><i></i></a>
-            <p>满200减50</p>
-            <input type="hidden" name="discount" value="0">
+            <a href="/coupon/select/{$Order.id}/{$Address.id}"><i></i></a>
+            <p>{if $Coupon.id}满{$Coupon.money_satisfy}减{$Coupon.money_derate}{else /}无{/if}</p>
+            <input type="hidden" name="coupon_id" value="{$Coupon.id|default=''}">
         </div>
         <div class="discount-info">
             <span>留言</span>
-            <input type="text" name="message" placeholder="和平台说点什么吧（选填）"/>
+            <input type="text" name="comment" placeholder="和平台说点什么吧（选填）" id="comment"/>
         </div>
     </div>
 
@@ -108,22 +108,22 @@
         <div class="pay-select">
             <i class="ali"></i>
             <p>支付宝支付</p>
-            <div class="pay-select-sure {$Order.pay_type == 1 ?='pay-active'}">
-                <input type="radio" name="pay_type" value="1" class="paySelect" {$Order.pay_type == 1 ?="checked"}>
+            <div class="pay-select-sure pay-active">
+                <input type="radio" name="pay_type" value="1" class="paySelect" checked>
             </div>
         </div>
         <div class="pay-select">
             <i class="wx"></i>
             <p>微信支付</p>
-            <div class="pay-select-sure {$Order.pay_type == 2 ?='pay-active'}">
-                <input type="radio" name="pay_type" value="2" class="paySelect" {$Order.pay_type == 2 ?="checked"}>
+            <div class="pay-select-sure ">
+                <input type="radio" name="pay_type" value="2" class="paySelect" }>
             </div>
         </div>
         <div class="pay-select">
             <i class="ye"></i>
             <p>余额支付 <span>(余额：{$Money|float})</span></p>
-            <div class="pay-select-sure {$Order.pay_type == 3 ?='pay-active'}" id="balance">
-                <input type="radio" name="pay_type" value="3" class="paySelect" {$Order.pay_type == 3 ?="checked"}>
+            <div class="pay-select-sure" id="balance">
+                <input type="radio" name="pay_type" value="3" class="paySelect" readonly>
             </div>
         </div>
     </div>
@@ -133,9 +133,9 @@
         <h2>订单结算</h2>
         <p>交易总金额：￥<sapn>{$Order.total_price|float}</sapn></p>
         <p>商品总金额：￥<sapn>{$Order.goods_price|float}</sapn></p>
-        <p>优惠金额：￥<sapn>{$Order.discount_price|float}</sapn></p>
+        <p>优惠金额：￥<sapn>{$Coupon.money_derate|float}</sapn></p>
         <p>运费金额：￥<sapn>{$Order.franking_price|float}</sapn></p>
-        <p>实付金额：￥<sapn>{$Order.total_price|float}</sapn></p>
+        <p>实付金额：￥<sapn>{$Order.total_price - $Coupon.money_derate}</sapn></p>
         <p>订单积分：<sapn>{$Order.integral}</sapn></p>
     </div>
 
@@ -146,7 +146,7 @@
 <!--订单提交模块-->
 <div class="balance">
     <div class="balance-sum">
-        <p>结算金额：￥<span class="periceSum">{$Order.total_price|float}</span></p>
+        <p>结算金额：￥<span class="periceSum">{$Order.total_price - $Coupon.money_derate}</span></p>
     </div>
     <div class="balance-button">
         <button type="button" id="submitForm" form="orderForm"> 订单支付 </button>
@@ -163,10 +163,10 @@
 
 <script>
 
-    var balance = 25;
+    var balance = "{$Money}";
     /*支付方式选择控制*/
     $(".pay-select-sure").click(function(){
-        if($(this).attr('id') == 'index.view.order.balance' && parseInt($(".periceSum").text()) > parseInt(balance))
+        if($(this).attr('id') == 'balance' && parseInt($(".periceSum").text()) > parseInt(balance))
             return alertConfirm("余额不足，请选择其他支付方式");
         $(".pay-select-sure").removeClass("pay-active");
         $(".paySelect").attr("checked",false);
@@ -178,7 +178,10 @@
     $("#submitForm").click(function(){
        //console.log($("#orderForm").serialize()) ;
        //console.log($("#orderForm").serializeArray()) ;
-       $.post('/post',$("#orderForm").serialize(),function(obj){
+        var comment = $.trim($("#comment").val());
+        if(comment.length >100)
+            return alertConfirm("留言信息请少于100个字");
+       $.post('/payment/'+"{$Order.id}",$("#orderForm").serialize(),function(obj){
            console.log(obj);
        })
     });

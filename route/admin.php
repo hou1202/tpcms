@@ -13,9 +13,9 @@
  * */
 
 //设置全局变量规则
-Route::pattern([
+/*Route::pattern([
     'id'   => '\d+',
-]);
+]);*/
 
 Route::get('setting','admin/set/index');
 Route::get('table_two','admin/set/tableTwo');

@@ -8,6 +8,17 @@
 // +----------------------------------------------------------------------
 //
 
+
+//设置全局变量规则
+Route::pattern([
+    'id'   => '\d+',
+    'goods_id'  => '\d+',
+    'coupon_id'  => '\d+',
+    'address_id'  => '\d+',
+    'order_id'  => '\d+',
+
+]);
+
 /*
  *
  * 前端路由处理模块
@@ -39,23 +50,29 @@ Route::post('forget','index/forget/forget');
     //购物车Route
     Route::get('car','index/car/index');
     Route::delete('car/:id','index/car/delete');
-    Route::post('join/:goods_id','index/car/join')->pattern(['goods_id'=> '\d+',]);           //加入购物车
-    Route::post('purchase/:goods_id','index/order/purchase')->pattern(['goods_id'=> '\d+',]);           //立即购买
+    Route::post('join/:goods_id','index/car/join');           //加入购物车
+    Route::post('purchase/:goods_id','index/order/purchase');           //立即购买
+
     Route::post('buy','index/order/buy');           //下单
-    Route::get('balance/:id','index/order/balance');    //订单结算页面
+    Route::get('balance/:id/[:coupon_id]/[:address_id]','index/order/balance');    //订单结算页面
+    Route::get('address/select/:id/:coupon_id','index/address/select');       //下单选择地址
+    Route::get('coupon/select/:id/:address_id','index/coupon/select');       //下单选择优惠券
+    Route::post('payment/:order_id','index/order/payment');
 
 
 /*个人中心*/
     Route::get('personal','index/personal/index');     //个人主页
     Route::resource('address','index/address')->except(['read']);     //收货地址
     Route::post('address/choice/:id','index/address/choice');       //默认收货地址设置
-    Route::get('collect','index/collect/index');
+
+    Route::get('collect','index/collect/index');        //我的收藏
 
     //优惠券
     Route::get('receives','index/coupon/receives');     //领取优惠券列表
     Route::post('receives/:id','index/coupon/collar');     //领取优惠券
     Route::get('coupon','index/coupon/index');     //我的优惠券列表
     Route::post('coupon/:type','index/coupon/getData')->pattern(['type'=> '\d+',]);     //我的优惠券列表数据
+
 
 
 
