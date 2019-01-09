@@ -57,7 +57,12 @@ Route::post('forget','index/forget/forget');
     Route::get('balance/:id/[:coupon_id]/[:address_id]','index/order/balance');    //订单结算页面
     Route::get('address/select/:id/:coupon_id','index/address/select');       //下单选择地址
     Route::get('coupon/select/:id/:address_id','index/coupon/select');       //下单选择优惠券
-    Route::post('payment/:order_id','index/order/payment');
+    Route::post('payment/:order_id','index/order/payment');         //生成支付订单
+    Route::get('pay/:id/:type','index/order/pay');         //生成支付订单
+    Route::get('pay/success','index/pay/success');         //生成支付订单
+    Route::get('pay/error','index/pay/pay');         //生成支付订单
+    Route::get('pay/returnurl','index/pay/returnurl');         //生成支付订单
+
 
 
 /*个人中心*/
@@ -77,7 +82,8 @@ Route::post('forget','index/forget/forget');
 
 
 
-
+//测试页面
+Route::get('test','index/test/index');
 
 
 //重置Token
@@ -92,7 +98,7 @@ Route::post('/getCode/:mobile/:type/[:over]','index/Verify/getCode');
 Route::get('/','index/index/index');
 Route::get('/details','index/index/goods');
 /*Route::get('/balance','index/index/balance');*/
-Route::get('/pay','index/index/pay');
+/*Route::get('/pay','index/index/pay');*/
 Route::get('/list','index/index/goodsList');
 Route::get('/personal','index/index/personal');
 Route::get('/data','index/index/personalData');

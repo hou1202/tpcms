@@ -19,9 +19,9 @@ class Order extends CommonValidate
         'spec_id' => 'require|number|isExist:goods_spec,id',
         'order_id' => 'require|number|isExist:order,id',
         'address_id' => 'require|number|isExist:address,id',
-        'coupon_id' => 'require|number|isExist:coupon,id',
+        'coupon_id' => 'number|isExist:coupon,id',
         'pay_type' => 'require|number|in:1,2,3',
-        'message' => 'max:100',
+        'comment' => 'max:100',
     ];
     
     /**
@@ -61,7 +61,8 @@ class Order extends CommonValidate
 
         'pay_type.require' => '订单信息有误',
         'pay_type.in' => '订单信息有误',
-        'message.max' => '留言信息最多100个字',
+
+        'comment.max' => '留言信息最多100个字',
 
     ];
 
@@ -72,6 +73,6 @@ class Order extends CommonValidate
     protected $scene = [
         'car' => ['id','num'],
         'purchase' => ['num','goods_id','spec_id'],
-        'payment' => ['order_id','address_id','coupon_id','pay_type','message']
+        'payment' => ['order_id','address_id','coupon_id','pay_type','comment']
     ];
 }

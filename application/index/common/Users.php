@@ -115,7 +115,7 @@ class Users
             return false;
         }
         // 解密 并 获取uid
-        $uid = decrypt($sArrs['uid'], self::$authKey);
+        $uid = DDecrypt($sArrs['uid'], self::$authKey);
         // 设置静态变量
         static $users = array();
         // 读取数据
@@ -133,7 +133,7 @@ class Users
         }
         // 校验token
         $tokenStr       = $user[self::$name].$user[self::$password];
-        $verifyTokenStr = decrypt($sArrs['token'], self::$authKey); //待校验token
+        $verifyTokenStr = DDecrypt($sArrs['token'], self::$authKey); //待校验token
         if (!$verifyTokenStr || $verifyTokenStr != $tokenStr) {
             self::logout(); //登出
             return false;
@@ -157,8 +157,8 @@ class Users
         // 加密用户信息并生成session
         $tokenStr = $user[self::$name].$user[self::$password];
         $sArrs    = array(
-            'uid'       => encrypt($user[self::$name], self::$authKey),
-            'token'     => encrypt($tokenStr, self::$authKey),
+            'uid'       => DEncrypt($user[self::$name], self::$authKey),
+            'token'     => DEncrypt($tokenStr, self::$authKey),
             'timestamp' => time()
         );
         session(self::$sessionKey, $sArrs);

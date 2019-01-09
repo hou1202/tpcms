@@ -2,9 +2,8 @@
 
 namespace app\index\controller;
 
+use app\common\controller\Alipay;
 use app\common\controller\IndexController;
-use app\common\model\Config;
-use app\common\model\Coupon;
 use think\Request;
 use think\Db;
 use think\facade\Cache;
@@ -14,6 +13,9 @@ use app\common\model\GoodsSpec;
 use app\common\model\Order as OrderM;
 use app\common\model\Car;
 use app\common\model\Address;
+use app\common\model\Config;
+use app\common\model\Coupon;
+use app\common\model\CouponUser;
 
 use app\index\validate\Order as OrderV;
 
@@ -57,6 +59,7 @@ class Order extends IndexController
      * @param  \think\Request  $request
      * @param  int  $coupon_id (Option)
      * @param  int  $address_id (Option )
+     *
      * @return \think\Response
      */
     public function balance(Request $request, $id)
@@ -93,16 +96,80 @@ class Order extends IndexController
      * 生成支付订单.
      *
      * @param  int  $order_id
+     * @param  \think\Request  $request
+     *
      * @return \think\Response
      */
     public function payment(Request $request,$order_id)
     {
-        $data = $request->param();
+        //$data = $request->param();
+        //var_dump($data);die;
         $validate = new OrderV();
-        if(!$validate->scene('payment')->check($data))
-            $this->failJson($validate->getError());
-        var_dump($data);die;
+        if(!$validate->scene('payment')->check($request->param()))
+            return $this->failJson($validate->getError());
+        $coupon = Coupon::get($request->param('coupon_id'));
+        $address = Address::get($request->param('address_id'));
+        $order = OrderM::get($request->param('order_id'));
+
+
+        //组装更新订单数据
+        if($coupon){
+            $order->discount_price = $coupon->money_derate;
+            $order->pay_price = bcsub($order->total_price,$coupon->money_derate,2);
+            $order->coupon_id = $coupon->id;
+            $order->integral = bcmul(bcsub($order->total_price,$coupon->money_derate,2),bcdiv(Config::where('id',3)->value('param'),100,2),2);
+        }
+        $order->name = $address->name;
+        $order->phone = $address->phone;
+        $order->city = $address->city;
+        $order->street = $address->street;
+        $order->pay_type = $request->param('pay_type');
+
+        /*if($coupon)
+            var_dump($coupon->id);
+        var_dump($coupon);
+        die;*/
+
+        //事务提交订单
+        Db::startTrans();
+        try{
+            //更新用户优惠券信息
+            if($coupon)
+                CouponUser::where(['coupon_id'=>$coupon->id,'user_id'=>$this->user_info['id']])->update(['status'=>1]);
+                /*$coupon->couponUser()
+                    ->where('user_id',$this->user_info['id'])
+                    ->save(['status'=>1]);*/
+            $order->save();
+
+            // 提交事务
+            Db::commit();
+        }catch(\Exception $e){
+            // 回滚事务
+            Db::rollback();
+            return $this->failJson('订单信息有误1');
+        }
+        return $this->successJson('开始支付','/pay/'.$order->id.'/'.$request->param('pay_type'));
     }
+
+
+    /**
+     * 支付订单.
+     *
+     * @param  int  $id
+     * @param  int  $type
+     *
+     * @return \think\Response
+     */
+    public function pay(Request $request, $id, $type)
+    {
+        //var_dump($id.'/'.$type);
+        if(!$order = OrderM::get($id))
+            return redirect($request->header('referer'));
+        $pay = new Alipay();
+        $resource = $pay->webGet('0.01','201901066211546774470','新品上市');
+        var_dump($resource);
+    }
+
 
     /**
      * 保存更新的资源

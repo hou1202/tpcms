@@ -8,7 +8,7 @@
 
 <!--头部标题模块-->
 <header class="header-title">
-    <a href="Javascript:history.go(-1);">
+    <a href="/car">
         <img src="/static/index/images/back.png">
     </a>
     <h2>订单结算</h2>
@@ -94,6 +94,7 @@
             <span>优惠券</span>
             <a href="/coupon/select/{$Order.id}/{$Address.id}"><i></i></a>
             <p>{if $Coupon.id}满{$Coupon.money_satisfy}减{$Coupon.money_derate}{else /}无{/if}</p>
+            <!--<input type="hidden" name="coupon_id" value="56">-->
             <input type="hidden" name="coupon_id" value="{$Coupon.id|default=''}">
         </div>
         <div class="discount-info">
@@ -176,14 +177,22 @@
 
 
     $("#submitForm").click(function(){
-       //console.log($("#orderForm").serialize()) ;
-       //console.log($("#orderForm").serializeArray()) ;
+
         var comment = $.trim($("#comment").val());
         if(comment.length >100)
             return alertConfirm("留言信息请少于100个字");
-       $.post('/payment/'+"{$Order.id}",$("#orderForm").serialize(),function(obj){
-           console.log(obj);
-       })
+        //console.log(13);
+        //window.href="/pay/3/1";
+        $(window).attr('location','/pay/3/1');
+        /*$.post("/pay/3/1",'',function(res){
+            console.log(res.msg);
+            console.log(res);
+        })*/
+       /*$.post('/payment/'+"{$Order.id}",$("#orderForm").serialize(),function(res){
+           alertConfirm(res.msg);
+           console.log(res.msg);
+           console.log(res);
+       })*/
     });
 
 </script>

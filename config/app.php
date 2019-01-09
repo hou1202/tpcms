@@ -183,6 +183,40 @@ return [
     //帐户
     'sms_account'       => '8E00048',
     //密码
-    'sms_password'      =>'8E0004888'
+    'sms_password'      =>'8E0004888',
+
+    /*支付配置项*/
+    //支付宝配置参数
+    'alipay_config'=>[
+        'app_id' =>'2019010962841618',   //应用APPID。
+        'partner' =>'2088521367543235',   //这里是你在成功申请支付宝接口后获取到的PID；
+        'seller_id' => 'xiaojikeji@aliyun.com', //收款支付宝用户ID
+        // 'key'=>'9t***********ie',//这里是你在成功申请支付宝接口后获取到的Key
+        'sign_type'=>'RSA',     //签名方式
+        'input_charset'=> 'utf-8',      //编码格式
+        'transport'=> 'http',
+        'gateway_url' => "https://openapi.alipay.com/gateway.do",       //支付宝网关
+        //密钥
+        'private_key'=> 'MIIEogIBAAKCAQEAyk/5XFglqUM09O8hEXy77P+NpPskjQFS9LqBRmj07HthDx0NAbtyaSHRQZjiqzSdrMxwlFOG0GmeKG5zufVdZYUeovbjDcVsFWeY1FeprTJbhzgj1cA7L/9vOIzuFsPl4HRSzrrcBpkEjJnjtTqhnk1BrmC9yicwlwKJdQy+pLqk3WHkNb4zY7a9SnTDTVi5Fv3qNLr9qJTONr7cu+JzUwTV5rKyavWjzNCmgJN47OMPy/ilAu9pw7Psmnr31/JIvbXY1YymN46sLBKT0CZvTkpd7SwAxgj5LXXtSHoCCYuRamuQV9GWYSHJ0D4CxZ9DrAtcxvIk9UVLuzYKMNs9sQIDAQABAoIBACW6sGhWT/+29uNOzT3zoyBZsFK6O2DIhG37cixtWm/XuowVAN331ShiFCJFntAK6fTV05D12sh3SfWEU7S0W4yZPNNrc4CX9sYvIcNH7e7M22DmSViNlvwmiNlk/unj8rTfPKotEudwFfcao+qiWo2pHrykcgCHOnqPEI9xpwQVLaD+3KLRSuI3hQFUIkZzDCDprL/ZCKvxTadSpIRZ9lVmRK/LEYwMBfkNmOW0rooynEg+jmy2F12FcQtIdxTt8jv3OewqbI5FgWPjTPkCwrM26COVQR6PW4tTMJuJBslA7xfmfKl3Gg7tfqwOTu2PKqpe+0vUmZuwo0P86InvaLkCgYEA86ecxG08ZggubElo+FkE1EHhgCWe5JlHPdJzlFYFG/UdzTCPWhlOtEz/9gB8NWYsPVY+KzN6pfFHzuTbDLZ0ebECH9Re7lI1h9rHaWqQPQIx8cZUcsC367XO+wLhEqugds5IOxTiFRAi+vx5NuclFQj5iRHKiFHtB8cS8rnyh4cCgYEA1JAevPettf4FlrxnVZqGskUiKRhUmU/GWJ7vq0iHyL0xg/9T9AHGD4YbonsyyA2Uy8f8cPHWn0zwRb4jk4xLLeTqj6uWLlnZAJi/D9S7G+14aOpyad9E3CWHcfwAW9xE/wcYo47ZJRy5UWm4au87YcEnvkizCgLaRvTt64tabwcCgYBt1PJfwPXm8G0stvKwcEAzBfeGcm7rkQSCI6miBhyLe7SRWABmlt3ZfJQs6g8TaxkqFQQ1KSFySA8cfiEX2+8pI9dXTb31I+2pbb9SD40xUxn8aHCMwb6ma+//Sk72wZK1u0roBwPahsmd5c0mKI+YqdECLpjjVjrItL4f2B4xZQKBgHhgLagiM3PPKWcVxwdJfWJTmGbhandwIAlr6Jp9drgNvI7d97NFld6QufGoBzgXyN4moSVtL3gDYEZ+yTLzzldtPhCiwWf6ZdParMjQVi4Yq4nuy2B9mkd50VyRs7pR4ZjzcdaePQaxX5llX5TfaieP9WvjS9EtkGOCrYIo5svdAoGAOwoPKDeprC/7qn6B4T1tVSipW46pFJP+H7MkpVzvdKX+ZGCpqHV46X02QmqbrW6rGhOUUi1JDswUHLu7sjMpzdYibUwwqtlBQz4G7UfknE8CMQusW8ly3922RXdkWhxIZD+fTO0H5VHQNwTJWlbos+uo7upZWIf8ZaXInPz7ou0=',
+        //公钥
+        'public_key'=> 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyk/5XFglqUM09O8hEXy77P+NpPskjQFS9LqBRmj07HthDx0NAbtyaSHRQZjiqzSdrMxwlFOG0GmeKG5zufVdZYUeovbjDcVsFWeY1FeprTJbhzgj1cA7L/9vOIzuFsPl4HRSzrrcBpkEjJnjtTqhnk1BrmC9yicwlwKJdQy+pLqk3WHkNb4zY7a9SnTDTVi5Fv3qNLr9qJTONr7cu+JzUwTV5rKyavWjzNCmgJN47OMPy/ilAu9pw7Psmnr31/JIvbXY1YymN46sLBKT0CZvTkpd7SwAxgj5LXXtSHoCCYuRamuQV9GWYSHJ0D4CxZ9DrAtcxvIk9UVLuzYKMNs9sQIDAQAB',
+    ],
+
+    //以上配置项，是从接口包中alipay.config.php 文件中复制过来，进行配置；
+    'alipay_url'   =>[
+        //这里是异步通知页面url，提交到项目的Pay控制器的notifyurl方法；
+        'notify_url'=>'http://aoogi.min-ji.com/api/callback/alicomplete',
+        //这里是页面跳转通知url，提交到项目的Pay控制器的returnurl方法；
+        'return_url'=>'http://aoogi.min-ji.com/Pay/returnurl',
+        //支付成功跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参payed（已支付列表）
+        'successpage'=>'http://aoogi.min-ji.com/pay/success',
+        //支付失败跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参unpay（未支付列表）
+        'errorpage'=>'http://aoogi.min-ji.com/pay/error',
+    ],
+    'alipay_key' =>[
+        'cacert'=> getcwd().'/../pay/alipay/key/cacert.pem',
+        'rsa_key'=> getcwd().'/../pay/alipay/key/rsa_private_key.pem',      //密钥路径
+        'public_key'=> getcwd().'/../pay/alipay/key/alipay_public_key.pem',     //公钥路径
+    ],
 
 ];

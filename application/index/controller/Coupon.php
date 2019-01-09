@@ -11,7 +11,7 @@ use app\common\model\Order;
 class Coupon extends IndexController
 {
     /**
-     * 显示资源列表
+     * 显示资源列表-我的优惠券
      *
      * @return \think\Response
      */
@@ -24,6 +24,7 @@ class Coupon extends IndexController
             ->where('c.end_time',['=',0],['>',time()],'or')
             ->where('c.status',1)
             ->where('u.status',0)
+            ->where('u.user_id',$this->user_info['id'])
             ->append(['type_text'])
             ->select()
             ->toArray();
@@ -45,6 +46,7 @@ class Coupon extends IndexController
             ->where('c.end_time',['=',0],['>',time()],'or')
             ->where('c.status',1)
             ->where('u.status',$type)
+            ->where('u.user_id',$this->user_info['id'])
             ->append(['type_text'])
             ->select()
             ->toArray();
@@ -52,7 +54,7 @@ class Coupon extends IndexController
     }
 
     /**
-     * 显示所有资源表单页.
+     * 显示所有资源表单页-领取优惠券-优惠券大厅
      *
      * @return \think\Response
      */
