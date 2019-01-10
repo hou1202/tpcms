@@ -33,10 +33,10 @@ class Alipay
         Loader::autoload('AlipayTradeAppPayRequest');
 
         if(Config::get('app_debug')){
-            $totalAmount = 0.01;
+            $payAmount = 0.01;
         }
         $aliConfig = Config::get('alipay_config');
-        $urlConfig = Config::get('alipay_url');
+
         $aop = new \AopClient();
         $aop->appId = $aliConfig['app_id'];     //应用APPID
         $aop->format = "json";
@@ -57,13 +57,13 @@ class Alipay
             "\"total_amount\":".$payAmount."," .
             "\"seller_id\":\"".$aliConfig['seller_id']."\"," .
             "\"goods_type\":\"1\"," .
-            "\"quit_url\":\"".$urlConfig['errorpage']."\"," .
+            "\"quit_url\":\"".$aliConfig['errorpage']."\"," .
             "\"product_code\":\"QUICK_WAP_WAY\"," .
             "  }";
-        $request->setNotifyUrl($urlConfig['notify_url']);
+        $request->setNotifyUrl($aliConfig['notify_url']);
         $request->setBizContent($request_body);
         //这里和普通的接口调用不同，使用的是sdkExecute
-        $response = $aop->pageExecute($request);
+        $response = $aop->sdkExecute($request);
 
         //htmlspecialchars是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
         return ['resp'=>$response];//就是orderString 可以直接给客户端请求，无需再做处理。

@@ -153,7 +153,7 @@ class Order extends IndexController
 
 
     /**
-     * 支付订单.
+     * 请求支付.
      *
      * @param  int  $id
      * @param  int  $type

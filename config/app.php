@@ -185,7 +185,9 @@ return [
     //密码
     'sms_password'      =>'8E0004888',
 
-    /*支付配置项*/
+    /**
+     * 支付配置项
+     */
     //支付宝配置参数
     'alipay_config'=>[
         'app_id' =>'2017022705930808',   //应用APPID。
@@ -205,10 +207,7 @@ return [
         'public_key'=> 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqEOILRHyJsRvZO837C8MLpIuzU35F4NUx5w/UkPWKsCOqqZbpqXHJzkXAEZg8ElXtTJATLrzCOXuEw5Rr2NZIkkh7VYOkZnbIy5mqwd2Vl9E9J1J6DuPbMk3znsq7vU1YpkCILIEjjJAVd9wqYsjvb34tp6NlUU5m7WOPeaSZ6wIDAQAB',
         //支付宝公钥
         'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB',
-    ],
 
-    //以上配置项，是从接口包中alipay.config.php 文件中复制过来，进行配置；
-    'alipay_url'   =>[
         //这里是异步通知页面url，提交到项目的Pay控制器的notifyurl方法；
         'notify_url'=>'http://aoogi.min-ji.com/api/callback/alicomplete',
         //这里是页面跳转通知url，提交到项目的Pay控制器的returnurl方法；
@@ -217,11 +216,11 @@ return [
         'successpage'=>'http://aoogi.min-ji.com/pay/success',
         //支付失败跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参unpay（未支付列表）
         'errorpage'=>'http://aoogi.min-ji.com/pay/error',
+
+        'cacert_pem'=> getcwd().'/../pay/alipay/key/cacert.pem',
+        'rsa_key_pem'=> getcwd().'/../pay/alipay/key/rsa_private_key.pem',      //密钥路径
+        'public_key_pem'=> getcwd().'/../pay/alipay/key/alipay_public_key.pem',     //公钥路径
     ],
-    'alipay_key' =>[
-        'cacert'=> getcwd().'/../pay/alipay/key/cacert.pem',
-        'rsa_key'=> getcwd().'/../pay/alipay/key/rsa_private_key.pem',      //密钥路径
-        'public_key'=> getcwd().'/../pay/alipay/key/alipay_public_key.pem',     //公钥路径
-    ],
+
 
 ];
