@@ -166,7 +166,7 @@ class Order extends IndexController
         if(!$order = OrderM::get($id))
             return redirect($request->header('referer'));
         $pay = new Alipay();
-        $resource = $pay->webGet('0.01','201901066211546774470','新品上市');
+        $resource = $pay->webGet('0.01','20190106621154'.rand(1000,9999).'70','新品上市');
         var_dump($resource);die;
     }
 

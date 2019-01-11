@@ -61,6 +61,7 @@ class Alipay
             "\"product_code\":\"QUICK_WAP_WAY\"," .
             "  }";
         $request->setNotifyUrl($aliConfig['notify_url']);
+        $request->setReturnUrl($aliConfig['successpage']);
         $request->setBizContent($request_body);
         //这里和普通的接口调用不同，使用的是sdkExecute
         $response = $aop->pageExecute($request);
