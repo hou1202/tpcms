@@ -30,7 +30,7 @@ class Alipay
         Loader::addAutoLoadDir($alipayPath);
         Loader::addAutoLoadDir($alipayPath.'request'.DS);
         Loader::autoload('AopClient');
-        Loader::autoload('AlipayTradeAppPayRequest');
+        Loader::autoload('AlipayTradeWapPayRequest');
 
         if(Config::get('app_debug')){
             $payAmount = 0.01;
