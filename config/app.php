@@ -190,7 +190,7 @@ return [
      */
     //支付宝配置参数
     'alipay_config'=>[
-        'app_id' =>'2017022705930808',   //应用APPID。
+        'app_id' =>'2017090508565516',   //应用APPID。
         'partner' =>'2088521367543235',   //这里是你在成功申请支付宝接口后获取到的PID；
         'seller_id' => 'xiaojikeji@aliyun.com', //收款支付宝用户ID
         // 'key'=>'9t***********ie',//这里是你在成功申请支付宝接口后获取到的Key
@@ -209,13 +209,13 @@ return [
         'ali_public_key' => 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB',
 
         //这里是异步通知页面url，提交到项目的Pay控制器的notifyurl方法；
-        'notify_url'=>'http://aoogi.min-ji.com/api/callback/alicomplete',
+        'notify_url'=>'http://www.aoogi.com/api/callback/alicomplete',
         //这里是页面跳转通知url，提交到项目的Pay控制器的returnurl方法；
-        'return_url'=>'http://aoogi.min-ji.com/Pay/returnurl',
+        'return_url'=>'http://www.aoogi.com/Pay/returnurl',
         //支付成功跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参payed（已支付列表）
-        'successpage'=>'http://aoogi.min-ji.com/pay/success',
+        'successpage'=>'http://www.aoogi.com/pay/success',
         //支付失败跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参unpay（未支付列表）
-        'errorpage'=>'http://aoogi.min-ji.com/pay/error',
+        'errorpage'=>'http://www.aoogi.com/pay/error',
 
         'cacert_pem'=> getcwd().'/../pay/alipay/key/cacert.pem',
         'rsa_key_pem'=> getcwd().'/../pay/alipay/key/rsa_private_key.pem',      //密钥路径

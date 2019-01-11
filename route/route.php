@@ -59,8 +59,9 @@ Route::post('forget','index/forget/forget');
     Route::get('coupon/select/:id/:address_id','index/coupon/select');       //下单选择优惠券
     Route::post('payment/:order_id','index/order/payment');         //生成支付订单
     Route::get('pay/:id/:type','index/order/pay');         //生成支付订单
-    Route::get('pay/success','index/pay/success');         //生成支付订单
-    Route::get('pay/error','index/pay/pay');         //生成支付订单
+
+    Route::get('pay/success','index/pay/paySuccess');         //生成支付订单
+    Route::get('pay/error','index/pay/payError');         //生成支付订单
     Route::get('pay/returnurl','index/pay/returnurl');         //生成支付订单
 
 

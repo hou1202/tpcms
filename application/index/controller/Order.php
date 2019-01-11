@@ -167,7 +167,7 @@ class Order extends IndexController
             return redirect($request->header('referer'));
         $pay = new Alipay();
         $resource = $pay->webGet('0.01','201901066211546774470','新品上市');
-        var_dump($resource);
+        var_dump($resource);die;
     }
 
 
