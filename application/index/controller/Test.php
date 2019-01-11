@@ -21,7 +21,8 @@ class Test extends BaseController
         //echo Env::get('extend_path');
 
         //echo DS;
-        $pay = new Alipay();
+        var_dump(DIRECTORY_SEPARATOR);
+        var_dump(dirname ( __FILE__ ));
         echo getcwd();
 
     }
