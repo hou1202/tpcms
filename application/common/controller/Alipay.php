@@ -14,6 +14,7 @@ use think\facade\Config;
 use app\common\model\Config as ConfigM;
 
 use think\facade\Env;
+use think\validate\ValidateRule;
 
 class Alipay
 {
@@ -66,12 +67,12 @@ class Alipay
             'seller_id ' => $aliConfig['seller_id'],                    //支付宝PID
             'notify_url' => $aliConfig['notify_url'],                   //异步通知地址
             'return_url' => $aliConfig['return_url'],                   //同步跳转
-            'quit_url ' => $aliConfig['error_url'],                     //支付失败跳转地址
+            'quit_url ' => $aliConfig['quit_url'],                     //支付失败跳转地址
             'charset' => $aliConfig['input_charset'],                   //编码格式
             'sign_type' => $aliConfig['sign_type'],                     //签名方式
-            'gatewayUrl' => $aliConfig['gateway_url'],                  //支付宝网关
-            'merchant_private_key' => $aliConfig['private_key'],        //商户私钥
-            'alipay_public_key' => $aliConfig['ali_public_key'],        //支付宝公钥
+            'gatewayUrl' => $aliConfig['gatewayUrl'],                  //支付宝网关
+            'merchant_private_key' => $aliConfig['merchant_private_key'],        //商户私钥
+            'alipay_public_key' => $aliConfig['alipay_public_key'],        //支付宝公钥
         ];
     }
 
@@ -89,8 +90,8 @@ class Alipay
         //支付宝扩展文件路径
         $payLoadPath = Env::get('extend_path').'alipay'.DS;
 
-        Loader::addAutoLoadDir($payLoadPath.'service'.DS);
-        Loader::addAutoLoadDir($payLoadPath.'buildermodel'.DS);
+        Loader::addAutoLoadDir($payLoadPath.'wappay'.DS.'service'.DS);
+        Loader::addAutoLoadDir($payLoadPath.'wappay'.DS.'buildermodel'.DS);
         Loader::autoload('AlipayTradeService');
         Loader::autoload('AlipayTradeWapPayContentBuilder');
 
@@ -106,8 +107,10 @@ class Alipay
         $payRequestBuilder->setTotalAmount($payAmount);             //付款金额，必填
         $payRequestBuilder->setTimeExpress($timeout);               //超时时间
 
-        $payResponse = new \AlipayTradeService($this->config);
-        $result = $payResponse->wapPay($payRequestBuilder, $this->config['return_url'], $this->config['notify_url']);
+        $aliConfig = Config::get('alipay_config');
+        //print_r($this->config);die;
+        $payResponse = new \AlipayTradeService($aliConfig);
+        $result = $payResponse->wapPay($payRequestBuilder, $aliConfig['return_url'], $aliConfig['notify_url']);
 
         return ;
         /*
