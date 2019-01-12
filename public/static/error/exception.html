@@ -6,20 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="[keywords]" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
-    <title>[title]</title>
-    {load href="/static/index/lib/flexible_css.js" /}
-    {load href="/static/index/lib/flexible.js" /}
-    {load href="/static/index/lib/jquery-3.3.1.min.js" /}
-    {load href="/static/index/js/public.js" /}
+    <title>AOOGI系统</title>
     <link rel="stylesheet" type="text/css" href="/static/index/css/cssreset.css" />
-    <link rel="stylesheet" type="text/css" href="/static/index/css/public.css" />
-    <link rel="stylesheet" type="text/css" href="/static/plugin/tips/css/style.css" />
 
 
+    <script src="/static/index/lib/flexible_css.js"></script>
+    <script src="/static/index/lib/flexible.js"></script>
+    <script src="/static/index/lib/jquery-3.3.1.min.js"></script>
 
-    <!--alert提示效果-->
-    {load href="/static/plugin/tips/alert-info.js" /}
-    {load href="/static/plugin/tips/css/style.css" /}
+
 
     <script>
         /*IOS  禁用屏幕放大*/
@@ -45,20 +40,40 @@
             });
         }
     </script>
+    <style>
+        .error {
+            width:100%;
+            text-align:center;
+            position: absolute;
+            top: 50%;
+        }
+        .error p {
+            width:100%;
+            transform: translate(0, -50%);
+            color: #ff9f3b;
+            font-size:1.3em;
+        }
+        .error a {
+            display:block;
+            width:100px;
+            height:40px;
+            line-height:40px;
+            margin:20px auto;
+            background:#ff9f3b;
+            color:#fff;
+            border-radius:7px;
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<!--弹窗提示模块-->
-<div class="alertInfo" id="alertInfo">
-    <p></p>
-</div>
 
-
-
-<div>
-    SORRY,您所访问的内容有误！
+<div class="error">
+    <p>SORRY , 您所访问的内容有误！</p>
+    <a href="/">返回首页</a>
 </div>
 
 
