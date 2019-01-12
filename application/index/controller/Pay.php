@@ -36,6 +36,18 @@ class Pay extends IndexController
         var_dump($request->param());
         var_dump($result);
         var_dump('returnurl');
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public function payError(Request $request)

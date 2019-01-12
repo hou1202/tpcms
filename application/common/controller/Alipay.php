@@ -87,6 +87,7 @@ class Alipay
      */
     public function wapPay($payAmount, $orderNumber, $msg, $timeout='30m')
     {
+
         //支付宝扩展文件路径
         $payLoadPath = Env::get('extend_path').'alipay'.DS;
 
@@ -108,7 +109,6 @@ class Alipay
         $payRequestBuilder->setTimeExpress($timeout);               //超时时间
 
         $aliConfig = Config::get('alipay_config');
-        //print_r($this->config);die;
         $payResponse = new \AlipayTradeService($aliConfig);
         $result = $payResponse->wapPay($payRequestBuilder, $aliConfig['return_url'], $aliConfig['notify_url']);
 

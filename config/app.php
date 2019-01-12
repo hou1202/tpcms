@@ -19,7 +19,7 @@ return [
     // 应用地址
     'app_host'               => '',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => false,
     // 应用Trace
     'app_trace'              => false,
     // 是否支持多模块
@@ -135,7 +135,8 @@ return [
     'dispatch_error_tmpl'    => Env::get('think_path') . 'tpl/dispatch_jump.tpl',
 
     // 异常页面的模板文件
-    'exception_tmpl'         => Env::get('think_path') . 'tpl/think_exception.tpl',
+    //'exception_tmpl'         => Env::get('think_path') . 'tpl/think_exception.tpl',
+    'exception_tmpl'         => Env::get('root_path') . 'public/static/error/exception.html',
 
     // 错误显示信息,非调试模式有效
     'error_message'          => '页面错误！请稍后再试～',
@@ -208,7 +209,7 @@ return [
 
         //应用密钥/私钥
         //'private_key'=> 'MIIEowIBAAKCAQEApkzGcTl2mRws8vUszmtnr8S4yweCWvAH4IcKsntBuSB4HSYshFM5fdpjKRIFGwit2aLviNomGTW/0R2RGXOaP/tqJP8dGGkSmLpz/ief9pUxpWEErZliI/K78uC5I5c8kQ7kOdUZ5pp+tR7aNNOy5eG5xB24O2Q9WKObpoesAZIZiwaNOPj0SDguImwOUv1b1ZBtUT9zMBuuTuSnJCDZ+n7rb1BEZIsADupy5JQSFBzc65xtpcVf9eHxfUkYbP0orzV39DCBVsTC/mjGpV7opKYg2OXIrdYilSO9InExzX7yzDQvEwCkV3pbblhOuo9J5fyXMkLAKNVUiJf5XOyh/QIDAQABAoIBAEeMGIR2GJRfDueonBJjG0T/+hE/tdGyG3F6KBwJ84jWc1b3KYf01nNTFf6BhjjPTxyngS77zBBkk5ZAhkDQ/7gvTseECtyJuDqFXYonOic4oRdp2j1mFFcrA7nG/WBWnPQ71+0Zxf700TbTg0XfHsTQjL/XmX/T7KDKIxlOna4+n7uuiWz+7o7eEEzOLT3o1pDaDbuSktxH6aixP4KNByOqEbSnqSi/v2rKRtsUvDDj+bG6YYA11x2DFxjYZceyRFmPcQ8RR+D5a2YNJMK578cZrexggEKa9W3bKARq5o6g752Anfbn3CGB1SgkvEtavjumDhnRsBDj5ht8TroiA/ECgYEAzoHuo2l06cPX2vHcfo0V7FK+w8ERoaR6pd+K7byrcrZ8lloqrivH3YLLv/L7ypt5FpByLpX9nz0yOQxkHVCp2kLOZLqfGGlBV60AKqRuZ1PB7FkbvDp6ytuIC6KQTM+sRuz9wf1gs8YC6HkW9hBPLQEBl+JPhNjJCha40IhW+scCgYEAzifxQwKJyIMsEnJFvxf2SPaOam3bP1e+LZT8K1VCQN9BE3gP/3ccVBjoBtL7r50++JqJsejRYgxgpwJiwocPrut6eyRWZ2sWIykXc4LbouZlaZOGF+YNu4RvOV22vVG4ZMbqDk0HPA8tz1TAmQ38ec74OKiHm0/d4vJEduPnWRsCgYEAvmvxsZ28wRJmKO59c/SFErX6Umfl6jfRIMNRSIeBUPYVTE84rAKS+h9x4j4dEGbs8XGg2HRWuk+j0Bcs+hs3hJu11gyAR/JG3qIYVTnq1DzXxSkl+huyvvxQJupwRWP6aCyAkjEiyqL8a4G9OokveUBER9nXmZiNSVBKe4A9NGECgYBREP3bVuUtdv9epZbtpROQ73tjOJ3Nk8hSDlL3C0jJT8E8UasgzwrRuxWKkW6tSQ1ZHxPkZOPpRWrAYbzKN+gf5bM9NzXO5xpGa0MwhhWuQiFA2eUSAsIFqfc+vK4+ViNHZbzmML4WjPV7oR03UnukvpF3XjYtCcP8GT547fesXwKBgERj3E0+Xu5fmY3kTzRfs3t6Qv28sIMrsiTBdgTZ1Srtx4J5rTjl6Hrvx4IG9Jz2EXm3kAVAAJX/edPE8q2Ksj4bpozF1ucDZsvDTLHKDCVnlpvy+bTFZYGZBQU+Ap+9YPoMdijEOlualUcoENkq4T5REOxSsAuHa04+HPxoXdFC',
-        'merchant_private_key'=> 'MIICXQIBAAKBgQDqEOILRHyJsRvZO837C8MLpIuzU35F4NUx5w/UkPWKsCOqqZbpqXHJzkXAEZg8ElXtTJATLrzCOXuEw5Rr2NZIkkh7VYOkZnbIy5mqwd2Vl9E9J1J6DuPbMk3znsq7vU1YpkCILIEjjJAVd9wqYsjvb34tp6NlUU5m7WOPeaSZ6wIDAQABAoGAZ05ORgTTJn5puSYhEkUtr6zPD7WxDKxfzCecIAhepvh4tXEmLzjfBN+qf0wEsbayAAsDp8PAAcUXFBCyKCtK32K90pxZ30IUE7Hk9XpM5dS0YMDloTLESlKiYhDEN8YYN0riIb7A2anXnr8oYqxdCXkAevKFPu1QRTLpTMyLEJkCQQD4q5yKCoEnmkSggaJxeaeIhLFLeC7PqG8WNPurtn9kaiNgsiBVVAScKbwmjiNnzF7cZ4rPqqGzV045AlGJaAiPAkEA8PcSO3Q4Y8hZGig5vdvKbmeEvZbsW4gX2pkHW1yXqeVhwx085iejg1d71h9pzpqgeDyLC3HDjNZ6W/EFPmDu5QJBANn8RgtUTgfTWhmByk7DIDOybmEEB7UNp+PFqmDKaD40NLMNMv7Z2fizNTZvH2ZcZ0O6mJqWr40xGWcsOyHCys0CQQCkT8YF9qUxHX/svztIhKSQDlTMtypq6+1gKXOD0Cq3NmwokTpisurj9/bAtuD+eiAsfRRPdH7k/aeoJDzwIUclAkAFplCoJWY0S05YTp06sBPwFB6q+HZqUMLkN7cSE6LlUpX9U3/+RW8oTyDsZtuVlITPiRsT4tFuKB7C/BBbANLM',
+        'merchant_private_key'=> 'MsICXQIBAAKBgQDqEOILRHyJsRvZO837C8MLpIuzU35F4NUx5w/UkPWKsCOqqZbpqXHJzkXAEZg8ElXtTJATLrzCOXuEw5Rr2NZIkkh7VYOkZnbIy5mqwd2Vl9E9J1J6DuPbMk3znsq7vU1YpkCILIEjjJAVd9wqYsjvb34tp6NlUU5m7WOPeaSZ6wIDAQABAoGAZ05ORgTTJn5puSYhEkUtr6zPD7WxDKxfzCecIAhepvh4tXEmLzjfBN+qf0wEsbayAAsDp8PAAcUXFBCyKCtK32K90pxZ30IUE7Hk9XpM5dS0YMDloTLESlKiYhDEN8YYN0riIb7A2anXnr8oYqxdCXkAevKFPu1QRTLpTMyLEJkCQQD4q5yKCoEnmkSggaJxeaeIhLFLeC7PqG8WNPurtn9kaiNgsiBVVAScKbwmjiNnzF7cZ4rPqqGzV045AlGJaAiPAkEA8PcSO3Q4Y8hZGig5vdvKbmeEvZbsW4gX2pkHW1yXqeVhwx085iejg1d71h9pzpqgeDyLC3HDjNZ6W/EFPmDu5QJBANn8RgtUTgfTWhmByk7DIDOybmEEB7UNp+PFqmDKaD40NLMNMv7Z2fizNTZvH2ZcZ0O6mJqWr40xGWcsOyHCys0CQQCkT8YF9qUxHX/svztIhKSQDlTMtypq6+1gKXOD0Cq3NmwokTpisurj9/bAtuD+eiAsfRRPdH7k/aeoJDzwIUclAkAFplCoJWY0S05YTp06sBPwFB6q+HZqUMLkN7cSE6LlUpX9U3/+RW8oTyDsZtuVlITPiRsT4tFuKB7C/BBbANLM',
 
         //应用公钥
         //'public_key'=> 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApkzGcTl2mRws8vUszmtnr8S4yweCWvAH4IcKsntBuSB4HSYshFM5fdpjKRIFGwit2aLviNomGTW/0R2RGXOaP/tqJP8dGGkSmLpz/ief9pUxpWEErZliI/K78uC5I5c8kQ7kOdUZ5pp+tR7aNNOy5eG5xB24O2Q9WKObpoesAZIZiwaNOPj0SDguImwOUv1b1ZBtUT9zMBuuTuSnJCDZ+n7rb1BEZIsADupy5JQSFBzc65xtpcVf9eHxfUkYbP0orzV39DCBVsTC/mjGpV7opKYg2OXIrdYilSO9InExzX7yzDQvEwCkV3pbblhOuo9J5fyXMkLAKNVUiJf5XOyh/QIDAQAB',

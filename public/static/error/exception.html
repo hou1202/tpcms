@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="[keywords]" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+    <title>[title]</title>
+    {load href="/static/index/lib/flexible_css.js" /}
+    {load href="/static/index/lib/flexible.js" /}
+    {load href="/static/index/lib/jquery-3.3.1.min.js" /}
+    {load href="/static/index/js/public.js" /}
+    <link rel="stylesheet" type="text/css" href="/static/index/css/cssreset.css" />
+    <link rel="stylesheet" type="text/css" href="/static/index/css/public.css" />
+    <link rel="stylesheet" type="text/css" href="/static/plugin/tips/css/style.css" />
+
+
+
+    <!--alert提示效果-->
+    {load href="/static/plugin/tips/alert-info.js" /}
+    {load href="/static/plugin/tips/css/style.css" /}
+
+    <script>
+        /*IOS  禁用屏幕放大*/
+        window.onload = function() {
+            // 阻止双击放大
+            var lastTouchEnd = 0;
+            document.addEventListener('touchstart', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            });
+            document.addEventListener('touchend', function(event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            // 阻止双指放大
+            document.addEventListener('gesturestart', function(event) {
+                event.preventDefault();
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+
+<!--弹窗提示模块-->
+<div class="alertInfo" id="alertInfo">
+    <p></p>
+</div>
+
+
+
+<div>
+    SORRY,您所访问的内容有误！
+</div>
+
+
+
+
+
+
+
+</body>
+
+
+<script>
+
+</script>
+
+</html>
