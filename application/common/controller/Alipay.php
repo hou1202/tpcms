@@ -12,14 +12,13 @@ namespace app\common\controller;
 use think\Loader;
 use think\facade\Config;
 use app\common\model\Config as ConfigM;
-use think\Request;
 
 use think\facade\Env;
 
 class Alipay
 {
 
-    protected $middleware = ['UserVerify'];         //身份验证
+
 /*
     private $app_id;                //应用APPID
 
@@ -147,28 +146,6 @@ class Alipay
     }
 
 
-    public function payError(Request $request)
-    {
-        var_dump($request->param());
-        var_dump('error');
-    }
 
-    public function paySuccess(Request $request)
-    {
-        var_dump($request->param());
-        var_dump('success');
-    }
-
-    public function payReturn(Request $request)
-    {
-        var_dump($request->param());
-        var_dump('returnurl');
-    }
-
-    public function payNotify(Request $request)
-    {
-        var_dump($request->param());
-        var_dump('notify');
-    }
 
 }

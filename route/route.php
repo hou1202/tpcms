@@ -60,10 +60,10 @@ Route::post('forget','index/forget/forget');
     Route::post('payment/:order_id','index/order/payment');         //生成支付订单
     Route::get('pay/:id/:type','index/order/pay');         //生成支付订单
 
-    Route::get('pay/success','index/alipay/paySuccess');       //支付宝支付成功
-    Route::get('pay/error','index/alipay/payError');           //支付宝支付失败
-    Route::get('pay/notify','index/alipay/payNotify');         //支付宝异步通知地址
-    Route::get('pay/revert','index/alipay/payReturn');         //支付宝同步跳转
+    Route::get('pay/success','index/pay/paySuccess');       //支付宝支付成功
+    Route::get('pay/error','index/pay/payError');           //支付宝支付失败
+    Route::get('pay/notify','index/pay/payNotify');         //支付宝异步通知地址
+    Route::get('pay/revert','index/pay/payReturn');         //支付宝同步跳转
 
 
 
