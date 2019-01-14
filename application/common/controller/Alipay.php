@@ -87,7 +87,6 @@ class Alipay
      */
     public function wapPay($payAmount, $orderNumber, $msg, $timeout='30m')
     {
-
         //支付宝扩展文件路径
         $payLoadPath = Env::get('extend_path').'alipay'.DS;
 

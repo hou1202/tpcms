@@ -162,13 +162,14 @@ class Order extends IndexController
      */
     public function pay(Request $request, $id, $type)
     {
+
         //var_dump($id.'/'.$type);
         if(!$order = OrderM::get($id))
             return redirect($request->header('referer'));
         $pay = new Alipay();
-        //var_dump('20190106621154'.rand(1000,9999).'70');die;
         $resource = $pay->wapPay('0.01','20190106621154'.rand(1000,9999).'70','新品上市');
-        var_dump($resource);die;
+
+        //var_dump($resource);die;
     }
 
 

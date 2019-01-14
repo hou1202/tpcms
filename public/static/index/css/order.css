@@ -230,6 +230,64 @@
 }
 
 
+/*订单支付结果*/
+.pay-header-title{
+    color:#cc7f15;
+    font-size:0.4rem;
+    height:1.2rem;
+    line-height:1.2rem;
+    padding-top:0.2rem;
+    letter-spacing:0.05333333rem;
+    text-align:center;
+}
+.pay_result {
+    padding-top:30%;
+    text-align:center;
+}
+.pay_result i{
+    display:inline-block;
+    width:1.6rem;
+    height:1.6rem;
+}
+i.success{
+    background:url(/static/index/images/pay-success.png) no-repeat center center;
+    background-size:1.6rem;
+}
+i.error{
+    background:url(/static/index/images/pay-error.png) no-repeat center center;
+    background-size:1.6rem;
+}
+.pay_result h3{
+    height:1rem;
+    line-height:1rem;
+    font-size:0.36rem;
+}
+.pay_result p {
+    height:1rem;
+    line-height:1rem;
+    color:#525252;
+    padding:0 1rem;
+    font-size:0.32rem;
+}
+.pay_result .result-href{
+    text-align:center;
+    padding-top:1rem;
+    height:2rem;
+    display:inline-block;
+
+}
+.pay_result .result-href a{
+    display:block;
+    float:left;
+    width:2rem;
+    height:1rem;
+    line-height:1rem;
+    color:#525252;
+    font-size:0.32rem;
+}
+.pay_result .result-href a:last-child{
+    color:#cc7f15;
+}
 
 
 
