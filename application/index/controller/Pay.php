@@ -32,6 +32,7 @@ class Pay extends BaseController
         $aliConfig = Config::get('alipay_config');
         $alipaySevice = new \AlipayTradeService($aliConfig);
         $result = $alipaySevice->check($data);
+
         /**
          * 实际验证过程建议商户添加以下校验。
          *  1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号，

@@ -30,10 +30,12 @@ class Notify
         Loader::autoload('AlipayTradeService');
 
         $aliConfig = Config::get('alipay_config');
-
+        $data['fund_bill_list']=htmlspecialchars_decode($data['fund_bill_list']);
         $alipaySevice = new \AlipayTradeService($aliConfig);
         $alipaySevice->writeLog(var_export($request->param(),true));
         $result = $alipaySevice->check($data);
+
+        var_dump($result);die;
 
         /**
          * 实际验证过程建议商户添加以下校验。
