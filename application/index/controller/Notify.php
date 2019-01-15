@@ -42,11 +42,10 @@ class Notify
          *  3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）
          *  4、验证app_id是否为该商户本身。
          */
-        $order = Order::where(['serial'=>$data['out_trade_no'],    //平台交易流水号
-                               'pay_price'=>$data['total_amount']])    //支付总金额
+        $order = Order::where('serial',$data['out_trade_no'])    //平台交易流水号
                         ->find();
 
-        if($result && $order && $data['seller_id'] == $aliConfig['seller_id'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
+        if($result && $order && $order->pay_price == $data['total_amount'] && $data['seller_id'] == $aliConfig['seller_id'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
 
             if($request->param('trade_status') == 'TRADE_FINISHED') {
                 if(empty($order['trade_no']) && $order['status'] == 1){
