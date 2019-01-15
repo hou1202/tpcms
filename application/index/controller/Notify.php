@@ -9,8 +9,6 @@
 
 namespace app\index\controller;
 
-
-
 use think\facade\Cache;
 use think\Request;
 use think\Loader;
