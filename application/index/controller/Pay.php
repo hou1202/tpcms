@@ -40,6 +40,7 @@ class Pay extends BaseController
          *  4、验证app_id是否为该商户本身。
          */
 
+
         if($result){//验证成功
             $order = Order::where(['serial'=>$data['out_trade_no'],    //交易流水号
                                    'pay_price'=>$data['total_amount']])    //支付总金额
@@ -69,6 +70,7 @@ class Pay extends BaseController
 
     public function paySuccess(Request $request)
     {
+        var_dump(Cache::get('pay_result'));die;
         var_dump($request->param());
         var_dump('success');
         return view('order/success');

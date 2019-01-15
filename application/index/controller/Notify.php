@@ -34,7 +34,7 @@ class Notify
         $alipaySevice = new \AlipayTradeService($aliConfig);
         $alipaySevice->writeLog(var_export($_POST,true));
         $result = $alipaySevice->check($data);
-        Cache::set('pay_notify',$request->param(),3600);
+        //Cache::set('pay_notify',$request->param(),3600);
 
         /**
          * 实际验证过程建议商户添加以下校验。

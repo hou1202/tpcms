@@ -169,7 +169,7 @@ class Order extends IndexController
         $pay = new Alipay();
         $resource = $pay->wapPay('0.01','20190106621154'.rand(1000,9999).'70','新品上市');
 
-        //var_dump($resource);die;
+        var_dump($resource);die;
     }
 
 

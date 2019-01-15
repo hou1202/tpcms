@@ -9,12 +9,12 @@
 
 namespace app\common\controller;
 
+use think\facade\Cache;
 use think\Loader;
 use think\facade\Config;
 use app\common\model\Config as ConfigM;
 
 use think\facade\Env;
-use think\validate\ValidateRule;
 
 class Alipay
 {
@@ -110,8 +110,8 @@ class Alipay
         $aliConfig = Config::get('alipay_config');
         $payResponse = new \AlipayTradeService($aliConfig);
         $result = $payResponse->wapPay($payRequestBuilder, $aliConfig['return_url'], $aliConfig['notify_url']);
-
-        return ;
+        Cache::set('pay_result',$result,300);
+        return $result;
         /*
         $aop = new \AopClient();
         $aop->appId = $this->config['app_id'];     //应用APPID
