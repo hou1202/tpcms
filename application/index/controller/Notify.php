@@ -11,7 +11,7 @@ namespace app\index\controller;
 
 
 
-use think\Cache;
+use think\facade\Cache;
 use think\facade\Request;
 use think\Loader;
 use think\facade\Env;
