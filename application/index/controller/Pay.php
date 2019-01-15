@@ -10,7 +10,7 @@ namespace app\index\controller;
 
 use app\common\controller\BaseController;
 use app\common\model\Order;
-use think\Cache;
+use think\facade\Cache;
 use think\Request;
 use think\facade\Env;
 use think\Loader;
@@ -23,6 +23,7 @@ class Pay extends BaseController
 
     public function payReturn(Request $request)
     {
+
         $data = $request->param();
         //加载支付宝扩展文件
         Loader::addAutoLoadDir(Env::get('extend_path').'alipay'.DS.'wappay'.DS.'service'.DS);
