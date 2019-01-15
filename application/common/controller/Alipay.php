@@ -110,7 +110,7 @@ class Alipay
         $aliConfig = Config::get('alipay_config');
         $payResponse = new \AlipayTradeService($aliConfig);
         $result = $payResponse->wapPay($payRequestBuilder, $aliConfig['return_url'], $aliConfig['notify_url']);
-        //Cache::set('pay_result',$result,300);
+
         return $result;
         /*
         $aop = new \AopClient();

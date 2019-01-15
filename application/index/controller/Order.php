@@ -166,10 +166,12 @@ class Order extends IndexController
         //var_dump($id.'/'.$type);
         if(!$order = OrderM::get($id))
             return redirect($request->header('referer'));
-        $pay = new Alipay();
-        $resource = $pay->wapPay('0.01','20190106621154'.rand(1000,9999).'70','新品上市');
+        $title = $order->orderGoods->column('title');
+        $title = implode('-',$title);
 
-        var_dump($resource);die;
+        $pay = new Alipay();
+        $resource = $pay->wapPay($order->pay_price,$order->serial,$title);
+
     }
 
 

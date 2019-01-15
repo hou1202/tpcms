@@ -44,16 +44,16 @@ class Pay extends BaseController
             $order = Order::where(['serial'=>$data['out_trade_no'],    //平台交易流水号
                                    'pay_price'=>$data['total_amount']])    //支付总金额
                             ->find();
-            /*if($order && $data['seller_id'] == $aliConfig['seller_id'] && $data['app_id'] == $aliConfig['app_id']){
-                $order->trade_no = $data['trade_no'];
-                $order->pay_type = 1;
-                $order->status = 2;
+            if($order && $data['seller_id'] == $aliConfig['seller_id'] && $data['app_id'] == $aliConfig['app_id']){
+                /*$order->trade_no = $data['trade_no'];
+                $order->pay_type = 1;*/
+                $order->comment = $data['trade_no'];
                 $order->save();         //更新订单数据
                 return view('order/success');
             }else{
                 return view('order/error');
-            }*/
-            return view('order/success');
+            }
+
 
         }else{
             return view('order/error');
