@@ -32,7 +32,7 @@ class Notify
         $aliConfig = Config::get('alipay_config');
 
         $alipaySevice = new \AlipayTradeService($aliConfig);
-        $alipaySevice->writeLog(var_export($_POST,true));
+        $alipaySevice->writeLog(var_export($request->param(),true));
         $result = $alipaySevice->check($data);
 
         /**
@@ -45,7 +45,7 @@ class Notify
         $order = Order::where('serial',$data['out_trade_no'])    //平台交易流水号
                         ->find();
 
-        if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
+        if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
 
             if($request->param('trade_status') == 'TRADE_FINISHED') {
                 if(empty($order['trade_no']) && $order['status'] == 1){
