@@ -146,7 +146,7 @@ class Order extends IndexController
         }catch(\Exception $e){
             // 回滚事务
             Db::rollback();
-            return $this->failJson('订单信息有误1');
+            return $this->failJson('订单信息有误');
         }
         return $this->successJson('开始支付','/pay/'.$order->id.'/'.$request->param('pay_type'));
     }
