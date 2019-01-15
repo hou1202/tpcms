@@ -166,8 +166,9 @@ class Order extends IndexController
         //var_dump($id.'/'.$type);
         if(!$order = OrderM::get($id))
             return redirect($request->header('referer'));
-        $title = $order->orderGoods->column('title');
-        $title = implode('-',$title);
+        /*$title = $order->orderGoods->column('title');
+        $title = implode('-',$title);*/
+        $title = 'Aoogi商城订单';
 
         $pay = new Alipay();
         $resource = $pay->wapPay($order->pay_price,$order->serial,$title);
