@@ -48,9 +48,12 @@ class Pay extends BaseController
 
         }
 
-        var_dump('1'.$request->param());
-        var_dump('2'.$result);
-        var_dump('3'.Cache::get('pay_notify'));
+        var_dump('1');
+        var_dump($request->param());
+        var_dump('2');
+        var_dump($result);
+        var_dump('3');
+        var_dump(Cache::get('pay_notify'));
         var_dump('4'.'returnurl');
 
 
