@@ -12,7 +12,7 @@ namespace app\index\controller;
 
 
 use think\facade\Cache;
-use think\facade\Request;
+use think\Request;
 use think\Loader;
 use think\facade\Env;
 use think\facade\Config;
@@ -24,6 +24,7 @@ class Notify
     public function payNotify(Request $request)
     {
         $data = $request->param();
+
         //加载支付宝扩展文件
         Loader::addAutoLoadDir(Env::get('extend_path').'alipay'.DS.'wappay'.DS.'service'.DS);
         Loader::autoload('AlipayTradeService');
@@ -33,7 +34,6 @@ class Notify
         $alipaySevice = new \AlipayTradeService($aliConfig);
         $alipaySevice->writeLog(var_export($_POST,true));
         $result = $alipaySevice->check($data);
-
         Cache::set('pay_notify',$request->param(),3600);
 
         /**
