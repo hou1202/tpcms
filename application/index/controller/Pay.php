@@ -47,7 +47,6 @@ class Pay extends BaseController
             /*var_dump($data);
             var_dump($aliConfig);
             var_dump($order);die;*/
-            var_dump($data);
 
             if($order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']){
                 /*$order->trade_no = $data['trade_no'];
