@@ -34,7 +34,6 @@ class Notify
         $alipaySevice = new \AlipayTradeService($aliConfig);
         $alipaySevice->writeLog(var_export($_POST,true));
         $result = $alipaySevice->check($data);
-        //Cache::set('pay_notify',$request->param(),3600);
 
         /**
          * 实际验证过程建议商户添加以下校验。
@@ -45,6 +44,7 @@ class Notify
          */
 
         if($result) {//验证成功
+            Cache::set('pay_result',$request->param(),600);
             if($request->param('trade_status') == 'TRADE_FINISHED') {
 
                 //判断该笔订单是否在商户网站中已经做过处理

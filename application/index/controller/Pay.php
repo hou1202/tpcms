@@ -40,40 +40,39 @@ class Pay extends BaseController
          *  4、验证app_id是否为该商户本身。
          */
 
-
         if($result){//验证成功
-            $order = Order::where(['serial'=>$data['out_trade_no'],    //交易流水号
+            $order = Order::where(['serial'=>$data['out_trade_no'],    //平台交易流水号
                                    'pay_price'=>$data['total_amount']])    //支付总金额
                             ->find();
+            /*if($order && $data['seller_id'] == $aliConfig['seller_id'] && $data['app_id'] == $aliConfig['app_id']){
+                $order->trade_no = $data['trade_no'];
+                $order->pay_type = 1;
+                $order->status = 2;
+                $order->save();         //更新订单数据
+                return view('order/success');
+            }else{
+                return view('order/error');
+            }*/
+            return view('order/success');
 
         }else{
+            return view('order/error');
 
         }
-
-        var_dump('1');
-        var_dump($request->param());
-        var_dump('2');
-        var_dump($result);
-        var_dump('3');
-        var_dump(Cache::get('pay_notify'));
-        var_dump('4'.'returnurl');
-
-
 
     }
 
     public function payError(Request $request)
     {
-        var_dump($request->param());
-        var_dump('error');
+        return view('order/error');
     }
 
     public function paySuccess(Request $request)
     {
-        var_dump(Cache::get('pay_result'));die;
-        var_dump($request->param());
-        var_dump('success');
-        return view('order/success');
+        var_dump(Cache::get('pay_result'));
+        //var_dump($request->param());
+        var_dump('success');die;
+        //return view('order/success');
     }
 
 

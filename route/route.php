@@ -63,7 +63,7 @@ Route::post('forget','index/forget/forget');
     Route::get('pay/success','index/pay/paySuccess');       //支付宝支付成功
     Route::get('pay/error','index/pay/payError');           //支付宝支付失败
     Route::get('pay/revert','index/pay/payReturn');         //支付宝同步跳转
-    Route::get('pay/notify','index/notify/payNotify');         //支付宝异步通知地址
+    Route::post('pay/notify','index/notify/payNotify');         //支付宝异步通知地址
 
 
 
