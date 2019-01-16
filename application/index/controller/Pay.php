@@ -11,7 +11,7 @@ namespace app\index\controller;
 use app\common\controller\BaseController;
 use app\common\model\CouponUser;
 use app\common\model\Order;
-use app\common\model\User;
+use think\Db;
 use think\facade\Cache;
 use think\Request;
 use think\facade\Env;
@@ -62,7 +62,7 @@ class Pay extends BaseController
                     $coupon->save();
                 }
                 //更新用户积分状态
-                User::where('id',$order->user_id)->setInc('integral',$order->integral);
+                Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
             }
 
             return view('order/success');

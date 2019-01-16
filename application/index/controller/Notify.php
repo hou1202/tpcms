@@ -13,10 +13,10 @@ use think\Request;
 use think\Loader;
 use think\facade\Env;
 use think\facade\Config;
+use think\Db;
 
 use app\common\model\Order;
 use app\common\model\CouponUser;
-use app\common\model\User;
 
 
 
@@ -64,7 +64,7 @@ class Notify
                         $coupon->save();
                     }
                     //更新用户积分状态
-                    User::where('id',$order->user_id)->setInc('integral',$order->integral);
+                    Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
                 }
 
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -90,7 +90,7 @@ class Notify
                         $coupon->save();
                     }
                     //更新用户积分状态
-                    User::where('id',$order->user_id)->setInc('integral',$order->integral);
+                    Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
                 }
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
