@@ -50,4 +50,14 @@ class Order extends Model
     {
         return $this->hasMany('OrderGoods','order_id','id');
     }
+
+    /*
+     * 获取器
+     * 追加获取订单产品
+     * */
+    public function getGoodsOrderAttr($value,$data)
+    {
+        $order_goods = OrderGoods::where('order_id',$data['id'])->select()->toArray();
+        return $order_goods;
+    }
 }

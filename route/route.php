@@ -62,6 +62,7 @@ Route::post('forget','index/forget/forget');
 
     Route::get('pay/warn','index/pay/payWarn');             //支付异常
     Route::get('pay/error','index/pay/payError');           //支付失败
+    Route::get('pay/success','index/pay/paySuccess');           //支付失败
     Route::get('pay/revert','index/pay/payReturn');         //同步跳转-支付成功
     Route::post('pay/notify','index/notify/payNotify');     //支付宝异步通知地址
 
@@ -79,6 +80,11 @@ Route::post('forget','index/forget/forget');
     Route::post('receives/:id','index/coupon/collar');     //领取优惠券
     Route::get('coupon','index/coupon/index');     //我的优惠券列表
     Route::post('coupon/:type','index/coupon/getData')->pattern(['type'=> '\d+',]);     //我的优惠券列表数据
+
+    //订单列表
+    Route::get('order','index/order/index');     //订单列表
+    Route::delete('order/:id','index/order/delete');     //取消订单
+    Route::post('order/pageData/:status/:page/:limit','index/order/pageData')->pattern(['status'=> '\d+',]);           //分页产品数据
 
 
 
@@ -106,7 +112,6 @@ Route::get('/personal','index/index/personal');
 Route::get('/data','index/index/personalData');
 
 
-Route::get('/order','index/index/order');
 Route::get('/orderDetails','index/index/orderDetails');
 
 

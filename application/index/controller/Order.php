@@ -4,6 +4,8 @@ namespace app\index\controller;
 
 use app\common\controller\Alipay;
 use app\common\controller\IndexController;
+use app\common\model\OrderGoods;
+use app\common\model\User;
 use think\Request;
 use think\Db;
 use think\facade\Cache;
@@ -21,6 +23,11 @@ use app\index\validate\Order as OrderV;
 
 class Order extends IndexController
 {
+
+    //订单列表缓存前缀
+    private $orderVer = 'aooOrder';
+
+
     /**
      * 显示资源列表
      *
@@ -28,29 +35,48 @@ class Order extends IndexController
      */
     public function index()
     {
-        //
+
+        $resource = OrderM::where('user_id',$this->user_info['id'])
+            ->where('status',1)
+            ->order('id desc')
+            ->append(['goods_order'])
+            ->select()
+            ->toArray();
+
+        $this->assign('Order',$resource);
+        return view();
     }
 
     /**
-     * 显示创建资源表单页.
+     * 获取资源列表数据
      *
+     * @param  int  $status     订单状态类型，默认为待支付
+     * @param  int  $page       分页起始页
+     * @param  int  $limit      分布显示条数
      * @return \think\Response
      */
-    public function create()
-    {
-        //
+    public function pageData($status,$page,$limit){
+        //获取存在，返回缓存数据
+        if($cacheRes = Cache::get($this->orderVer.$status.'_'.$page.'_'.$limit)){
+            return $this->successJson('获取成功','',$cacheRes);
+        }
+
+        $resources = OrderM::where('user_id',$this->user_info['id'])
+            ->where('status',$status)
+            ->order('id desc')
+            ->append(['goods_order'])
+            ->select()
+            ->toArray();
+
+        if($resources){
+            Cache::set($this->orderVer.$status.'_'.$page.'_'.$limit,$resources,600);
+            return $this->successJson('获取数据成功','',$resources);
+        }else{
+            return $this->failJson('获取失败');
+        }
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
+
 
     /**
      * 显示指定的资源
@@ -84,7 +110,7 @@ class Order extends IndexController
 
         $goods = $order->orderGoods()->select();
 
-        $this->assign('Money',$this->user_info['balance']);
+        $this->assign('Money',User::where('id',$this->user_info['id'])->value('balance'));
         $this->assign('Coupon',$coupon);
         $this->assign('Address',$address);
         $this->assign('Order',$order);
@@ -102,15 +128,14 @@ class Order extends IndexController
      */
     public function payment(Request $request,$order_id)
     {
-        //$data = $request->param();
-        //var_dump($data);die;
+        /*$data = $request->param();
+        var_dump($data);die;*/
         $validate = new OrderV();
         if(!$validate->scene('payment')->check($request->param()))
             return $this->failJson($validate->getError());
         $coupon = Coupon::get($request->param('coupon_id'));
         $address = Address::get($request->param('address_id'));
         $order = OrderM::get($request->param('order_id'));
-
 
         //组装更新订单数据
         if($coupon){
@@ -163,30 +188,62 @@ class Order extends IndexController
     public function pay(Request $request, $id, $type)
     {
 
-
         if(!$order = OrderM::get($id))
-            return redirect($request->header('referer'));
+            return redirect('/pay/warn');
+        if($order->pay_status != 0)
+            return redirect('/pay/warn');
         /*$title = $order->orderGoods->column('title');
         $title = implode('-',$title);*/
         $title = 'Aoogi商城订单';
+        if($type == 1){         //支付宝支付
+            $pay = new Alipay();
+            $resource = $pay->wapPay($order->pay_price,$order->serial,$title);
+        }else if($type == 2){   //微信支付
 
-        $pay = new Alipay();
-        $resource = $pay->wapPay($order->pay_price,$order->serial,$title);
+        }else if($type == 3){   //余额支付
+            if(!$user = User::get($order->user_id))
+                return redirect('/pay/warn');
+            if($user->balance < $order->pay_price)
+                return redirect('/pay/warn');
+
+            Db::startTrans();
+            try{
+                //更新用户余额-积分数据
+                Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
+                Db::table('user')->where('id',$order->user_id)->setDec('balance',$order->pay_price);
+
+                //更新用户优惠券状态
+                if(!empty($order->coupon_id)){
+                    $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
+                    $coupon->order_id = $order->id;
+                    $coupon->status = 2;
+                    $coupon->save();
+                }
+
+                //更新订单数据
+                $order->pay_type = 3;
+                $order->pay_status = 1;
+                $order->status = 2;
+                $order->save();
+
+                // 提交事务
+                Db::commit();
+            }catch(\Exception $e){
+                // 回滚事务
+                Db::rollback();
+                return redirect('/pay/error');
+            }
+            return redirect('/pay/success');
+
+        }else{
+            return redirect('/pay/warn');
+        }
+
 
     }
 
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
 
     /**
      * 删除指定资源
@@ -196,7 +253,13 @@ class Order extends IndexController
      */
     public function delete($id)
     {
-        //
+        if(!$order = OrderM::get($id))
+            return $this->failJson('订单信息有误');
+        //$order_goods = OrderGoods::where('order_id',$order->id)->select();
+        $order->delete();
+        OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
+        return $this->successJson('订单取消成功');
+
     }
 
     /**

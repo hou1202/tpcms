@@ -42,4 +42,5 @@ class OrderGoods extends Model
     protected $defaultSoftDelete = 0;
 
 
+
 }

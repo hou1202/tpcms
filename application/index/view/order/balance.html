@@ -8,7 +8,7 @@
 
 <!--头部标题模块-->
 <header class="header-title">
-    <a href="/car">
+    <a href="Javascript:history.go(-1);">
         <img src="/static/index/images/back.png">
     </a>
     <h2>订单结算</h2>
@@ -181,8 +181,6 @@
         var comment = $.trim($("#comment").val());
         if(comment.length >100)
             return alertConfirm("留言信息请少于100个字");
-
-        //$(window).attr('location','/pay/3/1');
 
        $.post('/payment/'+"{$Order.id}",$("#orderForm").serialize(),function(res){
            if(res.code == 1)

@@ -75,6 +75,13 @@ class Pay extends BaseController
 
     }
 
+
+    public function paySuccess()
+    {
+        return view('order/success');
+
+    }
+
     public function payError()
     {
         return view('order/error');
@@ -83,7 +90,6 @@ class Pay extends BaseController
     public function payWarn()
     {
         return view('order/warn');
-
 
     }
 

@@ -3,8 +3,9 @@
 namespace app\index\controller;
 
 use app\common\controller\IndexController;
+use app\common\model\User;
 use think\Request;
-use app\index\common\Users;
+
 
 class Personal extends IndexController
 {
@@ -15,7 +16,8 @@ class Personal extends IndexController
      */
     public function index()
     {
-        $this->assign('User',Users::user());
+
+        $this->assign('User',User::get($this->user_info['id']));
         return view('personal/personal');
     }
 
