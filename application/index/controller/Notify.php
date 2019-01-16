@@ -45,14 +45,14 @@ class Notify
          */
         $order = Order::where('serial',$data['out_trade_no'])->find();    //平台交易流水号
 
-        if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
+        if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id'] && $data['seller_id'] == $aliConfig['seller_id']) {//验证成功
 
             if($request->param('trade_status') == 'TRADE_FINISHED') {       //交易完结
-                if(empty($order['trade_no']) && $order['status'] == 1){
+                if(empty($order['trade_no']) && $order['pay_status'] == 0){
                     $order->trade_no = $data['trade_no'];
                     $order->pay_type = 1;
+                    $order->pay_status = 1;
                     $order->status = 2;
-                    $order->comment = $request->header('referer').'finished';
                     $order->save();
                 }
 
@@ -65,11 +65,11 @@ class Notify
                 //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
             }
             else if ($request->param('trade_status') == 'TRADE_SUCCESS') {          //支付成功
-                if(empty($order['trade_no']) && $order['status'] == 1){
+                if(empty($order['trade_no']) && $order['status'] == 1 && $order['pay_status'] == 0){
                     $order->trade_no = $data['trade_no'];
                     $order->pay_type = 1;
+                    $order->pay_status = 1;
                     $order->status = 2;
-                    $order->comment = $request->header('referer').'success';
                     $order->save();
                 }
                 //判断该笔订单是否在商户网站中已经做过处理

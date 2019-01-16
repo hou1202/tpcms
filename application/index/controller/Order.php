@@ -163,6 +163,7 @@ class Order extends IndexController
     public function pay(Request $request, $id, $type)
     {
         //var_dump($id.'/'.$type);
+        var_dump($request->header('referer'));die;
         if(!$order = OrderM::get($id))
             return redirect($request->header('referer'));
         /*$title = $order->orderGoods->column('title');

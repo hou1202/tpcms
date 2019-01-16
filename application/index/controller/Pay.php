@@ -16,7 +16,7 @@ use think\facade\Env;
 use think\Loader;
 
 use think\facade\Config;
-use app\common\model\Config as ConfigM;
+
 
 class Pay extends BaseController
 {
@@ -41,24 +41,19 @@ class Pay extends BaseController
          *  4、验证app_id是否为该商户本身。
          */
 
-        if($result){//验证成功
-            $order = Order::where('serial',$data['out_trade_no'])    //平台交易流水号
-                            ->find();
-            /*var_dump($data);
-            var_dump($aliConfig);
-            var_dump($order);die;*/
+        $order = Order::where('serial',$data['out_trade_no'])->find();    //平台交易流水号
 
-            if($order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']){
-                /*$order->trade_no = $data['trade_no'];
-                $order->pay_type = 1;*/
-                /*$order->comment = $data['trade_no'];
-                $order->save();         //更新订单数据*/
-                return view('order/success');
-            }else{
-                return view('order/error');
+        if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id'] && $data['seller_id'] == $aliConfig['seller_id']){//验证成功
+
+            if($order->pay_status == 0){
+                $order->trade_no = $data['trade_no'];
+                $order->pay_type = 1;
+                $order->pay_status = 1;
+                $order->status = 2;
+                $order->save();         //更新订单数据
             }
 
-
+            return view('order/success');
         }else{
             return view('order/error');
 
