@@ -9,7 +9,9 @@
 namespace app\index\controller;
 
 use app\common\controller\BaseController;
+use app\common\model\CouponUser;
 use app\common\model\Order;
+use app\common\model\User;
 use think\facade\Cache;
 use think\Request;
 use think\facade\Env;
@@ -46,11 +48,21 @@ class Pay extends BaseController
         if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id'] && $data['seller_id'] == $aliConfig['seller_id']){//验证成功
 
             if($order->pay_status == 0){
+                //更新订单数据
                 $order->trade_no = $data['trade_no'];
                 $order->pay_type = 1;
                 $order->pay_status = 1;
                 $order->status = 2;
-                $order->save();         //更新订单数据
+                $order->save();
+                //更新用户优惠券状态
+                if(!empty($order->coupon_id)){
+                    $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
+                    $coupon->order_id = $order->id;
+                    $coupon->status = 2;
+                    $coupon->save();
+                }
+                //更新用户积分状态
+                User::where('id',$order->user_id)->setInc('integral',$order->integral);
             }
 
             return view('order/success');

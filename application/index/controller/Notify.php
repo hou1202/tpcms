@@ -15,6 +15,8 @@ use think\facade\Env;
 use think\facade\Config;
 
 use app\common\model\Order;
+use app\common\model\CouponUser;
+use app\common\model\User;
 
 
 
@@ -54,6 +56,15 @@ class Notify
                     $order->pay_status = 1;
                     $order->status = 2;
                     $order->save();
+                    //更新用户优惠券状态
+                    if(!empty($order->coupon_id)){
+                        $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
+                        $coupon->order_id = $order->id;
+                        $coupon->status = 2;
+                        $coupon->save();
+                    }
+                    //更新用户积分状态
+                    User::where('id',$order->user_id)->setInc('integral',$order->integral);
                 }
 
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -71,6 +82,15 @@ class Notify
                     $order->pay_status = 1;
                     $order->status = 2;
                     $order->save();
+                    //更新用户优惠券状态
+                    if(!empty($order->coupon_id)){
+                        $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
+                        $coupon->order_id = $order->id;
+                        $coupon->status = 2;
+                        $coupon->save();
+                    }
+                    //更新用户积分状态
+                    User::where('id',$order->user_id)->setInc('integral',$order->integral);
                 }
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
