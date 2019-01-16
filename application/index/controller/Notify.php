@@ -9,7 +9,6 @@
 
 namespace app\index\controller;
 
-use think\facade\Cache;
 use think\Request;
 use think\Loader;
 use think\facade\Env;
@@ -44,16 +43,16 @@ class Notify
          *  3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）
          *  4、验证app_id是否为该商户本身。
          */
-        $order = Order::where('serial',$data['out_trade_no'])    //平台交易流水号
-                        ->find();
+        $order = Order::where('serial',$data['out_trade_no'])->find();    //平台交易流水号
 
         if($result && $order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']) {//验证成功
 
-            if($request->param('trade_status') == 'TRADE_FINISHED') {
+            if($request->param('trade_status') == 'TRADE_FINISHED') {       //交易完结
                 if(empty($order['trade_no']) && $order['status'] == 1){
                     $order->trade_no = $data['trade_no'];
                     $order->pay_type = 1;
                     $order->status = 2;
+                    $order->comment = $request->header('referer').'finished';
                     $order->save();
                 }
 
@@ -65,11 +64,12 @@ class Notify
                 //注意：
                 //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
             }
-            else if ($request->param('trade_status') == 'TRADE_SUCCESS') {
+            else if ($request->param('trade_status') == 'TRADE_SUCCESS') {          //支付成功
                 if(empty($order['trade_no']) && $order['status'] == 1){
                     $order->trade_no = $data['trade_no'];
                     $order->pay_type = 1;
                     $order->status = 2;
+                    $order->comment = $request->header('referer').'success';
                     $order->save();
                 }
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -78,6 +78,12 @@ class Notify
                 //如果有做过处理，不执行商户的业务程序
                 //注意：
                 //付款完成后，支付宝系统发送该交易状态通知
+            }
+            else if ($request->param('trade_status') == 'TRADE_CLOSED') {       //交易关闭
+                if($order['status'] == 1){
+                    $order->trade_no = null;
+                    $order->save();
+                }
             }
 
 
