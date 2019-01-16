@@ -21,7 +21,7 @@ class CouponUser extends Model
     /*
      * $readonly    定义只读字段保护
      * */
-    protected $readonly = ['id','user_id','coupon_id','order_id'];
+    protected $readonly = ['id','user_id','coupon_id'];
 
     /*
      * $field   开启数据表字段验证
