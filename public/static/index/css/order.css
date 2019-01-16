@@ -257,6 +257,10 @@ i.error{
     background:url(/static/index/images/pay-error.png) no-repeat center center;
     background-size:1.6rem;
 }
+i.warn{
+    background:url(/static/index/images/pay-warn.png) no-repeat center center;
+    background-size:1.6rem;
+}
 .pay_result h3{
     height:1rem;
     line-height:1rem;

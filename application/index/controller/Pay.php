@@ -55,23 +55,22 @@ class Pay extends BaseController
 
             return view('order/success');
         }else{
-            return view('order/error');
+            return view('order/warn');
 
         }
 
     }
 
-    public function payError(Request $request)
+    public function payError()
     {
         return view('order/error');
     }
 
-    public function paySuccess(Request $request)
+    public function payWarn()
     {
-        var_dump(Cache::get('pay_result'));
-        //var_dump($request->param());
-        var_dump('success');die;
-        //return view('order/success');
+        return view('order/warn');
+
+
     }
 
 
