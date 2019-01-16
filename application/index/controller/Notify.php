@@ -51,11 +51,7 @@ class Notify
 
             if($request->param('trade_status') == 'TRADE_FINISHED') {       //交易完结
                 if(empty($order['trade_no']) && $order['pay_status'] == 0){
-                    $order->trade_no = $data['trade_no'];
-                    $order->pay_type = 1;
-                    $order->pay_status = 1;
-                    $order->status = 2;
-                    $order->save();
+
                     //更新用户优惠券状态
                     if(!empty($order->coupon_id)){
                         $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
@@ -65,6 +61,13 @@ class Notify
                     }
                     //更新用户积分状态
                     Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
+
+                    //更新订单数据
+                    $order->trade_no = $data['trade_no'];
+                    $order->pay_type = 1;
+                    $order->pay_status = 1;
+                    $order->status = 2;
+                    $order->save();
                 }
 
                 //判断该笔订单是否在商户网站中已经做过处理
@@ -77,11 +80,7 @@ class Notify
             }
             else if ($request->param('trade_status') == 'TRADE_SUCCESS') {          //支付成功
                 if(empty($order['trade_no']) && $order['status'] == 1 && $order['pay_status'] == 0){
-                    $order->trade_no = $data['trade_no'];
-                    $order->pay_type = 1;
-                    $order->pay_status = 1;
-                    $order->status = 2;
-                    $order->save();
+
                     //更新用户优惠券状态
                     if(!empty($order->coupon_id)){
                         $coupon = CouponUser::where('user_id',$order->user_id)->where('coupon_id',$order->coupon_id)->find();
@@ -91,6 +90,13 @@ class Notify
                     }
                     //更新用户积分状态
                     Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
+
+                    //更新订单数据
+                    $order->trade_no = $data['trade_no'];
+                    $order->pay_type = 1;
+                    $order->pay_status = 1;
+                    $order->status = 2;
+                    $order->save();
                 }
                 //判断该笔订单是否在商户网站中已经做过处理
                 //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
