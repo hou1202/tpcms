@@ -51,8 +51,8 @@ class Pay extends BaseController
             if($order && $order->pay_price == $data['total_amount'] && $data['app_id'] == $aliConfig['app_id']){
                 /*$order->trade_no = $data['trade_no'];
                 $order->pay_type = 1;*/
-                $order->comment = $data['trade_no'];
-                $order->save();         //更新订单数据
+                /*$order->comment = $data['trade_no'];
+                $order->save();         //更新订单数据*/
                 return view('order/success');
             }else{
                 return view('order/error');
