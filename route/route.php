@@ -82,10 +82,12 @@ Route::post('forget','index/forget/forget');
     Route::post('coupon/:type','index/coupon/getData')->pattern(['type'=> '\d+',]);     //我的优惠券列表数据
 
     //订单列表
-    Route::get('order/[:type]','index/order/index');     //订单列表
+
     Route::post('order/pageData/:status/:page/:limit','index/order/pageData')->pattern(['status'=> '\d+',]);           //分页订单数据
+    Route::get('order/read/:id','index/order/read');         //订单详情
     Route::delete('order/:id','index/order/delete');     //取消订单
-    Route::put('order/:id','index/order/receipt');     //确认订单
+    Route::put('order/:id','index/order/receipt');       //确认订单
+    Route::get('order/[:type]','index/order/index')->pattern(['type'=> '\d+',]);     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
 
 
 

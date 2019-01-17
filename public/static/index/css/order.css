@@ -181,6 +181,13 @@
   padding-right:0.4rem;
 }
 
+.order-address .address-empty p{
+    line-height:2rem;
+    text-align:center;
+    color:#525252;
+    font-size:0.32rem;
+}
+
 .order-info{
     padding:0 0.6rem;
     color:#525252;

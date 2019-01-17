@@ -95,7 +95,7 @@ $(function(){
                             });
 
                             result +=   '<div class="order-list">'
-                                +'<a href="/orderDetails">'
+                                +'<a href="/order/read/'+res.data[i].id+'">'
                                 +goods
                                 +'</a>'
                                 +'<div class="order-list-bottom">'

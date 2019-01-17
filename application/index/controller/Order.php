@@ -8,7 +8,6 @@ use app\common\model\OrderGoods;
 use app\common\model\User;
 use think\Request;
 use think\Db;
-use think\facade\Cache;
 
 use app\common\model\Goods;
 use app\common\model\GoodsSpec;
@@ -67,6 +66,22 @@ class Order extends IndexController
     }
 
     /**
+     * 显示指定资源详细信息
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function read(Request $request, $id)
+    {
+        if(!$order = OrderM::where('id',$id)->append(['goods_order','status_text'])->find()->toArray())
+            return redirect($request->header('referer'));
+        //var_dump($order);die;
+        $this->assign('Order',$order);
+        return view('details');
+
+    }
+
+    /**
      * 删除指定资源
      *
      * @param  int  $id
@@ -84,6 +99,9 @@ class Order extends IndexController
 
     /**
      * 确认收货
+     * @param  int  $id
+     *
+     * @return \think\Response
      *  */
     public function receipt($id)
     {
@@ -94,8 +112,6 @@ class Order extends IndexController
         return $this->successJson('确认收货完成，请对订单进行评价');
 
     }
-
-
 
     /**
      * 显示指定的资源

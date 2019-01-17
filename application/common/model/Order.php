@@ -60,4 +60,14 @@ class Order extends Model
         $order_goods = OrderGoods::where('order_id',$data['id'])->select()->toArray();
         return $order_goods;
     }
+
+    /*
+     * 获取器
+     * 追加获取订单文字状态
+     * */
+    public function getStatusTextAttr($value,$data)
+    {
+        $status_text = [1=>'等待买家付款',2=>'等待买家收货',3=>'等待买家评论',4=>'订单已完成',5=>'退换货处理'];
+        return $status_text[$data['status']];
+    }
 }
