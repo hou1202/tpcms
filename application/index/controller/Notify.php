@@ -67,6 +67,7 @@ class Notify
                     $order->pay_type = 1;
                     $order->pay_status = 1;
                     $order->status = 2;
+                    $order->pay_time = time();
                     $order->save();
                 }
 
@@ -96,6 +97,7 @@ class Notify
                     $order->pay_type = 1;
                     $order->pay_status = 1;
                     $order->status = 2;
+                    $order->pay_time = time();
                     $order->save();
                 }
                 //判断该笔订单是否在商户网站中已经做过处理

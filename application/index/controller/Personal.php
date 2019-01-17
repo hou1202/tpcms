@@ -17,6 +17,7 @@ class Personal extends IndexController
     public function index()
     {
 
+
         $this->assign('User',User::get($this->user_info['id']));
         return view('personal/personal');
     }

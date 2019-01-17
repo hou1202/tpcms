@@ -21,19 +21,19 @@
 <div class="roll-nav">
     <div class="swiper-container" id="orderSwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide nav-active typeSide" data-type-id="1">
+            <div class="swiper-slide typeSide {$Active=='1' ?='nav-active'}" data-type-id="1">
                 <span>待付款</span>
             </div>
-            <div class="swiper-slide typeSide" data-type-id="2">
+            <div class="swiper-slide typeSide {$Active=='2' ?='nav-active'}" data-type-id="2">
                 <span>待收货</span>
             </div>
-            <div class="swiper-slide typeSide" data-type-id="3">
+            <div class="swiper-slide typeSide {$Active=='3' ?='nav-active'}" data-type-id="3">
                 <span>待评价</span>
             </div>
-            <div class="swiper-slide typeSide" data-type-id="4">
+            <div class="swiper-slide typeSide {$Active=='4' ?='nav-active'}" data-type-id="4">
                 <span>已完成</span>
             </div>
-            <div class="swiper-slide typeSide" data-type-id="5">
+            <div class="swiper-slide typeSide {$Active=='5' ?='nav-active'}" data-type-id="5">
                 <span>退换货</span>
             </div>
 
@@ -124,15 +124,11 @@
         freeModeMomentum:false,
     });
 
-   /* /!*NAV 切换模式*!/
-    orderSwiper.on('click',function(){
-        $(".swiper-slide").removeClass('nav-active');
-        $("#"+this.clickedSlide.id).addClass('nav-active');
-    });*/
 
-
-    /*取消订单操作*/
-    $(".cancelOrder").click(function() {
+    /**
+     * 取消订单操作
+     * */
+    $(document).on("click",".cancelOrder",function(){
         var id = $(this).attr('data-id');
         var _that = $(this);
         alertConfirm("确定取消该订单？", 'confirm', {
@@ -149,11 +145,22 @@
         });
     });
 
-   /* /!**立即支付*!/
-    $('.payOrder').on('click',function() {
+    /**
+     * 确认收货操作
+     * */
+    $(document).on("click",".receiptOrder",function(){
         var id = $(this).attr('data-id');
-        $(window).attr('location','/balance/'+id);
-    })*/
+        var _that = $(this);
+        $.post('/order/'+id,{'_method':'PUT'},function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                _that.parents('.order-list').remove();
+
+        });
+
+    });
+
+
 
 </script>
 

@@ -59,6 +59,25 @@ $(function(){
                         var result = '';
                         $.each(res.data,function(i,val){
                             var goods ='';
+                            var orderBottom = '';
+                            switch(pageAjax.type){
+                                case '1':
+                                    orderBottom +='<a  class="cancel cancelOrder" data-id="'+res.data[i].id+'">取消订单</a>'
+                                                +'<a href="/balance/'+res.data[i].id+'" class="payOrder">立即付款</a>';
+                                    break;
+                                case '2':
+                                    orderBottom +='<a  class="cancel receiptOrder" data-id="'+res.data[i].id+'">确认收货</a>';
+                                    break;
+                                case '3':
+                                    orderBottom +='<a  href="/balances/'+res.data[i].id+'">评价订单</a>'
+                                        +'<a href="/balances/'+res.data[i].id+'">联系售后</a>';
+                                    break;
+                                default:
+                                    orderBottom = '';
+                                    break;
+
+                            }
+                            //遍历产品信息
                             $.each(res.data[i].goods_order,function(n,val){
                                 goods += '<div class="order-goods">'
                                     +'<div class="order-list-left">'
@@ -74,6 +93,7 @@ $(function(){
                                     +'</div>'
                                     +'</div>'
                             });
+
                             result +=   '<div class="order-list">'
                                 +'<a href="/orderDetails">'
                                 +goods
@@ -81,8 +101,7 @@ $(function(){
                                 +'<div class="order-list-bottom">'
                                 +'<p>共计1件商品 合计：￥'+changeFloat(res.data[i].total_price)+' (含运费：￥ '+res.data[i].franking_price+')</p>'
                                 +'<div class="bottom-button">'
-                                +'<a  class="cancel cancelOrder" data-id="'+res.data[i].id+'">取消订单</a>'
-                                +'<a href="/balance/'+res.data[i].id+'" class="payOrder">立即付款</a>'
+                                +orderBottom
                                 +'</div>'
                                 +'</div>'
                                 +'</div>';

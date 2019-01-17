@@ -24,18 +24,14 @@ use app\index\validate\Order as OrderV;
 class Order extends IndexController
 {
 
-    //订单列表缓存前缀
-    private $orderVer = 'aooOrder';
-
-
     /**
      * 显示资源列表
      *
+     * @param  int  $type     订单类型
      * @return \think\Response
      */
-    public function index()
+    public function index($type=1)
     {
-
         $resource = OrderM::where('user_id',$this->user_info['id'])
             ->where('status',1)
             ->order('id desc')
@@ -44,6 +40,7 @@ class Order extends IndexController
             ->toArray();
 
         $this->assign('Order',$resource);
+        $this->assign('Active',$type);
         return view();
     }
 
@@ -56,24 +53,46 @@ class Order extends IndexController
      * @return \think\Response
      */
     public function pageData($status,$page,$limit){
-        //获取存在，返回缓存数据
-        if($cacheRes = Cache::get($this->orderVer.$status.'_'.$page.'_'.$limit)){
-            return $this->successJson('获取成功','',$cacheRes);
-        }
 
         $resources = OrderM::where('user_id',$this->user_info['id'])
             ->where('status',$status)
             ->order('id desc')
+            ->limit(($page-1)*$limit,$limit)
             ->append(['goods_order'])
             ->select()
             ->toArray();
 
-        if($resources){
-            Cache::set($this->orderVer.$status.'_'.$page.'_'.$limit,$resources,600);
-            return $this->successJson('获取数据成功','',$resources);
-        }else{
-            return $this->failJson('获取失败');
-        }
+        return $resources ? $this->successJson('获取数据成功','',$resources) : $this->failJson('获取失败');
+
+    }
+
+    /**
+     * 删除指定资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function delete($id)
+    {
+        if(!$order = OrderM::get($id))
+            return $this->failJson('订单信息有误');
+        $order->delete();
+        OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
+        return $this->successJson('订单取消成功');
+
+    }
+
+    /**
+     * 确认收货
+     *  */
+    public function receipt($id)
+    {
+        if(!$order = OrderM::get($id))
+            return $this->failJson('订单信息有误');
+        $order->status = 3;
+        $order->save();
+        return $this->successJson('确认收货完成，请对订单进行评价');
+
     }
 
 
@@ -176,7 +195,6 @@ class Order extends IndexController
         return $this->successJson('开始支付','/pay/'.$order->id.'/'.$request->param('pay_type'));
     }
 
-
     /**
      * 请求支付.
      *
@@ -224,6 +242,7 @@ class Order extends IndexController
                 $order->pay_type = 3;
                 $order->pay_status = 1;
                 $order->status = 2;
+                $order->pay_time = time();
                 $order->save();
 
                 // 提交事务
@@ -239,26 +258,6 @@ class Order extends IndexController
             return redirect('/pay/warn');
         }
 
-
-    }
-
-
-
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        if(!$order = OrderM::get($id))
-            return $this->failJson('订单信息有误');
-        //$order_goods = OrderGoods::where('order_id',$order->id)->select();
-        $order->delete();
-        OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
-        return $this->successJson('订单取消成功');
 
     }
 

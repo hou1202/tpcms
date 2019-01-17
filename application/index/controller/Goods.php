@@ -59,7 +59,7 @@ class Goods extends BaseController
             ->where('classify_id',$id)
             ->order('id desc')
             ->limit(($page-1)*$limit,$limit)
-            ->all()
+            ->select()
             ->toArray();
 
         if($resources){

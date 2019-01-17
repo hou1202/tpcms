@@ -64,6 +64,7 @@ class Pay extends BaseController
                 $order->pay_type = 1;
                 $order->pay_status = 1;
                 $order->status = 2;
+                $order->pay_time = time();
                 $order->save();
             }
 
