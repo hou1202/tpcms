@@ -7,6 +7,7 @@
  */
 
 namespace app\index\controller;
+use think\Db;
 use think\facade\Config;
 use app\common\controller\Alipay;
 
@@ -17,13 +18,18 @@ class Test extends BaseController
 {
     public function index()
     {
-        //echo Env::get('think_path');
-        //echo Env::get('extend_path');
 
-        //echo DS;
-        var_dump(DIRECTORY_SEPARATOR);
-        var_dump(dirname ( __FILE__ ));
-        echo getcwd();
+        for($i=0;$i<20;$i++){
+            $type = ['+','-'];
+            $type_keys=array_rand($type,1);
+            $data = [
+                'user_id'=>2,
+                'title'=>'累积'.rand(1000,9999),
+                'integral'=>rand(10,999),
+                'type'=>$type[$type_keys],
+            ];
+            Db::table('log_integral')->insert($data);
+        }
 
     }
 }

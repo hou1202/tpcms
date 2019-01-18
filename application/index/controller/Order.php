@@ -17,6 +17,7 @@ use app\common\model\Address;
 use app\common\model\Config;
 use app\common\model\Coupon;
 use app\common\model\CouponUser;
+use app\common\controller\MoneyLog;
 
 use app\index\validate\Order as OrderV;
 
@@ -75,7 +76,7 @@ class Order extends IndexController
     {
         if(!$order = OrderM::where('id',$id)->append(['goods_order','status_text'])->find()->toArray())
             return redirect($request->header('referer'));
-        //var_dump($order);die;
+        $this->assign('outTime',Config::where('id',7)->value('param'));
         $this->assign('Order',$order);
         return view('details');
 
@@ -245,6 +246,9 @@ class Order extends IndexController
                 //更新用户余额-积分数据
                 Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
                 Db::table('user')->where('id',$order->user_id)->setDec('balance',$order->pay_price);
+                //记录LOG
+                MoneyLog::IntegralLog($order->user_id,'累积：'.$order->serial,$order->pay_price,'+');
+                MoneyLog::BalanceLog($order->user_id,$order->serial,$order->pay_price,'-');
 
                 //更新用户优惠券状态
                 if(!empty($order->coupon_id)){

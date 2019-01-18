@@ -4,6 +4,7 @@ namespace app\index\controller;
 
 use app\common\controller\IndexController;
 use app\common\model\User;
+use think\Db;
 use think\Request;
 
 
@@ -17,19 +18,36 @@ class Personal extends IndexController
     public function index()
     {
 
-
         $this->assign('User',User::get($this->user_info['id']));
         return view('personal/personal');
     }
 
     /**
-     * 显示创建资源表单页.
+     * 显示积分资源页面.
      *
      * @return \think\Response
      */
-    public function create()
+    public function integral()
     {
-        //
+        $integral = User::where('id',$this->user_info['id'])->value('integral');
+        $log = Db::table('log_integral')->where('user_id',$this->user_info['id'])
+            ->order('id desc')
+            ->limit(1,15)
+            ->select();
+        $this->assign('Integral',$integral);
+        $this->assign('Log',$log);
+        return view();
+    }
+
+    public function pageData($page, $limit)
+    {
+        //$resource = Db::table('log_integral')->where('user_id',$this->user_info['id'])->order('id desc')->select();
+        $resource = Db::table('log_integral')
+            ->where('user_id',$this->user_info['id'])
+            ->order('id desc')
+            ->limit(($page-1)*$limit,$limit)
+            ->select();
+        return $resource ? $this->successJson('获取数据成功','',$resource) : $this->failJson('获取失败');
     }
 
     /**

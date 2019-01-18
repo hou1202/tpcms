@@ -17,6 +17,7 @@ use think\Db;
 
 use app\common\model\Order;
 use app\common\model\CouponUser;
+use app\common\controller\MoneyLog;
 
 
 
@@ -61,6 +62,8 @@ class Notify
                     }
                     //更新用户积分状态
                     Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
+                    //记录LOG
+                    MoneyLog::IntegralLog($order->user_id,'累积：'.$order->serial,$order->pay_price,'+');
 
                     //更新订单数据
                     $order->trade_no = $data['trade_no'];
@@ -91,6 +94,8 @@ class Notify
                     }
                     //更新用户积分状态
                     Db::table('user')->where('id',$order->user_id)->setInc('integral',$order->integral);
+                    //记录LOG
+                    MoneyLog::IntegralLog($order->user_id,'累积：'.$order->serial,$order->pay_price,'+');
 
                     //更新订单数据
                     $order->trade_no = $data['trade_no'];

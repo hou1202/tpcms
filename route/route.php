@@ -74,6 +74,8 @@ Route::post('forget','index/forget/forget');
     Route::post('address/choice/:id','index/address/choice');       //默认收货地址设置
 
     Route::get('collect','index/collect/index');        //我的收藏
+    Route::get('integral','index/personal/integral');        //我的积分
+    Route::post('integral/data/:page/:limit','index/personal/pageData');           //我的积分数据
 
     //优惠券
     Route::get('receives','index/coupon/receives');     //领取优惠券列表
@@ -118,7 +120,7 @@ Route::get('/orderDetails','index/index/orderDetails');
 
 
 Route::get('/wallet','index/index/wallet');
-Route::get('/integral','index/index/integral');
+
 
 Route::post('/post','index/index/post');
 Route::rule('/','index/index','get');
