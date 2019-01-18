@@ -17,7 +17,7 @@ $(function(){
         loadDiv : $('.load'),   //提示信息DIV
         loadP : $('#loadP'),    //提示信息P标签
 
-        loadBody : $("#integralList"),     //数据信息主体
+        loadBody : $("#walletList"),     //数据信息主体
         onOff : true,
 
 

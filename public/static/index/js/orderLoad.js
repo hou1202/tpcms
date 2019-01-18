@@ -69,7 +69,7 @@ $(function(){
                                     orderBottom +='<a  class="cancel receiptOrder" data-id="'+res.data[i].id+'">确认收货</a>';
                                     break;
                                 case '3':
-                                    orderBottom +='<a  href="/balances/'+res.data[i].id+'">评价订单</a>'
+                                    orderBottom +='<a  href="/comments/'+res.data[i].id+'">评价订单</a>'
                                         +'<a href="/balances/'+res.data[i].id+'">联系售后</a>';
                                     break;
                                 default:

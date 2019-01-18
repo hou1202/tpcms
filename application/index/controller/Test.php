@@ -19,17 +19,21 @@ class Test extends BaseController
     public function index()
     {
 
-        for($i=0;$i<20;$i++){
+        /*for($i=0;$i<20;$i++){
             $type = ['+','-'];
             $type_keys=array_rand($type,1);
             $data = [
                 'user_id'=>2,
                 'title'=>'累积'.rand(1000,9999),
-                'integral'=>rand(10,999),
+                'money'=>rand(10,999),
                 'type'=>$type[$type_keys],
             ];
-            Db::table('log_integral')->insert($data);
+            Db::table('log_money')->insert($data);
+        }*/
+       if($str1 == $str2){
+            var_dump(1);
+        }else{
+            var_dump(2);
         }
-
     }
 }

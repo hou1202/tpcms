@@ -1,6 +1,6 @@
 
 <!--引入头部文件-->
-{include file="default/header" title="我的积分" keywords="Aoogi商城系统"}
+{include file="default/header" title="我的钱包" keywords="Aoogi商城系统"}
 
 
 {load href="/static/index/css/wallet.css" /}
@@ -10,39 +10,44 @@
     <a href="Javascript:history.go(-1);">
         <img src="/static/index/images/back.png">
     </a>
-    <h2>我的积分</h2>
+    <h2>我的钱包</h2>
 </header>
 
 
 <!--列表模块-->
 <div class="wallet">
     <div class="wallet-money">
-        <p><span>积分</span>{$Integral|float|default='0.00'}</p>
+        <p><span>余额</span><strong>￥</strong>{$Wallet|float}</p>
     </div>
     <div class="wallet-info">
-        <h2>积分记录</h2>
-        <div id="integralList">
+        <h2>资金记录</h2>
+        <div id="walletList">
             {volist name='Log' id='l'}
-                <div class="wallet-list integral">
+                <div class="wallet-list">
                     <p>{$l.create_time}</p>
                     <p>{$l.title}</p>
-                    <p>{$l.type}{$l.integral}</p>
+                    <p>{$l.type}{$l.money}</p>
+
                 </div>
             {/volist}
         </div>
 
+       <!-- <div class="wallet-list">
+            <p>2018-12-12</p>
+            <p>退款</p>
+            <p>+ ￥50.00</p>
+        </div>-->
     </div>
 
 </div>
-
 <div class="load"><p id='loadP'></p></div>
-
 
 <script>
 
 </script>
 
+</body>
+
 {load href="/static/index/js/integralLoad.js" /}
 
-</body>
 </html>

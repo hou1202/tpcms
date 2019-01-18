@@ -1,0 +1,80 @@
+
+
+.comments{
+  padding:0.8rem 0.4rem;
+}
+.comments .comments-list{
+
+}
+.comments .comments-list .comments-goods{
+  display:flex;
+}
+.comments .comments-list .comments-goods img{
+  width:1.2rem;
+  height:1.2rem;
+  border-radius:0.2rem;
+}
+.comments .comments-list .comments-goods .goods-title p{
+  padding-left:0.4rem;
+  height: 0.6rem;
+  line-height:0.6rem;
+  font-size: 0.32rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.comments .comments-list .comments-goods .goods-title p:first-child{
+  color:#525252;
+}
+.comments .comments-list .comments-goods .goods-title p:last-child{
+  color:#cc7f15
+}
+.comments .comments-list .comments-grade {
+  height:1rem;
+  line-height:1rem;
+  padding:0 0.8rem;
+  font-size:0.32rem;
+
+  display:flex;
+}
+.comments .comments-list .comments-grade p{
+  width:2.2rem;
+}
+
+
+.comments .comments-list .comments-grade .grade-star i{
+  width:0.8rem;
+  height:1rem;
+  display:block;
+  background:url(/static/index/images/grade.png) no-repeat center center;
+  background-size:0.8rem;
+}
+i.star-active{
+  background:url(/static/index/images/grade-active.png) no-repeat center center !important;
+  background-size:0.8rem !important;
+}
+.comments .comments-list .comments-grade .grade-star input{
+  display:none;
+}
+.comments .comments-list .comments-content {
+  margin-top:0.2rem;
+  padding:0 0.4rem;
+}
+.comments .comments-list .comments-content textarea{
+  width:100%;
+  height:2rem;
+  line-height:0.4rem;
+  border:1px solid #78868e;
+  background:#fff;
+  border-radius:0.18rem;
+  padding:0.2rem 0;
+  color:#525252;
+  font-size:0.32rem;
+}
+
+
+
+
