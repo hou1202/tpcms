@@ -70,7 +70,7 @@ $(function(){
                                     break;
                                 case '3':
                                     orderBottom +='<a  href="/comments/'+res.data[i].id+'">评价订单</a>'
-                                        +'<a href="/balances/'+res.data[i].id+'">联系售后</a>';
+                                        +'<a href="/replace/'+res.data[i].id+'">申请售后</a>';
                                     break;
                                 default:
                                     orderBottom = '';

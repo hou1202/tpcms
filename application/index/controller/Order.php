@@ -83,7 +83,7 @@ class Order extends IndexController
     }
 
     /**
-     * 删除指定资源
+     * 删除/取消指定订单
      *
      * @param  int  $id
      * @return \think\Response
@@ -92,8 +92,33 @@ class Order extends IndexController
     {
         if(!$order = OrderM::get($id))
             return $this->failJson('订单信息有误');
-        $order->delete();
-        OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
+        //事务提交订单
+        Db::startTrans();
+        try{
+            //删除订单
+            $order->delete();
+
+            //回增订单产品库存
+            $resource = OrderGoods::field('goods_id,goods_spec_id,num')
+                ->where('order_id',$order->id)
+                ->select()
+                ->toArray();
+
+            foreach($resource as $val){
+                GoodsSpec::where('id',$val['goods_spec_id'])->setInc('stock',$val['num']);
+            }
+
+            //删除订单产品
+            OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
+
+            // 提交事务
+            Db::commit();
+        }catch(\Exception $e){
+            // 回滚事务
+            Db::rollback();
+            return $this->failJson('订单取消失败，请重试');
+        }
+
         return $this->successJson('订单取消成功');
 
     }
@@ -236,8 +261,10 @@ class Order extends IndexController
         }else if($type == 2){   //微信支付
 
         }else if($type == 3){   //余额支付
+            //判断订单用户是否正确
             if(!$user = User::get($order->user_id))
                 return redirect('/pay/warn');
+            //判断用户余额是否大于订单金额
             if($user->balance < $order->pay_price)
                 return redirect('/pay/warn');
 
@@ -356,6 +383,11 @@ class Order extends IndexController
         $integral = bcmul($total,bcdiv(Config::where('id',3)->value('param'),100,2),2);
         Db::startTrans();
         try{
+            //清减产品库
+            foreach($order_goods as $g){
+                GoodsSpec::where('id',$g['goods_spec_id'])->setDec('stock',$g['num']);
+            }
+
             //创建订单
             $order = OrderM::create([
                 'user_id' => $this->user_info['id'],
@@ -439,5 +471,21 @@ class Order extends IndexController
         }
 
         return $this->successJson('下单成功','/balance/'.$order->id);
+    }
+
+
+    public function replace(Request $request, $id)
+    {
+        $resource = OrderM::where('id',$id)
+            ->where('pay_status',1)
+            ->where('status',3)
+            ->where('user_id',$this->user_info['id'])
+            ->append(['goods_order'])
+            ->find();
+        if(!$resource)
+            return redirect($request->header('referer'));
+        $this->assign("Goods",$resource->goods_order);
+        $this->assign("orderId",$id);
+        return view();
     }
 }

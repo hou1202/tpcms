@@ -22,7 +22,7 @@ class Comments extends Model
     /*
      * $readonly    定义只读字段保护
      * */
-    protected $readonly = ['id','user_id','goods_id'];
+    protected $readonly = ['id','user_id','goods_id','order_id'];
 
     /*
      * $field   开启数据表字段验证

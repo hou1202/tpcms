@@ -1,0 +1,148 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="申请售后" keywords="Aoogi商城系统"}
+
+
+{load href="/static/index/css/replace.css" /}
+{load href="/static/plugin/aoupload/js/autoUpload.js" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>申请售后</h2>
+</header>
+
+<div class="replace">
+    <form id="commentsForm">
+        <h2>选择售后产品</h2>
+        <div class="replace-goods">
+            <div class="goods-select">
+                <i class="select-active"></i>
+                <input type="checkbox" name="goods_id[]" value="1" />
+            </div>
+            <div class="goods-img">
+                <img src="/static/index/images/goods1.jpg"/>
+            </div>
+            <div class="goods-title">
+                <p>华为HUAWEI Mate20 X 幻影银(6G+128G)</p>
+                <p>深空灰色</p>
+            </div>
+
+        </div>
+        <div class="replace-goods">
+            <div class="goods-select">
+                <i class="select-active"></i>
+                <input type="checkbox" name="goods_id[]" value="1" />
+            </div>
+            <div class="goods-img">
+                <img src="/static/index/images/goods1.jpg"/>
+            </div>
+            <div class="goods-title">
+                <p>华为HUAWEI Mate20 X 幻影银(6G+128G)</p>
+                <p>深空灰色</p>
+            </div>
+
+        </div>
+        <h2>选择售后类型</h2>
+        <div class="replace-type">
+            <div class="type-select">
+                <i class="select-active"></i>
+                <span>申请换货</span>
+                <input type="checkbox" name="goods_id[]" value="1" />
+            </div>
+            <div class="type-select">
+                <i class="select-active"></i>
+                <span>申请退货退款</span>
+                <input type="checkbox" name="goods_id[]" value="1" />
+            </div>
+        </div>
+
+
+
+    </form>
+
+    <button type="button" id="submitForm">提 交 申 请</button>
+</div>
+
+
+{volist name="Goods" id="s"}
+    <script>
+        $('#thumbnailUpload'+"{$s.id}").diyUpload({
+            buttonText : '',
+            //类型限制;
+            accept: {
+                title: "Images",
+                extensions: 'jpg,jpeg,png'
+            },
+            //配置生成缩略图的选项
+            thumb:{
+                width:50,
+                height:50,
+                quality:100,
+                allowMagnify:true,
+                crop:true,
+                type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+            },
+            swf:"/static/plugin/aoupload/Uploader.swf",
+            //是否支持多文件上传
+            multiple:true,
+            //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+            auto:true,
+            //文件上传方式,POST或者GET
+            method:"POST",
+            //服务器地址;
+            server:'/uploader',
+            //最大上传的文件数量
+            fileNumLimit:5,
+            //总文件大小(单位字节);
+            fileSizeLimit:1024*1024*25,
+            //单个文件大小(单位字节);
+            fileSingleSizeLimit:1024*1024 * 5,
+            //自定义内容信息
+            custom:{
+                inputName:'comments[{$s.id}][img][]',
+            },
+            success:function( data ) {
+
+            },
+            error:function( err ) { }
+        });
+    </script>
+{/volist}
+
+<script>
+
+    /**
+     * 星级评定
+     * */
+    $(".starSelect").on("click",function(){
+        $(this).nextAll().find('i').removeClass('star-active');
+        $(this).prevAll().find('i').addClass('star-active');
+        $(this).find('i').addClass('star-active');
+        $(this).parent().find("input").attr("checked",false);
+        $(this).find("input").attr("checked",true);
+    });
+
+    /**
+     * 提交评论信息
+     * */
+    $("#submitForm").on("click",function(){
+
+        $.post('/comments/'+"{$orderId}",$("#commentsForm").serializeArray(),function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                timeOutUrl(res.url)
+
+        });
+    })
+
+</script>
+
+
+
+</body>
+</html>

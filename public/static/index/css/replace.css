@@ -1,0 +1,97 @@
+
+
+
+.replace{
+  padding:0.8rem 0.2rem 0.4rem 0.2rem;
+}
+.replace input{
+  display:none;
+}
+.replace h2{
+  height:0.8rem;
+  line-height:0.8rem;
+  padding-left:0.2rem;
+  font-size:0.36rem;
+  color:#525252;
+}
+.replace .replace-goods{
+  height:1.4rem;
+  display:flex;
+  padding-bottom: 0.2rem;
+
+}
+.replace .replace-goods .goods-select{
+
+}
+.replace .replace-goods .goods-select i{
+  display:block;
+  width:0.8rem;
+  height:1.2rem;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.4rem;
+}
+i.select-active{
+  background:url(/static/index/images/circle-active.png) no-repeat center center !important;
+  background-size:0.4rem !important;
+}
+.replace .replace-goods .goods-img{
+  margin:0 0.2rem;
+}
+.replace .replace-goods .goods-img img{
+  width:1.2rem;
+  height:1.2rem;
+  border-radius:0.2rem;
+}
+.replace .replace-goods .goods-title{
+
+}
+.replace .replace-goods .goods-title p{
+  height: 0.6rem;
+  line-height:0.6rem;
+  font-size: 0.32rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.replace .replace-goods .goods-title p:first-child{
+  color:#525252;
+}
+.replace .replace-goods .goods-title p:last-child{
+  color:#cc7f15;
+}
+.replace .replace-type{
+
+}
+.replace .replace-type .type-select{
+  display:flex;
+}
+.replace .replace-type .type-select i{
+  display:block;
+  width:0.8rem;
+  height:1rem;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.4rem;
+}
+.replace .replace-type .type-select span {
+  height: 1rem;
+  line-height:1rem;
+  font-size: 0.32rem;
+  color:#525252;
+  padding-left:0.4rem;
+}
+
+
+
+.replace button{
+  width:8rem;
+  height:1rem;
+  line-height: 1rem;
+  background:#cc7f15;
+  color:#fff;
+  font-size: 0.33333333rem;
+  border:none;
+  border-radius: 1rem;
+}

@@ -58,6 +58,18 @@ a:hover { text-decoration: none; }
 .upload-pick:hover{
     background: url(/static/plugin/aoupload/images/upload-bj.png) no-repeat 0 -90px;
 }
+.square-sm {
+    width:100% !important;
+}
+.square-sm li{
+    width:1.6rem !important;
+    height:1.6rem !important;
+    margin:1% !important;
+}
+.square-sm-pick{
+    background: url(/static/plugin/aoupload/images/z-bg.png) no-repeat center center !important;
+    background-size:100% !important;
+}
 .webuploader-pick{
     position: relative;
     display: inline-block;

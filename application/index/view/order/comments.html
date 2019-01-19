@@ -1,0 +1,154 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="商品评论" keywords="Aoogi商城系统"}
+
+
+{load href="/static/index/css/comments.css" /}
+{load href="/static/plugin/aoupload/js/autoUpload.js" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>商品评论</h2>
+</header>
+
+<div class="comments">
+    <form id="commentsForm">
+        {volist name="Goods" id="g"}
+            <div class="comments-list">
+                <input type="hidden" name="comments[{$g.id}][goods_id]" value="{$g.id}">
+
+                <div class="comments-goods">
+                    <img src="{$g.thumbnail}">
+                    <div class="goods-title">
+                        <p>{$g.title}</p>
+                        <p>{$g.name}</p>
+                    </div>
+                </div>
+
+                <div class="comments-grade">
+                    <p>产品满意度：</p>
+                    <div class="grade-star starSelect">
+                        <i class="star-active"></i>
+                        <input type="radio" name="comments[{$g.id}][star]" value="1" />
+                    </div>
+                    <div class="grade-star starSelect">
+                        <i class="star-active"></i>
+                        <input type="radio" name="comments[{$g.id}][star]" value="2" />
+                    </div>
+                    <div class="grade-star starSelect">
+                        <i class="star-active"></i>
+                        <input type="radio" name="comments[{$g.id}][star]" value="3" />
+                    </div>
+                    <div class="grade-star starSelect">
+                        <i class="star-active"></i>
+                        <input type="radio" name="comments[{$g.id}][star]" value="4" />
+                    </div>
+                    <div class="grade-star starSelect">
+                        <i class="star-active"></i>
+                        <input type="radio" name="comments[{$g.id}][star]" value="5" checked/>
+                    </div>
+                </div>
+
+                <div class="comments-content">
+                    <textarea name="comments[{$g.id}][content]" class="content" placeholder="来说说您对此产品的使用感受吧..."></textarea>
+                </div>
+
+                <div class="comments-img">
+                    <ul class="upload-ul clearfix square-sm">
+                        <li class="upload-pick square-sm-pick">
+                            <div class="webuploader-container clearfix " id="thumbnailUpload{$g.id}"></div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        {/volist}
+
+    </form>
+
+    <button type="button" id="submitForm">提 交 评 论</button>
+</div>
+
+
+{volist name="Goods" id="s"}
+    <script>
+        $('#thumbnailUpload'+"{$s.id}").diyUpload({
+            buttonText : '',
+            //类型限制;
+            accept: {
+                title: "Images",
+                extensions: 'jpg,jpeg,png'
+            },
+            //配置生成缩略图的选项
+            thumb:{
+                width:50,
+                height:50,
+                quality:100,
+                allowMagnify:true,
+                crop:true,
+                type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+            },
+            swf:"/static/plugin/aoupload/Uploader.swf",
+            //是否支持多文件上传
+            multiple:true,
+            //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+            auto:true,
+            //文件上传方式,POST或者GET
+            method:"POST",
+            //服务器地址;
+            server:'/uploader',
+            //最大上传的文件数量
+            fileNumLimit:5,
+            //总文件大小(单位字节);
+            fileSizeLimit:1024*1024*25,
+            //单个文件大小(单位字节);
+            fileSingleSizeLimit:1024*1024 * 5,
+            //自定义内容信息
+            custom:{
+                inputName:'comments[{$s.id}][img][]',
+            },
+            success:function( data ) {
+
+            },
+            error:function( err ) { }
+        });
+    </script>
+{/volist}
+
+<script>
+
+    /**
+     * 星级评定
+     * */
+    $(".starSelect").on("click",function(){
+        $(this).nextAll().find('i').removeClass('star-active');
+        $(this).prevAll().find('i').addClass('star-active');
+        $(this).find('i').addClass('star-active');
+        $(this).parent().find("input").attr("checked",false);
+        $(this).find("input").attr("checked",true);
+    });
+
+    /**
+     * 提交评论信息
+     * */
+    $("#submitForm").on("click",function(){
+
+        $.post('/comments/'+"{$orderId}",$("#commentsForm").serializeArray(),function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                timeOutUrl(res.url)
+
+        });
+    })
+
+</script>
+
+
+
+</body>
+</html>

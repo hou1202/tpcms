@@ -92,7 +92,9 @@ Route::post('forget','index/forget/forget');
     Route::delete('order/:id','index/order/delete');     //取消订单
     Route::put('order/:id','index/order/receipt');       //确认订单
     Route::get('order/[:type]','index/order/index')->pattern(['type'=> '\d+',]);     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
-    Route::get('comments/:id','index/Comments/index');
+    Route::get('comments/:id','index/Comments/index');      //写评论
+    Route::post('comments/:id','index/Comments/save');    //提交评论
+    Route::get('replace/:id','index/order/replace');      //写评论
 
 
 
