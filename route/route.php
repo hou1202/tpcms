@@ -94,7 +94,8 @@ Route::post('forget','index/forget/forget');
     Route::get('order/[:type]','index/order/index')->pattern(['type'=> '\d+',]);     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
     Route::get('comments/:id','index/Comments/index');      //写评论
     Route::post('comments/:id','index/Comments/save');    //提交评论
-    Route::get('replace/:id','index/order/replace');      //写评论
+    Route::get('replace/:id','index/replace/index');      //售后申请
+    Route::post('replace/:id','index/replace/save');      //提交售后申请
 
 
 

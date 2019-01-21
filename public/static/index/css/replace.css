@@ -12,13 +12,20 @@
   line-height:0.8rem;
   padding-left:0.2rem;
   font-size:0.36rem;
-  color:#525252;
+  color: #292929;
 }
-.replace .replace-goods{
-  height:1.4rem;
-  display:flex;
-  padding-bottom: 0.2rem;
 
+.replace .replace-goods{
+  padding-bottom: 0.2rem;
+  margin-bottom:0.2rem;
+  border-bottom:1px dashed #ccc;
+
+}
+.replace .replace-goods:last-child{
+  border-bottom:none;
+}
+.replace .replace-goods .goods-list{
+  display:flex;
 }
 .replace .replace-goods .goods-select{
 
@@ -62,30 +69,91 @@ i.select-active{
 .replace .replace-goods .goods-title p:last-child{
   color:#cc7f15;
 }
-.replace .replace-type{
+.replace .replace-goods .reason-list{
+  padding:0.2rem 0.4rem;
+}
+.replace-type{
 
 }
-.replace .replace-type .type-select{
+.replace .replace-goods .reason-list .replace-type .type-select{
   display:flex;
 }
-.replace .replace-type .type-select i{
+.replace .replace-goods .reason-list .replace-type .type-select i{
   display:block;
   width:0.8rem;
   height:1rem;
   background:url(/static/index/images/circle.png) no-repeat center center;
   background-size:0.4rem;
 }
-.replace .replace-type .type-select span {
+.replace .replace-goods .reason-list .replace-type .type-select span {
   height: 1rem;
   line-height:1rem;
   font-size: 0.32rem;
   color:#525252;
   padding-left:0.4rem;
 }
+.replace-reason{
+
+}
+.replace .replace-goods .reason-list .replace-reason .reason-select{
+  display:flex;
+}
+.replace .replace-goods .reason-list .replace-reason .reason-select i{
+  display:block;
+  width:0.8rem;
+  height:0.6rem;
+  background:url(/static/index/images/circle.png) no-repeat center center;
+  background-size:0.4rem;
+}
+.replace .replace-goods .reason-list .replace-reason .reason-select span {
+  height: 0.6rem;
+  line-height:0.6rem;
+  font-size: 0.32rem;
+  color:#525252;
+  padding-left:0.4rem;
+}
+.replace .replace-goods .reason-list .replace-info{
+  padding:0.2rem 0;
+}
+
+.replace .replace-goods .reason-list .replace-info textarea{
+  width:100%;
+  height:1.6rem;
+  line-height:0.4rem;
+  border:1px solid #78868e;
+  background:#fff;
+  border-radius:0.16rem;
+  padding:0.2rem 0;
+  color:#525252;
+  font-size:0.32rem;
+}
+.replace .replace-goods .reason-list .replace-img{
+  margin-top:0.2rem;
+}
 
 
+.replace-button{
+  text-align:center;
+}
+.replace-button .replace-explain{
+  text-align:left;
+  padding:0 0.8rem;
+  margin-bottom: 0.4rem;
+}
+.replace-button .replace-explain h2{
+  height:0.8rem;
+  line-height:0.8rem;
 
-.replace button{
+  font-size:0.36rem;
+  color: #292929;
+}
+.replace-button .replace-explain p{
+  line-height:0.52rem;
+  padding-left:0.2rem;
+  font-size:0.32rem;
+  color: #494949;
+}
+.replace-button button{
   width:8rem;
   height:1rem;
   line-height: 1rem;

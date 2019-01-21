@@ -17,60 +17,92 @@
 </header>
 
 <div class="replace">
-    <form id="commentsForm">
-        <h2>选择售后产品</h2>
+
+    <h2>选择售后产品</h2>
+    {volist name="Goods" id="g"}
         <div class="replace-goods">
-            <div class="goods-select">
-                <i class="select-active"></i>
-                <input type="checkbox" name="goods_id[]" value="1" />
+            <div class="goods-list">
+                <div class="goods-select goodsSelect">
+                    <i class=""></i>
+                </div>
+                <div class="goods-img">
+                    <img src="{$g.thumbnail}"/>
+                </div>
+                <div class="goods-title">
+                    <p>{$g.title}</p>
+                    <p>{$g.name}</p>
+                </div>
             </div>
-            <div class="goods-img">
-                <img src="/static/index/images/goods1.jpg"/>
-            </div>
-            <div class="goods-title">
-                <p>华为HUAWEI Mate20 X 幻影银(6G+128G)</p>
-                <p>深空灰色</p>
-            </div>
+            <form class="">
+                <input type="hidden" name="replace[{$g.id}][goods_id]" value="{$g.id}" />
+                <div class="reason-list">
 
+                    <div class="replace-type">
+                        <h2>选择售后类型</h2>
+                        <div class="type-select typeSelect">
+                            <i class="select-active"></i>
+                            <span>申请换货</span>
+                            <input type="radio" name="replace[{$g.id}][type]" value="1" checked/>
+                        </div>
+                        <div class="type-select typeSelect">
+                            <i></i>
+                            <span>申请退货退款</span>
+                            <input type="radio" name="replace[{$g.id}][type]" value="2" />
+                        </div>
+                    </div>
+
+                    <div class="replace-reason">
+                        <h2>售后原因</h2>
+                        <div class="reason-select reasonSelect">
+                            <i class=""></i>
+                            <span>收到产品有损坏</span>
+                            <input type="radio" name="replace[{$g.id}][reason]" value="收到产品有损坏" />
+                        </div>
+                        <div class="reason-select reasonSelect">
+                            <i class=""></i>
+                            <span>收到产品与下单产品不符合</span>
+                            <input type="radio" name="replace[{$g.id}][reason]" value="收到产品与下单产品不符合" />
+                        </div>
+                        <div class="reason-select reasonSelect">
+                            <i class=""></i>
+                            <span>产品有质量问题</span>
+                            <input type="radio" name="replace[{$g.id}][reason]" value="产品有质量问题" />
+                        </div>
+                    </div>
+
+                    <div class="replace-img">
+                        <h2>产品瑕疵图</h2>
+                        <ul class="upload-ul clearfix square-sm">
+                            <li class="upload-pick square-sm-pick">
+                                <div class="webuploader-container clearfix " id="thumbnailUpload{$g.id}"></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="replace-info">
+                        <h2>备注说明</h2>
+                        <textarea name="replace[{$g.id}][info]" placeholder="若是其他原因，请在此说明..."></textarea>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="replace-goods">
-            <div class="goods-select">
-                <i class="select-active"></i>
-                <input type="checkbox" name="goods_id[]" value="1" />
-            </div>
-            <div class="goods-img">
-                <img src="/static/index/images/goods1.jpg"/>
-            </div>
-            <div class="goods-title">
-                <p>华为HUAWEI Mate20 X 幻影银(6G+128G)</p>
-                <p>深空灰色</p>
-            </div>
+    {/volist}
 
-        </div>
-        <h2>选择售后类型</h2>
-        <div class="replace-type">
-            <div class="type-select">
-                <i class="select-active"></i>
-                <span>申请换货</span>
-                <input type="checkbox" name="goods_id[]" value="1" />
-            </div>
-            <div class="type-select">
-                <i class="select-active"></i>
-                <span>申请退货退款</span>
-                <input type="checkbox" name="goods_id[]" value="1" />
-            </div>
-        </div>
-
-
-
-    </form>
-
+</div>
+<div class="replace-button">
+    <div class="replace-explain">
+        <h2>申请售后说明</h2>
+        <p>1. 申请售后订单，在审核通过后，请回寄产品，并支付邮费，平台的将拒收邮费到付；</p>
+        <p>2. 申请售后产品，请保证产品标签，名牌等信息完好；</p>
+        <p>3. 申请售后产品，请在审核通过后将产品所有配件及相关东西回寄，切勿有遗漏。</p>
+    </div>
     <button type="button" id="submitForm">提 交 申 请</button>
 </div>
 
 
 {volist name="Goods" id="s"}
     <script>
+
         $('#thumbnailUpload'+"{$s.id}").diyUpload({
             buttonText : '',
             //类型限制;
@@ -97,50 +129,83 @@
             //服务器地址;
             server:'/uploader',
             //最大上传的文件数量
-            fileNumLimit:5,
+            fileNumLimit:4,
             //总文件大小(单位字节);
             fileSizeLimit:1024*1024*25,
             //单个文件大小(单位字节);
             fileSingleSizeLimit:1024*1024 * 5,
             //自定义内容信息
             custom:{
-                inputName:'comments[{$s.id}][img][]',
+                inputName:'replace[{$s.id}][img][]',
             },
             success:function( data ) {
 
             },
             error:function( err ) { }
         });
+
     </script>
 {/volist}
 
 <script>
+    $(function () {
+        $('form').css("display","none");
+    });
+</script>
+
+
+<script>
 
     /**
-     * 星级评定
+     * 售后产品选择
      * */
-    $(".starSelect").on("click",function(){
-        $(this).nextAll().find('i').removeClass('star-active');
-        $(this).prevAll().find('i').addClass('star-active');
-        $(this).find('i').addClass('star-active');
-        $(this).parent().find("input").attr("checked",false);
-        $(this).find("input").attr("checked",true);
+    $(".goodsSelect").on("click",function(){
+        $(this).children('i').toggleClass('select-active');
+        $(this).parents('.replace-goods').find('form').toggleClass('replaceForm');
+        $(this).parents('.replace-goods').find('form').toggle();
     });
 
     /**
-     * 提交评论信息
+     * 售后类型选择
      * */
-    $("#submitForm").on("click",function(){
+    $(".typeSelect").on("click",function(){
+        $(this).parent().find("i").removeClass('select-active');
+        $(this).parent().find("input").attr('checked',false);
+        $(this).find("i").addClass('select-active');
+        $(this).find("input").attr('checked',true);
 
-        $.post('/comments/'+"{$orderId}",$("#commentsForm").serializeArray(),function(res){
-            alertConfirm(res.msg);
-            if(res.code == 1)
+    });
+
+    /**
+     * 售后原因选择
+     * */
+    $(".reasonSelect").on("click",function(){
+        $(this).parent().find("i").removeClass('select-active');
+        $(this).parent().find("input").attr('checked',false);
+        $(this).find("i").addClass('select-active');
+        $(this).find("input").attr('checked',true);
+
+    });
+
+    /**
+     * 提交信息
+     * */
+
+    $("#submitForm").on('click',function(){
+        var dataForm = $(".replaceForm").serializeArray();
+        if(!dataForm.length)
+            return alertConfirm('请填写有效售后产品信息');
+
+        $.post('/replace/'+"{$orderId}",dataForm,function(res){
+             alertConfirm(res.msg);
+             if(res.code == 1)
                 timeOutUrl(res.url)
-
-        });
-    })
+         });
+    });
 
 </script>
+
+
 
 
 

@@ -72,6 +72,9 @@ $(function(){
                                     orderBottom +='<a  href="/comments/'+res.data[i].id+'">评价订单</a>'
                                         +'<a href="/replace/'+res.data[i].id+'">申请售后</a>';
                                     break;
+                                case '5':
+                                    orderBottom +='<a  href="/commentsss/'+res.data[i].id+'">了解进度</a>';
+                                    break;
                                 default:
                                     orderBottom = '';
                                     break;
@@ -99,7 +102,7 @@ $(function(){
                                 +goods
                                 +'</a>'
                                 +'<div class="order-list-bottom">'
-                                +'<p>共计1件商品 合计：￥'+changeFloat(res.data[i].total_price)+' (含运费：￥ '+res.data[i].franking_price+')</p>'
+                                +'<p>共计 '+res.data[i].goods_order.length+' 件商品 合计：￥'+changeFloat(res.data[i].total_price)+' (含运费：￥ '+res.data[i].franking_price+')</p>'
                                 +'<div class="bottom-button">'
                                 +orderBottom
                                 +'</div>'

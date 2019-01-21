@@ -137,8 +137,11 @@
      * 提交评论信息
      * */
     $("#submitForm").on("click",function(){
+        var dataForm = $("#commentsForm").serializeArray();
+        if(!dataForm.length)
+            return alertConfirm('请填写有效评论信息');
 
-        $.post('/comments/'+"{$orderId}",$("#commentsForm").serializeArray(),function(res){
+        $.post('/comments/'+"{$orderId}",dataForm,function(res){
             alertConfirm(res.msg);
             if(res.code == 1)
                 timeOutUrl(res.url)

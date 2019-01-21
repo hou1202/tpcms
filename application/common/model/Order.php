@@ -67,7 +67,7 @@ class Order extends Model
      * */
     public function getStatusTextAttr($value,$data)
     {
-        $status_text = [1=>'等待买家付款',2=>'等待买家收货',3=>'等待买家评论',4=>'订单已完成',5=>'退换货处理'];
+        $status_text = [1=>'等待买家付款',2=>'等待买家收货',3=>'等待买家评论',4=>'订单已完成',5=>'申请售后处理'];
         return $status_text[$data['status']];
     }
 }

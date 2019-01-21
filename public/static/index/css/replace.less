@@ -2,92 +2,153 @@
 
 
 
-.comments{
-    padding:15/@rem 30/@rem 75/@rem 30/@rem;
-    text-align:center;
-    .comments-list{
-        padding:30/@rem 0;
-        border-bottom:1px dashed  #ccc;
-        text-align:left;
+.replace{
+    padding:60/@rem 15/@rem 30/@rem 15/@rem;
+    input{
+        display:none;
+    }
+    h2{
+        height:60/@rem;
+        line-height:60/@rem;
+        padding-left:15/@rem;
+        font-size:27/@rem;
+        color: #292929;
+    }
+    .replace-goods{
+        padding-bottom: 15/@rem;
+        margin-bottom:15/@rem;
+        border-bottom:1px dashed #ccc;
         &:last-child{
             border-bottom:none;
         }
-        .comments-goods{
+        .goods-list{
             display:flex;
+        }
+        .goods-select{
+            i{
+                display:block;
+                width:60/@rem;
+                height:90/@rem;
+                background:url(/static/index/images/circle.png) no-repeat center center;
+                background-size:30/@rem;
+            }
+        }
+        .goods-img{
+            margin:0 15/@rem;
             img{
                 width:90/@rem;
                 height:90/@rem;
                 border-radius:15/@rem;
             }
-            .goods-title{
-                p{
-                    padding-left:30/@rem;
-                    height: 45/@rem;
-                    line-height:45/@rem;
-                    font-size: 24/@rem;
-
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1; /* 这个表示要显示几行 */
-                    -webkit-box-orient: vertical;
-                    &:first-child{
-                        color:#525252;
-                    }
-                    &:last-child{
-                        color:#cc7f15;
-                    }
-                }
-            }
         }
-
-        .comments-grade {
-            height:75/@rem;
-            line-height:75/@rem;
-            padding:0 60/@rem;
-            font-size:24/@rem;
-
-            display:flex;
+        .goods-title{
             p{
-                width:165/@rem;
-            }
-            .grade-star {
-                i{
-                    width:60/@rem;
-                    height:75/@rem;
-                    display:block;
-                    background:url(/static/index/images/grade.png) no-repeat center center;
-                    background-size:60/@rem;
+                height: 45/@rem;
+                line-height:45/@rem;
+                font-size: 24/@rem;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
+                &:first-child{
+                    color:#525252;
                 }
-                input{
-                    display:none;
+                &:last-child{
+                    color:#cc7f15;
                 }
             }
         }
-
-        .comments-content {
-            margin-top:15/@rem;
-            padding:0 30/@rem;
-            textarea{
-                width:100%;
-                height:150/@rem;
-                line-height:30/@rem;
-                border:1px solid #78868e;
-                background:#fff;
-                border-radius:0.18rem;
+        .reason-list{
+            padding:15/@rem 30/@rem;
+            .replace-type{
+                .type-select{
+                    display:flex;
+                    i{
+                        display:block;
+                        width:60/@rem;
+                        height:75/@rem;
+                        background:url(/static/index/images/circle.png) no-repeat center center;
+                        background-size:30/@rem;
+                    }
+                    span {
+                        height: 75/@rem;
+                        line-height:75/@rem;
+                        font-size: 24/@rem;
+                        color:#525252;
+                        padding-left:30/@rem;
+                    }
+                }
+            }
+            .replace-reason{
+                .reason-select{
+                    display:flex;
+                    i{
+                        display:block;
+                        width:60/@rem;
+                        height:45/@rem;
+                        background:url(/static/index/images/circle.png) no-repeat center center;
+                        background-size:30/@rem;
+                    }
+                    span {
+                        height: 45/@rem;
+                        line-height:45/@rem;
+                        font-size: 24/@rem;
+                        color:#525252;
+                        padding-left:30/@rem;
+                    }
+                }
+            }
+            .replace-info{
                 padding:15/@rem 0;
-                color:#525252;
-                font-size:24/@rem;
+                textarea{
+                    width:100%;
+                    height:120/@rem;
+                    line-height:30/@rem;
+                    border:1px solid #78868e;
+                    background:#fff;
+                    border-radius:12/@rem;
+                    padding:15/@rem 0;
+                    color:#525252;
+                    font-size:24/@rem;
+                }
             }
-        }
-
-        .comments-img{
-            margin-top:30/@rem;
+            .replace-img{
+                margin-top:15/@rem;
+            }
         }
     }
+}
 
+
+i.select-active{
+    background:url(/static/index/images/circle-active.png) no-repeat center center !important;
+    background-size:30/@rem !important;
+}
+
+
+.replace-button{
+    text-align:center;
+    .replace-explain{
+        text-align:left;
+        padding:0 60/@rem;
+        margin-bottom: 30/@rem;
+        h2{
+            height:60/@rem;
+            line-height:60/@rem;
+            font-size:27/@rem;
+            color: #292929;
+        }
+        p{
+            line-height:39/@rem;
+            padding-left:15/@rem;
+            font-size:24/@rem;
+            color: #494949;
+        }
+    }
     button{
-        width:8rem;
+        width:600/@rem;
         height:75/@rem;
         line-height: 75/@rem;
         background:#cc7f15;
@@ -97,13 +158,4 @@
         border-radius: 75/@rem;
     }
 }
-
-i.star-active{
-    background:url(/static/index/images/grade-active.png) no-repeat center center !important;
-    background-size:60/@rem !important;
-}
-
-
-
-
 

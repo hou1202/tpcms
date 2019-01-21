@@ -11,7 +11,7 @@ namespace app\index\validate;
 
 use app\common\validate\CommonValidate;
 
-class Comments extends CommonValidate
+class Replace extends CommonValidate
 {
     /**
      * 定义验证规则
@@ -22,8 +22,10 @@ class Comments extends CommonValidate
     protected $rule = [
         'order_id'   =>  'require|number|isExist:order,id',
         'goods_id'   =>  'require|number|isExist:goods,id',
-        'star'   =>  'require|number|in:1,2,3,4,5',
-        'content|评论内容' => 'require|length:10,255',
+        'type'   =>  'require|number|in:1,2',
+        'reason'   =>  'require|chsDash',
+        'img'   =>  'require|array',
+        'info' => 'max:255',
     ];
 
     /**
@@ -39,9 +41,14 @@ class Comments extends CommonValidate
         'goods_id.require' => '非有效评论信息',
         'goods_id.number' => '非有效评论信息',
         'goods_id.isExist' => '非有效评论信息',
-        'star.require' => '非有效评论信息',
-        'star.number' => '非有效评论信息',
-        'star.in' => '非有效评论信息',
+        'type.require' => '申请类型信息有误',
+        'type.number' => '申请类型信息有误',
+        'type.in' => '申请类型信息有误',
+        'reason.require' => '申请原因信息有误',
+        'reason.chsDash' => '申请原因信息有误',
+        'img.require' => '申请反馈信息图有误',
+        'img.array' => '申请反馈信息图有误',
+        'info.max' => '备注说明最大为255个字符',
     ];
 
 
@@ -50,7 +57,7 @@ class Comments extends CommonValidate
      * 格式：'场景名' => ['字段名1','字段名2']
      * */
     protected $scene = [
-        'create' => ['goods_id','star','content']
+        'create' => ['goods_id','type','reason','img','info']
 
     ];
 }

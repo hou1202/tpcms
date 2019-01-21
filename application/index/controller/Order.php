@@ -474,7 +474,7 @@ class Order extends IndexController
     }
 
 
-    public function replace(Request $request, $id)
+    /*public function replace(Request $request, $id)
     {
         $resource = OrderM::where('id',$id)
             ->where('pay_status',1)
@@ -487,5 +487,7 @@ class Order extends IndexController
         $this->assign("Goods",$resource->goods_order);
         $this->assign("orderId",$id);
         return view();
-    }
+    }*/
+
+
 }
