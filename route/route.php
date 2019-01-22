@@ -25,6 +25,8 @@ Route::pattern([
  *
  * */
 
+Route::rule('/','index/index','get');
+Route::get('/','index/index/index');
 
 //登录Route
 Route::get('login','index/login/index');
@@ -94,8 +96,10 @@ Route::post('forget','index/forget/forget');
     Route::get('order/[:type]','index/order/index')->pattern(['type'=> '\d+',]);     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
     Route::get('comments/:id','index/Comments/index');      //写评论
     Route::post('comments/:id','index/Comments/save');    //提交评论
-    Route::get('replace/:id','index/replace/index');      //售后申请
-    Route::post('replace/:id','index/replace/save');      //提交售后申请
+    Route::get('replace/:order_id','index/replace/index');      //售后申请
+    Route::post('replace/:order_id','index/replace/save');      //提交售后申请
+    Route::get('replace/read/:id','index/replace/read');      //查看售后申请
+    Route::put('replace/:id','index/replace/update');
 
 
 
@@ -107,34 +111,21 @@ Route::get('test','index/test/index');
 Route::post('resetToken','index/SelfFunction/resetToken');
 //获取验证码处理
 Route::post('/getCode/:mobile/:type/[:over]','index/Verify/getCode');
+//图片上传处理
+Route::get('uploader','admin/Uploader/uploader');
 
 
 
 
 
-Route::get('/','index/index/index');
-Route::get('/details','index/index/goods');
-/*Route::get('/balance','index/index/balance');*/
-/*Route::get('/pay','index/index/pay');*/
-Route::get('/list','index/index/goodsList');
-Route::get('/personal','index/index/personal');
 Route::get('/data','index/index/personalData');
 
 
-Route::get('/orderDetails','index/index/orderDetails');
-
-
-Route::get('/wallet','index/index/wallet');
-
-
-Route::post('/post','index/index/post');
-Route::rule('/','index/index','get');
-Route::get('hello','index/index/hello');
 
 
 
-//图片上传处理
-Route::get('uploader','admin/Uploader/uploader');
+
+
 
 
 

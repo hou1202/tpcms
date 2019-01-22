@@ -20,12 +20,15 @@ class Replace extends CommonValidate
      * @var array
      */
     protected $rule = [
+        'id' => 'require|number|isExist:replace,id',
         'order_id'   =>  'require|number|isExist:order,id',
         'goods_id'   =>  'require|number|isExist:goods,id',
         'type'   =>  'require|number|in:1,2',
         'reason'   =>  'require|chsDash',
         'img'   =>  'require|array',
         'info' => 'max:255',
+        'company|快递公司信息' => 'require|chsAlpha',
+        'waybill|快递单号' => 'require|alphaNum|length:12,18'
     ];
 
     /**
@@ -35,12 +38,15 @@ class Replace extends CommonValidate
      * @var array
      */
     protected $message = [
-        'order_id.require' => '非有效评论信息',
-        'order_id.number' => '非有效评论信息',
-        'order_id.isExist' => '非有效评论信息',
-        'goods_id.require' => '非有效评论信息',
-        'goods_id.number' => '非有效评论信息',
-        'goods_id.isExist' => '非有效评论信息',
+        'id.require' => '非有效售后信息',
+        'id.number' => '非有效售后信息',
+        'id.isExist' => '非有效售后信息',
+        'order_id.require' => '非有效订单信息',
+        'order_id.number' => '非有效订单信息',
+        'order_id.isExist' => '非有效订单信息',
+        'goods_id.require' => '非有效订单产品信息',
+        'goods_id.number' => '非有效订单产品信息',
+        'goods_id.isExist' => '非有效订单产品信息',
         'type.require' => '申请类型信息有误',
         'type.number' => '申请类型信息有误',
         'type.in' => '申请类型信息有误',
@@ -49,6 +55,9 @@ class Replace extends CommonValidate
         'img.require' => '申请反馈信息图有误',
         'img.array' => '申请反馈信息图有误',
         'info.max' => '备注说明最大为255个字符',
+        'company.chsAlpha' => '快递公司信息有误',
+        'waybill.alphaNum' => '快递单号信息有误',
+        'waybill.length' => '快递单号信息有误',
     ];
 
 
@@ -57,7 +66,8 @@ class Replace extends CommonValidate
      * 格式：'场景名' => ['字段名1','字段名2']
      * */
     protected $scene = [
-        'create' => ['goods_id','type','reason','img','info']
+        'create' => ['goods_id','type','reason','img','info'],
+        'update' => ['id','company','waybill']
 
     ];
 }

@@ -73,7 +73,7 @@ $(function(){
                                         +'<a href="/replace/'+res.data[i].id+'">申请售后</a>';
                                     break;
                                 case '5':
-                                    orderBottom +='<a  href="/commentsss/'+res.data[i].id+'">了解进度</a>';
+                                    orderBottom +='<a  href="/replace/read/'+res.data[i].id+'">了解进度</a>';
                                     break;
                                 default:
                                     orderBottom = '';

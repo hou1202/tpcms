@@ -25,13 +25,13 @@ class Replace extends IndexController
      * 创建申请售后资源页面
      *
      * @param  \think\Request  $request
-     * @param  int  $id     订单ID
+     * @param  int  $order_id     订单ID
      *
      * @return \think\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, $order_id)
     {
-        $resource = Order::where('id',$id)
+        $resource = Order::where('id',$order_id)
             ->where('pay_status',1)
             ->where('status',3)
             ->where('user_id',$this->user_info['id'])
@@ -40,7 +40,7 @@ class Replace extends IndexController
         if(!$resource)
             return redirect($request->header('referer'));
         $this->assign("Goods",$resource->goods_order);
-        $this->assign("orderId",$id);
+        $this->assign("orderId",$order_id);
         return view('order/replace');
     }
 
@@ -48,15 +48,15 @@ class Replace extends IndexController
      * 保存申请售后订单数据
      *
      * @param  \think\Request  $request
-     * @param  int  $id     订单ID
+     * @param  int  $order_id     订单ID
      *
      * @return \think\Response
      */
-    public function save(Request $request, $id){
+    public function save(Request $request, $order_id){
         $data = $request->param("replace");
         if(empty($data))
             return $this->failJson('非有效售后申请信息');
-        if(!$order = Order::where('id',$id)->where('user_id',$this->user_info['id'])->find())
+        if(!$order = Order::where('id',$order_id)->where('user_id',$this->user_info['id'])->find())
             return $this->failJson('非有效订单信息');
         $validate = new ReplaceV();
         foreach($data as &$val){
@@ -66,7 +66,7 @@ class Replace extends IndexController
             if(isset($val['img']))
                 $val['img'] = implode('-',$val['img']);
             $val['user_id'] = $this->user_info['id'];
-            $val['order_id'] = $id;
+            $val['order_id'] = $order_id;
         }
         Db::startTrans();
         try{
@@ -86,5 +86,48 @@ class Replace extends IndexController
             return $this->failJson('售后申请提交失败，请重新提交');
         }
         return $this->successJson('售后申请提交成功','/order/4');
+    }
+
+    /**
+     * 查看申请售后订单数据
+     *
+     * @param  \think\Request  $request
+     * @param  int  $id     售后申请ID
+     *
+     * @return \think\Response
+     */
+    public function read(Request  $request, $id)
+    {
+        $resource = ReplaceM::where('order_id',$id)
+            ->where('user_id',$this->user_info['id'])
+            ->append(['replace_goods','type_text','img_arr','status_text'])
+            ->select()
+            ->toArray();
+        if(!$resource)
+            return redirect($request->header('referer'));
+        $this->assign('Replace',$resource);
+        return view('order/replace-read');
+    }
+
+    /**
+     * 更新申请售后订单数据
+     *
+     * @param  \think\Request  $request
+     * @param  int  $id     售后申请ID
+     *
+     * @return \think\Response
+     */
+    public function update(Request $request, $id){
+        $data = $request->param();
+
+        $validate = new ReplaceV();
+        if(!$validate->scene("update")->check($data))
+            return $this->failJson($validate->getError());
+        $resource = ReplaceM::get($id);
+        if($resource->status != 1)
+            return $this->failJson('非有效售后申请信息');
+        $data['status'] = 3;
+        return $resource->save($data) ? $this->successJson('售后申请更新成功','/order/5') : $this->failJson('售后申请更新失败，请重新提交');
+
     }
 }

@@ -70,4 +70,55 @@ class Order extends Model
         $status_text = [1=>'等待买家付款',2=>'等待买家收货',3=>'等待买家评论',4=>'订单已完成',5=>'申请售后处理'];
         return $status_text[$data['status']];
     }
+
+    /*
+     * 获取器/后台用
+     * 追加获取订单文字状态
+     * */
+    public function getStatusAdminTextAttr($value,$data)
+    {
+        $status_admin_text = [1=>'待付款',2=>'待收货',3=>'待评论',4=>'已完成',5=>'申请售后'];
+        return $status_admin_text[$data['status']];
+    }
+
+    /*
+     * 获取器
+     * 追加获取订单支付文字状态
+     * */
+    public function getPayStatusTextAttr($value,$data)
+    {
+        $pay_status_text = [0=>'未付款',1=>'已付款'];
+        return $pay_status_text[$data['pay_status']];
+    }
+
+    /*
+     * 获取器
+     * 追加获取订单支付方式文字状态
+     * */
+    public function getPayTypeTextAttr($value,$data)
+    {
+        $pay_type_text = [1=>'支付宝支付',2=>'微信支付',3=>'余额支付'];
+        return $pay_type_text[$data['pay_type']];
+    }
+
+    /*
+     * 获取器
+     * 追加获取订单拼接产品名称
+     * */
+    public function getGoodsTitleAttr($value,$data)
+    {
+        $goods = OrderGoods::where('order_id',$data['id'])->column('title');
+        $goods_title = implode('-',$goods);
+        return $goods_title;
+    }
+
+    /*
+     * 获取器
+     * 追加获取订单用户昵称
+     * */
+    public function getUserNameAttr($value,$data)
+    {
+        $name = User::where('id',$data['user_id'])->value('name');
+        return $name;
+    }
 }

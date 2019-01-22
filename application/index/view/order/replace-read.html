@@ -1,0 +1,123 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="售后详情" keywords="Aoogi商城系统"}
+
+
+{load href="/static/index/css/replace.css" /}
+{load href="/static/plugin/aoupload/js/autoUpload.js" /}
+{load href="/static/plugin/aoupload/js/webuploader.min.js" /}
+{load href="/static/plugin/aoupload/css/globle.css" /}
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>售后详情</h2>
+</header>
+{volist name="Replace" id="r"}
+    <div class="replaces">
+        <div class="replaces-goods">
+            <img src="{$r.replace_goods.thumbnail}" />
+
+            <div class="goods-title">
+                <p>{$r.replace_goods.title}</p>
+                <p>￥{$r.replace_goods.price|float}</p>
+                <p>{$r.replace_goods.name}</p>
+
+            </div>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>售后类型</h2>
+            <p>{$r.type_text}</p>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>售后原因</h2>
+            <p>{$r.reason}</p>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>售后说明</h2>
+            <p>{$r.info|default='无'}</p>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>售后说明图</h2>
+            <div class="reason-img">
+                {volist name="$r.img_arr" id="m"}
+                    <img src="{$m}">
+                {/volist}
+            </div>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>平台反馈</h2>
+            <p>{$r.tickling|default="暂无"}</p>
+        </div>
+
+        <div class="replaces-reason">
+            <h2>处理进程</h2>
+            <button>{$r.status_text}</button>
+        </div>
+
+        {if $r.status=='1'}
+            <div class="replaces-reason">
+                <h2>上传运单信息</h2>
+                <div class="reason-form">
+                    <form data-id="{$r.id}">
+                        <input type="hidden" name="_method" value="PUT" />
+                        <select name="company" class="company">
+                            <option value="">选择快递公司</option>
+                            <option value="顺丰快递">顺丰快递</option>
+                            <option value="天天快递">天天快递</option>
+                            <option value="圆通快递">圆通快递</option>
+                            <option value="申通快递">申通快递</option>
+                        </select>
+                        <input type="text" name="waybill" class="waybill" placeholder="填写运单号"/>
+                        <button type="button" class="formSubmit">提 交 运 单</button>
+                    </form>
+                </div>
+            </div>
+        {elseif ($r.status == '3') OR ($r.status == '4') OR ($r.status == '5')}
+            <div class="replaces-reason">
+                <h2>快递运单信息</h2>
+                <p>{$r.company}</p>
+                <p>{$r.waybill}</p>
+            </div>
+        {/if}
+
+    </div>
+{/volist}
+
+<script>
+
+    $(".formSubmit").on('click',function(){
+        var formData = $(this).parent('form');
+        var id = $(this).parent('form').attr('data-id');
+        var company = formData.find('.company').val();
+        var waybill = formData.find('.waybill').val();
+
+        if($.trim(company) == '')
+            return alertConfirm('请选择快递公司')
+
+        if($.trim(waybill) == '' || $.trim(waybill).length < 12 || $.trim(waybill).length > 18)
+            return alertConfirm('快递单号信息有误');
+
+        $.post('/replace/'+id,formData.serializeArray(),function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                timeOutUrl(res.url)
+
+        });
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>

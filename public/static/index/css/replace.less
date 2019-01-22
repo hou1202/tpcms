@@ -127,7 +127,6 @@ i.select-active{
     background-size:30/@rem !important;
 }
 
-
 .replace-button{
     text-align:center;
     .replace-explain{
@@ -156,6 +155,109 @@ i.select-active{
         font-size: 25/@rem;
         border:none;
         border-radius: 75/@rem;
+    }
+}
+
+
+/*售后详情*/
+.replaces{
+
+    padding:30/@rem 0;
+    border-bottom:1px dashed #ccc;
+    .replaces-goods{
+        display:flex;
+        padding:15/@rem 45/@rem;
+        img{
+            width:90/@rem;
+            height:90/@rem;
+            border-radius:12/@rem;
+        }
+        .goods-title{
+            padding-left:30/@rem;
+            p{
+                height:45/@rem;
+                line-height:45/@rem;
+                width:100%;
+                font-size:24/@rem;
+                float:left;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+                -webkit-box-orient: vertical;
+                &:nth-child(2){
+                    width:50%;
+                    color:#cc7f15;
+
+                }
+                &:nth-child(3){
+                    width:50%;
+                    color:#525252;
+                }
+            }
+
+        }
+    }
+    .replaces-reason{
+        padding:9/@rem 60/@rem;
+        h2{
+            height:45/@rem;
+            line-height:45/@rem;
+            font-size:27/@rem;
+        }
+        p{
+            line-height:36/@rem;
+            font-size:24/@rem;
+            color: #927117;
+            padding-left:15/@rem;
+        }
+        button{
+            width:180/@rem;
+            height:60/@rem;
+            font-size:24/@rem;
+            color:#cc7f15;
+            background:#fff;
+            border:1px solid #cc7f15;
+            border-radius:45/@rem;
+            margin:15/@rem 0 0 30/@rem;
+        }
+        .reason-img{
+            padding-left:15/@rem;
+            img{
+                width:120/@rem;
+                margin:0 9/@rem;
+                border-radius:9/@rem;
+            }
+        }
+        .reason-form{
+            padding:0 15/@rem;
+            input{
+                background:#fff;
+                border:none;
+                border-bottom:1px solid #ccc;
+                height:75/@rem;
+                line-height:75/@rem;
+                font-size:24/@rem;
+                width:100%;
+                color:#525252;
+            }
+            select{
+                background:#fff;
+                border:none;
+                border-bottom:1px solid #ccc;
+                height:60/@rem;
+                line-height:60/@rem;
+                font-size:24/@rem;
+                width:100%;
+                color:#525252;
+            }
+            button{
+                color:#fff;
+                background:#cc7f15;
+                margin-left:0;
+            }
+        }
     }
 }
 

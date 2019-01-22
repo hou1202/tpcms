@@ -131,7 +131,6 @@ i.select-active{
   margin-top:0.2rem;
 }
 
-
 .replace-button{
   text-align:center;
 }
@@ -162,4 +161,107 @@ i.select-active{
   font-size: 0.33333333rem;
   border:none;
   border-radius: 1rem;
+}
+
+/*售后详情*/
+.replaces{
+
+  padding:0.4rem 0;
+  border-bottom:1px dashed #ccc;
+}
+.replaces .replaces-goods{
+  display:flex;
+  padding:0.2rem 0.6rem;
+}
+.replaces .replaces-goods img{
+  width:1.2rem;
+  height:1.2rem;
+  border-radius:0.16rem;
+}
+.replaces .replaces-goods .goods-title{
+  padding-left:0.4rem;
+
+}
+.replaces .replaces-goods .goods-title p{
+  height:0.6rem;
+  line-height:0.6rem;
+  width:100%;
+  font-size:0.32rem;
+  float:left;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.replaces .replaces-goods .goods-title p:nth-child(2){
+  width:50%;
+  color:#cc7f15;
+
+}
+.replaces .replaces-goods .goods-title p:nth-child(3){
+  width:50%;
+  color:#525252;
+}
+.replaces .replaces-reason{
+  padding:0.12rem 0.8rem;
+}
+.replaces .replaces-reason h2{
+  height:0.6rem;
+  line-height:0.6rem;
+  font-size:0.36rem
+}
+.replaces .replaces-reason p{
+
+  line-height:0.48rem;
+  font-size:0.32rem;
+  color: #927117;
+  padding-left:0.2rem;
+}
+.replaces .replaces-reason button{
+  width:2.4rem;
+  height:0.8rem;
+  font-size:0.32rem;
+  color:#cc7f15;
+  background:#fff;
+  border:1px solid #cc7f15;
+  border-radius:0.6rem;
+  margin:0.2rem 0 0 0.4rem;
+}
+.replaces .replaces-reason .reason-img{
+  padding-left:0.2rem;
+}
+.replaces .replaces-reason .reason-img img{
+  width:1.6rem;
+  margin:0 0.12rem;
+  border-radius:0.12rem;
+}
+.replaces .replaces-reason .reason-form{
+  padding:0 0.2rem;
+}
+.replaces .replaces-reason .reason-form input{
+  background:#fff;
+  border:none;
+  border-bottom:1px solid #ccc;
+  height:1rem;
+  line-height:1rem;
+  font-size:0.32rem;
+  width:100%;
+  color:#525252;
+}
+.replaces .replaces-reason .reason-form select{
+  background:#fff;
+  border:none;
+  border-bottom:1px solid #ccc;
+  height:0.8rem;
+  line-height:0.8rem;
+  font-size:0.32rem;
+  width:100%;
+  color:#525252;
+}
+.replaces .replaces-reason .reason-form button{
+  color:#fff;
+  background:#cc7f15;
+  margin-left:0;
 }
