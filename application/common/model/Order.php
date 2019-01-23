@@ -101,6 +101,8 @@ class Order extends Model
         return $pay_type_text[$data['pay_type']];
     }
 
+
+
     /*
      * 获取器
      * 追加获取订单拼接产品名称
@@ -121,4 +123,34 @@ class Order extends Model
         $name = User::where('id',$data['user_id'])->value('name');
         return $name;
     }
+
+    /*
+     * 获取器
+     * 追加获取订单优惠券
+     * */
+    public function getCouponAttr($value,$data)
+    {
+        if(empty($data['coupon_id'])){
+            $coupon = '无';
+        }else{
+            $resource = Coupon::where('id',$data['coupon_id'])->find();
+            $coupon = $resource->title.' ： 满 '.$resource->money_satisfy.' 减'.$resource->money_derate;
+        }
+
+        return $coupon;
+    }
+
+    /*
+     * 获取器
+     * 追加获取售后申请信息
+     * */
+    public function getReplaceAttr($value,$data){
+        $replace = array();
+        if($data['status'] == 5){
+            $replace = Replace::where('order_id',$data['id'])->append(['img_arr','type_text','replace_goods','status_text'])->select()->toArray();
+        }
+        return $replace;
+    }
+
+
 }

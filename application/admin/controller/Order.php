@@ -29,16 +29,19 @@ class Order extends AdminController
     {
         $data = $request -> param();
 
-
+        //定义SQL变量
         $alias = ['order'=>'o','user'=>'u'];
         $join = [['user','o.user_id=u.id'],['order_goods']];
-        $field = ['o.id','o.total_price','o.pay_price','o.integral','o.pay_status','o.pay_type','o.status','o.create_time','u.name'];
+        $field = ['o.id','o.serial','o.total_price','o.pay_price','o.integral','o.pay_status','o.pay_type','o.status','o.create_time','u.name'];
         $append = ['status_admin_text','pay_status_text','pay_type_text','goods_title'];
 
+        //定义搜索条件
         $map=array();
         if(isset($data['keyword']) && !empty($data['keyword'])){
             $map['u.name'] = ['like','%'.trim($data['keyword']).'%'];
+            $map['o.serial'] = ['like','%'.trim($data['keyword']).'%'];
             $map['o.id'] = ['like','%'.trim($data['keyword']).'%'];
+            $map['o.phone'] = ['like','%'.trim($data['keyword']).'%'];
         }
 
         $list = OrderM::alias($alias)
@@ -80,14 +83,17 @@ class Order extends AdminController
     }
 
     /**
-     * 保存新建的资源
+     * 订单发货
      *
-     * @param  \think\Request  $request
+     * @param  int  $id
      * @return \think\Response
      */
-    public function save(Request $request)
+    public function shipment($id)
     {
-        //
+        if(!$resource = OrderM::get($id))
+            return $this->failJson('订单信息有误');
+        $resource->shipment = 1;
+        return $resource->save() ? $this->successJson('订单发货信息更新成功') : $this->failJson('更新失败，请重新操作');
     }
 
     /**
@@ -98,7 +104,11 @@ class Order extends AdminController
      */
     public function read($id)
     {
-        //
+        $resource = OrderM::where('id',$id)->append(['goods_order','user_name','coupon'])->find();
+        if(!$resource)
+            return $this->failJson('非有效数据信息');
+        $this->assign('Order',$resource);
+        return view('');
     }
 
     /**
@@ -109,7 +119,11 @@ class Order extends AdminController
      */
     public function edit($id)
     {
-        //
+        $resource = OrderM::where('id',$id)->append(['goods_order','user_name','coupon','replace'])->find();
+        if(!$resource)
+            return $this->failJson('非有效数据信息');
+        $this->assign('Order',$resource);
+        return view('');
     }
 
     /**

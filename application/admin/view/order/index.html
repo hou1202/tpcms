@@ -25,30 +25,35 @@
                         <!--操作控制-->
                         <script type="text/html" id="barHash">
                             <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
-                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">更新</a>
                             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                         </script>
 
-                        <!--状态显示控制-->
-                        <script type="text/html" id="setStatuss">
-                            <input type="checkbox" name="status" lay-filter="switchStatus" lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="上架|下架" value="{{d.id}}">
+                        <!--支付状态显示控制-->
+                        <script type="text/html" id="setPayStatus">
+                            {{# if(d.pay_status == '0'){ }}
+                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-green" style="width:50px"> {{d.pay_status_text}} </button>
+                            {{#} }}
+                            {{# if(d.pay_status == '1'){ }}
+                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-pink" style="width:50px"> {{d.pay_status_text}} </button>
+                            {{#} }}
                         </script>
                         <!--订单状态显示控制-->
                         <script type="text/html" id="setStatus">
                             {{# if(d.status == '1'){ }}
-                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-warm"> {{d.status_admin_text}} </button>
+                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-warm" style="width:60px"> {{d.status_admin_text}} </button>
                             {{#} }}
                             {{# if(d.status == '2'){ }}
-                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal"> {{d.status_admin_text}} </button>
+                                <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" style="width:60px"> {{d.status_admin_text}} </button>
                             {{#} }}
                             {{# if(d.status == '3'){ }}
-                            <button class="layui-btn layui-btn-radius layui-btn-xs"> {{d.status_admin_text}} </button>
+                            <button class="layui-btn layui-btn-radius layui-btn-xs" style="width:60px"> {{d.status_admin_text}} </button>
                             {{#} }}
                             {{# if(d.status == '4'){ }}
-                            <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-primary"> {{d.status_admin_text}} </button>
+                            <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-primary" style="width:60px"> {{d.status_admin_text}} </button>
                             {{#} }}
                             {{# if(d.status == '5'){ }}
-                            <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-danger"> {{d.status_admin_text}} </button>
+                            <button class="layui-btn layui-btn-radius layui-btn-xs layui-btn-danger" style="width:60px"> {{d.status_admin_text}} </button>
                             {{#} }}
 
                         </script>
@@ -91,13 +96,13 @@
                     }, {
                         field: 'name', title: '下单用户', align: 'center'
                     },{
-                        field: 'total_price', title: '交易总金额',  align: 'center'
+                        field: 'serial', title: '交易订单号',  align: 'center'
                     },{
                         field: 'goods_title', title: '订单产品',  align: 'center'
                     },{
                         field: 'pay_price', title: '支付金额', align: 'center', minWidth: 80, templet:'#setImg'
                     },{
-                        field: 'integral', title: '订单积分', align: 'center'
+                        field: 'total_price', title: '交易总金额', align: 'center'
                     },{
                         field: 'pay_status_text', title: '支付状态', align: 'center', templet:'#setPayStatus'
                     },{
