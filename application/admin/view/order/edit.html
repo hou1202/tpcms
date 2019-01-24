@@ -38,14 +38,14 @@
                         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
                             <ul class="layui-tab-title">
-                                <li class="layui-this">订单基本信息</li>
+                                <li >订单基本信息</li>
                                 <li>订单产品信息</li>
-                                {if $Order.status == '5'}<li>售后申请信息</li>{/if}
+                                {if ($Order.status == '6') || ($Order.status == '7')}<li class="layui-this">售后申请信息</li>{/if}
                             </ul>
 
                             <div class="layui-tab-content">
                                 <!--产品基本信息-->
-                                <div class="layui-tab-item layui-show">
+                                <div class="layui-tab-item ">
                                     <form class="layui-form" lay-filter="formVal">
 
                                         <div class="layui-form-item layui-input-md">
@@ -237,10 +237,14 @@
 
                                 </div>
 
-                                {if $Order.status == '5'}
+                                {if ($Order.status == '6') || ($Order.status == '7')}
                                     <!--售后申请信息-->
-                                    <div class="layui-tab-item">
+                                    <div class="layui-tab-item layui-show">
+                                        <form class="layui-form" lay-filter="formReplace">
+                                            <input type="hidden" name="_method" value="PUT">
                                         {volist name='$Order.replace' id='r'}
+                                            <input type="hidden" name="replace[{$r.id}][id]" value="{$r.id}">
+
                                             <div class="layui-form-item layui-input-md">
                                                 <label class="layui-form-label">售后产品</label>
                                                 <div class="layui-input-inline">
@@ -282,42 +286,68 @@
 
                                             <div class="layui-form-item layui-input-md">
                                                 <label class="layui-form-label">申请状态</label>
-                                                <div class="layui-input-inline orderShip">
+                                                <div class="layui-input-inline">
                                                     <button type="button" class="layui-btn layui-btn-radius layui-btn-xs  layui-btn-primary" style="margin-left:10px;width:90px;height:30px;"> {$r.status_text} </button>
                                                 </div>
                                             </div>
 
                                             {if $r.status == '0'}
-                                                <div class="layui-form-item layui-input-md">
-                                                    <label class="layui-form-label">申请处理</label>
-                                                    <div class="layui-input-inline orderShip">
-                                                        <select name="status" lay-verify="">
-                                                            <option value="">申请处理结果</option>
-                                                            <option value="1">通过售后申请</option>
-                                                            <option value="2">驳回售后申请</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="layui-form-mid layui-word-aux">*处理结果选择后不可变更</div>
+                                            <div class="layui-form-item layui-input-md">
+                                                <label class="layui-form-label">申请处理</label>
+                                                <div class="layui-input-inline">
+                                                    <select name="replace[{$r.id}][status]" lay-verify="">
+                                                        <option value="0">选择申请处理结果</option>
+                                                        <option value="1">通过售后申请</option>
+                                                        <option value="2">驳回售后申请</option>
+                                                    </select>
                                                 </div>
+                                                <div class="layui-form-mid layui-word-aux">
+                                                    *处理结果选择后不可变更
+                                                </div>
+                                            </div>
+                                            {/if}
+
+                                            {if $r.status > 2}
+                                            <div class="layui-form-item layui-input-md">
+                                                <label class="layui-form-label">回寄快递</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" value="{$r.company}" readonly autocomplete="off"  class="layui-input">
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item layui-input-md">
+                                                <label class="layui-form-label">回寄单号</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" value="{$r.waybill}" readonly autocomplete="off"  class="layui-input">
+                                                </div>
+                                            </div>
                                             {/if}
 
                                             <div class="layui-form-item layui-input-md">
                                                 <label class="layui-form-label">反馈信息</label>
                                                 <div class="layui-input-inline">
-                                                    <textarea name="tickling" class="layui-textarea">{$r.tickling}</textarea>
+                                                    <textarea name="replace[{$r.id}][tickling]" class="layui-textarea">{$r.tickling}</textarea>
                                                 </div>
                                             </div>
 
-                                        {if $r.status == '3'}
-                                        <div class="layui-form-item layui-input-md">
-                                            <div class="layui-input-block">
-                                                <button type="button" class="layui-btn layui-btn-radius" >完成售后服务</button>
+                                            {if $r.status == '3'}
+                                            <div class="layui-form-item layui-input-md">
+                                                <div class="layui-input-block">
+                                                    <button type="button" class="layui-btn layui-btn-radius" >完成售后服务</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        {/if}
+                                            {/if}
 
                                             <hr class="layui-bg-red">
                                         {/volist}
+                                            {if $Order.status == 6}
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <button class="layui-btn" lay-submit lay-filter="submitReplace">处理申请</button>
+                                                    </div>
+                                                </div>
+                                            {/if}
+                                        </form>
                                     </div>
                                 {/if}
                             </div>
@@ -334,9 +364,8 @@
 
 
 <script>
-    layui.use(['element','form', 'route', 'table'], function() {
+    layui.use(['form', 'route', 'table'], function() {
         var $ = layui.jquery,
-            element = layui.element,
             form = layui.form,
             route = layui.route,
             table = layui.table,
@@ -376,7 +405,7 @@
 
         }
 
-        if("{$Order.status}" == "2" && "{$Order.shipment}" == "0"){
+        if("{$Order.status}" == "2"){
             var ship = '<button type="button" id="sureShipment" class="layui-btn layui-btn-radius layui-btn-xs" style="margin:8px 0 0 10px;width:70px;"> 确认发货 </button>';
             $(".orderShip").append(ship);
 
@@ -400,7 +429,23 @@
                return false;
             });
 
-        })
+        });
+
+        /**监听提交售后处理*/
+        form.on('submit(submitReplace)', function(data){
+
+            $.post("/aoogi/replace/"+"{$Order.id}",data.field,function(res){
+                layer.msg(res.msg);
+                if(res.code == 1){
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 2000);
+                }
+
+
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     });
 </script>
 

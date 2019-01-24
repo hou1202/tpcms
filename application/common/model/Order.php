@@ -29,11 +29,6 @@ class Order extends Model
     protected $field = true;
 
     /**
-     * $ autoWriteTimestamp   开启自动写入时间戳字段
-     * */
-    //protected $autoWriteTimestamp = 'datetime';
-
-    /**
      * $deleteTime  定义数据软删除
      * $defaultSoftDelete       定义软删除字段默认值 0
      * */
@@ -67,7 +62,7 @@ class Order extends Model
      * */
     public function getStatusTextAttr($value,$data)
     {
-        $status_text = [1=>'等待买家付款',2=>'等待买家收货',3=>'等待买家评论',4=>'订单已完成',5=>'申请售后处理'];
+        $status_text = [1=>'等待买家付款',2=>'等待平台发货',3=>'等待买家收货',4=>'等待买家评论',5=>'订单已完成',6=>'申请售后处理',7=>'售后处理已完成',8=>'订单已失效'];
         return $status_text[$data['status']];
     }
 
@@ -77,7 +72,7 @@ class Order extends Model
      * */
     public function getStatusAdminTextAttr($value,$data)
     {
-        $status_admin_text = [1=>'待付款',2=>'待收货',3=>'待评论',4=>'已完成',5=>'申请售后'];
+        $status_admin_text = [1=>'待付款',2=>'待发货',3=>'待收货',4=>'待评论',5=>'已完成',6=>'申请售后',7=>'售后完成',8=>'已失效'];
         return $status_admin_text[$data['status']];
     }
 
@@ -146,7 +141,7 @@ class Order extends Model
      * */
     public function getReplaceAttr($value,$data){
         $replace = array();
-        if($data['status'] == 5){
+        if($data['status'] == 6 || $data['status'] == 7){
             $replace = Replace::where('order_id',$data['id'])->append(['img_arr','type_text','replace_goods','status_text'])->select()->toArray();
         }
         return $replace;

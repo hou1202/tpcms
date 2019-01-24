@@ -87,6 +87,7 @@ Route::post('aoogi/coupon/status','admin/coupon/setStatus');
 Route::resource('aoogi/order','admin/order')->rest('edit',['GET', '/edit/:id','edit'])->except(['create','save']);
 Route::post('aoogi/order/data','admin/order/getData');
 Route::post('aoogi/order/shipment/:id','admin/order/shipment');     //更新订单发货状态
+Route::put('aoogi/replace/:order_id','admin/order/replace');     //更新售后申请
 
 //图片上传处理
 Route::post('uploader/[:genre]','admin/Uploader/uploader')->pattern(['genre' => '1']);

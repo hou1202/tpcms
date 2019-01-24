@@ -6,10 +6,24 @@ use app\common\controller\AdminController;
 use think\db\Where;
 use think\Request;
 use app\common\model\Order as OrderM;
+use app\common\validate\Replace as ReplaceV;
+use app\common\model\Replace as ReplaceM;
+use think\Db;
 
 
 class Order extends AdminController
 {
+
+    const ORDER_STATUS_UNPAID = 1;          //未付款
+    const ORDER_STATUS_SHIPMENT = 2;        //待发货
+    const ORDER_STATUS_RECEIVE= 3;          //待收货
+    const ORDER_STATUS_COMMENTS= 4;         //待评论
+    const ORDER_STATUS_FINISH= 5;           //已完成
+    const ORDER_STATUS_REPLACE= 6;          //售后申请
+    const ORDER_STATUS_REPLACE_FINISH= 7;   //售后完成
+    const ORDER_STATUS_INVALID= 8;          //已失效
+
+
     /**
      * 显示资源列表
      *
@@ -93,6 +107,7 @@ class Order extends AdminController
         if(!$resource = OrderM::get($id))
             return $this->failJson('订单信息有误');
         $resource->shipment = 1;
+        $resource->status = 3;
         return $resource->save() ? $this->successJson('订单发货信息更新成功') : $this->failJson('更新失败，请重新操作');
     }
 
@@ -147,5 +162,60 @@ class Order extends AdminController
     public function delete($id)
     {
         //
+    }
+
+
+    /**
+     * 更新的售后申请
+     *
+     * @param  \think\Request  $request
+     * @param  int  $order_id
+     *
+     * @return \think\Response
+     */
+    public function replace(Request $request, $order_id)
+    {
+        $order=OrderM::get($order_id);
+        $data=$request->param('replace');
+        if(!$data || !$order)
+            return $this->failJson('非有效售后信息');
+        $validate = new ReplaceV();
+        foreach($data as $value){
+            if(!$validate->scene('admin_update')->check($value))
+                return $this->failJson($validate->getError());
+        }
+
+        Db::startTrans();
+        try{
+
+            //更新售后申请
+            $replace = new ReplaceM;
+            $replace->saveAll($data);
+
+            $cond = false;
+            foreach($data as $res){
+                //判断提交的售后状态，是否都为驳回
+                if(isset($res['status']) && $res['status']==2){
+                    $cond = true;
+                }else{
+                    $cond = false;
+                    break;
+                }
+            }
+            //更新订单
+            if($cond === true){
+                $order->status = self::ORDER_STATUS_REPLACE_FINISH;
+                $order->save();
+            }
+
+            // 提交事务
+            Db::commit();
+        }catch(\Exception $e){
+            // 回滚事务
+            Db::rollback();
+            return $this->failJson('更新失败');
+        }
+        return $this->successJson('更新成功');
+
     }
 }

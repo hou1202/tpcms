@@ -60,20 +60,26 @@ $(function(){
                         $.each(res.data,function(i,val){
                             var goods ='';
                             var orderBottom = '';
-                            switch(pageAjax.type){
-                                case '1':
+                            switch(res.data[i].status){
+                                case 1:
                                     orderBottom +='<a  class="cancel cancelOrder" data-id="'+res.data[i].id+'">取消订单</a>'
                                                 +'<a href="/balance/'+res.data[i].id+'" class="payOrder">立即付款</a>';
                                     break;
-                                case '2':
+                                case 2:
+                                    orderBottom +='<a  class="cancel no-operation"">等待发货</a>';
+                                    break;
+                                case 3:
                                     orderBottom +='<a  class="cancel receiptOrder" data-id="'+res.data[i].id+'">确认收货</a>';
                                     break;
-                                case '3':
+                                case 4:
                                     orderBottom +='<a  href="/comments/'+res.data[i].id+'">评价订单</a>'
                                         +'<a href="/replace/'+res.data[i].id+'">申请售后</a>';
                                     break;
-                                case '5':
+                                case 6:
                                     orderBottom +='<a  href="/replace/read/'+res.data[i].id+'">了解进度</a>';
+                                    break;
+                                case 7:
+                                    orderBottom +='<a  class="no-operation" href="/replace/read/'+res.data[i].id+'">售后完成</a>';
                                     break;
                                 default:
                                     orderBottom = '';

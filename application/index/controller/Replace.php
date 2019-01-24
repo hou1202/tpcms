@@ -13,7 +13,7 @@ use app\common\controller\IndexController;
 
 use app\common\model\Order;
 use app\common\model\Replace as ReplaceM;
-use app\index\validate\Replace as ReplaceV;
+use app\common\validate\Replace as ReplaceV;
 
 use think\Request;
 use think\Db;
@@ -33,7 +33,7 @@ class Replace extends IndexController
     {
         $resource = Order::where('id',$order_id)
             ->where('pay_status',1)
-            ->where('status',3)
+            ->where('status',4)
             ->where('user_id',$this->user_info['id'])
             ->append(['goods_order'])
             ->find();
@@ -75,7 +75,7 @@ class Replace extends IndexController
             $replace->saveAll($data);
 
             //更新订单状态
-            $order->status = 5;
+            $order->status = 6;
             $order->save();
 
             // 提交事务
@@ -103,6 +103,7 @@ class Replace extends IndexController
             ->append(['replace_goods','type_text','img_arr','status_text'])
             ->select()
             ->toArray();
+
         if(!$resource)
             return redirect($request->header('referer'));
         $this->assign('Replace',$resource);

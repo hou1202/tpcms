@@ -32,7 +32,7 @@ class Comments extends IndexController
     {
         $resource = Order::where('id',$id)
             ->where('pay_status',1)
-            ->where('status',3)
+            ->where('status',4)
             ->where('user_id',$this->user_info['id'])
             ->append(['goods_order'])
             ->find();
@@ -75,7 +75,7 @@ class Comments extends IndexController
             $comments = new CommentsM;
             $comments->saveAll($data);
             //更新订单状态
-            $order->status = 4;
+            $order->status = 5;
             $order->save();
 
             // 提交事务

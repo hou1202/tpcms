@@ -6,10 +6,8 @@
  * Time: 14:05
  */
 
-namespace app\index\validate;
+namespace app\common\validate;
 
-
-use app\common\validate\CommonValidate;
 
 class Replace extends CommonValidate
 {
@@ -28,7 +26,9 @@ class Replace extends CommonValidate
         'img'   =>  'require|array',
         'info' => 'max:255',
         'company|快递公司信息' => 'require|chsAlpha',
-        'waybill|快递单号' => 'require|alphaNum|length:12,18'
+        'waybill|快递单号' => 'require|alphaNum|length:12,18',
+        'tickling|反馈信息' => 'max:500',
+        'status' => 'requireExist|number|in:0,1,2'
     ];
 
     /**
@@ -58,6 +58,9 @@ class Replace extends CommonValidate
         'company.chsAlpha' => '快递公司信息有误',
         'waybill.alphaNum' => '快递单号信息有误',
         'waybill.length' => '快递单号信息有误',
+        'status.requireExist' => '售后处理不得为空',
+        'status.number' => '非有效售后处理信息',
+        'status.in' => '非有效售后处理信息',
     ];
 
 
@@ -67,7 +70,8 @@ class Replace extends CommonValidate
      * */
     protected $scene = [
         'create' => ['goods_id','type','reason','img','info'],
-        'update' => ['id','company','waybill']
+        'update' => ['id','company','waybill'],
+        'admin_update' => ['id','status','tickling']
 
     ];
 }

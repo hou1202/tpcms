@@ -95,14 +95,23 @@
             <a href="/balance/{$Order.id}">立即付款</a>
         {/case}
         {case 2}
-            <a class="receiptOrder" data-id="{$Order.id}">确认收货</a>
+            <a class="">等待发货</a>
         {/case}
         {case 3}
-            <a class="">联系售后</a>
-            <a href="/comments/{$Order.id}">评论订单</a>
+            <a class="receiptOrder" data-id="{$Order.id}">确认收货</a>
         {/case}
         {case 4}
+            <a class="" href="/replace/{$Order.id}">申请售后</a>
+            <a href="/comments/{$Order.id}">评论订单</a>
+        {/case}
+        {case 5}
             <a class="">订单完成</a>
+        {/case}
+        {case 6}
+            <a class="" href="/replace/read/{$Order.id}">了解详情</a>
+        {/case}
+        {case 7}
+            <a class="" href="/replace/read/{$Order.id}">售后完成</a>
         {/case}
     {/switch}
 </div>

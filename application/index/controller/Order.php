@@ -23,6 +23,24 @@ use app\index\validate\Order as OrderV;
 
 class Order extends IndexController
 {
+    const ORDER_STATUS_UNPAID = 1;          //未付款
+    const ORDER_STATUS_SHIPMENT = 2;        //待发货
+    const ORDER_STATUS_RECEIVE= 3;          //待收货
+    const ORDER_STATUS_COMMENTS= 4;         //待评论
+    const ORDER_STATUS_FINISH= 5;           //已完成
+    const ORDER_STATUS_REPLACE= 6;          //售后申请
+    const ORDER_STATUS_REPLACE_FINISH= 7;   //售后完成
+    const ORDER_STATUS_INVALID= 8;          //已失效
+
+    private static $whereOrderStatus = [
+        self::ORDER_STATUS_UNPAID => '1',
+        self::ORDER_STATUS_RECEIVE => '2,3',
+        self::ORDER_STATUS_COMMENTS => '4',
+        self::ORDER_STATUS_FINISH => '5',
+        self::ORDER_STATUS_REPLACE => '6,7',
+        self::ORDER_STATUS_INVALID => '8',
+    ];
+
 
     /**
      * 显示资源列表
@@ -33,7 +51,7 @@ class Order extends IndexController
     public function index($type=1)
     {
         $resource = OrderM::where('user_id',$this->user_info['id'])
-            ->where('status',1)
+            ->where('status',self::ORDER_STATUS_UNPAID)
             ->order('id desc')
             ->append(['goods_order'])
             ->select()
@@ -55,10 +73,11 @@ class Order extends IndexController
     public function pageData($status,$page,$limit){
 
         $resources = OrderM::where('user_id',$this->user_info['id'])
-            ->where('status',$status)
+            ->whereIn('status',static::$whereOrderStatus[$status])
             ->order('id desc')
             ->limit(($page-1)*$limit,$limit)
             ->append(['goods_order'])
+
             ->select()
             ->toArray();
 
@@ -133,7 +152,7 @@ class Order extends IndexController
     {
         if(!$order = OrderM::get($id))
             return $this->failJson('订单信息有误');
-        $order->status = 3;
+        $order->status = self::ORDER_STATUS_COMMENTS;     //确认收货，订单进入待评论
         $order->save();
         return $this->successJson('确认收货完成，请对订单进行评价');
 
@@ -189,8 +208,7 @@ class Order extends IndexController
      */
     public function payment(Request $request,$order_id)
     {
-        /*$data = $request->param();
-        var_dump($data);die;*/
+
         $validate = new OrderV();
         if(!$validate->scene('payment')->check($request->param()))
             return $this->failJson($validate->getError());
@@ -288,7 +306,7 @@ class Order extends IndexController
                 //更新订单数据
                 $order->pay_type = 3;
                 $order->pay_status = 1;
-                $order->status = 2;
+                $order->status = self::ORDER_STATUS_SHIPMENT;
                 $order->pay_time = time();
                 $order->save();
 
