@@ -7,7 +7,7 @@
 
 <!--头部标题模块-->
 <header class="header-title">
-    <a href="Javascript:history.go(-1);">
+    <a href="/order">
         <img src="/static/index/images/back.png">
     </a>
     <h2>订单支付</h2>
@@ -15,13 +15,12 @@
 
 <!--结算金额-->
 <div class="pay-money">
-    <p><span>￥</span>250.00</p>
+    <p><span>￥</span>{$Order.pay_price|float}</p>
 </div>
 <!--结算模块-->
 <div class="order">
     <form id="payForm">
 
-        <input type="hidden" name="id" value="21521145221" readonly />
         <!--支付方式-->
         <div class="order-pay">
 
@@ -29,21 +28,21 @@
                 <i class="ali"></i>
                 <p>支付宝支付</p>
                 <div class="pay-select-sure pay-active">
-                    <input type="radio" name="pay" value="1" class="paySelect" checked="checked">
+                    <input type="radio" name="pay_type" value="1" class="paySelect" checked="checked">
                 </div>
             </div>
             <div class="pay-select">
                 <i class="wx"></i>
                 <p>微信支付</p>
                 <div class="pay-select-sure">
-                    <input type="radio" name="pay" value="2" class="paySelect">
+                    <input type="radio" name="pay_type" value="2" class="paySelect">
                 </div>
             </div>
             <div class="pay-select">
                 <i class="ye"></i>
-                <p>余额支付 <span>(余额：250.00)</span></p>
+                <p>余额支付 <span>(余额：{$Money|float})</span></p>
                 <div class="pay-select-sure" id="balance">
-                    <input type="radio" name="pay" value="3" class="paySelect">
+                    <input type="radio" name="pay_type" value="3" class="paySelect" readonly>
                 </div>
             </div>
         </div>
@@ -65,13 +64,13 @@
 
 
 <script>
-    //帐户余额
-    var balance = 25;
-    //订单总额
-    var sum = 30.00;
+
+
+    var balance = "{$Money}";
+    var payPrice = "{$Order.pay_price}";
     /*支付方式选择控制*/
     $(".pay-select-sure").click(function(){
-        if($(this).attr('id') == 'index.view.order.balance' && parseInt(sum) > parseInt(balance))
+        if($(this).attr('id') == 'balance' && parseInt(payPrice) > parseInt(balance))
             return alertConfirm("余额不足，请选择其他支付方式");
         $(".pay-select-sure").removeClass("pay-active");
         $(".paySelect").attr("checked",false);
@@ -81,12 +80,14 @@
 
 
     $("#submitForm").click(function(){
-       //console.log($("#orderForm").serialize()) ;
-       //console.log($("#orderForm").serializeArray()) ;
-       $.post('/post',$("#payForm").serialize(),function(obj){
-           console.log(obj);
-       })
+        $.post('/payment/'+"{$Order.id}",$("#payForm").serialize(),function(res){
+            if(res.code == 1)
+                $(window).attr('location',res.url);
+            if(res.code == 0)
+                alertConfirm(res.msg);
+        })
     });
+
 
 </script>
 

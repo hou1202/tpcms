@@ -38,14 +38,14 @@
                         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
                             <ul class="layui-tab-title">
-                                <li >订单基本信息</li>
+                                <li class="layui-this">订单基本信息</li>
                                 <li>订单产品信息</li>
-                                {if ($Order.status == '6') || ($Order.status == '7')}<li class="layui-this">售后申请信息</li>{/if}
+                                {if ($Order.status == '6') || ($Order.status == '7')}<li>售后申请信息</li>{/if}
                             </ul>
 
                             <div class="layui-tab-content">
                                 <!--产品基本信息-->
-                                <div class="layui-tab-item ">
+                                <div class="layui-tab-item layui-show">
                                     <form class="layui-form" lay-filter="formVal">
 
                                         <div class="layui-form-item layui-input-md">
@@ -90,18 +90,18 @@
                                             </div>
                                         </div>
 
-                                        <div class="layui-form-item layui-input-md orderUpdate">
+                                        <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">优惠金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="discount_price" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" readonly autocomplete="off"  class="layui-input">
                                             </div>
 
                                         </div>
 
-                                        <div class="layui-form-item layui-input-md orderUpdate">
+                                        <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">运费金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="franking_price" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -197,12 +197,13 @@
 
                                             </div>
                                         </div>
-
+                                        {if ($Order.status == 1) || ($Order.status == 2)}
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
                                                 <button class="layui-btn" lay-submit lay-filter="form_submit">立即提交</button>
                                             </div>
                                         </div>
+                                        {/if}
                                     </form>
                                 </div>
 
@@ -239,7 +240,7 @@
 
                                 {if ($Order.status == '6') || ($Order.status == '7')}
                                     <!--售后申请信息-->
-                                    <div class="layui-tab-item layui-show">
+                                    <div class="layui-tab-item">
                                         <form class="layui-form" lay-filter="formReplace">
                                             <input type="hidden" name="_method" value="PUT">
                                         {volist name='$Order.replace' id='r'}
@@ -333,7 +334,7 @@
                                             {if $r.status == '3'}
                                             <div class="layui-form-item layui-input-md">
                                                 <div class="layui-input-block">
-                                                    <button type="button" class="layui-btn layui-btn-radius" >完成售后服务</button>
+                                                    <button type="button" class="layui-btn layui-btn-radius completeReplace" data-replace-key="{$r.id}">完成售后服务</button>
                                                 </div>
                                             </div>
                                             {/if}
@@ -429,6 +430,23 @@
                return false;
             });
 
+        });
+
+        /**
+         * 完成售后服务
+         * */
+        $(".completeReplace").on('click',function(){
+            var id = $(this).attr('data-replace-key');
+            var _that = $(this);
+            $.post('/aoogi/replace/complete/'+"{$Order.id}"+'/'+id,'',function(res){
+                layer.msg(res.msg);
+                if(res.code == 1){
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 2000);
+                }
+                return false;
+            });
         });
 
         /**监听提交售后处理*/

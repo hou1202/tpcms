@@ -92,7 +92,7 @@ class Order extends Model
      * */
     public function getPayTypeTextAttr($value,$data)
     {
-        $pay_type_text = [1=>'支付宝支付',2=>'微信支付',3=>'余额支付'];
+        $pay_type_text = [0=>'未支付',1=>'支付宝支付',2=>'微信支付',3=>'余额支付'];
         return $pay_type_text[$data['pay_type']];
     }
 

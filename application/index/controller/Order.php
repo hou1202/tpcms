@@ -109,13 +109,17 @@ class Order extends IndexController
      */
     public function delete($id)
     {
-        if(!$order = OrderM::get($id))
+        if(!$order = OrderM::where([
+                                'id'=>$id,
+                                'user_id'=>$this->user_info['id'],
+                                'status'=>self::ORDER_STATUS_UNPAID])
+                            ->find()){
             return $this->failJson('订单信息有误');
+        }
         //事务提交订单
         Db::startTrans();
         try{
-            //删除订单
-            $order->delete();
+
 
             //回增订单产品库存
             $resource = OrderGoods::field('goods_id,goods_spec_id,num')
@@ -129,6 +133,28 @@ class Order extends IndexController
 
             //删除订单产品
             OrderGoods::where('order_id',$order->id)->update(['delete_time'=>time()]);
+
+
+            //优惠券处理
+            if(!empty($order->coupon_id)){
+                $coupon = Coupon::withTrashed()->where('id',$order->coupon_id)->find();
+                $coupon_user = CouponUser::where('coupon_id',$order->coupon_id)
+                    ->where('user_id',$order->user_id)
+                    ->find();
+
+                if($coupon->delete_time != 0){  //优惠券已删除，则删除用户领取的优惠券
+                    $coupon_user->delete();
+                }elseif($coupon->end_time > time()){     //优惠过期，则更改用户优惠券至过期状态
+                    $coupon_user->status = 3;
+                    $coupon_user->save();
+                }else{      //恢复优惠至未使用
+                    $coupon_user->status = 0;
+                    $coupon_user->save();
+                }
+            }
+
+            //删除订单
+            $order->delete();
 
             // 提交事务
             Db::commit();
@@ -159,7 +185,7 @@ class Order extends IndexController
     }
 
     /**
-     * 显示指定的资源
+     * 显示订单结算页面
      *
      * @param  int  $id
      * @param  \think\Request  $request
@@ -173,6 +199,10 @@ class Order extends IndexController
 
         if(!$order = OrderM::get($id))
             return $this->failJson('订单错误');
+
+        if($order->complete == 1){
+            return $this->complete($id);
+        }
 
         //获取收货地址信息
         if(empty($request->param('address_id'))){
@@ -199,6 +229,22 @@ class Order extends IndexController
     }
 
     /**
+     * 显示完整订单结算页面
+     *
+     * @param  int  $id
+     *
+     * @return \think\Response
+     */
+    protected function complete($id)
+    {
+        if(!$order = OrderM::get($id))
+            return redirect('error');
+        $this->assign('Money',User::where('id',$this->user_info['id'])->value('balance'));
+        $this->assign('Order',$order);
+        return view('order/complete');
+    }
+
+    /**
      * 生成支付订单.
      *
      * @param  int  $order_id
@@ -208,13 +254,16 @@ class Order extends IndexController
      */
     public function payment(Request $request,$order_id)
     {
-
+        if(!$order = OrderM::get($order_id))
+            return $this->failJson('订单信息有误');
+        if($order->complete == 1){
+            return $this->successJson('开始支付','/pay/'.$order_id.'/'.$request->param('pay_type'));
+        }
         $validate = new OrderV();
         if(!$validate->scene('payment')->check($request->param()))
             return $this->failJson($validate->getError());
         $coupon = Coupon::get($request->param('coupon_id'));
         $address = Address::get($request->param('address_id'));
-        $order = OrderM::get($request->param('order_id'));
 
         //组装更新订单数据
         if($coupon){
@@ -227,12 +276,8 @@ class Order extends IndexController
         $order->phone = $address->phone;
         $order->city = $address->city;
         $order->street = $address->street;
-        $order->pay_type = $request->param('pay_type');
+        $order->complete = 1;
 
-        /*if($coupon)
-            var_dump($coupon->id);
-        var_dump($coupon);
-        die;*/
 
         //事务提交订单
         Db::startTrans();
@@ -240,9 +285,7 @@ class Order extends IndexController
             //更新用户优惠券信息
             if($coupon)
                 CouponUser::where(['coupon_id'=>$coupon->id,'user_id'=>$this->user_info['id']])->update(['status'=>1]);
-                /*$coupon->couponUser()
-                    ->where('user_id',$this->user_info['id'])
-                    ->save(['status'=>1]);*/
+
             $order->save();
 
             // 提交事务
@@ -491,21 +534,6 @@ class Order extends IndexController
         return $this->successJson('下单成功','/balance/'.$order->id);
     }
 
-
-    /*public function replace(Request $request, $id)
-    {
-        $resource = OrderM::where('id',$id)
-            ->where('pay_status',1)
-            ->where('status',3)
-            ->where('user_id',$this->user_info['id'])
-            ->append(['goods_order'])
-            ->find();
-        if(!$resource)
-            return redirect($request->header('referer'));
-        $this->assign("Goods",$resource->goods_order);
-        $this->assign("orderId",$id);
-        return view();
-    }*/
 
 
 }
