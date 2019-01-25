@@ -63,33 +63,30 @@ class Order extends AdminController
             $map['o.phone'] = ['like','%'.trim($data['keyword']).'%'];      //收货人手机号码
         }
 
+        //构造子查询，查询产品名称
 
         $where = new Where();
         $where['o.complete'] =['=',1];
         $list = OrderM::alias($alias)
-        //$list = Db::table('order')->alias($alias)
             ->order('o.id desc')
             ->join($join)
             ->field($field)
-            ->whereOr(new Where($map))
-            /*->where(function($query) use($map){
-                $query->whereOr(new Where($map));
-            })*/
             ->where($where->enclose())
+            ->where(function($query) use($map){
+                $query->whereOr(new Where($map));
+            })
             ->limit(($data['page']-1)*$data['limit'],$data['limit'])
             ->append($append)
-            //->fetchSql(true)
             ->select();
 
-        //var_dump($list);die;
+
 
         $count = OrderM::alias($alias)
             ->join($join)
-            /*->where(function($query) use($map){
-                $query->where(new Where($map));
-            })*/
-            //->where(new Where($map))
             ->where($where->enclose())
+            ->where(function($query) use($map){
+                $query->whereOr(new Where($map));
+            })
             ->count('o.id');
 
         return $this->kitJson($list,$count);
