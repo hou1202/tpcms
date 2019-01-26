@@ -16,7 +16,9 @@ Route::pattern([
     'coupon_id'  => '\d+',
     'address_id'  => '\d+',
     'order_id'  => '\d+',
-
+    'type'  => '\d+',
+    'page'  => '\d+',
+    'limit'  => '\d+',
 ]);
 
 /*
@@ -29,13 +31,13 @@ Route::rule('/','index/index','get');
 Route::get('/','index/index/index');
 
 //登录Route
-Route::get('login','index/login/index');
-Route::post('login','index/login/login');
-Route::get('logout','index/login/logout');
-Route::get('register','index/register/index');
-Route::post('register','index/register/register');
-Route::get('forget','index/forget/index');
-Route::post('forget','index/forget/forget');
+    Route::get('login','index/login/index');
+    Route::post('login','index/login/login');
+    Route::get('logout','index/login/logout');
+    Route::get('register','index/register/index');
+    Route::post('register','index/register/register');
+    Route::get('forget','index/forget/index');
+    Route::post('forget','index/forget/forget');
 
 /*产品路由*/
     Route::get('goods/index/:id','index/goods/index');               //产品列表
@@ -79,13 +81,15 @@ Route::post('forget','index/forget/forget');
     Route::get('integral','index/personal/integral');        //我的积分
     Route::post('integral/data/:page/:limit','index/personal/integralData');           //我的积分数据
     Route::get('wallet','index/personal/wallet');        //我的积分
-    Route::post('wallet/data/:page/:limit','index/personal/walletData');           //我的积分数据
+    Route::post('wallet/data/:page/:limit','index/personal/walletData');           //我的余额数据
+    Route::get('data','index/personal/data');        //我的积分
+
 
     //优惠券
     Route::get('receives','index/coupon/receives');     //领取优惠券列表
     Route::post('receives/:id','index/coupon/collar');     //领取优惠券
     Route::get('coupon','index/coupon/index');     //我的优惠券列表
-    Route::post('coupon/:type','index/coupon/getData')->pattern(['type'=> '\d+',]);     //我的优惠券列表数据
+    Route::post('coupon/:type','index/coupon/getData');     //我的优惠券列表数据
 
     //订单列表
 
@@ -93,7 +97,7 @@ Route::post('forget','index/forget/forget');
     Route::get('order/read/:id','index/order/read');         //订单详情
     Route::delete('order/:id','index/order/delete');     //取消订单
     Route::put('order/:id','index/order/receipt');       //确认订单
-    Route::get('order/[:type]','index/order/index')->pattern(['type'=> '\d+',]);     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
+    Route::get('order/[:type]','index/order/index');     //订单列表,备注：路由中有可选参数，此条路由应该放在ORDER类路由中最后面
     Route::get('comments/:id','index/Comments/index');      //写评论
     Route::post('comments/:id','index/Comments/save');    //提交评论
     Route::get('replace/:order_id','index/replace/index');      //售后申请
@@ -118,7 +122,7 @@ Route::get('uploader','admin/Uploader/uploader');
 
 
 
-Route::get('/data','index/index/personalData');
+
 
 
 

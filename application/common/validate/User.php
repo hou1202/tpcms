@@ -46,6 +46,7 @@ class User extends CommonValidate
     protected $scene = [
         'status' =>['id','status'],
         'update' =>['id','name','password','portrait','balance','status','sex','birthday'],
+        'indexUpdate' =>['id','name','portrait','sex','birthday'],
 
     ];
 }

@@ -68,13 +68,16 @@
                 <div class="reason-form">
                     <form data-id="{$r.id}">
                         <input type="hidden" name="_method" value="PUT" />
-                        <select name="company" class="company">
-                            <option value="">选择快递公司</option>
-                            <option value="顺丰快递">顺丰快递</option>
-                            <option value="天天快递">天天快递</option>
-                            <option value="圆通快递">圆通快递</option>
-                            <option value="申通快递">申通快递</option>
-                        </select>
+                        {if $Logistics}
+                            <select name="company" class="company">
+                                <option value="">选择快递公司</option>
+                                {volist name="Logistics" id="l"}
+                                    <option value="{$l.title}">{$l.title}</option>
+                                {/volist}
+                            </select>
+                        {else /}
+                            <input type="text" name="company" class="waybill" placeholder="填写快递公司"/>
+                        {/if}
                         <input type="text" name="waybill" class="waybill" placeholder="填写运单号"/>
                         <button type="button" class="formSubmit">提 交 运 单</button>
                     </form>

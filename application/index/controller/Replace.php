@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\common\controller\IndexController;
 
+use app\common\model\Logistics;
 use app\common\model\Order;
 use app\common\model\Replace as ReplaceM;
 use app\common\validate\Replace as ReplaceV;
@@ -106,6 +107,10 @@ class Replace extends IndexController
 
         if(!$resource)
             return redirect($request->header('referer'));
+
+        $logistics = Logistics::all();
+
+        $this->assign('Logistics',$logistics);
         $this->assign('Replace',$resource);
         return view('order/replace-read');
     }

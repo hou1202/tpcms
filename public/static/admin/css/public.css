@@ -1,4 +1,10 @@
 /*定义input输入框长度*/
+.layui-input-sm .layui-input-inline{
+    width:30% !important;
+}
+.layui-input-sm .layui-input-block{
+    width:30% !important;
+}
 .layui-input-md .layui-input-inline{
     width:50%;
 }

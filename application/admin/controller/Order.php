@@ -34,18 +34,42 @@ class Order extends AdminController
      */
     public function index()
     {
+        $this->assign('Type',1);
         return  view();
     }
 
-    /*
+    /**
+     * 显示预生成订单资源列表
+     *
+     * @return \think\Response
+     */
+    public function reserve()
+    {
+        $this->assign('Type',2);
+        return view('order/index');
+    }
+
+    /**
+     * 显示申请售后订单资源列表
+     *
+     * @return \think\Response
+     */
+    public function replace()
+    {
+        $this->assign('Type',3);
+        return view('order/index');
+    }
+
+    /**
     * getData  获取资源信息
     *
+    * @param  int  $type
     * @return json
     * */
-    public function getData(Request $request)
+    public function getData(Request $request, $type=1)
     {
         $data = $request -> param();
-
+        //var_dump($data);die;
         //定义SQL变量
         $alias = ['order'=>'o','user'=>'u'];
         $join = [['user','o.user_id=u.id'],['order_goods']];
@@ -56,22 +80,65 @@ class Order extends AdminController
         //定义搜索条件
         $map = array();
         if(isset($data['keyword']) && !empty($data['keyword'])){
-            $map['u.name'] = ['like','%'.trim($data['keyword']).'%'];       //用户昵称
-            $map['u.phone'] = ['like','%'.trim($data['keyword']).'%'];      //用户手机号码
-            $map['o.serial'] = ['like','%'.trim($data['keyword']).'%'];     //平台交易流水号
-            $map['o.id'] = ['like','%'.trim($data['keyword']).'%'];         //订单ID
-            $map['o.phone'] = ['like','%'.trim($data['keyword']).'%'];      //收货人手机号码
+            $key = trim($data['keyword']);
+
+            $map['u.name'] = ['like','%'.$key.'%'];             //用户昵称
+            $map['u.phone'] = ['like','%'.$key.'%'];            //用户手机号码
+            $map['o.serial'] = ['like','%'.$key.'%'];           //平台交易流水号
+            $map['o.id'] = ['like','%'.$key.'%'];               //订单ID
+            $map['o.phone'] = ['like','%'.$key.'%'];            //收货人手机号码
+            $map['o.id'] =['in',function($query) use($key){     //构造子查询，查询产品名称
+                $query->table('order_goods')->whereLike('title','%'.$key.'%')->field('order_id');
+            }] ;
         }
 
-        //构造子查询，查询产品名称
+        //定义条件搜索
+        $mapType = array();
+        if(isset($data['oType']) && !empty($data['oType'])){
+            $oType = $data['oType'];
+            if(!empty($oType['status']) && is_numeric($oType['status'])){
+                $mapType['o.status'] = ['=',trim($oType['status'])];             //订单状态查询
+            }
+            if(!empty($oType['pay_type']) && is_numeric($oType['pay_type'])){
+                $mapType['o.pay_type'] = ['=',trim($oType['pay_type'])];             //订单支付方式查询
+            }
+            if(!empty($oType['date_start']) && empty($oType['date_end']) && $oType['date_start'] <= date('Y-m-d')){
+                $mapType['o.create_time'] = ['>',$oType['date_start']];             //订单创建开始时间
+            }elseif(!empty($oType['date_end']) && empty($oType['date_start']) && $oType['date_end'] <= date('Y-m-d')){
+                $mapType['o.create_time'] = ['>',$oType['date_end']];             //订单创建结束时间
+            }elseif(!empty($oType['date_end']) && !empty($oType['date_start']) && $oType['date_end'] > $oType['date_start'] && $oType['date_end'] <= date('Y-m-d')){
+                $mapType['o.create_time'] = ['between',[$oType['date_start'],$oType['date_end']]];             //订单创建时间
+            }
+        }
 
         $where = new Where();
-        $where['o.complete'] =['=',1];
+        //是否生成完整订单
+        //$where['o.complete'] = $type == 2 ? ['=',0] : ['=',1];
+        switch($type){
+            case 1 :
+                $where['o.complete'] = ['=',1];
+                break;
+            case 2 :
+                $where['o.complete'] = ['=',0];
+                break;
+            case 3 :
+                $where['o.complete'] = ['=',1];
+                $where['o.status'] = ['in','6,7'];
+                break;
+            default :
+                $where['o.complete'] = ['=',1];
+                break;
+
+        }
+
         $list = OrderM::alias($alias)
             ->order('o.id desc')
             ->join($join)
             ->field($field)
             ->where($where->enclose())
+            ->where(function($query) use($mapType){
+                $query->where(new Where($mapType));
+            })
             ->where(function($query) use($map){
                 $query->whereOr(new Where($map));
             })
@@ -79,11 +146,12 @@ class Order extends AdminController
             ->append($append)
             ->select();
 
-
-
         $count = OrderM::alias($alias)
             ->join($join)
             ->where($where->enclose())
+            ->where(function($query) use($mapType){
+                $query->where(new Where($mapType));
+            })
             ->where(function($query) use($map){
                 $query->whereOr(new Where($map));
             })
@@ -126,7 +194,7 @@ class Order extends AdminController
      */
     public function read($id)
     {
-        $resource = OrderM::where('id',$id)->append(['goods_order','user_name','coupon'])->find();
+        $resource = OrderM::where('id',$id)->append(['goods_order','user_name','coupon','replace'])->find();
         if(!$resource)
             return $this->failJson('非有效数据信息');
         $this->assign('Order',$resource);
@@ -230,7 +298,7 @@ class Order extends AdminController
      *
      * @return \think\Response
      */
-    public function replace(Request $request, $order_id)
+    public function replaceUpdate(Request $request, $order_id)
     {
         $order=OrderM::get($order_id);
         $data=$request->param('replace');

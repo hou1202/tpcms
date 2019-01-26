@@ -16,6 +16,43 @@
                                 </button>
                             </form>
                         </div>
+                        {if $Type == 1 }
+                        <div class="self-card-header">
+                            <form class="layui-form" lay-filter="typeForm">
+                                <input type="hidden" name="oType" value="oType" />
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input type="text" name="date_start" id="dateStart" placeholder="起始日期" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input type="text" name="date_end" id="dateEnd" placeholder="结束日期" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline layui-input-sm" style="width:130px;">
+                                    <select name="pay_type" lay-verify="">
+                                        <option value="">订单支付方式</option>
+                                        <option value="1">支付宝支付</option>
+                                        <option value="2">微信支付</option>
+                                        <option value="3">余额支付</option>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline layui-input-sm" style="width:150px;">
+                                    <select name="status" lay-verify="">
+                                        <option value="">查看订单类型</option>
+                                        <option value="1">待支付订单</option>
+                                        <option value="2">待发货订单</option>
+                                        <option value="3">待收货订单</option>
+                                        <option value="4">待评价订单</option>
+                                        <option value="5">已完成订单</option>
+                                        <option value="6">售后申请订单</option>
+                                        <option value="7">售后完成订单</option>
+                                    </select>
+                                </div>
+                                <button class="layui-btn layui-btn-sm" lay-submit lay-filter="submitType">
+                                    <i class="layui-icon">&#xe615;</i>
+                                    查 看
+                                    </button>
+                            </form>
+                        </div>
+                        {/if}
                     </div>
 
                     <div class="layui-card-body">
@@ -79,15 +116,26 @@
 <script>
     layui.config({
         base: '/static/admin/js/'
-    }).use(['jquery', 'table', 'form', 'route'], function () {
+    }).use(['jquery', 'table', 'form', 'route', 'laydate'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             table = layui.table,
             route = layui.route,
-            form = layui.form;
+            form = layui.form,
+            laydate = layui.laydate;
 
         //设置nav标题
         $("#navTitle").text(route.getRoute().name);
+
+        //表单渲染
+        form.render();
+
+        laydate.render({
+            elem: '#dateStart'
+        });
+        laydate.render({
+            elem: '#dateEnd'
+        });
 
         //表格数据获取及定义
         var tableLoad = table.render({
@@ -96,7 +144,7 @@
             limits:[10,20],
             elem: '#tableHash',
             height: 'full-235',
-            url: '/aoogi/order/data', //数据接口
+            url: '/aoogi/order/data/'+"{$Type|default=1}", //数据接口
             page: true, //开启分页
             cols: [
                 [ //表头
@@ -117,25 +165,15 @@
                     },{
                         field: 'status_admin_text', title: '订单状态',align: 'center', templet:'#setStatus'
                     },{
-                        field: 'pay_type_text', title: '支付方式', align: 'center',minWidth: 100
+                        field: 'pay_type_text', title: '支付方式', align: 'center',width: 80
                     },{
                         field: 'create_time', title: '创建时间',align: 'center', minWidth: 120
                     },{
-                        fixed: 'right', title:'操作', align: 'center', minWidth: 200, toolbar: '#barHash'
+                        fixed: 'right', title:'操作', align: 'center', width: 150, toolbar: '#barHash'
                     }
                 ]
             ]
         });
-
-        //监听状态开关
-        form.on('switch(switchStatus)', function(data) {
-            var status = this.checked ? 1 : 0 ;
-            $.post("/aoogi/order/status",{"id":data.value,"status":status},function(res){
-                layer.msg(res.msg);
-                tableLoad.reload();
-            });
-        });
-
 
 
         //操作栏监听
@@ -145,7 +183,7 @@
             }else if(obj.event === 'edit'){
                 window.location.href ='#/aoogi/order/edit/'+obj.data.id;
             }else if(obj.event === 'del'){
-                layer.confirm('确定删除该产品?', {icon: 3, title:'提示'}, function(index){
+                layer.confirm('请认真核对相关订单信息，确认无误删除?', {icon: 3, title:'提示'}, function(index){
                     $.post('/aoogi/order/'+obj.data.id,{'_method':'DELETE'},function(res){
                         layer.msg(res.msg);
                         table.reload('tableHash');
@@ -164,6 +202,49 @@
             }
             tableLoad.reload({
                 where:{keyword:data.field.keyword}
+            });
+            return false;
+        });
+
+        //监听类型提交
+        form.on('submit(submitType)', function(data) {
+            if(data.field.oType === '' || data.field.oType != 'oType'){
+                layer.msg('查看信息有误');
+                return false;
+            }
+
+            if(isNaN(data.field.pay_type)){
+                layer.msg('请选择有效订单支付方式');
+                return false;
+            }
+
+            if(isNaN(data.field.status)){
+                layer.msg('请选择有效订单类型');
+                return false;
+            }
+
+            var nowDate =new Date;
+            if(data.field.date_start != ''){
+                if(new Date(data.field.date_start) > nowDate){
+                    layer.msg('所选开始日期不可大于当前日期');
+                    return false;
+                }
+            }
+            if(data.field.date_end != ''){
+                if(new Date(data.field.date_end) > nowDate){
+                    layer.msg('所选结束日期不可大于当前日期');
+                    return false;
+                }
+            }
+            if(data.field.date_start != '' && data.field.date_end != ''){
+                if(new Date(data.field.date_start) > new Date(data.field.date_end)){
+                    layer.msg('所选开始结束日期不可大于结束日期');
+                    return false;
+                }
+            }
+
+            tableLoad.reload({
+                where:{oType:data.field}
             });
             return false;
         });

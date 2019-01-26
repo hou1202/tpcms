@@ -93,7 +93,7 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">优惠金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="discount_price" readonly autocomplete="off"  class="layui-input">
                                             </div>
 
                                         </div>
@@ -101,7 +101,7 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">运费金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="franking_price" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -214,11 +214,10 @@
                                         <tr>
                                             <th lay-data="{field:'id', width:100}">产品ID</th>
                                             <th lay-data="{field:'title'}">产品名称</th>
-                                            <th lay-data="{field:'name'}">产品规格</th>
-                                            <th lay-data="{field:'classify_ud'}">产品分类</th>
-                                            <th lay-data="{field:'thumbnail'}">缩略图</th>
-                                            <th lay-data="{field:'price'}">产品价格</th>
-                                            <th lay-data="{field:'num'}">购买数量</th>
+                                            <th lay-data="{field:'name',width:200}">产品规格</th>
+                                            <th lay-data="{field:'thumbnail',width:150}">缩略图</th>
+                                            <th lay-data="{field:'price',width:150}">产品价格</th>
+                                            <th lay-data="{field:'num',width:150}">购买数量</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -227,7 +226,6 @@
                                             <td>{$g.id}</td>
                                             <td>{$g.title}</td>
                                             <td>{$g.name}</td>
-                                            <td>{$g.classify_id}</td>
                                             <td><img src="{$g.thumbnail}" /></td>
                                             <td>￥{$g.price|float}</td>
                                             <td>{$g.num}</td>

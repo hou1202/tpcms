@@ -12,6 +12,10 @@
     .layui-form-label{
         width:90px!important;
     }
+    .replace-img{
+        width:110px;
+        margin-right:10px;
+    }
 
 </style>
 <div class="layui-fluid">
@@ -29,23 +33,25 @@
                     </div>
 
                     <div class="layui-card-body">
-                        <form class="layui-form" lay-filter="formVal">
 
-                            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
-                                <ul class="layui-tab-title">
-                                    <li class="layui-this">订单基本信息</li>
-                                    <li>订单产品信息</li>
-                                    <!--<li>参数设置</li>-->
-                                </ul>
+                        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 
-                                <div class="layui-tab-content">
-                                    <!--产品基本信息-->
-                                    <div class="layui-tab-item layui-show">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">订单基本信息</li>
+                                <li>订单产品信息</li>
+                                {if ($Order.status == '6') || ($Order.status == '7')}<li>售后申请信息</li>{/if}
+                            </ul>
+
+                            <div class="layui-tab-content">
+                                <!--订单基本信息-->
+                                <div class="layui-tab-item layui-show">
+                                    <form class="layui-form" lay-filter="formVal">
+
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">订单用户</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="user" readonly autocomplete="off"  class="layui-input">
+                                                <input type="text" name="serial" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -78,13 +84,6 @@
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
-                                            <label class="layui-form-label">优惠金额</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" name="discount_price" readonly autocomplete="off"  class="layui-input">
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">优惠券</label>
                                             <div class="layui-input-inline">
                                                 <input type="text" name="coupon" readonly autocomplete="off"  class="layui-input">
@@ -92,23 +91,31 @@
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">优惠金额</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="discount_price" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">运费金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="franking_price" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="franking_price" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">支付金额</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="pay_price" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="pay_price" readonly  autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">订单积分</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="integral" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="integral" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -122,7 +129,14 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">收货人电话</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="phone" readonly autocomplete="off"  class="layui-input">
+                                                <input type="number" name="phone" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">收货城市</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="city" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -136,14 +150,14 @@
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">客户留言</label>
                                             <div class="layui-input-inline">
-                                                <textarea placeholder="无" name="comment"  readonly class="layui-textarea"></textarea>
+                                                <textarea name="comment" readonly class="layui-textarea"></textarea>
                                             </div>
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">支付方式</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="pay_type" readonly autocomplete="off"  class="layui-input">
+                                                <input type="text" name="pay_type_text" readonly autocomplete="off"  class="layui-input">
                                             </div>
                                         </div>
 
@@ -151,15 +165,15 @@
                                             <label class="layui-form-label">支付状态</label>
                                             <div class="layui-input-inline">
                                                 <input type="checkbox" {$Order.pay_status ?= "checked" } disabled  lay-skin="switch" lay-text=" 已支付 | 未支付 ">
-
                                             </div>
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
                                             <label class="layui-form-label">订单状态</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="status" readonly autocomplete="off"  class="layui-input">
+                                                <input type="text" name="status_text" readonly autocomplete="off"  class="layui-input">
                                             </div>
+
                                         </div>
 
                                         <div class="layui-form-item layui-input-md">
@@ -176,45 +190,128 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">订单发货</label>
+                                            <div class="layui-input-inline orderShip">
+                                                <input type="checkbox" {$Order.shipment ?= "checked" } disabled  id="ship_status" lay-skin="switch" lay-text=" 已发货 | 未发货 ">
 
-                                    <!--产品规格信息-->
-                                    <div class="layui-tab-item">
-                                        <table lay-filter="orderGoods">
-                                            <thead>
-                                            <tr>
-                                                <th lay-data="{field:'id', width:100}">产品ID</th>
-                                                <th lay-data="{field:'title'}">产品名称</th>
-                                                <th lay-data="{field:'name'}">产品规格</th>
-                                                <th lay-data="{field:'classify_ud'}">产品分类</th>
-                                                <th lay-data="{field:'thumbnail'}">缩略图</th>
-                                                <th lay-data="{field:'price'}">产品价格</th>
-                                                <th lay-data="{field:'num'}">购买数量</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {volist name="$Order.goods_order" id="g" key="k"}
-                                                <tr>
-                                                    <td>{$g.id}</td>
-                                                    <td>{$g.title}</td>
-                                                    <td>{$g.name}</td>
-                                                    <td>{$g.classify_id}</td>
-                                                    <td><img src="{$g.thumbnail}" /></td>
-                                                    <td>{$g.price}</td>
-                                                    <td>{$g.num}</td>
-                                                </tr>
-                                            {/volist}
-                                            </tbody>
-                                        </table>
+                                            </div>
+                                        </div>
 
-                                    </div>
+                                    </form>
+                                </div>
 
-                                    <!--产品参数信息-->
+                                <!--订单产品信息-->
+                                <div class="layui-tab-item">
+                                    <table lay-filter="orderGoods">
+                                        <thead>
+                                        <tr>
+                                            <th lay-data="{field:'id', width:100}">产品ID</th>
+                                            <th lay-data="{field:'title'}">产品名称</th>
+                                            <th lay-data="{field:'name',width:200}">产品规格</th>
+                                            <th lay-data="{field:'thumbnail',width:150}">缩略图</th>
+                                            <th lay-data="{field:'price',width:150}">产品价格</th>
+                                            <th lay-data="{field:'num',width:150}">购买数量</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {volist name="$Order.goods_order" id="g" key="k"}
+                                        <tr>
+                                            <td>{$g.id}</td>
+                                            <td>{$g.title}</td>
+                                            <td>{$g.name}</td>
+                                            <td><img src="{$g.thumbnail}" /></td>
+                                            <td>￥{$g.price|float}</td>
+                                            <td>{$g.num}</td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
 
                                 </div>
-                            </div>
 
-                        </form>
+                                {if ($Order.status == '6') || ($Order.status == '7')}
+                                <!--售后申请信息-->
+                                <div class="layui-tab-item">
+                                    <form class="layui-form" >
+                                        {volist name='$Order.replace' id='r'}
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">售后产品</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" value="{$r.replace_goods.title}" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">售后类型</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" value="{$r.type_text}" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">售后原因</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" value="{$r.reason}" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">产品问题图</label>
+                                            <div class="layui-input-inline">
+                                                {volist name='$r.img_arr' id='m'}
+                                                <a href="{$m}" target="_blank">
+                                                    <img src="{$m}" class="replace-img" />
+                                                </a>
+                                                {/volist}
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">备注说明</label>
+                                            <div class="layui-input-inline">
+                                                <textarea readonly class="layui-textarea">{$r.info|default='无'}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">申请状态</label>
+                                            <div class="layui-input-inline">
+                                                <button type="button" class="layui-btn layui-btn-radius layui-btn-xs  layui-btn-primary" style="margin-left:10px;width:90px;height:30px;"> {$r.status_text} </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">回寄快递</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" value="{$r.company|default='无'}" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">回寄单号</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" value="{$r.waybill|default='无'}" readonly autocomplete="off"  class="layui-input">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="layui-form-item layui-input-md">
+                                            <label class="layui-form-label">反馈信息</label>
+                                            <div class="layui-input-inline">
+                                                <textarea name="replace[{$r.id}][tickling]" readonly class="layui-textarea">{$r.tickling}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <hr class="layui-bg-red">
+                                        {/volist}
+
+                                    </form>
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -227,49 +324,51 @@
 
 
 <script>
-  layui.use(['element','form', 'route', 'table'], function() {
-    var $ = layui.jquery,
-        element = layui.element,
-        form = layui.form,
-        route = layui.route,
-        table = layui.table,
-        layer = layui.layer;
+    layui.use(['form', 'route', 'table'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            route = layui.route,
+            table = layui.table,
+            layer = layui.layer;
 
 
-    //设置nav标题
-    $("#navTitle").text(route.getRoute().name);
+        //设置nav标题
+        $("#navTitle").text(route.getRoute().name);
 
-    //转换静态表格
-    table.init('orderGoods', {
-      height: 315 //设置高度
+        //转换静态表格
+        table.init('orderGoods', {
+            height: 315 //设置高度
+
+        });
+
+        //表单渲染
+        form.render();
+
+        //表单默认值
+        form.val("formVal", {
+            "user_name" : "{$Order.user_name}",
+            "serial" : "{$Order.serial}",
+            "trade_no" : "{$Order.trade_no|default='无'}",
+            "total_price": "{$Order.total_price|float}",
+            "goods_price": "{$Order.goods_price|float}",
+            "coupon": "{$Order.coupon}",
+            "discount_price": "{$Order.discount_price|float}",
+            "franking_price": "{$Order.franking_price|float}",
+            "pay_price": "{$Order.pay_price|float}",
+            "integral": "{$Order.integral}",
+            "name": "{$Order.name}",
+            "phone": "{$Order.phone}",
+            "city": "{$Order.city}",
+            "street": "{$Order.street}",
+            "comment": "{$Order.comment|default='无'}",
+            "pay_type_text": "{$Order.pay_type_text}",
+            "status_text": "{$Order.status_text}",
+            "pay_time": "{$Order.pay_time|date='Y-m-d H:i:s'}",
+            "create_time": "{$Order.create_time}",
+        });
+
 
     });
-
-      //表单渲染
-    form.render();
-
-    //表单默认值
-    form.val("formVal", {
-        "user": "{$Order.user_name}",
-        "serial": "{$Order.serial}",
-        "trade_no": "{$Order.trade_no|default='无'}",
-        "total_price": "￥{$Order.total_price|float}",
-        "goods_price": "￥{$Order.goods_price|float}",
-        "discount_price": "￥{$Order.discount_price|float}",
-        "franking_price": "￥{$Order.franking_price|float}",
-        "pay_price": "￥{$Order.pay_price|float}",
-        "coupon": "{$Order.coupon}",
-        "integral": "{$Order.integral}",
-        "comment": "{$Order.comment}",
-        "name": "{$Order.name}",
-        "phone": "{$Order.phone}",
-        "street": "{$Order.city}{$Order.street}",
-        "pay_type": "{$Order.pay_type_text}",
-        "status": "{$Order.status_text}",
-        "pay_time": "{$Order.pay_time|date='Y-m-d H:i:s'}",
-        "create_time": "{$Order.create_time}"
-    });
-  });
 </script>
 
 

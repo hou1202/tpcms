@@ -92,59 +92,16 @@ class Personal extends IndexController
         return $resource ? $this->successJson('获取数据成功','',$resource) : $this->failJson('获取失败');
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
 
     /**
-     * 显示指定的资源
+     * 显示资金资源页面.
      *
-     * @param  int  $id
      * @return \think\Response
      */
-    public function read($id)
+    public function data()
     {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
+        $resource = User::get($this->user_info['id']);
+        $this->assign('Data',$resource);
+        return view();
     }
 }
