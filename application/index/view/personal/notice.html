@@ -1,0 +1,83 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="消息通知" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/notice.css" /}
+
+{load href="/static/index/lib/swiper-4.3.3.min.css" /}
+{load href="/static/index/lib/swiper-4.3.3.min.js" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>消息通知</h2>
+</header>
+
+<!--列表模块-->
+<div class="notice">
+
+    {volist name="Notice" id="n"}
+    <div class="swiper-container noticeList">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="notice-list">
+                    <div class="list-left">
+                        <img src="/static/index/images/message.png">
+                    </div>
+                    <div class="list-right">
+                        <h2>{$n.title}</h2>
+                        <h3>{$n.create_time}</h3>
+                        <p>{$n.content}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide del-slide">
+                <div class="notice-del">
+                    <p data-id="{$n.id}" class="delNotice">删除</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/volist}
+
+
+
+
+</div>
+
+<!--引入加载footer文件-->
+{include file="default/footer" /}
+
+
+
+<script>
+    var noticeListSwiper = new Swiper('.noticeList', {
+        slidesPerView: "auto",
+        freeMode:true,
+        freeModeMomentum:false
+    });
+
+    $(".delNotice").on('click',function(){
+        var id = $(this).attr('data-id');
+        var _that = $(this);
+        $.post('/notice/del/'+id,{'_method':'DELETE'},function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                _that.parents(".noticeList").remove();
+        });
+    })
+
+
+
+</script>
+
+
+
+
+
+
+
+</html>

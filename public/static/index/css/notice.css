@@ -1,0 +1,77 @@
+
+
+.notice{
+  padding:0.4rem 0.2rem;
+}
+.notice .notice-list{
+  display:flex;
+  padding:0.2rem 0.6rem;
+  border:1px solid #e5e5e5;
+  border-radius:0.4rem;
+  margin-top:0.2rem;
+
+ }
+.notice .notice-list .list-left{
+  width:1.2rem;
+  display:flex;
+  align-items: center;
+}
+.notice .notice-list .list-left img{
+  width:1rem;
+  padding-top:0.12rem;
+
+}
+.notice .notice-list .list-right{
+
+  padding-left:0.4rem;
+}
+.notice .notice-list .list-right h2{
+  font-size:0.36rem;
+  color: #3f3f3f;
+  height:0.6rem;
+  line-height:0.6rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.notice .notice-list .list-right h3{
+  font-size:0.28rem;
+  color: #7a7a7a;
+  height:0.48rem;
+  line-height:0.48rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+.notice .notice-list .list-right p{
+  font-size:0.22rem;
+  color: #656565;
+  line-height:0.48rem;
+
+}
+.notice .del-slide{
+  width:2.6rem;
+}
+.notice .notice-del{
+  margin-top:0.2rem;
+  display:flex;
+  align-items: center;
+}
+.notice .notice-del p{
+  width:1.2rem;
+  height:2rem;
+  line-height:2rem;
+
+  background:#cc7f15;
+  border-radius:0.12rem;
+  color:#fff;
+  text-align:center;
+
+  margin-left:1rem;
+}

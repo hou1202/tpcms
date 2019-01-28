@@ -23,6 +23,8 @@
 <!--列表模块-->
 <div class="data">
     <form id="dataForm">
+        <input  type="hidden" name="_method" value="PUT">
+
         <div class="data-header">
             <ul class="upload-ul clearfix">
                 <li id="fileBox_WU_FILE" class="uploadList">
@@ -126,7 +128,11 @@
 
     //数据提交
     $("#dataSubmit").click(function(){
-        console.log($("#dataForm").serializeArray()); //这里可以得到后台返回的数据
+        $.post('/data/'+"{$Data.id}",$("#dataForm").serializeArray(),function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                timeOutUrl(res.url);
+        });
     });
 
 </script>

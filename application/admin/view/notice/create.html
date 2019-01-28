@@ -1,0 +1,220 @@
+
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form" id="goodsForm" lay-filter="formVal">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">消息标题</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="title" lay-verify="required|title" autocomplete="off" placeholder="消息标题" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">消息内容</label>
+                                <div class="layui-input-inline">
+                                    <textarea name="content" lay-verify="required|info" placeholder="推送用户消息内容" autocomplete="off" class="layui-textarea"></textarea>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" lay-filter="typeSelect">
+                                <label class="layui-form-label">推送用户</label>
+                                <div class="layui-input-inline">
+                                    <input type="radio"  name="chose" value="0" title="所有用户" lay-filter="selectAll" checked>
+                                    <input type="radio"  name="chose" title="指定用户" lay-filter="selectAppoint">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md" id="selectUser" style="display:none">
+                                <label class="layui-form-label">选择用户</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  placeholder="推送指定用户" readonly id="userName" class="layui-input">
+                                    <input type="hidden" name="user_id" lay-verify="required|number" id="userId" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux" style="padding:4px 0!important;">
+                                    <button type="button" id="selectGoods" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i>选择商品</button>
+                                </div>
+                            </div>
+
+
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="form_submit">立即提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-card" id="userTips" style="display:none">
+    <div class="layui-card-header">
+        <div class="self-search">
+            <form class="layui-form">
+                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索用户..." />
+                <button class="self-search-btn" lay-submit lay-filter="searchSubmit">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card-body">
+        <!--表格主体-->
+        <table id="tableHash" lay-filter="tIndex"></table>
+
+        <!--状态显示控制-->
+        <script type="text/html" id="showStatus">
+            <input type="checkbox"  disabled lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="正常|禁用" >
+        </script>
+
+    </div>
+</div>
+
+<script>
+  layui.use(['form', 'route', 'jquery', 'table'], function() {
+    var $ = layui.jquery,
+        form = layui.form,
+        route = layui.route,
+        table = layui.table,
+        layer = layui.layer;
+
+    //设置nav标题
+    $("#navTitle").text(route.getRoute().name);
+
+    //表单渲染
+    form.render();
+
+    //推送所有用户
+    form.on('radio(selectAll)', function(data){
+      $("#selectUser").hide().find('#userId').val(0);
+    });
+
+    //推送指定用户
+    form.on('radio(selectAppoint)', function(data){
+      $("#selectUser").show();
+    });
+
+      //表格数据获取及定义
+    var tableLoad = table.render({
+      method: 'post',
+      limit: 10,
+      limits:[10,20],
+      elem: '#tableHash',
+      id: 'tableHash',
+      height: 'full-235',
+      url: '/aoogi/user/data', //数据接口
+      text:'我们很努力，但是没有数据哦 ^_^',
+      page: true, //开启分页
+      cols: [   //表头
+          [
+          {field: 'id', title: 'ID', align: 'center', width:100},
+          {field: 'name', title: '用户昵称', align: 'center', width:229 },
+          {field: 'phone', title: '用户手机号', align: 'center', width:230},
+          {field: 'status', title: '帐户状态', width:100, align: 'center', templet:'#showStatus'},
+          {fixed: 'right', field:'id' ,title:'选择', align: 'center', width: 100, type: 'radio'}
+           ]
+      ]
+    });
+
+    /*
+    * 监听Radio链接产品选择
+    * @ checkUser  array   定义选择产品接收变量
+    * */
+    var checkUser = '';
+    table.on('radio(tIndex)', function(obj){
+      checkUser=obj.data;
+    });
+
+    //监听搜索提交
+    form.on('submit(searchSubmit)', function(data) {
+      if(data.field.keyword === ''){
+          layer.msg('请输入搜索关键词');
+          tableLoad.reload();
+          return false;
+      }
+      tableLoad.reload({
+          where:{keyword:data.field.keyword}
+      });
+      return false;
+    });
+
+    //监听弹层产品选择
+    $("#selectGoods").on("click",function(){
+        layer.open({
+            type: 1,
+            title: '选择推送用户', //不显示标题栏
+            closeBtn: false,
+            area: ['800px', '500px'],
+            shade: 0,
+            shadeClose: true,
+            id: 'LAY_layuipro_hash', //设定一个id，防止重复弹出
+            btn: ['确定', '关闭'],
+            btnAlign: 'c',
+            moveType: 1 ,//拖拽模式，0或者1
+            content: $("#userTips"),
+            end: function(){    //层销毁后触发的回调
+                //隐藏弹层
+                $("#userTips").hide();
+            },
+            yes: function(index, layero){   //确定按钮回调方法
+                $("#userName").val(checkUser.name);
+                $("#userId").val(checkUser.id);
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
+    });
+
+    //自定义验证规则
+    form.verify({
+        title: function(value) {
+            if (value.length < 2 || value.length > 50) {
+                return '标题长度应在2-50个字符之间';
+            }
+        },
+        info: function(value) {
+            if (value.length < 1 || value.length > 254) {
+                return "推荐信息内容长度应在1-254个字符之间";
+            }
+        }
+    });
+
+    //监听Notice提交
+    form.on('submit(form_submit)', function(data) {
+
+       /* $.post("/aoogi/recom",data.field,function(res){
+            layer.msg(res.msg);
+            if(res.url)
+                window.location.href = "#" + res.url;
+            return false;
+        });*/
+        return false;
+    });
+
+  });
+</script>
+
+
+
+
+<style scoped>
+
+</style>

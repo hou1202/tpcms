@@ -82,7 +82,10 @@ Route::get('/','index/index/index');
     Route::post('integral/data/:page/:limit','index/personal/integralData');           //我的积分数据
     Route::get('wallet','index/personal/wallet');        //我的积分
     Route::post('wallet/data/:page/:limit','index/personal/walletData');           //我的余额数据
-    Route::get('data','index/personal/data');        //我的积分
+    Route::get('data','index/personal/data');        //个人资料
+    Route::put('data/:id','index/personal/update');        //个人资料
+    Route::get('notice','index/personal/notice');        //消息通知
+    Route::delete('notice/del/:id','index/personal/noticeDel');        //删除消息通知
 
 
     //优惠券

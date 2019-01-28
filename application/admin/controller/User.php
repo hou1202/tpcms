@@ -28,7 +28,7 @@ class User extends AdminController
     public function getData(Request $request)
     {
         $data = $request -> param();
-        $map[] = ['id','>',0];
+        $map = array();
         if(isset($data['keyword']) && !empty($data['keyword'])){
             $map[] = ['id|name|phone','like','%'.trim($data['keyword']).'%'];
         }

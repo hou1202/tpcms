@@ -3,9 +3,11 @@
 namespace app\index\controller;
 
 use app\common\controller\IndexController;
+use app\common\model\Notice;
 use app\common\model\User;
 use think\Db;
 use think\Request;
+use app\common\validate\User as UserV;
 
 
 class Personal extends IndexController
@@ -94,7 +96,7 @@ class Personal extends IndexController
 
 
     /**
-     * 显示资金资源页面.
+     * 显示个人资料资源页面.
      *
      * @return \think\Response
      */
@@ -103,5 +105,51 @@ class Personal extends IndexController
         $resource = User::get($this->user_info['id']);
         $this->assign('Data',$resource);
         return view();
+    }
+
+    /**
+     * 更新个人资料
+     *
+     * @param  int  $id
+     * @param  \think\Request  $request
+     *
+     * @return \think\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->param();
+        if($id != $this->user_info['id'] )
+            return $this->failJson('非有效修改数据');
+        $validate = new UserV();
+        if(!$validate->scene('indexUpdate')->check($data))
+            return $this->failJson($validate->getError());
+        $user = User::get($id);
+        return $user->save($data) ? $this->successJson('资料更新成功','/personal') : $this->failJson('资料更新失败');
+    }
+
+    /**
+     * 显示消息通知页面
+     *
+     * @return \think\Response
+     */
+    public function notice()
+    {
+        $resource = Notice::where('user_id',0)->whereOr('user_id',$this->user_info['id'])->select();
+        $this->assign('Notice',$resource);
+        return view();
+    }
+
+    /**
+     * 删除消息通知
+     *
+     * @param  int  $id
+     *
+     * @return \think\Response
+     */
+    public function noticeDel($id)
+    {
+        if(!$notice = Notice::get($id))
+            return $this->failJson('非有效通知信息');
+        return $notice->delete() ? $this->successJson('删除成功') : $this->failJson('删除失败');
     }
 }
