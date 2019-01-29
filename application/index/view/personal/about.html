@@ -1,0 +1,47 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="关于我们" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/about.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>关于我们</h2>
+</header>
+
+<!--列表模块-->
+<div class="about">
+    {volist name="Message" id="m"}
+    <div class="about-list">
+        <a href="/message/{$m.id}">
+            <i class="heard"></i>
+            <p>{$m.title}</p>
+            <i class="open"></i>
+        </a>
+    </div>
+    {/volist}
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+</script>
+
+
+
+
+
+
+
+</html>

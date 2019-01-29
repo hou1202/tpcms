@@ -8,6 +8,7 @@ use app\common\model\User;
 use think\Db;
 use think\Request;
 use app\common\validate\User as UserV;
+use app\common\model\Message;
 
 
 class Personal extends IndexController
@@ -134,7 +135,7 @@ class Personal extends IndexController
      */
     public function notice()
     {
-        $resource = Notice::where('user_id',0)->whereOr('user_id',$this->user_info['id'])->select();
+        $resource = Notice::where('user_id',0)->whereOr('user_id',$this->user_info['id'])->order('id desc')->select();
         $this->assign('Notice',$resource);
         return view();
     }
@@ -151,5 +152,33 @@ class Personal extends IndexController
         if(!$notice = Notice::get($id))
             return $this->failJson('非有效通知信息');
         return $notice->delete() ? $this->successJson('删除成功') : $this->failJson('删除失败');
+    }
+
+    /**
+     * 关于我们列表页面
+     *
+     * @return \think\Response
+     */
+    public function about()
+    {
+        $resource = Message::field('id,title')->order('sort desc')->select();
+        $this->assign('Message',$resource);
+        return view();
+    }
+
+    /**
+     * 信息详情页面
+     *
+     * @param  int  $id
+     * @param  \think\Request  $request
+     *
+     * @return \think\Response
+     */
+    public function message(Request $request, $id)
+    {
+        if(!$resource = Message::get($id))
+            return redirect($request->header('referer'));
+        $this->assign('Message',$resource);
+        return view();
     }
 }

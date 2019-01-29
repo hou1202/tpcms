@@ -15,7 +15,7 @@
 
                     <div class="layui-card-body">
 
-                        <form class="layui-form" id="goodsForm" lay-filter="formVal">
+                        <form class="layui-form" lay-filter="formVal">
 
                             <div class="layui-form-item layui-input-md">
                                 <label class="layui-form-label">消息标题</label>
@@ -45,10 +45,10 @@
                                 <label class="layui-form-label">选择用户</label>
                                 <div class="layui-input-inline">
                                     <input type="text"  placeholder="推送指定用户" readonly id="userName" class="layui-input">
-                                    <input type="hidden" name="user_id" lay-verify="required|number" id="userId" class="layui-input">
+                                    <input type="hidden" name="user_id" lay-verify="required|number" value="0" id="userId" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux" style="padding:4px 0!important;">
-                                    <button type="button" id="selectGoods" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i>选择商品</button>
+                                    <button type="button" id="selectGoods" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe608;</i>选择用户</button>
                                 </div>
                             </div>
 
@@ -110,7 +110,7 @@
 
     //推送指定用户
     form.on('radio(selectAppoint)', function(data){
-      $("#selectUser").show();
+      $("#selectUser").show().find('input').val('');
     });
 
       //表格数据获取及定义
@@ -200,12 +200,12 @@
     //监听Notice提交
     form.on('submit(form_submit)', function(data) {
 
-       /* $.post("/aoogi/recom",data.field,function(res){
+        $.post("/aoogi/notice",data.field,function(res){
             layer.msg(res.msg);
             if(res.url)
                 window.location.href = "#" + res.url;
             return false;
-        });*/
+        });
         return false;
     });
 

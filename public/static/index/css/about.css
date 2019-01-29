@@ -1,0 +1,85 @@
+
+
+.about {
+  padding:0.6rem;
+}
+.about .about-list{
+  height:1rem;
+  line-height:1rem;
+  width:8.6rem;
+  font-size:0.32rem;
+  border-bottom: 1px solid #e5e5e5;
+  margin:0 auto;
+  margin-top:0.2rem;
+}
+.about .about-list a{
+  color:#525252;
+}
+.about .about-list i{
+  display:block;
+  width:1rem;
+  height:1rem;
+
+}
+.about .about-list p{
+  float:left;
+  color:#525252;
+  width:6.6rem;
+  height:1rem;
+  line-height:1rem;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+  -webkit-box-orient: vertical;
+}
+i.heard{
+  background:url(/static/index/images/mes_icon.png) no-repeat center center;
+  background-size:0.6rem;
+  float:left;
+}
+i.open{
+  background:url(/static/index/images/open.png) no-repeat center center;
+  background-size:0.6rem;
+  float:right;
+}
+
+.message{
+padding:0.6rem 0.2rem;
+}
+.message h2{
+  height:1rem;
+  line-height:1rem;
+  text-align:center;
+  font-size:0.36rem;
+  margin-bottom:0.2rem;
+}
+.message .message-content{
+  line-height:0.48rem;
+  font-size:0.32rem;
+  color:#525252;
+}
+
+.message .message-content img{
+  width:100%;
+}
+
+@media screen and (min-width: 650px) {
+  .about .about-list{
+    width:10.6rem;
+  }
+  .about .about-list p {
+    width: 8.6rem;
+
+  }
+}
+@media screen and (min-width: 900px) {
+  .about .about-list{
+    width:12.6rem;
+  }
+  .about .about-list p {
+    width: 10.6rem;
+
+  }
+}

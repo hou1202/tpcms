@@ -15,8 +15,8 @@ class Notice extends CommonValidate
 	protected $rule = [
         'id'   =>  'require|number|isExist:notice,id',
         'title|信息标题' => 'require|length:2,50',
-        'info|信息内容' => 'require|length:1,254',
-        'user_id|推送用户' => 'require|isExist:user,id',
+        'content|信息内容' => 'require|length:1,254',
+        'user_id|推送用户' => 'require|number|isExist:user,id,id,true',
 
     ];
     
@@ -27,13 +27,12 @@ class Notice extends CommonValidate
      * @var array
      */	
     protected $message = [
-        'id.require' => '非有效推荐信息',
-        'id.number' => '非有效推荐信息',
-        'id.isExist' => '非有效推荐信息',
-        'status.in' => '推荐状态信息有误',
-        'goods_id.require' => '链接产品信息有误',
-        'goods_id.isExist' => '链接产品信息有误',
-        'goods_title.require' => '链接产品信息有误',
+        'id.require' => '非有效通知信息',
+        'id.number' => '非有效通知信息',
+        'id.isExist' => '非有效通知信息',
+        'user_id.require' => '推送用户信息有误',
+        'user_id.number' => '推送用户信息有误',
+        'user_id.isExist' => '推送用户信息有误',
     ];
 
     /*
@@ -41,16 +40,9 @@ class Notice extends CommonValidate
      * 格式：'场景名' => ['字段名1','字段名2']
      * */
     protected $scene = [
-        'create' => ['title','info','status','thumbnail','goods_id','goods_title'],
-        'status' => ['id','status']
+        'create' => ['title','content','user_id'],
+        'update' => ['id','title','content','user_id']
     ];
 
-    /*
-     * 定义编辑 edit 模式下，验证场景
-     * */
-    public function sceneEdit()
-    {
-        return $this -> only(['id','title','info','status','thumbnail','goods_id','goods_title'])
-            ->remove('thumbnail','require');
-    }
+
 }

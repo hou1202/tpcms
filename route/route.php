@@ -28,7 +28,10 @@ Route::pattern([
  * */
 
 Route::rule('/','index/index','get');
+//首页
 Route::get('/','index/index/index');
+Route::post('index/goods/:page/:limit','index/index/getData');
+
 
 //登录Route
     Route::get('login','index/login/index');
@@ -86,6 +89,8 @@ Route::get('/','index/index/index');
     Route::put('data/:id','index/personal/update');        //个人资料
     Route::get('notice','index/personal/notice');        //消息通知
     Route::delete('notice/del/:id','index/personal/noticeDel');        //删除消息通知
+    Route::get('about','index/personal/about');        //关于我们列表
+    Route::get('message/:id','index/personal/message');        //关于详情
 
 
     //优惠券

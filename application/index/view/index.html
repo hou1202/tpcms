@@ -32,18 +32,13 @@
         <img src="/static/index/images/coupon.png" />
         <p>优惠券</p>
     </a>
-    <a href="#">
-        <img src="/static/index/images/nav2.png" />
-        <p>iPhone</p>
+    {volist name="Classify" id="c"}
+    <a href="/goods/index/{$c.id}">
+        <img src="{$c.thumbnail}" />
+        <p>{$c.title}</p>
     </a>
-    <a href="#">
-        <img src="/static/index/images/nav1.png" />
-        <p>iPhone</p>
-    </a>
-    <a href="#">
-        <img src="/static/index/images/nav3.png" />
-        <p>iPhone</p>
-    </a>
+    {/volist}
+
 </div>
 
 <!--推荐-->
@@ -72,30 +67,32 @@
     <i class="ticon2"></i>
 </div>
 
-<div class="list">
-    {volist name="Goods" id="g"}
-        <a class="list-block"  href="/goods/{$g.id}">
+<div class="list" id="goodsList">
+   <!--
+        <a class="list-block"  href="">
             <div class="block-img">
-                <img src="{$g.thumbnail}">
+                <img src="">
             </div>
             <div class="block-info">
-                <h2>{$g.title}</h2>
-                <h3>{$g.info}</h3>
+                <h2>title</h2>
+                <h3>info</h3>
                 <div class="block-info-price">
-                    <p>￥{$g.sell_price}</p>
-                    <p>￥{$g.origin_price}</p>
+                    <p>￥sell_price</p>
+                    <p>￥.origin_price</p>
                 </div>
             </div>
-
         </a>
-    {/volist}
+   -->
 
 </div>
+
+<div class="load"><p id='loadP'></p></div>
 
 <!--引入加载footer文件-->
 {include file="default/footer" /}
 
 {load href="/static/index/lib/swiper-4.3.3.min.js" /}
+{load href="/static/index/js/indexGoods.js" /}
 
 <script>
     var mySwiper = new Swiper('.swiper-container', {
@@ -106,14 +103,6 @@
         autoplay: true,
     });
 
-    /*$(".list-block").on("click",function(){
-        var detail = $(this).attr('title');
-        window.location.href='/goods/'+detail;
-    });*/
-
-    window.addEventListener('touchmove', function(evt) {
-        evt.preventDefault()
-    });
 </script>
 
 </html>

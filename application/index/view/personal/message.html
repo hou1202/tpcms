@@ -1,0 +1,33 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="Aoogi商城系统" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/about.css" /}
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <h2>{$Message.title}</h2>
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+</header>
+
+<!--列表模块-->
+<div class="message">
+    <h2>{$Message.vice_title}</h2>
+    <div class="message-content">
+        {:html_entity_decode($Message.content)}
+    </div>
+
+
+</div>
+
+<script>
+
+
+</script>
+
+
+
+</html>

@@ -97,8 +97,10 @@ Route::resource('aoogi/logistics','admin/logistics')->rest('edit',['GET', '/edit
 Route::post('aoogi/logistics/data','admin/logistics/getData');
 
 //消息Notice管理Route
-Route::resource('aoogi/notice','admin/notice')->rest('edit',['GET', '/edit/:id','edit']);
+Route::resource('aoogi/notice','admin/notice')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/notice/data','admin/notice/getData');
+Route::resource('aoogi/message','admin/message')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
+Route::post('aoogi/message/data','admin/message/getData');
 
 
 //图片上传处理

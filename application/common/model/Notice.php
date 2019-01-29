@@ -21,7 +21,7 @@ class Notice extends Model
     /*
      * $readonly    定义只读字段保护
      * */
-    protected $readonly = ['user_id'];
+    protected $readonly = ['id'];
 
     /*
      * $field   开启数据表字段验证

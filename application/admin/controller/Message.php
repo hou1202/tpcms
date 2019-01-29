@@ -4,10 +4,10 @@ namespace app\admin\controller;
 
 use app\common\controller\AdminController;
 use think\Request;
-use app\common\model\Notice as NoticeM;
-use app\admin\validate\Notice as NoticeV;
+use app\common\model\Message as MessageM;
+use app\admin\validate\Message as MessageV;
 
-class Notice extends AdminController
+class Message extends AdminController
 {
     /**
      * 显示资源列表
@@ -27,11 +27,10 @@ class Notice extends AdminController
     public function getData(Request $request)
     {
         $data = $request -> param();
-        $resource = NoticeM::order('id desc')
+        $resource = MessageM::order('id desc')
             ->limit(($data['page']-1)*$data['limit'],$data['limit'])
-            ->append(['type_text','notice_user'])
             ->select();;
-        $count = NoticeM::count('id');
+        $count = MessageM::count('id');
         return $this->kitJson($resource,$count);
     }
 
@@ -54,10 +53,10 @@ class Notice extends AdminController
     public function save(Request $request)
     {
         $data = $request->param();
-        $validate = new NoticeV();
+        $validate = new MessageV();
         if(!$validate->scene('create')->check($data))
             return $this->failJson($validate->getError());
-        return NoticeM::create($data) ? $this->successJson('通知信息创建成功','/aoogi/notice') : $this->failJson('通知信息创建失败');
+        return MessageM::create($data) ? $this->successJson('内容创建成功','/aoogi/message') : $this->failJson('内容创建失败');
     }
 
 
@@ -69,10 +68,10 @@ class Notice extends AdminController
      */
     public function edit($id)
     {
-        $resource = NoticeM::where('id',$id)->append(['notice_user'])->find();
+        $resource = MessageM::where('id',$id)->find();
         if(!$resource)
             return $this->failJson('非有效数据信息');
-        $this->assign('Notice',$resource);
+        $this->assign('Message',$resource);
         return view('');
     }
 
@@ -86,11 +85,11 @@ class Notice extends AdminController
     public function update(Request $request, $id)
     {
         $data = $request->param();
-        $validate = new NoticeV();
+        $validate = new MessageV();
         if(!$validate->scene('create')->check($data))
             return $this->failJson($validate->getError());
-        $resource = NoticeM::get($id);
-        return $resource->save($data) ? $this->successJson('通知信息更新成功','/aoogi/notice') : $this->failJson('通知信息更新失败');
+        $resource = MessageM::get($id);
+        return $resource->save($data) ? $this->successJson('内容更新成功','/aoogi/message') : $this->failJson('内容更新失败');
     }
 
     /**
@@ -101,8 +100,8 @@ class Notice extends AdminController
      */
     public function delete($id)
     {
-        if(!$notice = NoticeM::get($id))
-            return $this->failJson('非有效通知信息');
+        if(!$notice = MessageM::get($id))
+            return $this->failJson('非有效数据信息');
         return $notice->delete() ? $this->successJson('删除成功') : $this->failJson('删除失败');
     }
 }

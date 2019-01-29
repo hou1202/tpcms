@@ -1,0 +1,145 @@
+
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+                    <div class="layui-card-header">
+                        <a href="javascript:history.go(-2);" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon">&#xe65a;</i>
+                            <span>返回</span>
+                        </a>
+                    </div>
+
+                    <div class="layui-card-body">
+
+                        <form class="layui-form" lay-filter="formVal">
+
+                            <input type="hidden" name="_method" value="PUT">
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">消息标题</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="title" value="{$Message.title}" lay-verify="required|title" autocomplete="off" placeholder="消息标题" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">消息副标题</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="vice_title" value="{$Message.vice_title}" lay-verify="required|vice" autocomplete="off" placeholder="消息副标题" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item layui-input-md">
+                                <label class="layui-form-label">排序</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" name="sort" lay-verify="required|number|cSort" autocomplete="off" value="{$Message.sort}" placeholder="排序：1-999，数值越大越靠前" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">*必填</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">内容正文</label>
+                                <div class="layui-input-block">
+                                    <textarea id="editor" name="content">{:html_entity_decode($Message.content)}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="form_submit">立即提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--上传文件引入文件-->
+{load href="/static/plugin/jquery/jquery-3.1.1.js" /}
+
+{load href="/static/plugin/kind/kind-all-min.js" /}
+
+<script>
+    layui.use(['form', 'route', 'jquery', 'table'], function() {
+        var $ = layui.jquery,
+            form = layui.form,
+            route = layui.route,
+            table = layui.table,
+            layer = layui.layer;
+
+        //设置nav标题
+        $("#navTitle").text(route.getRoute().name);
+
+        //表单渲染
+        form.render();
+
+
+        //自定义验证规则
+        form.verify({
+            title: function(value) {
+                if (value.length < 2 || value.length > 20) {
+                    return '内容标题长度应在2-20个字符之间';
+                }
+            },
+            vice:function(value) {
+                if (value.length < 2 || value.length > 50) {
+                    return '内容副标题长度应在2-50个字符之间';
+                }
+            },
+            cSort: [/^[1-9]\d{0,2}?$/, '排序设置有误，应为：1-999之间的整数'],
+        });
+
+        //监听message提交
+        form.on('submit(form_submit)', function(data) {
+
+            $.post("/aoogi/message/"+"{$Message.id}",data.field,function(res){
+                layer.msg(res.msg);
+                if(res.url)
+                 window.location.href = "#" + res.url;
+                return false;
+            });
+            return false;
+        });
+
+    });
+</script>
+
+<script>
+    //实例化KindEditor编辑器
+    KindEditor.create($('#editor'), {
+        allowImageRemote: false,
+        basePath: '/static/plugin/kind/',
+        themesPath: '/static/plugin/kind/themes/',
+        pluginsPath: '/static/plugin/kind/plugins/',
+        langPath: '/static/plugin/kind/lang/',
+        uploadJson: '/uploader',
+        filePostName: 'file',    //imgFile是编辑器中图片上传的默认表单域名称
+        width: '100%',
+        minHeight: 400,    //最小高度，不用写px单位
+        resizeType: 1,     //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+        allowImageUpload: true,       //允许本地上传图片
+        extraFileUploadParams: '',       //上传图片、Flash、视音频、文件时，支持添加别的参数一并传到服务器
+        afterBlur: function () {
+            //编辑器失去焦点时，同步编辑器中的内容到textarea，在异步提交内容的时候，必须写！否则textarea中的值是不会改变的
+            this.sync();
+        }
+
+    });
+</script>
+
+
+
+
+<style scoped>
+
+</style>

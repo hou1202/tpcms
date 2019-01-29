@@ -21,7 +21,7 @@ class CommonValidate extends Validate
      * 验证数据在指定表的字段中是否存在
      * @access protected
      * @param  mixed     $value  字段值
-     * @param  mixed     $rule  验证规则 格式：数据表,字段名,主键名
+     * @param  mixed     $rule  验证规则 格式：数据表,字段名,主键名,是否为空不验证：默认否
      * @param  array     $data  数据
      * @param  string    $field  验证字段名
      * @return bool      存在返回TRUE；不存在返回FALSE
@@ -30,6 +30,10 @@ class CommonValidate extends Validate
     {
         if (is_string($rule)) {
             $rule = explode(',', $rule);
+        }
+
+        if(!empty($rule[3]) && empty($value)){
+            return true;
         }
 
         if (false !== strpos($rule[0], '\\')) {
