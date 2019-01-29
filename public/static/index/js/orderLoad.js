@@ -8,7 +8,7 @@ $(function(){
 
 
     var pageAjax = {
-        //loadDivC : "<div class='load' style='width:100%;height:1.2rem;line-height: 1.2rem;color: #838383;text-align:center;font-size:0.3rem;'><p id='loadP'></p></div>",
+
         loading : "加载中...",
         loadingUp : "上拉可以加载更多哦@#￥%…&",
         loadingEnd : "=== 已经没有更多的订单了哦 ===",
