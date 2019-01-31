@@ -1,0 +1,102 @@
+
+<!--引入头部文件-->
+{include file="default/header" title="反馈详情" keywords="Aoogi商城系统"}
+
+{load href="/static/index/css/tickling.css" /}
+
+
+
+<!--头部标题模块-->
+<header class="header-title">
+    <a href="Javascript:history.go(-1);">
+        <img src="/static/index/images/back.png">
+    </a>
+    <h2>反馈详情</h2>
+</header>
+
+<!--列表模块-->
+<div class="tickling_read">
+    <h2>反馈内容：</h2>
+    <p>{$Tickling.content}</p>
+    {if $Tickling.img}
+        <h2>反馈图片：</h2>
+        <div class="read-img">
+            {volist name="$Tickling.img" id="m"}
+                <img src="{$m}">
+            {/volist}
+        </div>
+    {/if}
+    <h2>提交时间：</h2>
+        <p>{$Tickling.create_time}</p>
+    <h2>回复信息</h2>
+        <p>{$Tickling.reply|default='暂未回复'}</p>
+
+</div>
+
+
+
+
+
+
+<script>
+    $("#formSubmit").on('click',function(){
+        var content = $.trim($("#content").val());
+        if(content == '' || content.length > 500)
+            return alertConfirm('反馈内容不能为空,且不得大于500字');
+        $.post("/tickling",$("#ticklingForm").serializeArray(),function(res){
+            alertConfirm(res.msg);
+            if(res.code == 1)
+                timeOutUrl(res.url);
+        })
+    })
+
+</script>
+<script>
+    $('#thumbnailUpload').diyUpload({
+        buttonText : '',
+        //类型限制;
+        accept: {
+            title: "Images",
+            extensions: 'jpg,jpeg,png'
+        },
+        //配置生成缩略图的选项
+        thumb:{
+            width:50,
+            height:50,
+            quality:100,
+            allowMagnify:true,
+            crop:true,
+            type:"image/jpeg"      // 为空的话则保留原有图片格式。 否则强制转换成指定的类型(image/jpeg)。
+        },
+        swf:"/static/plugin/aoupload/Uploader.swf",
+        //是否支持多文件上传
+        multiple:true,
+        //设置为 true 后，不需要手动调用上传，有文件选择即开始上传
+        auto:true,
+        //文件上传方式,POST或者GET
+        method:"POST",
+        //服务器地址;
+        server:'/uploader',
+        //最大上传的文件数量
+        fileNumLimit:4,
+        //总文件大小(单位字节);
+        fileSizeLimit:1024*1024*25,
+        //单个文件大小(单位字节);
+        fileSingleSizeLimit:1024*1024 * 5,
+        //自定义内容信息
+        custom:{
+            inputName:'img[]',
+        },
+        success:function( data ) {
+
+        },
+        error:function( err ) { }
+    });
+</script>
+
+
+
+
+
+
+</html>

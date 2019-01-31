@@ -87,7 +87,7 @@ class Notice extends AdminController
     {
         $data = $request->param();
         $validate = new NoticeV();
-        if(!$validate->scene('create')->check($data))
+        if(!$validate->scene('update')->check($data))
             return $this->failJson($validate->getError());
         $resource = NoticeM::get($id);
         return $resource->save($data) ? $this->successJson('通知信息更新成功','/aoogi/notice') : $this->failJson('通知信息更新失败');

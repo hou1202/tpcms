@@ -60,8 +60,6 @@ $(function(){
                         $.each(res.data,function(i,val){
                             var goods ='';
                             var orderBottom = '';
-                            console.log(res.data[i].status);
-                            console.log(typeof res.data[i].status);
                             switch(parseInt(res.data[i].status)){
                                 case 1:
                                     orderBottom +='<a  class="cancel cancelOrder" data-id="'+res.data[i].id+'">取消订单</a>'

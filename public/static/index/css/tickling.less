@@ -1,0 +1,134 @@
+@rem:75rem;
+
+
+
+h2{
+    height:60/@rem;
+    line-height:60/@rem;
+    font-size:24/@rem;
+    color:#525252;
+    text-align:left;
+}
+.tickling {
+    padding:15/@rem 45/@rem;
+    text-align:center;
+    .tickling-input{
+        padding:15/@rem;
+        textarea {
+            width:100%;
+            height:144/@rem;
+            line-height:36/@rem;
+            color:#525252;
+            font-size:24/@rem;
+            border:1px solid #888888;
+            border-radius:15/@rem;
+        }
+    }
+    .tickling-img {
+        padding:15/@rem 0;
+        text-align:left;
+    }
+    button{
+        width:495/@rem;
+        margin:0 auto;
+        margin-top:75/@rem;
+        height:75/@rem;
+        line-height:75/@rem;
+        border:none;
+        background:#cc7f15;
+        color:#fff;
+        border-radius:9/@rem;
+    }
+
+}
+
+
+.tickling-log{
+    padding:30/@rem 45/@rem;
+    .log-list{
+        width:645/@rem;
+        height:75/@rem;
+        line-height:45/@rem;
+        padding:15/@rem;
+        margin:0 auto;
+        border-bottom: 1px solid #e5e5e5;
+        &:last-child{
+            border-bottom: none;
+        }
+        a{
+            color:#525252;
+        }
+        i{
+            display:block;
+            width:45/@rem;
+            height:45/@rem;
+        }
+        p{
+            width:525/@rem;
+            height:45/@rem;
+            line-height:45/@rem;
+            float:left;
+            font-size:24/@rem;
+            padding-left:15/@rem;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1; /* 这个表示要显示几行 */
+            -webkit-box-orient: vertical;
+        }
+    }
+}
+
+i.heard{
+    float:left;
+    background:url(/static/index/images/tickling-log.png) no-repeat center center;
+    background-size:45/@rem;
+}
+i.open{
+    float:right;
+    background:url(/static/index/images/open.png) no-repeat center center;
+    background-size:45/@rem;
+}
+
+.tickling_read{
+    padding:45/@rem;
+    p{
+        line-height:45/@rem;
+        font-size:24/@rem;
+        padding:0 15/@rem;
+        color: #878787;
+    }
+    .read-img{
+        height:165/@rem;
+        padding:15/@rem 0;
+        overflow: hidden;
+        img{
+            width:135/@rem;
+            height:135/@rem;
+            margin:0 9/@rem;
+        }
+    }
+}
+
+
+@media screen and (min-width: 600px) {
+    .tickling-log .log-list{
+        width:145/@rem;
+        p {
+            width: 675/@rem;
+
+        }
+    }
+
+}
+@media screen and (min-width: 750px) {
+    .tickling-log .log-list{
+        width:945/@rem;
+        p {
+            width: 825/@rem;
+
+        }
+    }
+
+}

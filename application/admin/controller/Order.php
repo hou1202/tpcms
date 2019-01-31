@@ -69,7 +69,6 @@ class Order extends AdminController
     public function getData(Request $request, $type=1)
     {
         $data = $request -> param();
-        //var_dump($data);die;
         //定义SQL变量
         $alias = ['order'=>'o','user'=>'u'];
         $join = [['user','o.user_id=u.id'],['order_goods']];

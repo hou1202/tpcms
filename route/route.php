@@ -73,24 +73,36 @@ Route::post('index/goods/:page/:limit','index/index/getData');
     Route::get('pay/revert','index/pay/payReturn');         //同步跳转-支付成功
     Route::post('pay/notify','index/notify/payNotify');     //支付宝异步通知地址
 
+    Route::get('wx/pay/wxpay','api/WxPay/pay');
 
 
 /*个人中心*/
     Route::get('personal','index/personal/index');     //个人主页
+
     Route::resource('address','index/address')->except(['read']);     //收货地址
     Route::post('address/choice/:id','index/address/choice');       //默认收货地址设置
 
     Route::get('collect','index/collect/index');        //我的收藏
+
     Route::get('integral','index/personal/integral');        //我的积分
     Route::post('integral/data/:page/:limit','index/personal/integralData');           //我的积分数据
-    Route::get('wallet','index/personal/wallet');        //我的积分
+
+    Route::get('wallet','index/personal/wallet');        //我的余额
     Route::post('wallet/data/:page/:limit','index/personal/walletData');           //我的余额数据
+
     Route::get('data','index/personal/data');        //个人资料
     Route::put('data/:id','index/personal/update');        //个人资料
+
     Route::get('notice','index/personal/notice');        //消息通知
     Route::delete('notice/del/:id','index/personal/noticeDel');        //删除消息通知
+
     Route::get('about','index/personal/about');        //关于我们列表
     Route::get('message/:id','index/personal/message');        //关于详情
+
+    Route::get('tickling/:id','index/tickling/read');        //查看信息反馈
+    Route::get('tickling','index/tickling/index');        //信息反馈
+    Route::post('tickling','index/tickling/save');        //保存信息反馈
+
 
 
     //优惠券
@@ -112,6 +124,8 @@ Route::post('index/goods/:page/:limit','index/index/getData');
     Route::post('replace/:order_id','index/replace/save');      //提交售后申请
     Route::get('replace/read/:id','index/replace/read');      //查看售后申请
     Route::put('replace/:id','index/replace/update');
+
+
 
 
 

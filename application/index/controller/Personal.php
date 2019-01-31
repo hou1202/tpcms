@@ -181,4 +181,6 @@ class Personal extends IndexController
         $this->assign('Message',$resource);
         return view();
     }
+
+
 }

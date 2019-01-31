@@ -101,6 +101,8 @@ Route::resource('aoogi/notice','admin/notice')->rest('edit',['GET', '/edit/:id',
 Route::post('aoogi/notice/data','admin/notice/getData');
 Route::resource('aoogi/message','admin/message')->rest('edit',['GET', '/edit/:id','edit'])->except(['read']);
 Route::post('aoogi/message/data','admin/message/getData');
+Route::resource('aoogi/tickling','admin/tickling')->rest('edit',['GET', '/edit/:id','edit'])->except(['read','create','save']);
+Route::post('aoogi/tickling/data','admin/tickling/getData');
 
 
 //图片上传处理

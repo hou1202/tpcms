@@ -1,0 +1,121 @@
+
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-card">
+
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote layui-text" id="navTitle"></blockquote>
+
+                    <div class="layui-card-header">
+                        <div class="self-search">
+                            <form class="layui-form">
+                                <input type="text" name="keyword" class="kit-search-input self-search-input" placeholder="搜索关键字..." />
+                                <button class=" self-search-btn" lay-submit="" lay-filter="formSubmit">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="layui-card-body">
+                        <!--表格主体-->
+                        <table id="tableHash" lay-filter="tIndex"></table>
+
+                        <!--操作控制-->
+                        <script type="text/html" id="barHash">
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        </script>
+
+                        <!--状态显示控制-->
+                        <script type="text/html" id="setStatus">
+                            <input type="checkbox" name="status" lay-filter="switchStatus" disabled lay-skin="switch" {{# if(d.status){ }}checked{{#} }} lay-text="已处理|未处理" value="{{d.id}}">
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    layui.config({
+        base: '/static/admin/js/'
+    }).use(['jquery', 'table', 'form', 'route'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            table = layui.table,
+            route = layui.route,
+            form = layui.form;
+
+        //设置nav标题
+        $("#navTitle").text(route.getRoute().name);
+
+        //表格数据获取及定义
+        var tableLoad = table.render({
+            method: 'post',
+            limit: 10,
+            limits:[10,20],
+            elem: '#tableHash',
+            height: 'full-235',
+            url: '/aoogi/tickling/data', //数据接口
+            page: true, //开启分页
+            cols: [
+                [ //表头
+                    {
+                        field: 'id', title: 'ID', width: 80, sort: true, align: 'center', fixed: 'left'
+                    }, {
+                        field: 'name', title: '反馈用户', align: 'center'
+                    },{
+                        field: 'content', title: '反馈内容', align: 'center', minWidth: 350
+                    }, {
+                        field: 'reply', title: '回复内容', align: 'center',
+                    }, {
+                        field: 'status', title: '处理状态',align: 'center', minWidth: 100, templet:'#setStatus'
+                    },{
+                        fixed: 'right', title:'操作', align: 'center', minWidth: 150, toolbar: '#barHash'
+                    }
+                ]
+            ]
+        });
+
+
+        //操作栏监听
+        table.on('tool(tIndex)',function(obj){
+            if(obj.event === 'edit'){
+                window.location.href ='#/aoogi/tickling/edit/'+obj.data.id;
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除该反馈消息?', {icon: 3, title:'提示'}, function(index){
+                    $.post('/aoogi/tickling/'+obj.data.id,{'_method':'DELETE'},function(res){
+                        layer.msg(res.msg);
+                        table.reload('tableHash');
+                    });
+                    layer.close(index);
+                });
+
+            }
+        });
+
+        //监听搜索提交
+        form.on('submit(formSubmit)', function(data) {
+            if(data.field.keyword === ''){
+                layer.msg('请输入搜索关键词');
+                return false;
+            }
+            tableLoad.reload({
+                where:{keyword:data.field.keyword}
+            });
+            return false;
+        });
+
+    });
+</script>
+
+
+<style scoped>
+
+</style>
