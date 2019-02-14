@@ -18,7 +18,7 @@ class WxPay
      * @param   $timeout    string     订单超时时间,单位：秒,样例：‘30’
      * @return string
      */
-    public function WxPay($payAmount, $orderNumber, $msg, $timeout=30)
+    public function pay($payAmount, $orderNumber, $msg, $timeout=30)
     {
         $appid = '';            //微信分配的公众账号ID
         $mch_id = '1457831502';            //微信支付商户号
@@ -52,7 +52,7 @@ class WxPay
                         </xml>";
 
         //后台POST微信传参地址  同时取得微信返回的参数
-        $dataxml = postXmlCurl($post_data,$url,$timeout);
+        $dataxml = $this->postXmlCurl($post_data,$url,$timeout);
         //将微信返回的XML 转换成数组
         $objectxml = (array)simplexml_load_string($dataxml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -85,7 +85,7 @@ class WxPay
      * @param   $second int  超时时间
      * @return string
      */
-    function postXmlCurl($xml,$url,$second){
+    private function postXmlCurl($xml,$url,$second){
         $ch = curl_init();
         //设置超时
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
@@ -113,13 +113,13 @@ class WxPay
     }
 
     /**
-     * get_client_ip  获取客户端真实IP
+     * getClientIp  获取客户端真实IP
      */
-    function get_client_ip($type = 0) {
+    public function getClientIp($type = 0) {
         $type       =  $type ? 1 : 0;
         $ip         =   'unknown';
         if ($ip !== 'unknown') return $ip[$type];
-        if($_SERVER['HTTP_X_REAL_IP']){//nginx 代理模式下，获取客户端真实IP
+        if(isset($_SERVER['HTTP_X_REAL_IP'])){//nginx 代理模式下，获取客户端真实IP
             $ip=$_SERVER['HTTP_X_REAL_IP'];
         }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {//客户端的ip
             $ip     =   $_SERVER['HTTP_CLIENT_IP'];

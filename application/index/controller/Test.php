@@ -7,6 +7,7 @@
  */
 
 namespace app\index\controller;
+use app\api\controller\WxPay;
 use think\Db;
 use think\facade\Config;
 use app\common\controller\Alipay;
@@ -19,6 +20,9 @@ class Test extends BaseController
 {
     public function index(Request $request)
     {
+        $pay = new WxPay();
+        $resource = $pay -> getClientIp();
+        var_dump($resource);die;
         $type = 0;
         $type       =  $type ? 1 : 0;
         $ip         =   'unknown';
