@@ -2,6 +2,7 @@
 
 namespace app\index\controller;
 
+use app\api\controller\WxPay;
 use app\common\controller\Alipay;
 use app\common\controller\IndexController;
 use app\common\model\OrderGoods;
@@ -320,6 +321,8 @@ class Order extends IndexController
             $pay = new Alipay();
             $resource = $pay->wapPay($order->pay_price,$order->serial,$title);
         }else if($type == 2){   //微信支付
+            $pay = new WxPay();
+            $resource = $pay -> pay();
 
         }else if($type == 3){   //余额支付
             //判断订单用户是否正确

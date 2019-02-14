@@ -13,27 +13,37 @@ use app\common\controller\Alipay;
 
 use app\common\controller\BaseController;
 use think\facade\Env;
+use think\facade\Request;
 
 class Test extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-
-        /*for($i=0;$i<20;$i++){
-            $type = ['+','-'];
-            $type_keys=array_rand($type,1);
-            $data = [
-                'user_id'=>2,
-                'title'=>'累积'.rand(1000,9999),
-                'money'=>rand(10,999),
-                'type'=>$type[$type_keys],
-            ];
-            Db::table('log_money')->insert($data);
-        }*/
-       if($str1 == $str2){
-            var_dump(1);
+        $type = 0;
+        $type       =  $type ? 1 : 0;
+        $ip         =   'unknown';
+        if ($ip !== 'unknown') return $ip[$type];
+        //var_dump($_SERVER);die;
+        if(isset($_SERVER['HTTP_X_REAL_IP'])){//nginx 代理模式下，获取客户端真实IP
+            $ip=$_SERVER['HTTP_X_REAL_IP'];
+        }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {//客户端的ip
+            $ip     =   $_SERVER['HTTP_CLIENT_IP'];
+        }elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {//浏览当前页面的用户计算机的网关
+            $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $pos    =   array_search('unknown',$arr);
+            if(false !== $pos) unset($arr[$pos]);
+            $ip     =   trim($arr[0]);
+        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip     =   $_SERVER['REMOTE_ADDR'];//浏览当前页面的用户计算机的ip地址
         }else{
-            var_dump(2);
+            $ip=$_SERVER['REMOTE_ADDR'];
         }
+        // IP地址合法验证
+        $long = sprintf("%u",ip2long($ip));
+        $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+        //return $ip[$type];
+        var_dump($ip[$type]);
+
+
     }
 }
