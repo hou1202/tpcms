@@ -30,11 +30,16 @@ class WxPay
         $url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信传参地址
 
         $nonce_str = $this->createNoncestr();            //随机字符串，不长于32位
-        $sign = '';            //签名
         $body = '';            //商品简单描述
         $out_trade_no = $orderNumber;            //商户系统内部的订单号
         $total_fee = $payAmount*100;            //订单总金额，单位为分
-        $spbill_create_ip = '';            //用户端IP
+        $spbill_create_ip = $this->getClientIp();            //用户端IP
+
+        $signA ="appid=$appid&attach=$out_trade_no&body=$body&mch_id=$mch_id&nonce_str=$nonce_str&notify_url=$notify_url&out_trade_no=$out_trade_no&scene_info=$scene_info&spbill_create_ip=$spbill_create_ip&total_fee=$total_fee&trade_type=$trade_type";
+        //拼接字符串  注意顺序微信有个测试网址 顺序按照他的来 直接点下面的校正测试 包括下面XML  是否正确
+        $strSignTmp = $signA."&key=$mch_key";
+        //签名
+        $sign = strtoupper(MD5($strSignTmp)); // MD5 后转换成大写
 
         //拼接成XML 格式
         $post_data = "<xml>
