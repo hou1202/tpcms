@@ -131,6 +131,7 @@ Route::post('index/goods/:page/:limit','index/index/getData');
 
 //测试页面
 Route::get('test','index/test/index');
+Route::post('testUploader/[:genre]/[:percent]','index/test/uploader');
 
 
 //重置Token
