@@ -18,7 +18,6 @@ class Index extends BaseController
         $bannerWhere[] = ['status', '=', '1'];
         $banner = Db::table('banner')->where($bannerWhere)->select();
         $data = [
-            'code' => 1,
             'success' => true,
             'data' => $banner,
             'headers' => '',
@@ -26,6 +25,6 @@ class Index extends BaseController
             'statusText' => 'OK',
 
         ];
-        return json($data);
+        return json($data)->code(200)->header(['Access-Control-Allow-Origin'=>'*']);
     }
 }
