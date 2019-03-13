@@ -20,7 +20,11 @@ class Index extends BaseController
         $data = [
             'code' => 1,
             'success' => true,
-            'data' => $banner
+            'data' => $banner,
+            'headers' => '',
+            'status' => 200,
+            'statusText' => 'OK',
+
         ];
         return json($data);
     }
