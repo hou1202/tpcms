@@ -21,10 +21,9 @@ class Index extends BaseController
             'success' => true,
             'data' => $banner,
             'headers' => '',
-            'status' => 200,
-            'statusText' => 'OK',
+
 
         ];
-        return json($data)->code(200)->header(['Access-Control-Allow-Origin'=>'*']);
+        return json($banner)->code(200)->header(['Access-Control-Allow-Origin'=>'*']);
     }
 }
