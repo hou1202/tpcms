@@ -10,4 +10,4 @@
 
 Route::get('api/index/banner','api/index/banner');
 Route::get('api/index/recom','api/index/recom');
-Route::get('api/index/goods/:page/:limit','api/index/goods');
+Route::get('api/index/indexGoods/:page/:limit','api/index/indexGoods');
