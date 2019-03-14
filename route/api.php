@@ -9,4 +9,4 @@
 //API接口访问路由
 
 Route::get('api/index/banner','api/index/banner');
-Route::get('api/index/recom','api/index/recom');
+Route::get('api/index/recom/:page/:limit','api/index/recom');

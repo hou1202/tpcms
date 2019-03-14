@@ -31,4 +31,21 @@ class Index extends BaseController
         return $this->apiJson($recomm);
 
     }
+
+    public function indexGoods($page, $limit)
+    {
+        $field = ['id','title','info','thumbnail','sell_price','origin_price'];
+        $where['status'] = ['=', '1'];
+        $where['recom'] = ['=', '1'];
+        $goods = Db::table('goods')->field($field)->whereOr($where)->order('id desc')->limit($page,$limit)->select();
+        $surplus = true;
+        if(count($goods) < $limit){
+            $surplus = false;
+        }
+        $data = [
+            'res' => $goods,
+            'surplus' => $surplus,
+        ];
+        return $this->apiJson($data);
+    }
 }
