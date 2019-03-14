@@ -41,4 +41,9 @@ class BaseController extends Controller
         ];
         return json($res);
     }
+
+    protected function apiJson($data, $code=200)
+    {
+        return json($data)->code($code)->header(['Access-Control-Allow-Origin'=>'*']);
+    }
 }

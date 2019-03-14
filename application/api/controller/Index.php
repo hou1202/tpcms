@@ -20,10 +20,15 @@ class Index extends BaseController
         $data = [
             'success' => true,
             'data' => $banner,
-            'headers' => '',
-
-
         ];
         return json($banner)->code(200)->header(['Access-Control-Allow-Origin'=>'*']);
+    }
+
+    public function recom()
+    {
+        $recomWhere[] = ['status', '=', '1'];
+        $recomm = Db::table('recom')->where($recomWhere)->select();
+        return $this->apiJson($recomm);
+
     }
 }
