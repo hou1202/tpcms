@@ -49,13 +49,14 @@ class Index extends BaseController
         $field = ['id','title','info','thumbnail','sell_price','origin_price'];
         $where['status'] = ['=', '1'];
         $where['recom'] = ['=', '1'];
-        $goods = Db::table('goods')->field($field)->whereOr($where)->order('id desc')->limit($page,$limit)->select();
+        $goods = Db::table('goods')->field($field)->where($where)->order('id desc')->limit($page*$limit,$limit)->select();
 
         /*临时处理图片URL*/
         foreach($goods as &$value){
             $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
         }
         $surplus = true;
+
         if(count($goods) < $limit){
             $surplus = false;
         }
