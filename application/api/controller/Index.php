@@ -17,6 +17,12 @@ class Index extends BaseController
     {
         $bannerWhere[] = ['status', '=', '1'];
         $banner = Db::table('banner')->where($bannerWhere)->select();
+
+        /*临时处理图片URL*/
+        foreach($banner as &$value){
+            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+        }
+
         $data = [
             'success' => true,
             'data' => $banner,
@@ -28,6 +34,12 @@ class Index extends BaseController
     {
         $recomWhere[] = ['status', '=', '1'];
         $recomm = Db::table('recom')->where($recomWhere)->select();
+
+        /*临时处理图片URL*/
+        foreach($recomm as &$value){
+            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+        }
+
         return $this->apiJson($recomm);
 
     }
@@ -38,6 +50,11 @@ class Index extends BaseController
         $where['status'] = ['=', '1'];
         $where['recom'] = ['=', '1'];
         $goods = Db::table('goods')->field($field)->whereOr($where)->order('id desc')->limit($page,$limit)->select();
+
+        /*临时处理图片URL*/
+        foreach($goods as &$value){
+            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+        }
         $surplus = true;
         if(count($goods) < $limit){
             $surplus = false;
@@ -47,5 +64,29 @@ class Index extends BaseController
             'surplus' => $surplus,
         ];
         return $this->apiJson($data);
+    }
+
+    public function goodsDetails($id)
+    {
+        $field = ['id','title','info','thumbnail','banner','origin_price','sell_price','franking','volume','address','content'];
+        $where['status'] = ['=', 1];
+        $wehre['id'] = ['=', $id];
+        $details = Db::table('goods')->field($field)->where($where)->find();
+        $details['banner'] = explode('-',$details['banner']);
+
+        /*临时处理图片URL*/
+        $details['thumbnail'] = 'http://www.aoogi.com'.$details['thumbnail'];
+        foreach($details['banner'] as &$value){
+            $value = 'http://www.aoogi.com'.$value;
+        }
+
+        $params = Db::table('goods_param')->where('goods_id',$id)->select();
+        $spec = Db::table('goods_spec')->where('goods_id',$id)->select();
+        $resource = [
+            'detail' => $details,
+            'params' => $params,
+            'spec' => $spec
+        ];
+        return $this->apiJson($resource);
     }
 }
