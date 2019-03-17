@@ -77,7 +77,7 @@ class Index extends BaseController
             ['id','=', $id]
         ];
         /*$where[] = ['id','=', $id];*/
-        $details = Db::table('goods')->field($field)->where($where)->fetchSql()->find();
+        $details = Db::table('goods')->field($field)->where($where)->find();
         $details['banner'] = explode('-',$details['banner']);
 
         /*临时处理图片URL*/
