@@ -47,8 +47,10 @@ class Index extends BaseController
     public function indexGoods($page, $limit)
     {
         $field = ['id','title','info','thumbnail','sell_price','origin_price'];
-        $where['status'] = ['=', '1'];
-        $where['recom'] = ['=', '1'];
+        $where = [
+            ['status','=', 1],
+            ['recom','=', 1]
+        ];
         $goods = Db::table('goods')->field($field)->where($where)->order('id desc')->limit($page*$limit,$limit)->select();
 
         /*临时处理图片URL*/
@@ -70,9 +72,12 @@ class Index extends BaseController
     public function goodsDetails($id)
     {
         $field = ['id','title','info','thumbnail','banner','origin_price','sell_price','franking','volume','address','content'];
-        $where['status'] = ['=', 1];
-        $wehre['id'] = ['=', $id];
-        $details = Db::table('goods')->field($field)->where($where)->find();
+        $where = [
+            ['status','=', 1],
+            ['id','=', $id]
+        ];
+        /*$where[] = ['id','=', $id];*/
+        $details = Db::table('goods')->field($field)->where($where)->fetchSql()->find();
         $details['banner'] = explode('-',$details['banner']);
 
         /*临时处理图片URL*/
