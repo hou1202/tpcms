@@ -79,6 +79,7 @@ class Index extends BaseController
         /*$where[] = ['id','=', $id];*/
         $details = Db::table('goods')->field($field)->where($where)->find();
         $details['banner'] = explode('-',$details['banner']);
+        $details['content'] = html_entity_decode($details['content']);
 
         /*临时处理图片URL*/
         $details['thumbnail'] = 'http://www.aoogi.com'.$details['thumbnail'];
