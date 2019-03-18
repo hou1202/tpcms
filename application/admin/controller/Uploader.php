@@ -123,14 +123,19 @@ class Uploader
                 exit(json_encode($return));
             } else {
                 $return = array();
+                if(Config::get('website_url') != 'localhost' || Config::get('website_url') != '127.0.0.1'){
+                    $src_url="/uploads/".DATE_PATH. $src;
+                }else{
+                    $src_url=Config::get('website_url')."/uploads/".DATE_PATH. $src;
+                }
                 if($genre){
                     $return['code'] = 0;
                     $return['msg'] = '上传成功!';
-                    $return['data']['src'] = "/uploads/".DATE_PATH. $src;;
+                    $return['data']['src'] = $src_url;
                 }else{
                     $return['error'] = 0;
                     $return['message'] = '上传成功';
-                    $return['url'] = "/uploads/".DATE_PATH. $src;
+                    $return['url'] = $src_url;
                     $return['source_path'] = UPLOAD_PATH . $src;
                     if (isset($_REQUEST['uid'])) {
                         $return['uid'] = $_REQUEST['uid'];
