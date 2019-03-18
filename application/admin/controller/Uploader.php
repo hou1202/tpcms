@@ -123,7 +123,7 @@ class Uploader
                 exit(json_encode($return));
             } else {
                 $return = array();
-                if(Config::get('website_url') != 'localhost' || Config::get('website_url') != '127.0.0.1'){
+                if(Config::get('website_url') == 'localhost' || Config::get('website_url') == '127.0.0.1'){
                     $src_url="/uploads/".DATE_PATH. $src;
                 }else{
                     $src_url=Config::get('website_url')."/uploads/".DATE_PATH. $src;
