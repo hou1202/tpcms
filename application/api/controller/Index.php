@@ -137,6 +137,7 @@ class Index extends BaseController
                         $img = 'http://www.aoogi.com'.$img;
                     }
                 }
+                $value['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
             }
         }
 
