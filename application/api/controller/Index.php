@@ -126,7 +126,7 @@ class Index extends BaseController
             'detail' => $details,
             'params' => $params,
             'spec' => $spec,
-            'comment' => $comRec,
+            'comments' => $comRec,
             'isColl' => $collect
         ];
         return $this->apiJson($resource);
