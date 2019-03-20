@@ -11,4 +11,4 @@
 Route::get('api/index/banner','api/index/banner');
 Route::get('api/index/recom','api/index/recom');
 Route::get('api/index/indexGoods/:page/:limit','api/index/indexGoods');
-Route::get('api/index/goods/:id','api/index/goodsDetails');
+Route::get('api/index/goods/:id/[:user_id]','api/index/goodsDetails');
