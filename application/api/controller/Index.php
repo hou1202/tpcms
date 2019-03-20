@@ -20,7 +20,9 @@ class Index extends BaseController
 
         /*临时处理图片URL*/
         foreach($banner as &$value){
-            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
         }
 
         $data = [
@@ -37,7 +39,9 @@ class Index extends BaseController
 
         /*临时处理图片URL*/
         foreach($recomm as &$value){
-            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
         }
 
         return $this->apiJson($recomm);
@@ -56,7 +60,9 @@ class Index extends BaseController
 
         /*临时处理图片URL*/
         foreach($goods as &$value){
-            $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
         }
         $surplus = true;
 
@@ -87,7 +93,9 @@ class Index extends BaseController
         /*临时处理图片URL*/
         $details['thumbnail'] = 'http://www.aoogi.com'.$details['thumbnail'];
         foreach($details['banner'] as &$value){
-            $value = 'http://www.aoogi.com'.$value;
+            if(empty(strstr($value,'http://www.'))){
+                $value = 'http://www.aoogi.com'.$value;
+            }
         }
         /*产品规格参数*/
         $params = Db::table('goods_param')->where('goods_id',$id)->select();
