@@ -129,6 +129,16 @@ class Index extends BaseController
             ->where($comWhere)
             ->order($comOrder)
             ->select();
+        if(!empty($comRec)) {
+            foreach($comRec as &$value) {
+                $value['img'] = explode('-',$value['img']);
+                foreach($value['img'] as &$img) {
+                    if(empty(strstr($img,'http://www.'))){
+                        $img = 'http://www.aoogi.com'.$img;
+                    }
+                }
+            }
+        }
 
         $resource = [
             'detail' => $details,
