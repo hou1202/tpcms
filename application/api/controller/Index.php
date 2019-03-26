@@ -99,7 +99,7 @@ class Index extends BaseController
         }
         /*产品规格参数*/
         $params = Db::table('goods_param')->where('goods_id',$id)->select();
-        $spec = Db::table('goods_spec')->where('goods_id',$id)->select();
+        $spec = Db::table('goods_spec')->field('id,goods_id,name,price,stock')->where('goods_id',$id)->select();
 
         /*收藏*/
         $collect = false;
@@ -149,5 +149,24 @@ class Index extends BaseController
             'isColl' => $collect
         ];
         return $this->apiJson($resource);
+    }
+
+    public function getGoodsSpec($id)
+    {
+        $whereGoods = [
+            ['status','=', 1],
+            ['id','=', $id],
+            ['delete_time','=', 0]
+        ];
+        $goods = Db::table('goods')->where($whereGoods)->value('id');
+        if(!$goods){
+            return $this->apiJson(false,250);
+        }
+
+        $whereSpec[] = ['goods_id', '=', $id];
+        $fieldSpec = ['id','goods_id','name','price','stock'];
+        $res = Db::table('goods_spec')->field($fieldSpec)->where($whereSpec)->select();
+
+        return $res ? $this->apiJson($res) : $this->apiJson(false,250);
     }
 }
