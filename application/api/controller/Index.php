@@ -91,7 +91,10 @@ class Index extends BaseController
         $details['content'] = html_entity_decode($details['content']);
 
         /*临时处理图片URL*/
-        $details['thumbnail'] = 'http://www.aoogi.com'.$details['thumbnail'];
+        if(empty(strstr($details['thumbnail'],'http://www.'))){
+            $details['thumbnail'] = 'http://www.aoogi.com'.$details['thumbnail'];
+        };
+
         foreach($details['banner'] as &$value){
             if(empty(strstr($value,'http://www.'))){
                 $value = 'http://www.aoogi.com'.$value;
