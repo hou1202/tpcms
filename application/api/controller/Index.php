@@ -173,6 +173,17 @@ class Index extends BaseController
         return $res ? $this->apiJson($res) : $this->apiJson(false,250);
     }
 
+    public function getClassify(){
+        $res = Db::table('classify')->field('id,title,thumbnail')->where('p_id',0)->select();
+        /*临时处理图片URL*/
+        foreach($res as &$value){
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
+        }
+        return $this->apiJson($res);
+    }
+
     public function getGoodsClassifyList($id, $page, $limit)
     {
         $field = ['id','title','info','thumbnail','sell_price','origin_price'];
