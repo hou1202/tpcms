@@ -172,4 +172,34 @@ class Index extends BaseController
 
         return $res ? $this->apiJson($res) : $this->apiJson(false,250);
     }
+
+    public function getGoodsClassifyList($id, $page, $limit)
+    {
+        $field = ['id','title','info','thumbnail','sell_price','origin_price'];
+        $where = [
+            ['status','=', 1],
+            ['classify_top','=', $id],
+            ['delete_time','=', 0],
+        ];
+        $goods = Db::table('goods')->field($field)->where($where)->order('id desc')->limit($page*$limit,$limit)->select();
+
+        /*临时处理图片URL*/
+        foreach($goods as &$value){
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
+        }
+
+        //数据是否全部结束
+        $surplus = true;
+
+        if(count($goods) < $limit){
+            $surplus = false;
+        }
+        $data = [
+            'res' => $goods,
+            'surplus' => $surplus,
+        ];
+        return $this->apiJson($data);
+    }
 }
