@@ -173,8 +173,8 @@ class Index extends BaseController
         return $res ? $this->apiJson($res) : $this->apiJson(false,250);
     }
 
-    public function getClassify(){
-        $res = Db::table('classify')->field('id,title,thumbnail')->where('p_id',0)->select();
+    public function getClassify($id){
+        $res = Db::table('classify')->field('id,title,thumbnail')->where('p_id',$id)->select();
         /*临时处理图片URL*/
         foreach($res as &$value){
             if(empty(strstr($value['thumbnail'],'http://www.'))){
@@ -184,12 +184,13 @@ class Index extends BaseController
         return $this->apiJson($res);
     }
 
-    public function getGoodsClassifyList($id, $page, $limit)
+
+    public function getGoodsClassifyList($classify_id, $page, $limit)
     {
         $field = ['id','title','info','thumbnail','sell_price','origin_price'];
         $where = [
             ['status','=', 1],
-            ['classify_top','=', $id],
+            ['classify_id','=', $classify_id],
             ['delete_time','=', 0],
         ];
         $goods = Db::table('goods')->field($field)->where($where)->order('id desc')->limit($page*$limit,$limit)->select();
