@@ -15,3 +15,4 @@ Route::get('api/index/goods/:id/[:user_id]','api/index/goodsDetails');
 Route::get('api/index/goodsSpec/:id','api/index/getGoodsSpec');
 Route::get('api/index/classify/:id','api/index/getClassify');
 Route::get('api/index/goodsClassifyList/:classify_id/:page/:limit','api/index/getGoodsClassifyList');
+Route::get('api/index/shoppingCart/:id','api/index/getShoppingCart');

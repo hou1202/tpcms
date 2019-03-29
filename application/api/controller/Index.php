@@ -10,6 +10,7 @@ namespace app\api\controller;
 use think\Db;
 
 use app\common\controller\BaseController;
+use app\common\model\Car;
 
 class Index extends BaseController
 {
@@ -184,7 +185,6 @@ class Index extends BaseController
         return $this->apiJson($res);
     }
 
-
     public function getGoodsClassifyList($classify_id, $page, $limit)
     {
         $field = ['id','title','info','thumbnail','sell_price','origin_price'];
@@ -213,5 +213,31 @@ class Index extends BaseController
             'surplus' => $surplus,
         ];
         return $this->apiJson($data);
+    }
+
+    public function getShoppingCart($id){
+        $id = 2;
+        $alias = ['car'=>'c','goods'=>'g','goods_spec'=>'s'];
+        $field = ['c.id','c.goods_id','c.spec_id','c.num','g.title','g.thumbnail','s.name','s.price','s.stock'];
+        $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
+        $where[] = [
+            ['c.user_id','=',$id],
+            ['c.delete_time','=',0],
+            ['c.isbuy','=',0],
+            ['g.status','=',1],
+        ];
+
+        $res = Db::table('car')->alias($alias)->field($field)
+            ->join($join)
+            ->where($where)
+            ->order('c.id asc')
+            ->select();
+        /*临时处理图片URL*/
+        foreach($res as &$value){
+            if(empty(strstr($value['thumbnail'],'http://www.'))){
+                $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
+            }
+        }
+        return $this->apiJson($res);
     }
 }
