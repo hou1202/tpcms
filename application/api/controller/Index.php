@@ -216,7 +216,7 @@ class Index extends BaseController
     }
 
     public function getShoppingCart($id){
-        $id = 2;
+        /*$id = 2;*/
         $alias = ['car'=>'c','goods'=>'g','goods_spec'=>'s'];
         $field = ['c.id','c.goods_id','c.spec_id','c.num','g.title','g.thumbnail','s.name','s.price','s.stock'];
         $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
