@@ -237,6 +237,7 @@ class Index extends BaseController
             if(empty(strstr($value['thumbnail'],'http://www.'))){
                 $value['thumbnail'] = 'http://www.aoogi.com'.$value['thumbnail'];
             }
+            $value['state'] = false;
         }
         return $this->apiJson($res);
     }
