@@ -241,4 +241,23 @@ class Index extends BaseController
         }
         return $this->apiJson($res);
     }
+
+    public function getUserTradeAddress($user_id){
+        $res = Db::table('address')->where('user_id',$user_id)->order('choice Desc')->select();
+        return $this->apiJson($res);
+    }
+
+    public function getUserTradeCoupon($user_id){
+        //$res = Db::table('coupon_user')->where('user_id',$user_id)->
+        $alias = ['coupon_user'=>'c','coupon'=>'p'];
+        $field = ['c.id','c.coupon_id','c.state','p.title','p.type','p.relation_title','p.goods_id','p.classify_id',];
+        $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
+        $where[] = [
+            ['c.user_id','=',$user_id],
+            ['c.delete_time','=',0],
+            ['c.isbuy','=',0],
+            ['g.status','=',1],
+        ];
+    }
+
 }
