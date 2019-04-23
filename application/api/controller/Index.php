@@ -8,6 +8,7 @@
 
 namespace app\api\controller;
 use think\Db;
+use think\Request;
 
 use app\common\controller\BaseController;
 use app\common\model\Car;
@@ -247,8 +248,9 @@ class Index extends BaseController
         return $this->apiJson($res);
     }
 
-    public function getUserTradeCoupon($user_id){
+    public function getUserTradeCoupon(Request $request,$user_id){
         //$res = Db::table('coupon_user')->where('user_id',$user_id)->
+        $data=$request->get();
         $alias = ['coupon_user'=>'c','coupon'=>'p'];
         $field = ['c.id','c.coupon_id','c.state','p.title','p.type','p.relation_title','p.goods_id','p.classify_id',];
         $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
@@ -258,6 +260,28 @@ class Index extends BaseController
             ['c.isbuy','=',0],
             ['g.status','=',1],
         ];
+       /* $resource = Db::table('coupon')->alias('c')
+            ->field('c.*')
+            ->join('coupon_user u','c.id = u.coupon_id')
+            ->where('c.end_time','>',time())        //优惠券尚未过期
+            ->where('u.status',0)                   //用户尚未使用
+            ->where('u.user_id',$this->user_info['id'])         //属于订单用户
+            ->where('c.money_satisfy',['=',0],['<',$order->goods_price],'or')       //订单金额满足使用条件
+            ->where("c.type=1 OR c.goods_id IN (".$goods_id.") OR c.classify_id IN (".$classify_id.")")     //满足类型的优惠券
+            ->append(['type_text'])
+            ->select()
+            ->toArray();*/
+        $res = Db::table('coupon_user')
+            ->alias('u')
+            ->field('u.*')
+            ->join('coupon c','u.coupon_user = c.coupon')
+            ->where('u.state',0)
+            ->where('u.delete_time',0)
+            ->where('u.user_id',$user_id)
+            ->where('c.end_time','>',time())
+            ->where('c.money_satisfy',['=',0],['<',$data->total],'or')
+            ->where('c.type=1 OR c.goods_id IN ('.$data->goods_list.') OR c.classify_id IN ('.$data->classify_list.')')
+            ->select();
     }
 
 }
