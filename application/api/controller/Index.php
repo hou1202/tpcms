@@ -251,8 +251,8 @@ class Index extends BaseController
     public function getUserTradeCoupon(Request $request,$user_id){
         //$res = Db::table('coupon_user')->where('user_id',$user_id)->
         $data=$request->param();
-        var_dump($data);die;
-        $alias = ['coupon_user'=>'c','coupon'=>'p'];
+        //var_dump($data);die;
+        /*$alias = ['coupon_user'=>'c','coupon'=>'p'];
         $field = ['c.id','c.coupon_id','c.state','p.title','p.type','p.relation_title','p.goods_id','p.classify_id',];
         $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
         $where[] = [
@@ -260,7 +260,7 @@ class Index extends BaseController
             ['c.delete_time','=',0],
             ['c.isbuy','=',0],
             ['g.status','=',1],
-        ];
+        ];*/
        /* $resource = Db::table('coupon')->alias('c')
             ->field('c.*')
             ->join('coupon_user u','c.id = u.coupon_id')
@@ -272,17 +272,30 @@ class Index extends BaseController
             ->append(['type_text'])
             ->select()
             ->toArray();*/
+
+       $goodsRes = Db::table('goods')->field('classify_id,classify_top')->where('id','in',$data['goods_list'])->select();
+       //$resdf= array_column($goodsRes,['classify_id','classify_top']);
+        $classify = [];
+        array_walk_recursive($goodsRes, function($value) use (&$classify) {
+            array_push($classify, $value);
+        });
+        $classify = array_unique($classify);
+
         $res = Db::table('coupon_user')
             ->alias('u')
             ->field('u.*')
-            ->join('coupon c','u.coupon_user = c.coupon')
-            ->where('u.state',0)
-            ->where('u.delete_time',0)
-            ->where('u.user_id',$user_id)
+            ->join('coupon c','u.coupon_id = c.id')
+            ->where('u.status','=',0)
+            ->where('u.delete_time','=',0)
+            ->where('u.user_id','=',$user_id)
             ->where('c.end_time','>',time())
-            ->where('c.money_satisfy',['=',0],['<',$data->total],'or')
-            ->where('c.type=1 OR c.goods_id IN ('.$data->goods_list.') OR c.classify_id IN ('.$data->classify_list.')')
+            //->where('c.money_satisfy',['=',0],['<',$data['total']],'or')
+            ->where('c.money_satisfy = 0 OR c.money_satisfy<'.$data['total'].'')
+            //->where('c.type=1 OR c.goods_id IN ('.$data['goods_list'].') OR c.classify_id IN ('.$classify.')')
+            ->where('c.type=1 OR c.goods_id IN ('.$data['goods_list'].') OR c.classify_id IN ('.implode(',',$classify).')')
+            ->fetchSql()
             ->select();
+        var_dump($res);die;
     }
 
 }
