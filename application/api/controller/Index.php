@@ -251,6 +251,7 @@ class Index extends BaseController
     public function getUserTradeCoupon(Request $request,$user_id){
         //$res = Db::table('coupon_user')->where('user_id',$user_id)->
         $data=$request->get();
+        var_dump($data);die;
         $alias = ['coupon_user'=>'c','coupon'=>'p'];
         $field = ['c.id','c.coupon_id','c.state','p.title','p.type','p.relation_title','p.goods_id','p.classify_id',];
         $join = [['goods','c.goods_id=g.id'],['goods_spec','c.spec_id=s.id']];
